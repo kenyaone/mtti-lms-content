@@ -1,1504 +1,588 @@
 {
+  "version": 2,
+  "generated": "2026-03-29T17:27:25.350640",
   "files": [
     {
-      "name": "1.1-introduction-to-chemistry.html",
-      "size": 23978
-    },
-    {
-      "name": "1.2-the-atom.html",
-      "size": 21797
-    },
-    {
-      "name": "1.3-the-periodic-table.html",
-      "size": 20196
-    },
-    {
-      "name": "1.4-chemical-bonding.html",
-      "size": 21630
-    },
-    {
-      "name": "1.5-periodicity.html",
-      "size": 20376
-    },
-    {
-      "name": "1773225999_15_Grade10-Bio-1.1-Introduction-Biology.html",
-      "size": 26063
-    },
-    {
-      "name": "1773227539_26_Grade10-Chem-1.1-Introduction-Chemistry.html",
-      "size": 26418
-    },
-    {
-      "name": "1773227606_34_Grade10-Eng-1.1-Listening-Speaking.html",
-      "size": 26353
-    },
-    {
-      "name": "1773227658_38_Grade10-Phys-1.1-Introduction-Physics.html",
-      "size": 25043
-    },
-    {
-      "name": "1773227707_45_Grade10-Comp-1.1-Computer-Systems.html",
-      "size": 25841
-    },
-    {
-      "name": "1773228255_49_Grade10-Elec-1.1-Electrical-Principles.html",
-      "size": 25526
-    },
-    {
-      "name": "1773236141_51_Grade10-Eng-1.1-Listening-Speaking.html",
-      "size": 26353
-    },
-    {
-      "name": "1773236175_55_Grade10-Kisw-1.1-Kusikiliza-Kuzungumza.html",
-      "size": 25900
-    },
-    {
-      "name": "1773236236_59_Grade10-Maths-1.3-Quadratic-Expressions.html",
-      "size": 25308
-    },
-    {
-      "name": "1773236236_60_Grade10-Maths-1.2-Indices-Logarithms.html",
-      "size": 25009
-    },
-    {
-      "name": "1773236236_61_Grade10-Maths-1.1-Real-Numbers.html",
-      "size": 25959
-    },
-    {
-      "name": "1773236547_77_Grade10-CSL-1.1-Community-Service.html",
-      "size": 25995
-    },
-    {
-      "name": "1773236615_88_Grade10-Bio-1.1-Introduction-Biology.html",
-      "size": 26063
-    },
-    {
-      "name": "1773238941_90_Grade10-PE-1.1-Physical-Education.html",
-      "size": 25861
-    },
-    {
-      "name": "1773238964_91_Grade10-Sports-1.1-Anatomy.html",
-      "size": 25620
-    },
-    {
-      "name": "1773239087_94_Grade10-Arts-1.1-Drawing-Painting.html",
-      "size": 25832
-    },
-    {
-      "name": "1773239150_105_Grade10-Bio-1.1-Introduction-Biology.html",
-      "size": 26063
-    },
-    {
-      "name": "1774358141_1_bio-f4-2-evolution-full.html",
-      "size": 35313
-    },
-    {
-      "name": "1774358142_2_bio-f4-1-genetics-inheritance-full.html",
-      "size": 36012
-    },
-    {
-      "name": "1774358142_3_bio-f4-5-support-locomotion-full.html",
-      "size": 32445
-    },
-    {
-      "name": "1774358142_4_bio-f4-4-coordination-full.html",
-      "size": 34123
-    },
-    {
-      "name": "1774358142_5_bio-f4-3-irritability-tropisms-full.html",
-      "size": 31815
-    },
-    {
-      "name": "1774358492_15_f4-phys-11-electronics-full.html",
-      "size": 15621
-    },
-    {
-      "name": "1774358492_16_f4-phys-10-radioactivity-full.html",
-      "size": 16071
-    },
-    {
-      "name": "1774358492_17_f4-phys-9-photoelectric-effect-full.html",
-      "size": 16538
-    },
-    {
-      "name": "1774358492_18_f4-phys-8-x-rays-full.html",
-      "size": 15129
-    },
-    {
-      "name": "1774358492_19_f4-phys-7-cathode-rays-full.html",
-      "size": 14555
-    },
-    {
-      "name": "1774358492_20_f4-phys-6-mains-electricity-full.html",
-      "size": 14908
-    },
-    {
-      "name": "1774358492_21_f4-phys-5-electromagnetic-induction-full.html",
-      "size": 16629
-    },
-    {
-      "name": "1774358492_22_f4-phys-4-electromagnetic-spectrum-full.html",
-      "size": 16238
-    },
-    {
-      "name": "1774358492_23_f4-phys-3-floating-sinking-full.html",
-      "size": 16821
-    },
-    {
-      "name": "1774358492_24_f4-phys-2-circular-motion-full.html",
-      "size": 21948
-    },
-    {
-      "name": "1774358493_25_f4-phys-1-thin-lenses-full.html",
-      "size": 25091
-    },
-    {
-      "name": "2.1-acids-and-bases.html",
-      "size": 19847
-    },
-    {
-      "name": "2.2-introduction-to-salts.html",
-      "size": 20522
-    },
-    {
       "name": "bio-f4-1-genetics-inheritance-full.html",
-      "size": 36012
+      "type": "html",
+      "size": 36012,
+      "hash": "c22feb8eae4ab5b0ffac791bc57f7050"
     },
     {
       "name": "bio-f4-2-evolution-full-1774418173.html",
-      "size": 35313
+      "type": "html",
+      "size": 35313,
+      "hash": "ceb9e92706aa027ac4b074358d4b2b48"
     },
     {
       "name": "bio-f4-2-evolution-full.html",
-      "size": 35313
+      "type": "html",
+      "size": 35313,
+      "hash": "ceb9e92706aa027ac4b074358d4b2b48"
     },
     {
       "name": "bio-f4-3-irritability-tropisms-full.html",
-      "size": 31815
+      "type": "html",
+      "size": 31815,
+      "hash": "b1cb7611b79db8531f02b0ba75facd34"
     },
     {
       "name": "bio-f4-4-coordination-full.html",
-      "size": 34123
+      "type": "html",
+      "size": 34123,
+      "hash": "9f66b71a2929e8883a761be86de6fc13"
     },
     {
       "name": "bio-f4-5-support-locomotion-full.html",
-      "size": 32445
-    },
-    {
-      "name": "bs-1.1-money-full.html",
-      "size": 51261
-    },
-    {
-      "name": "bs-1.2-business-goals-full.html",
-      "size": 50414
-    },
-    {
-      "name": "bs-1.3-budgeting-full.html",
-      "size": 50429
-    },
-    {
-      "name": "bs-1.4-banking-full.html",
-      "size": 48287
-    },
-    {
-      "name": "bs-2.1-business-activities-full.html",
-      "size": 46118
-    },
-    {
-      "name": "bs-2.2-business-ownership-full.html",
-      "size": 45899
-    },
-    {
-      "name": "bs-2.3-social-responsibility-full.html",
-      "size": 44896
-    },
-    {
-      "name": "bs-2.4-entrepreneurship-full.html",
-      "size": 47234
-    },
-    {
-      "name": "bs-2.5-production-full.html",
-      "size": 50365
-    },
-    {
-      "name": "bs-4.1-business-transactions-full.html",
-      "size": 44181
-    },
-    {
-      "name": "bs-4.2-effects-transactions-full.html",
-      "size": 37203
-    },
-    {
-      "name": "bs-4.3-source-documents-full.html",
-      "size": 46020
-    },
-    {
-      "name": "chem-1.1-introduction-full.html",
-      "size": 29928
-    },
-    {
-      "name": "chem-1.2-the-atom-full.html",
-      "size": 27606
-    },
-    {
-      "name": "chem-1.3-periodic-table-full.html",
-      "size": 34787
-    },
-    {
-      "name": "chem-1.4-chemical-bonding-full.html",
-      "size": 30575
-    },
-    {
-      "name": "chem-1.5-periodicity-full.html",
-      "size": 28472
-    },
-    {
-      "name": "chem-2.1-acids-bases-full.html",
-      "size": 26238
-    },
-    {
-      "name": "chem-2.2-salts-full.html",
-      "size": 30593
-    },
-    {
-      "name": "cs-1.1-evolution-computers-full.html",
-      "size": 46537
-    },
-    {
-      "name": "cs-1.2-computer-architecture-full.html",
-      "size": 51786
-    },
-    {
-      "name": "cs-1.3-io-devices-full.html",
-      "size": 56024
-    },
-    {
-      "name": "cs-1.4-computer-storage-full.html",
-      "size": 50360
-    },
-    {
-      "name": "cs-1.5-cpu-full.html",
-      "size": 55776
-    },
-    {
-      "name": "cs-1.6-operating-system-full.html",
-      "size": 56071
-    },
-    {
-      "name": "cs-1.7-computer-setup-full.html",
-      "size": 50413
-    },
-    {
-      "name": "cs-2.1-data-communication-full.html",
-      "size": 57095
-    },
-    {
-      "name": "cs-2.2-transmission-media-full.html",
-      "size": 56482
-    },
-    {
-      "name": "cs-2.3-network-elements-full.html",
-      "size": 58138
-    },
-    {
-      "name": "cs-2.4-network-topologies-full.html",
-      "size": 62099
-    },
-    {
-      "name": "cs-3.1-programming-concepts-full.html",
-      "size": 51099
-    },
-    {
-      "name": "cs-3.2-program-development-full.html",
-      "size": 58550
-    },
-    {
-      "name": "cs-3.3-identifiers-operators-full.html",
-      "size": 54672
-    },
-    {
-      "name": "cs-3.4-control-structures-full.html",
-      "size": 58227
-    },
-    {
-      "name": "cs-3.5-data-structures-full.html",
-      "size": 55556
-    },
-    {
-      "name": "cs-3.6-functions-full.html",
-      "size": 63304
-    },
-    {
-      "name": "elec-1.1-intro-electrical-tech-full.html",
-      "size": 43441
-    },
-    {
-      "name": "elec-1.2-dc-circuits-full.html",
-      "size": 46421
-    },
-    {
-      "name": "elec-1.3-capacitors-capacitance-full.html",
-      "size": 48697
-    },
-    {
-      "name": "elec-1.4-cells-batteries-full.html",
-      "size": 44775
-    },
-    {
-      "name": "elec-2.1-magnetism-full.html",
-      "size": 44935
-    },
-    {
-      "name": "elec-2.2-electromagnetism-full.html",
-      "size": 46186
-    },
-    {
-      "name": "elec-2.3-measuring-instruments-full.html",
-      "size": 45307
-    },
-    {
-      "name": "elec-3.1-generation-transmission-full.html",
-      "size": 45408
-    },
-    {
-      "name": "elec-3.2-intake-point-equipment-full.html",
-      "size": 48467
-    },
-    {
-      "name": "elec-3.3-final-circuits-full.html",
-      "size": 49612
-    },
-    {
-      "name": "elec-4.1-semiconductor-theory-full.html",
-      "size": 53174
-    },
-    {
-      "name": "elec-4.2-semiconductor-diodes-full.html",
-      "size": 51557
-    },
-    {
-      "name": "elec-4.3-transistors-full.html",
-      "size": 52007
-    },
-    {
-      "name": "eng-3.3-word-classes-adj-conj-prep-full.html",
-      "size": 44650
-    },
-    {
-      "name": "f3-bio-10-gaseous-exchange-full (1).html",
-      "size": 16487
-    },
-    {
-      "name": "f3-bio-10-gaseous-exchange-full.html",
-      "size": 16487
-    },
-    {
-      "name": "f3-bio-11-excretion-full.html",
-      "size": 16265
-    },
-    {
-      "name": "f3-bio-12-coordination-full.html",
-      "size": 16698
-    },
-    {
-      "name": "f3-bio-13-support-movement-full.html",
-      "size": 16603
-    },
-    {
-      "name": "f3-bio-14-reproduction-full.html",
-      "size": 16909
-    },
-    {
-      "name": "f3-bio-15-genetics-full.html",
-      "size": 16647
-    },
-    {
-      "name": "f3-bio-16-evolution-full.html",
-      "size": 16390
+      "type": "html",
+      "size": 32445,
+      "hash": "6afb03ff1288009ec8c44d4b0f60b6c3"
     },
     {
       "name": "f3-bio-1-classification.html",
-      "size": 36301
+      "type": "html",
+      "size": 36301,
+      "hash": "1796c5e60b0f7f9f33541ec173cfa5fc"
+    },
+    {
+      "name": "f3-bio-10-gaseous-exchange-full (1).html",
+      "type": "html",
+      "size": 16487,
+      "hash": "1de05c7f3a0bf2305b5d2cd3e55f3144"
+    },
+    {
+      "name": "f3-bio-10-gaseous-exchange-full.html",
+      "type": "html",
+      "size": 16487,
+      "hash": "1de05c7f3a0bf2305b5d2cd3e55f3144"
+    },
+    {
+      "name": "f3-bio-11-excretion-full.html",
+      "type": "html",
+      "size": 16265,
+      "hash": "d742536be198d14121ed9dede0087cb9"
+    },
+    {
+      "name": "f3-bio-12-coordination-full.html",
+      "type": "html",
+      "size": 16698,
+      "hash": "9df1dabff5b39d6b89166eb3bcad57d0"
+    },
+    {
+      "name": "f3-bio-13-support-movement-full.html",
+      "type": "html",
+      "size": 16603,
+      "hash": "9336b9e5ed93aa46472812c4a41a8a8d"
+    },
+    {
+      "name": "f3-bio-14-reproduction-full.html",
+      "type": "html",
+      "size": 16909,
+      "hash": "6ad34bca2b97930e14e40717ca5ac1be"
+    },
+    {
+      "name": "f3-bio-15-genetics-full.html",
+      "type": "html",
+      "size": 16647,
+      "hash": "fad842a46dc2eb63d31eee627e2c3224"
+    },
+    {
+      "name": "f3-bio-16-evolution-full.html",
+      "type": "html",
+      "size": 16390,
+      "hash": "b5514565095e03e972cc04df2b24ed2c"
     },
     {
       "name": "f3-bio-2-ecology.html",
-      "size": 35962
+      "type": "html",
+      "size": 35962,
+      "hash": "e84477c8c29a67705b713f4b39938d2d"
     },
     {
       "name": "f3-bio-3-nitrogen-pollution.html",
-      "size": 38496
+      "type": "html",
+      "size": 38496,
+      "hash": "216d3e9645c04e14054780619cda795d"
     },
     {
       "name": "f3-bio-4-reproduction-cell-division.html",
-      "size": 37702
+      "type": "html",
+      "size": 37702,
+      "hash": "bdaa3231131a004e065c9e877e67992f"
     },
     {
       "name": "f3-bio-5-flowering-plants.html",
-      "size": 39381
+      "type": "html",
+      "size": 39381,
+      "hash": "a45012f4463abdbcf313dd00ec6f8092"
     },
     {
       "name": "f3-bio-6-growth-1774435988.html",
-      "size": 39625
+      "type": "html",
+      "size": 39625,
+      "hash": "b17a4d27a8bf2dfad64d2e6debf241be"
     },
     {
       "name": "f3-bio-6-growth.html",
-      "size": 39625
+      "type": "html",
+      "size": 39625,
+      "hash": "b17a4d27a8bf2dfad64d2e6debf241be"
     },
     {
       "name": "f3-bio-7-cell-biology-full.html",
-      "size": 16447
+      "type": "html",
+      "size": 16447,
+      "hash": "579d05a61ec96d35541d05b360131126"
     },
     {
       "name": "f3-bio-8-nutrition-full.html",
-      "size": 16863
+      "type": "html",
+      "size": 16863,
+      "hash": "fd83118ffa3354ce4a000933d221f627"
     },
     {
       "name": "f3-bio-9-transport-full.html",
-      "size": 16818
+      "type": "html",
+      "size": 16818,
+      "hash": "eb1ec4420a57f383dd3aa3bbf68e5457"
     },
     {
       "name": "f3-chem-1-organic-chemistry-hydrocarbons-full-1774412720.html",
-      "size": 30191
+      "type": "html",
+      "size": 30191,
+      "hash": "be5bda452252fd0a838e0bcb7f769a6d"
     },
     {
       "name": "f3-chem-1-organic-chemistry-hydrocarbons-full-1774435962.html",
-      "size": 30191
+      "type": "html",
+      "size": 30191,
+      "hash": "be5bda452252fd0a838e0bcb7f769a6d"
     },
     {
       "name": "f3-chem-1-organic-chemistry-hydrocarbons-full.html",
-      "size": 30191
+      "type": "html",
+      "size": 30191,
+      "hash": "be5bda452252fd0a838e0bcb7f769a6d"
     },
     {
       "name": "f3-chem-2-nitrogen-compounds-full.html",
-      "size": 32592
+      "type": "html",
+      "size": 32592,
+      "hash": "5d3d5ef9f23f180524f5fdbba250693a"
     },
     {
       "name": "f3-chem-3-sulphur-compounds-full.html",
-      "size": 31710
+      "type": "html",
+      "size": 31710,
+      "hash": "0c97370cba4c718ce54f51424d85f381"
     },
     {
       "name": "f3-chem-4-chlorine-compounds-full.html",
-      "size": 30299
+      "type": "html",
+      "size": 30299,
+      "hash": "33e8859a5dbe72416329300c993fff2a"
     },
     {
       "name": "f3-chem-5-electrochemistry-full.html",
-      "size": 27080
+      "type": "html",
+      "size": 27080,
+      "hash": "ffd289f0f9b15ef28958be38a30f0a59"
     },
     {
       "name": "f3-chem-6-radioactivity-full.html",
-      "size": 23959
+      "type": "html",
+      "size": 23959,
+      "hash": "5d2be5402f78c038ffa7ba17781cb3ab"
     },
     {
       "name": "f3-chem-7-acids-bases-salts-full.html",
-      "size": 25644
-    },
-    {
-      "name": "f3-math-10-sequences-series-full.html",
-      "size": 21601
-    },
-    {
-      "name": "f3-math-11-vectors-2-full.html",
-      "size": 20845
-    },
-    {
-      "name": "f3-math-12-binomial-expansion-full.html",
-      "size": 17956
-    },
-    {
-      "name": "f3-math-13-probability-full.html",
-      "size": 18357
-    },
-    {
-      "name": "f3-math-14-compound-proportion-full.html",
-      "size": 17593
-    },
-    {
-      "name": "f3-math-15-graphical-methods-full-1774436004.html",
-      "size": 19843
-    },
-    {
-      "name": "f3-math-15-graphical-methods-full.html",
-      "size": 19843
+      "type": "html",
+      "size": 25644,
+      "hash": "c5b9621eabbe18c67713cdf3c5e70527"
     },
     {
       "name": "f3-math-1-quadratic-equations-full.html",
-      "size": 21905
+      "type": "html",
+      "size": 21905,
+      "hash": "a5cf35b40cffa1562a7cca21f0aed7f0"
+    },
+    {
+      "name": "f3-math-10-sequences-series-full.html",
+      "type": "html",
+      "size": 21601,
+      "hash": "958a5ea6f88733d151a698c26528c304"
+    },
+    {
+      "name": "f3-math-11-vectors-2-full.html",
+      "type": "html",
+      "size": 20845,
+      "hash": "4ba63e572021647b3a44a6f44b37a483"
+    },
+    {
+      "name": "f3-math-12-binomial-expansion-full.html",
+      "type": "html",
+      "size": 17956,
+      "hash": "588ef2861eb4d423ccd2a3385b681883"
+    },
+    {
+      "name": "f3-math-13-probability-full.html",
+      "type": "html",
+      "size": 18357,
+      "hash": "6be89a3c4812eee563dea36c12b7a692"
+    },
+    {
+      "name": "f3-math-14-compound-proportion-full.html",
+      "type": "html",
+      "size": 17593,
+      "hash": "0d9912c6d3da818d6fc2ccfb2bc50d17"
+    },
+    {
+      "name": "f3-math-15-graphical-methods-full-1774436004.html",
+      "type": "html",
+      "size": 19843,
+      "hash": "352ef0e345cc5fe8a3dc5f8fdf046e75"
+    },
+    {
+      "name": "f3-math-15-graphical-methods-full.html",
+      "type": "html",
+      "size": 19843,
+      "hash": "352ef0e345cc5fe8a3dc5f8fdf046e75"
     },
     {
       "name": "f3-math-2-approximations-errors-full.html",
-      "size": 17762
+      "type": "html",
+      "size": 17762,
+      "hash": "376d23ab69d7e735dc9fd48ff860e577"
     },
     {
       "name": "f3-math-3-trigonometry-2-full.html",
-      "size": 18042
+      "type": "html",
+      "size": 18042,
+      "hash": "077ccf68db0572794c23bca83cdadc3d"
     },
     {
       "name": "f3-math-4-surds-full.html",
-      "size": 16365
+      "type": "html",
+      "size": 16365,
+      "hash": "f5a2b9942215a8792b54cd31d680116a"
     },
     {
       "name": "f3-math-5-further-logarithms-full.html",
-      "size": 18384
+      "type": "html",
+      "size": 18384,
+      "hash": "4f06e9af84f181d234437eb229dc0bd0"
     },
     {
       "name": "f3-math-6-commercial-arithmetic-full.html",
-      "size": 21584
+      "type": "html",
+      "size": 21584,
+      "hash": "031e0369f0cfbabcc71223af99144cbe"
     },
     {
       "name": "f3-math-7-circles-chords-tangents-full.html",
-      "size": 22913
+      "type": "html",
+      "size": 22913,
+      "hash": "51cc99d96f67a03b27e22fa45239a0ff"
     },
     {
       "name": "f3-math-8-matrices-full.html",
-      "size": 22947
+      "type": "html",
+      "size": 22947,
+      "hash": "7c2e7b259cf4366c52f77213121513dc"
     },
     {
       "name": "f3-math-9-formulae-variations-full.html",
-      "size": 20869
-    },
-    {
-      "name": "f3-phys-10-radioactivity-full.html",
-      "size": 14522
+      "type": "html",
+      "size": 20869,
+      "hash": "42f834386a0e1508590926b74e40a9cd"
     },
     {
       "name": "f3-phys-1-waves-full.html",
-      "size": 20317
+      "type": "html",
+      "size": 20317,
+      "hash": "6b4b450748d4e74cac1ffd5513cc4cd0"
+    },
+    {
+      "name": "f3-phys-10-radioactivity-full.html",
+      "type": "html",
+      "size": 14522,
+      "hash": "1ea7ac8f1952a5b62f9d73d54e48599b"
     },
     {
       "name": "f3-phys-4-magnetic-effect-full.html",
-      "size": 15091
+      "type": "html",
+      "size": 15091,
+      "hash": "f34a3ac91913e1a6471eef4c5a51386f"
     },
     {
       "name": "f3-phys-5-electromagnetic-induction-full.html",
-      "size": 14780
+      "type": "html",
+      "size": 14780,
+      "hash": "d10542992bfa9f454acfd25324a899a7"
     },
     {
       "name": "f3-phys-6-mains-electricity-full (1).html",
-      "size": 14598
+      "type": "html",
+      "size": 14598,
+      "hash": "d7bd1d75eee7aea4ab931d5e5c69d5dc"
     },
     {
       "name": "f3-phys-6-mains-electricity-full.html",
-      "size": 14598
+      "type": "html",
+      "size": 14598,
+      "hash": "d7bd1d75eee7aea4ab931d5e5c69d5dc"
     },
     {
       "name": "f3-phys-7-cathode-rays-full (1).html",
-      "size": 14601
+      "type": "html",
+      "size": 14601,
+      "hash": "447f1b267cab951042fcddfd2fd0f40f"
     },
     {
       "name": "f3-phys-7-cathode-rays-full.html",
-      "size": 14601
+      "type": "html",
+      "size": 14601,
+      "hash": "447f1b267cab951042fcddfd2fd0f40f"
     },
     {
       "name": "f3-phys-8-photoelectric-effect-full.html",
-      "size": 14713
+      "type": "html",
+      "size": 14713,
+      "hash": "520ca655a99e453af8bc9497daf58720"
     },
     {
       "name": "f4-chem-1-organic-chemistry-2-full.html",
-      "size": 25459
+      "type": "html",
+      "size": 25459,
+      "hash": "832800d59614f4e2f45e7b11aa2233be"
     },
     {
       "name": "f4-chem-2-radioactivity-full.html",
-      "size": 22710
+      "type": "html",
+      "size": 22710,
+      "hash": "cf1119bd55254e91817aa11b08f5bb3f"
     },
     {
       "name": "f4-chem-3-electrochemistry-2-full.html",
-      "size": 23871
+      "type": "html",
+      "size": 23871,
+      "hash": "a723791d2b613bb853a8e839d19ed994"
     },
     {
       "name": "f4-chem-4-chlorine-compounds-full.html",
-      "size": 24392
+      "type": "html",
+      "size": 24392,
+      "hash": "0c074919338f0d437cd5578d061f4227"
     },
     {
       "name": "f4-chem-5-acids-bases-salts-full.html",
-      "size": 29118
+      "type": "html",
+      "size": 29118,
+      "hash": "91e42e1f094ab57a4d449d7019764ea2"
     },
     {
       "name": "f4-chem-5-nitrogen-compounds-full.html",
-      "size": 54021
+      "type": "html",
+      "size": 54021,
+      "hash": "02bbde79c2dbde169cdef161ea03d436"
     },
     {
       "name": "f4-chem-6-reaction-rates-full.html",
-      "size": 34762
+      "type": "html",
+      "size": 34762,
+      "hash": "e20bb496a56adb920fa5edbb9490023b"
     },
     {
       "name": "f4-chem-6-sulphur-compounds-full.html",
-      "size": 57524
+      "type": "html",
+      "size": 57524,
+      "hash": "8efd5cf1ee303555fb4e89b200c45f9b"
     },
     {
       "name": "f4-chem-7-metals-full.html",
-      "size": 32448
+      "type": "html",
+      "size": 32448,
+      "hash": "49f21d96287c46d95516530acacbccd5"
     },
     {
       "name": "f4-chem-8-energy-changes-full-1774412463.html",
-      "size": 34571
+      "type": "html",
+      "size": 34571,
+      "hash": "d4a250196da6b936b588b7366d70e026"
     },
     {
       "name": "f4-chem-8-energy-changes-full.html",
-      "size": 34571
-    },
-    {
-      "name": "f4-math-10-linear-programming-full.html",
-      "size": 21198
-    },
-    {
-      "name": "f4-math-11-longitudes-latitudes-full.html",
-      "size": 21992
-    },
-    {
-      "name": "f4-math-12-three-dimensional-geometry-full.html",
-      "size": 20002
-    },
-    {
-      "name": "f4-math-13-differentiation-full-1774424702.html",
-      "size": 19570
-    },
-    {
-      "name": "f4-math-13-differentiation-full.html",
-      "size": 19570
-    },
-    {
-      "name": "f4-math-14-integration-full.html",
-      "size": 18422
+      "type": "html",
+      "size": 34571,
+      "hash": "d4a250196da6b936b588b7366d70e026"
     },
     {
       "name": "f4-math-1-matrices-full.html",
-      "size": 30132
+      "type": "html",
+      "size": 30132,
+      "hash": "48063d5df36ec7a2a530d535fbbfec76"
+    },
+    {
+      "name": "f4-math-10-linear-programming-full.html",
+      "type": "html",
+      "size": 21198,
+      "hash": "1618db88f0145b00e929294d0281d2da"
+    },
+    {
+      "name": "f4-math-11-longitudes-latitudes-full.html",
+      "type": "html",
+      "size": 21992,
+      "hash": "fce40f929903203213d0120eeeeaade1"
+    },
+    {
+      "name": "f4-math-12-three-dimensional-geometry-full.html",
+      "type": "html",
+      "size": 20002,
+      "hash": "8df4646ebb88fb377aa6695820f76564"
+    },
+    {
+      "name": "f4-math-13-differentiation-full-1774424702.html",
+      "type": "html",
+      "size": 19570,
+      "hash": "27dd47104114222a6aff16132353c843"
+    },
+    {
+      "name": "f4-math-13-differentiation-full.html",
+      "type": "html",
+      "size": 19570,
+      "hash": "27dd47104114222a6aff16132353c843"
+    },
+    {
+      "name": "f4-math-14-integration-full.html",
+      "type": "html",
+      "size": 18422,
+      "hash": "ce2c27cc70b149597d561419901e9c53"
     },
     {
       "name": "f4-math-2-formulae-variations-full.html",
-      "size": 29602
+      "type": "html",
+      "size": 29602,
+      "hash": "3c59bf6484835a13bf8c2a8c5578bb07"
     },
     {
       "name": "f4-math-3-sequences-series-full.html",
-      "size": 21347
+      "type": "html",
+      "size": 21347,
+      "hash": "2f26f0d74b2a19b23c05c8daa802df6c"
     },
     {
       "name": "f4-math-4-binomial-expansion-full.html",
-      "size": 21810
+      "type": "html",
+      "size": 21810,
+      "hash": "d53331b2d1028a9118c327bdb7ebbd57"
     },
     {
       "name": "f4-math-5-probability-full.html",
-      "size": 20709
+      "type": "html",
+      "size": 20709,
+      "hash": "1982977768d32fb8544d5ab60b9d5c7e"
     },
     {
       "name": "f4-math-6-vectors-2-full.html",
-      "size": 20569
+      "type": "html",
+      "size": 20569,
+      "hash": "fd46e00e44f831486e48e755ce36d529"
     },
     {
       "name": "f4-math-7-trigonometry-3-full.html",
-      "size": 19840
+      "type": "html",
+      "size": 19840,
+      "hash": "af6a514f037f5fda456d8093f467cdd8"
     },
     {
       "name": "f4-math-8-statistics-2-full.html",
-      "size": 20196
+      "type": "html",
+      "size": 20196,
+      "hash": "fb39b6336a0a30168d8fc941123b6159"
     },
     {
       "name": "f4-math-9-loci-full.html",
-      "size": 20656
-    },
-    {
-      "name": "f4-phys-10-radioactivity-full.html",
-      "size": 16071
-    },
-    {
-      "name": "f4-phys-11-electronics-full-1774412650.html",
-      "size": 15621
-    },
-    {
-      "name": "f4-phys-11-electronics-full-1774418256.html",
-      "size": 15621
-    },
-    {
-      "name": "f4-phys-11-electronics-full.html",
-      "size": 15621
+      "type": "html",
+      "size": 20656,
+      "hash": "d3babaa804b02749918a7ca40a451e3a"
     },
     {
       "name": "f4-phys-1-thin-lenses-full.html",
-      "size": 25091
+      "type": "html",
+      "size": 25091,
+      "hash": "edf2a5536dc0d4431faf8bc8b58e2d73"
+    },
+    {
+      "name": "f4-phys-10-radioactivity-full.html",
+      "type": "html",
+      "size": 16071,
+      "hash": "2436d5dd29f4dc9a0228ad75afbff4e7"
+    },
+    {
+      "name": "f4-phys-11-electronics-full-1774412650.html",
+      "type": "html",
+      "size": 15621,
+      "hash": "1550f6869ae23c22796de8e75721dad3"
+    },
+    {
+      "name": "f4-phys-11-electronics-full-1774418256.html",
+      "type": "html",
+      "size": 15621,
+      "hash": "1550f6869ae23c22796de8e75721dad3"
+    },
+    {
+      "name": "f4-phys-11-electronics-full.html",
+      "type": "html",
+      "size": 15621,
+      "hash": "1550f6869ae23c22796de8e75721dad3"
     },
     {
       "name": "f4-phys-2-circular-motion-full.html",
-      "size": 21948
+      "type": "html",
+      "size": 21948,
+      "hash": "a1eda04d5a122731bf149db08d72dad3"
     },
     {
       "name": "f4-phys-3-floating-sinking-full.html",
-      "size": 16821
+      "type": "html",
+      "size": 16821,
+      "hash": "9ebfa881411b665e8a78ff1b954883fa"
     },
     {
       "name": "f4-phys-4-electromagnetic-spectrum-full.html",
-      "size": 16238
+      "type": "html",
+      "size": 16238,
+      "hash": "63fd43b8c85d0d16ebd76d5f99375304"
     },
     {
       "name": "f4-phys-5-electromagnetic-induction-full.html",
-      "size": 16629
+      "type": "html",
+      "size": 16629,
+      "hash": "5c0fd4245b2c5e523698f03b0c90794f"
     },
     {
       "name": "f4-phys-6-mains-electricity-full.html",
-      "size": 14908
+      "type": "html",
+      "size": 14908,
+      "hash": "8de23037b3bf4042b0983795432c5240"
     },
     {
       "name": "f4-phys-7-cathode-rays-full.html",
-      "size": 14555
+      "type": "html",
+      "size": 14555,
+      "hash": "15ec9a3be55ddfca60489c4edcb8246f"
     },
     {
       "name": "f4-phys-8-x-rays-full.html",
-      "size": 15129
+      "type": "html",
+      "size": 15129,
+      "hash": "8cab95858f9d9838ef54467c563ec57e"
     },
     {
       "name": "f4-phys-9-photoelectric-effect-full.html",
-      "size": 16538
-    },
-    {
-      "name": "Grade10-Agri-1.1-Introduction-Agriculture.html",
-      "size": 25860
-    },
-    {
-      "name": "Grade10-Agri-2.1-Crop-Production.html",
-      "size": 24243
-    },
-    {
-      "name": "Grade10-Agri-3.1-Animal-Production.html",
-      "size": 24304
-    },
-    {
-      "name": "Grade10-Arts-1.1-Drawing-Painting.html",
-      "size": 25832
-    },
-    {
-      "name": "Grade10-Arts-2.1-Sculpture.html",
-      "size": 24371
-    },
-    {
-      "name": "Grade10-Arts-3.1-Graphic-Design.html",
-      "size": 24344
-    },
-    {
-      "name": "Grade10-Arts-4.1-Art-History.html",
-      "size": 24315
-    },
-    {
-      "name": "Grade10-Avi-1.1-Principles-Flight.html",
-      "size": 25883
-    },
-    {
-      "name": "Grade10-Avi-2.1-Aircraft-Systems.html",
-      "size": 24469
-    },
-    {
-      "name": "Grade10-Avi-3.1-Navigation.html",
-      "size": 24348
-    },
-    {
-      "name": "Grade10-Avi-4.1-Safety.html",
-      "size": 24437
-    },
-    {
-      "name": "Grade10-Bio-1.1-Introduction-Biology.html",
-      "size": 26063
-    },
-    {
-      "name": "Grade10-Bio-1.2-Scientific-Investigations.html",
-      "size": 25235
-    },
-    {
-      "name": "Grade10-Bio-1.3-Cell-Structure.html",
-      "size": 25335
-    },
-    {
-      "name": "Grade10-Bio-1.4-Chemicals-of-Life.html",
-      "size": 25056
-    },
-    {
-      "name": "Grade10-Bio-2.1-Nutrition-Plants.html",
-      "size": 25046
-    },
-    {
-      "name": "Grade10-Bio-2.2-Transport-Plants.html",
-      "size": 25080
-    },
-    {
-      "name": "Grade10-Bio-2.3-Gaseous-Exchange-Plants.html",
-      "size": 24416
-    },
-    {
-      "name": "Grade10-Bio-3.1-Nutrition-Animals.html",
-      "size": 23972
-    },
-    {
-      "name": "Grade10-Bio-3.2-Transport-Animals.html",
-      "size": 23965
-    },
-    {
-      "name": "Grade10-Bio-3.3-Gaseous-Exchange-Animals.html",
-      "size": 24421
-    },
-    {
-      "name": "Grade10-Build-1.1-Materials-Tools.html",
-      "size": 26221
-    },
-    {
-      "name": "Grade10-Build-2.1-Masonry.html",
-      "size": 24232
-    },
-    {
-      "name": "Grade10-Build-3.1-Drawing.html",
-      "size": 24260
-    },
-    {
-      "name": "Grade10-Build-4.1-Plumbing.html",
-      "size": 24356
-    },
-    {
-      "name": "Grade10-Bus-1.1-Introduction-Business.html",
-      "size": 26342
-    },
-    {
-      "name": "Grade10-Bus-2.1-Trade-Markets.html",
-      "size": 24281
-    },
-    {
-      "name": "Grade10-Bus-3.1-Financial-Literacy.html",
-      "size": 24128
-    },
-    {
-      "name": "Grade10-Bus-4.1-Marketing.html",
-      "size": 24505
-    },
-    {
-      "name": "Grade10-Chem-1.1-Introduction-Chemistry.html",
-      "size": 26418
-    },
-    {
-      "name": "Grade10-Chem-1.2-Classification.html",
-      "size": 24830
-    },
-    {
-      "name": "Grade10-Chem-1.3-Atomic-Structure.html",
-      "size": 24456
-    },
-    {
-      "name": "Grade10-Chem-1.4-Acids-Bases.html",
-      "size": 24339
-    },
-    {
-      "name": "Grade10-Chem-1.5-Energy-Changes.html",
-      "size": 24549
-    },
-    {
-      "name": "Grade10-Chem-2.1-Chemical-Bonding.html",
-      "size": 24679
-    },
-    {
-      "name": "Grade10-Chem-2.2-Water-Hydrogen.html",
-      "size": 24836
-    },
-    {
-      "name": "Grade10-Comp-1.1-Computer-Systems.html",
-      "size": 25841
-    },
-    {
-      "name": "Grade10-Comp-2.1-Programming.html",
-      "size": 24318
-    },
-    {
-      "name": "Grade10-Comp-3.1-Data-Networking.html",
-      "size": 24387
-    },
-    {
-      "name": "Grade10-CRE-1.1-Old-Testament.html",
-      "size": 25457
-    },
-    {
-      "name": "Grade10-CRE-2.1-New-Testament.html",
-      "size": 24538
-    },
-    {
-      "name": "Grade10-CRE-3.1-Christian-Ethics.html",
-      "size": 24627
-    },
-    {
-      "name": "Grade10-CSL-1.1-Community-Service.html",
-      "size": 25995
-    },
-    {
-      "name": "Grade10-CSL-2.1-Project-Planning.html",
-      "size": 24543
-    },
-    {
-      "name": "Grade10-CSL-3.1-Reflection.html",
-      "size": 24800
-    },
-    {
-      "name": "Grade10-CSL-4.1-Partnerships.html",
-      "size": 24725
-    },
-    {
-      "name": "Grade10-Econ-1.1-Economic-Concepts.html",
-      "size": 26138
-    },
-    {
-      "name": "Grade10-Econ-2.1-National-Income.html",
-      "size": 24551
-    },
-    {
-      "name": "Grade10-Econ-3.1-Money-Banking.html",
-      "size": 24346
-    },
-    {
-      "name": "Grade10-Econ-4.1-Production-Markets.html",
-      "size": 24533
-    },
-    {
-      "name": "Grade10-Econ-5.1-Development.html",
-      "size": 24751
-    },
-    {
-      "name": "Grade10-Elec-1.1-Electrical-Principles.html",
-      "size": 25526
-    },
-    {
-      "name": "Grade10-Elec-2.1-Wiring-Installation.html",
-      "size": 25490
-    },
-    {
-      "name": "Grade10-Elec-3.1-Electronics.html",
-      "size": 24212
-    },
-    {
-      "name": "Grade10-Elec-4.1-Renewable-Energy.html",
-      "size": 25837
-    },
-    {
-      "name": "Grade10-Eng-1.1-Listening-Speaking.html",
-      "size": 26353
-    },
-    {
-      "name": "Grade10-Eng-2.1-Reading-Skills.html",
-      "size": 24473
-    },
-    {
-      "name": "Grade10-Eng-3.1-Writing-Skills.html",
-      "size": 24424
-    },
-    {
-      "name": "Grade10-Eng-4.1-Grammar.html",
-      "size": 24322
-    },
-    {
-      "name": "Grade10-Geo-1.1-Physical-Geography.html",
-      "size": 25987
-    },
-    {
-      "name": "Grade10-Geo-2.1-Population-Settlement.html",
-      "size": 24373
-    },
-    {
-      "name": "Grade10-Geo-3.1-Map-Work.html",
-      "size": 24169
-    },
-    {
-      "name": "Grade10-Hist-1.1-Pre-Colonial-Kenya.html",
-      "size": 26301
-    },
-    {
-      "name": "Grade10-Hist-1.2-Colonial-Rule.html",
-      "size": 24428
-    },
-    {
-      "name": "Grade10-Hist-2.1-African-History.html",
-      "size": 24432
-    },
-    {
-      "name": "Grade10-Hist-3.1-International-History.html",
-      "size": 24380
-    },
-    {
-      "name": "Grade10-Hist-4.1-Contemporary-Themes.html",
-      "size": 24505
-    },
-    {
-      "name": "Grade10-Kisw-1.1-Kusikiliza-Kuzungumza.html",
-      "size": 25900
-    },
-    {
-      "name": "Grade10-Kisw-2.1-Kusoma.html",
-      "size": 24280
-    },
-    {
-      "name": "Grade10-Kisw-3.1-Kuandika.html",
-      "size": 24258
-    },
-    {
-      "name": "Grade10-Kisw-4.1-Sarufi.html",
-      "size": 24124
-    },
-    {
-      "name": "Grade10-Life-1.1-Self-Awareness.html",
-      "size": 26376
-    },
-    {
-      "name": "Grade10-Life-2.1-Health-Living.html",
-      "size": 24446
-    },
-    {
-      "name": "Grade10-Life-3.1-Financial-Career.html",
-      "size": 24451
-    },
-    {
-      "name": "Grade10-Life-4.1-Citizenship.html",
-      "size": 24275
-    },
-    {
-      "name": "Grade10-Life-5.1-Environment.html",
-      "size": 24668
-    },
-    {
-      "name": "Grade10-Life-5.1-Environment-Safety.html",
-      "size": 24567
-    },
-    {
-      "name": "Grade10-Mari-2.1-Fisheries.html",
-      "size": 24272
-    },
-    {
-      "name": "Grade10-Mari-3.1-Aquaculture.html",
-      "size": 24265
-    },
-    {
-      "name": "Grade10-Mari-4.1-Navigation.html",
-      "size": 24268
-    },
-    {
-      "name": "Grade10-Maritime-1.1-Marine-Science.html",
-      "size": 25656
-    },
-    {
-      "name": "grade10-maths-1.1-real-numbers-full.html",
-      "size": 29446
-    },
-    {
-      "name": "grade10-maths-1.1-real-numbers.html",
-      "size": 19826
-    },
-    {
-      "name": "Grade10-Maths-1.1-Real-Numbers.html",
-      "size": 25959
-    },
-    {
-      "name": "grade10-maths-1.2-indices-logarithms-full.html",
-      "size": 23539
-    },
-    {
-      "name": "grade10-maths-1.2-indices-logarithms.html",
-      "size": 11038
-    },
-    {
-      "name": "Grade10-Maths-1.2-Indices-Logarithms.html",
-      "size": 25009
-    },
-    {
-      "name": "grade10-maths-1.3-quadratic-expressions.html",
-      "size": 12005
-    },
-    {
-      "name": "Grade10-Maths-1.3-Quadratic-Expressions.html",
-      "size": 25308
-    },
-    {
-      "name": "grade10-maths-1.3-quadratic-full.html",
-      "size": 19900
-    },
-    {
-      "name": "grade10-maths-2.1-similarity-enlargement.html",
-      "size": 9894
-    },
-    {
-      "name": "Grade10-Maths-2.1-Similarity-Enlargement.html",
-      "size": 24501
-    },
-    {
-      "name": "grade10-maths-2.1-similarity-full.html",
-      "size": 17479
-    },
-    {
-      "name": "grade10-maths-2.2-reflection-congruence.html",
-      "size": 10331
-    },
-    {
-      "name": "Grade10-Maths-2.2-Reflection-Congruence.html",
-      "size": 24463
-    },
-    {
-      "name": "grade10-maths-2.2-reflection-full.html",
-      "size": 18186
-    },
-    {
-      "name": "grade10-maths-2.3-rotation-full.html",
-      "size": 17291
-    },
-    {
-      "name": "grade10-maths-2.3-rotation.html",
-      "size": 9737
-    },
-    {
-      "name": "Grade10-Maths-2.3-Rotation.html",
-      "size": 24432
-    },
-    {
-      "name": "Grade10-Maths-2.4-Angle-Properties-Circle.html",
-      "size": 24574
-    },
-    {
-      "name": "Grade10-Maths-2.4-Circle-Angles.html",
-      "size": 24522
-    },
-    {
-      "name": "grade10-maths-2.4-trigonometry-full.html",
-      "size": 18965
-    },
-    {
-      "name": "grade10-maths-2.4-trigonometry.html",
-      "size": 9852
-    },
-    {
-      "name": "grade10-maths-2.5-area-polygons-full.html",
-      "size": 17141
-    },
-    {
-      "name": "grade10-maths-2.5-area-polygons.html",
-      "size": 9723
-    },
-    {
-      "name": "Grade10-Maths-2.5-Trigonometry.html",
-      "size": 23988
-    },
-    {
-      "name": "grade10-maths-2.6-area-circle-full.html",
-      "size": 16687
-    },
-    {
-      "name": "grade10-maths-2.6-area-part-circle.html",
-      "size": 9282
-    },
-    {
-      "name": "Grade10-Maths-2.6-Area-Polygons.html",
-      "size": 23958
-    },
-    {
-      "name": "Grade10-Maths-2.7-Area-Circle.html",
-      "size": 24052
-    },
-    {
-      "name": "Grade10-Maths-2.7-Area-Part-Circle.html",
-      "size": 24222
-    },
-    {
-      "name": "grade10-maths-2.7-surface-area-volume.html",
-      "size": 9221
-    },
-    {
-      "name": "grade10-maths-2.7-surface-volume-full.html",
-      "size": 16467
-    },
-    {
-      "name": "Grade10-Maths-2.8-Surface-Area-Volume.html",
-      "size": 24093
-    },
-    {
-      "name": "grade10-maths-2.8-vectors-full.html",
-      "size": 16683
-    },
-    {
-      "name": "grade10-maths-2.8-vectors.html",
-      "size": 9025
-    },
-    {
-      "name": "Grade10-Maths-2.8-Vectors-I.html",
-      "size": 23890
-    },
-    {
-      "name": "grade10-maths-2.9-linear-motion-full.html",
-      "size": 17248
-    },
-    {
-      "name": "grade10-maths-2.9-linear-motion.html",
-      "size": 9161
-    },
-    {
-      "name": "Grade10-Maths-2.9-Linear-Motion.html",
-      "size": 24161
-    },
-    {
-      "name": "grade10-maths-3.1-statistics-full.html",
-      "size": 18042
-    },
-    {
-      "name": "grade10-maths-3.1-statistics.html",
-      "size": 9290
-    },
-    {
-      "name": "Grade10-Maths-3.1-Statistics.html",
-      "size": 24165
-    },
-    {
-      "name": "grade10-maths-3.2-probability-full.html",
-      "size": 17507
-    },
-    {
-      "name": "grade10-maths-3.2-probability.html",
-      "size": 9066
-    },
-    {
-      "name": "Grade10-Maths-3.2-Probability.html",
-      "size": 23809
-    },
-    {
-      "name": "Grade10-Music-1.1-Music-Theory.html",
-      "size": 24825
-    },
-    {
-      "name": "Grade10-Music-2.1-African-Music.html",
-      "size": 24427
-    },
-    {
-      "name": "Grade10-Music-3.1-Practical.html",
-      "size": 24120
-    },
-    {
-      "name": "Grade10-Music-4.1-History.html",
-      "size": 24290
-    },
-    {
-      "name": "Grade10-PE-1.1-Physical-Education.html",
-      "size": 25861
-    },
-    {
-      "name": "Grade10-PE-2.1-Team-Sports.html",
-      "size": 24208
-    },
-    {
-      "name": "Grade10-PE-3.1-Athletics.html",
-      "size": 24295
-    },
-    {
-      "name": "Grade10-PE-4.1-Health-Recreation.html",
-      "size": 24495
-    },
-    {
-      "name": "Grade10-PerfArts-1.1-Drama-Dance.html",
-      "size": 25862
-    },
-    {
-      "name": "Grade10-PerfArts-2.1-Dance.html",
-      "size": 24354
-    },
-    {
-      "name": "Grade10-PerfArts-3.1-Film.html",
-      "size": 24333
-    },
-    {
-      "name": "Grade10-Phys-1.1-Introduction-Physics.html",
-      "size": 25043
-    },
-    {
-      "name": "Grade10-Phys-1.2-Forces-Motion.html",
-      "size": 24654
-    },
-    {
-      "name": "Grade10-Phys-1.3-Energy-Work-Power.html",
-      "size": 24182
-    },
-    {
-      "name": "Grade10-Phys-2.1-Waves.html",
-      "size": 24608
-    },
-    {
-      "name": "Grade10-Phys-3.1-Electricity.html",
-      "size": 24204
-    },
-    {
-      "name": "Grade10-Phys-4.1-Heat-Temperature.html",
-      "size": 25037
-    },
-    {
-      "name": "Grade10-Sports-1.1-Anatomy.html",
-      "size": 25620
-    },
-    {
-      "name": "Grade10-Sports-2.1-Exercise-Physiology.html",
-      "size": 24270
-    },
-    {
-      "name": "Grade10-Sports-3.1-Psychology.html",
-      "size": 24294
-    },
-    {
-      "name": "Grade10-Sports-4.1-Medicine.html",
-      "size": 24336
-    },
-    {
-      "name": "Grade10-Tech-1.1-Engineering-Drawing.html",
-      "size": 25685
-    },
-    {
-      "name": "Grade10-Tech-2.1-Electronics-Robotics.html",
-      "size": 24425
-    },
-    {
-      "name": "Grade10-Tech-3.1-Materials.html",
-      "size": 24388
-    },
-    {
-      "name": "Grade10-Tech-4.1-Energy.html",
-      "size": 24159
-    },
-    {
-      "name": "Grade10-VisArts-1.1-Sculpture-Design.html",
-      "size": 26001
-    },
-    {
-      "name": "Grade10-VisArts-3.1-Printmaking.html",
-      "size": 24398
-    },
-    {
-      "name": "Grade10-VisArts-4.1-Art-Tech.html",
-      "size": 24361
-    },
-    {
-      "name": "Grade10-Wood-1.1-Wood-Technology.html",
-      "size": 25830
-    },
-    {
-      "name": "Grade10-Wood-2.1-Hand-Tools.html",
-      "size": 24216
-    },
-    {
-      "name": "Grade10-Wood-3.1-Carpentry.html",
-      "size": 24167
-    },
-    {
-      "name": "Grade10-Wood-4.1-Furniture.html",
-      "size": 24433
-    },
-    {
-      "name": "Grade10-Wood-5.1-Finishing.html",
-      "size": 24400
-    },
-    {
-      "name": "physics-1-1-introduction-to-physics-full.html",
-      "size": 22503
-    },
-    {
-      "name": "physics-1-2-pressure-full.html",
-      "size": 24576
-    },
-    {
-      "name": "physics-1-3-mechanical-properties-full.html",
-      "size": 21434
-    },
-    {
-      "name": "physics-1-4-temperature-thermal-expansion-full.html",
-      "size": 22460
-    },
-    {
-      "name": "physics-1-5-moments-equilibrium-full.html",
-      "size": 20864
-    },
-    {
-      "name": "physics-1-6-energy-work-power-machines-full.html",
-      "size": 21063
-    },
-    {
-      "name": "physics-2-1-properties-of-waves-full.html",
-      "size": 21075
-    },
-    {
-      "name": "physics-2-2-radioactivity-full.html",
-      "size": 23002
-    },
-    {
-      "name": "physics-3-1-electrostatics-full.html",
-      "size": 21125
-    },
-    {
-      "name": "physics-3-2-current-electricity-full.html",
-      "size": 21147
-    },
-    {
-      "name": "physics-3-3-introduction-electronics-full.html",
-      "size": 20796
-    },
-    {
-      "name": "physics-4-1-greenhouse-climate-change-full.html",
-      "size": 20595
-    },
-    {
-      "name": "physics-4-2-introduction-space-physics-full.html",
-      "size": 22867
-    },
-    {
-      "name": "pm-1.1-overview-power-mechanics-full.html",
-      "size": 33305
-    },
-    {
-      "name": "pm-1.2-evolution-automobile-full.html",
-      "size": 29016
-    },
-    {
-      "name": "pm-1.3-workshop-layout-full.html",
-      "size": 32064
-    },
-    {
-      "name": "pm-1.4-workshop-safety-ppe-full.html",
-      "size": 32878
-    },
-    {
-      "name": "pm-2.1-diagonal-scale-full.html",
-      "size": 37720
-    },
-    {
-      "name": "pm-2.2-loci-full.html",
-      "size": 28802
-    },
-    {
-      "name": "pm-2.3-tangency-full.html",
-      "size": 29011
-    },
-    {
-      "name": "pm-2.4-blending-lines-curves-full.html",
-      "size": 29089
-    },
-    {
-      "name": "pm-3.1-road-wheels-full.html",
-      "size": 33124
-    },
-    {
-      "name": "pm-3.2-vehicle-body-full.html",
-      "size": 29075
-    },
-    {
-      "name": "pm-3.3-vehicle-chassis-full.html",
-      "size": 25931
-    },
-    {
-      "name": "pm-3.4-vehicle-body-joining-full.html",
-      "size": 29184
-    },
-    {
-      "name": "pm-4.1-introduction-engines-full.html",
-      "size": 29408
-    },
-    {
-      "name": "pm-4.2-types-of-engines-full.html",
-      "size": 31679
-    },
-    {
-      "name": "pm-4.3-classification-engines-full.html",
-      "size": 28767
-    },
-    {
-      "name": "pm-4.4-engine-components-full.html",
-      "size": 30717
+      "type": "html",
+      "size": 16538,
+      "hash": "cff655acb59ad91df6e21536acae6da4"
     }
   ]
 }
