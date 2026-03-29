@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chemistry Form 4 | Organic Chemistry II</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--txt:#1a1a1a;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#topbar .sub{font-size:.7rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+#topbar .ttl{font-size:.95rem;font-weight:700;flex:1}
+#slide-badge{background:var(--acc);color:#000;font-weight:700;font-size:.78rem;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.slide{display:none;flex:1;padding:16px 16px 80px;animation:fi .3s ease}
+.slide.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-title{font-size:1.2rem;font-weight:800;color:var(--pri);margin-bottom:14px;padding-bottom:8px;border-bottom:3px solid var(--acc)}
+.lo-box{background:#e8f5e9;border-left:5px solid var(--pri);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.lo-box h3{color:var(--pri);font-size:.95rem;margin-bottom:8px}
+.lo-box ol{padding-left:18px;font-size:.9rem;line-height:1.8}
+.inquiry{background:#fff8e1;border:1.5px solid var(--acc);border-radius:8px;padding:10px 14px;font-size:.88rem;color:#5d4037;margin-top:10px}
+.inquiry strong{color:#e65100}
+.tb{margin-bottom:18px}
+.tb h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--acc);display:inline-block}
+.tb p,.tb li{font-size:.9rem;line-height:1.7}
+.tb ul,.tb ol{padding-left:18px;margin-top:6px}
+.kt{background:#fff8e1;border-left:4px solid var(--acc);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem}
+.kt strong{color:#e65100}
+.it{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+.it th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.it td{padding:7px 10px;border-bottom:1px solid #e0e0e0}
+.it tr:nth-child(even) td{background:#f1f8e9}
+.eg{background:#f1f8e9;border:1.5px solid var(--ok);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.88rem}
+.eg strong{color:var(--ok);display:block;margin-bottom:4px}
+.warn{background:#fff3e0;border-left:4px solid #e65100;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem;color:#5d4037}
+.rxn{background:#f8f9fa;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.9rem;text-align:center}
+.qs h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:12px}
+.qi{background:#fff;border:1.5px solid #c8e6c9;border-radius:10px;padding:14px;margin-bottom:12px}
+.qi p{font-size:.9rem;font-weight:600;margin-bottom:10px}
+.fb{border:none;border-bottom:2.5px dashed var(--pri);background:transparent;font-size:.9rem;padding:2px 6px;width:140px;outline:none;text-align:center}
+.fb:focus{border-bottom-color:var(--acc)}
+.fbr{font-size:.82rem;font-weight:600;margin-top:6px;padding:4px 8px;border-radius:4px;display:none}
+.fbr.ok{background:#e8f5e9;color:var(--ok)}
+.fbr.no{background:#ffebee;color:var(--no)}
+.sa{width:100%;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px;font-size:.88rem;font-family:inherit;resize:vertical;min-height:80px;outline:none}
+.sa:focus{border-color:var(--pri)}
+.gb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:8px}
+.gb:hover{background:var(--pri-l)}
+.saf{font-size:.82rem;margin-top:8px;padding:10px;border-radius:8px;line-height:1.6;display:none}
+.saf.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+.saf.partial{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.saf.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c}
+.kwf{color:var(--ok);font-weight:700}
+.kwm{color:var(--no);font-weight:700}
+.ma{margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-style:italic}
+#sr{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:16px;display:none}
+#sr .big{font-size:2rem;font-weight:900;margin:8px 0}
+.sub-btn{background:var(--acc);color:#000;border:none;border-radius:10px;padding:12px 32px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:16px;width:100%}
+.sub-btn:hover{background:#e8961a}
+#navbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.nb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer}
+.nb:hover{background:var(--pri-l)}
+.nb:disabled{background:#ccc;cursor:not-allowed}
+#dn{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:#c8e6c9;cursor:pointer;transition:background .2s,transform .2s}
+.dot.active{background:var(--pri);transform:scale(1.3)}
+.dot.done{background:var(--acc)}
+@media(max-width:600px){.nb{padding:8px 14px;font-size:.8rem}#topbar .ttl{font-size:.85rem}}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div><div class="sub">Chemistry · Form 4</div><div class="ttl">Organic Chemistry II</div></div>
+  <div id="slide-badge">Slide 1 / 10</div>
+</div>
+
+<div class="slide active" id="s1">
+  <div class="slide-title">📋 Learning Outcomes</div>
+  <div class="lo-box">
+    <h3>By the end of this lesson, you should be able to:</h3>
+    <ol>
+      <li>Describe the structure and properties of alcohols, aldehydes, ketones and carboxylic acids</li>
+      <li>Explain the preparation and reactions of ethanol</li>
+      <li>Distinguish aldehydes from ketones using chemical tests</li>
+      <li>Write equations for esterification and name the products</li>
+      <li>Explain addition and condensation polymerisation with examples</li>
+      <li>Describe saponification and explain how soap cleans</li>
+    </ol>
+  </div>
+  <div class="inquiry"><strong>🔍 Key Inquiry Question:</strong> How do functional groups determine the chemical behaviour and practical uses of organic compounds?</div>
+</div>
+
+<div class="slide" id="s2">
+  <div class="slide-title">🍶 Alcohols (Alkanols)</div>
+  <div class="tb">
+    <h3>Structure and Naming</h3>
+    <p>Alcohols contain the hydroxyl group <strong>–OH</strong>. General formula: CₙH₂ₙ₊₁OH.</p>
+    <table class="it">
+      <tr><th>Name</th><th>Formula</th><th>Use</th></tr>
+      <tr><td>Methanol</td><td>CH₃OH</td><td>Solvent, fuel (toxic)</td></tr>
+      <tr><td>Ethanol</td><td>C₂H₅OH</td><td>Beverages, antiseptic</td></tr>
+      <tr><td>Propan-1-ol</td><td>C₃H₇OH</td><td>Solvent, perfumes</td></tr>
+    </table>
+  </div>
+  <div class="tb">
+    <h3>Preparation of Ethanol</h3>
+    <ul>
+      <li><strong>Fermentation:</strong> Glucose + yeast (zymase) → Ethanol + CO₂ (25–37°C, anaerobic)</li>
+      <li><strong>Hydration of ethene:</strong> CH₂=CH₂ + H₂O → C₂H₅OH (300°C, H₃PO₄, high pressure)</li>
+    </ul>
+  </div>
+  <div class="tb">
+    <h3>Chemical Reactions of Ethanol</h3>
+    <ul>
+      <li><strong>Combustion:</strong> C₂H₅OH + 3O₂ → 2CO₂ + 3H₂O (blue flame)</li>
+      <li><strong>Mild oxidation:</strong> Ethanol → Ethanal (with K₂Cr₂O₇/H₂SO₄, warm)</li>
+      <li><strong>Strong oxidation:</strong> Ethanol → Ethanoic acid (excess oxidant)</li>
+      <li><strong>Dehydration:</strong> C₂H₅OH → CH₂=CH₂ + H₂O (conc. H₂SO₄, 180°C)</li>
+      <li><strong>Esterification:</strong> Ethanol + acid → ester + water</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide" id="s3">
+  <div class="slide-title">🧪 Aldehydes and Ketones</div>
+  <div class="tb">
+    <h3>Aldehydes (Alkanals)</h3>
+    <p>Contain the <strong>–CHO</strong> group at the <em>end</em> of the carbon chain.</p>
+    <ul>
+      <li>Methanal (HCHO) — preservative (formalin); disinfectant</li>
+      <li>Ethanal (CH₃CHO) — made by oxidation of ethanol</li>
+    </ul>
+  </div>
+  <div class="tb">
+    <h3>Ketones (Alkanones)</h3>
+    <p>Contain the <strong>C=O</strong> group within the carbon chain (not at the end).</p>
+    <ul>
+      <li>Propanone (CH₃COCH₃) — solvent in nail polish remover</li>
+      <li>Butanone (CH₃COC₂H₅) — solvent in industry</li>
+    </ul>
+  </div>
+  <div class="tb">
+    <h3>Chemical Tests to Distinguish Aldehydes from Ketones</h3>
+    <table class="it">
+      <tr><th>Test / Reagent</th><th>Aldehyde</th><th>Ketone</th></tr>
+      <tr><td>Fehling's solution (warm)</td><td>Brick-red precipitate ✅</td><td>No change ❌</td></tr>
+      <tr><td>Tollens' reagent (warm)</td><td>Silver mirror ✅</td><td>No change ❌</td></tr>
+      <tr><td>Acidified KMnO₄</td><td>Decolourises</td><td>No reaction</td></tr>
+    </table>
+    <div class="kt"><strong>Key Principle:</strong> Aldehydes are reducing agents — they reduce Fehling's and Tollens' reagent. Ketones are NOT reducing agents.</div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <div class="slide-title">🍋 Carboxylic Acids (Alkanoic Acids)</div>
+  <div class="tb">
+    <h3>Structure</h3>
+    <p>Contain the carboxyl group <strong>–COOH</strong>. General formula: CₙH₂ₙ₊₁COOH.</p>
+    <table class="it">
+      <tr><th>Name</th><th>Formula</th><th>Source / Use</th></tr>
+      <tr><td>Methanoic acid</td><td>HCOOH</td><td>Ant stings, leather tanning</td></tr>
+      <tr><td>Ethanoic acid</td><td>CH₃COOH</td><td>Vinegar (~5%), solvent</td></tr>
+      <tr><td>Propanoic acid</td><td>C₂H₅COOH</td><td>Food preservative</td></tr>
+      <tr><td>Butanoic acid</td><td>C₃H₇COOH</td><td>Rancid butter smell</td></tr>
+    </table>
+  </div>
+  <div class="tb">
+    <h3>Preparation of Ethanoic Acid</h3>
+    <div class="rxn">C₂H₅OH → CH₃CHO → CH₃COOH &nbsp; (stepwise oxidation: K₂Cr₂O₇/H₂SO₄)</div>
+  </div>
+  <div class="tb">
+    <h3>Chemical Properties</h3>
+    <ul>
+      <li>Weak acids — partially ionise in water</li>
+      <li><strong>With metals:</strong> 2CH₃COOH + Mg → (CH₃COO)₂Mg + H₂ ↑</li>
+      <li><strong>With carbonates:</strong> 2CH₃COOH + Na₂CO₃ → 2CH₃COONa + H₂O + CO₂ ↑</li>
+      <li><strong>With alkalis:</strong> CH₃COOH + NaOH → CH₃COONa + H₂O (sodium ethanoate)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide" id="s5">
+  <div class="slide-title">🧴 Esters and Esterification</div>
+  <div class="tb">
+    <h3>The Esterification Reaction</h3>
+    <p>A reversible reaction between a carboxylic acid and an alcohol, catalysed by concentrated H₂SO₄.</p>
+    <div class="rxn">Carboxylic acid + Alcohol ⇌ Ester + Water &nbsp;(conc. H₂SO₄, warm)</div>
+    <div class="eg">
+      <strong>Example 1:</strong> CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O<br>
+      Ethanoic acid + Ethanol → <strong>Ethyl ethanoate</strong> + Water
+    </div>
+    <div class="eg">
+      <strong>Example 2:</strong> HCOOH + CH₃OH ⇌ HCOOCH₃ + H₂O<br>
+      Methanoic acid + Methanol → <strong>Methyl methanoate</strong> + Water
+    </div>
+  </div>
+  <div class="tb">
+    <h3>Naming Rule for Esters</h3>
+    <p><em>Alkyl</em> (from alcohol) + <em>Alkanoate</em> (from acid).</p>
+    <table class="it">
+      <tr><th>Acid</th><th>Alcohol</th><th>Ester Name</th></tr>
+      <tr><td>Ethanoic acid</td><td>Propan-1-ol</td><td>Propyl ethanoate</td></tr>
+      <tr><td>Methanoic acid</td><td>Ethanol</td><td>Ethyl methanoate</td></tr>
+      <tr><td>Propanoic acid</td><td>Methanol</td><td>Methyl propanoate</td></tr>
+    </table>
+  </div>
+  <div class="tb">
+    <h3>Uses of Esters</h3>
+    <ul>
+      <li>Artificial flavourings and perfumes (sweet, fruity odours)</li>
+      <li>Solvents in paints, varnishes, nail polish</li>
+      <li>Plasticisers in PVC manufacturing</li>
+      <li>Fats and oils in food are naturally occurring esters (triglycerides)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide" id="s6">
+  <div class="slide-title">🔗 Polymers</div>
+  <div class="tb">
+    <h3>Addition Polymerisation</h3>
+    <p>Unsaturated monomers (containing C=C) join together with no by-products. The double bond opens to link monomers.</p>
+    <table class="it">
+      <tr><th>Monomer</th><th>Polymer</th><th>Uses</th></tr>
+      <tr><td>Ethene (CH₂=CH₂)</td><td>Polyethylene / Polythene</td><td>Bags, bottles, pipes</td></tr>
+      <tr><td>Chloroethene (CH₂=CHCl)</td><td>PVC</td><td>Pipes, wire insulation, floors</td></tr>
+      <tr><td>Styrene (C₆H₅CH=CH₂)</td><td>Polystyrene</td><td>Packaging, foam cups</td></tr>
+      <tr><td>Tetrafluoroethene (CF₂=CF₂)</td><td>PTFE / Teflon</td><td>Non-stick cookware</td></tr>
+    </table>
+  </div>
+  <div class="tb">
+    <h3>Condensation Polymerisation</h3>
+    <p>Monomers join with elimination of a small molecule (H₂O or HCl).</p>
+    <ul>
+      <li><strong>Nylon 6,6:</strong> Hexane-1,6-diamine + Hexanedioic acid → Polyamide + H₂O<br>Uses: ropes, fabric, toothbrush bristles, parachutes</li>
+      <li><strong>Terylene (Dacron):</strong> Diol + Dicarboxylic acid → Polyester + H₂O<br>Uses: clothing fibres, plastic bottles (PET)</li>
+    </ul>
+  </div>
+  <div class="warn">⚠️ Most synthetic polymers are <strong>non-biodegradable</strong> — they persist in the environment for hundreds of years. Solutions: recycling, using biodegradable plastics, reducing single-use plastics.</div>
+</div>
+
+<div class="slide" id="s7">
+  <div class="slide-title">🌿 Fats, Oils and Soaps</div>
+  <div class="tb">
+    <h3>Fats and Oils — Triglycerides</h3>
+    <p>Esters of glycerol (propane-1,2,3-triol) with three fatty acid molecules.</p>
+    <table class="it">
+      <tr><th>Type</th><th>Bonds</th><th>State at R.T.</th><th>Example</th></tr>
+      <tr><td>Saturated fat</td><td>C–C only</td><td>Solid</td><td>Butter, lard, palm oil</td></tr>
+      <tr><td>Unsaturated oil</td><td>Contains C=C</td><td>Liquid</td><td>Sunflower, olive oil</td></tr>
+    </table>
+    <div class="kt"><strong>Hydrogenation:</strong> Adding H₂ across C=C double bonds (Ni catalyst, ~180°C) converts liquid oils into semi-solid fats. Used in margarine production.</div>
+  </div>
+  <div class="tb">
+    <h3>Soap Making — Saponification</h3>
+    <div class="rxn">Triglyceride + 3NaOH (boiling) → 3 RCOONa (soap) + Glycerol</div>
+    <p style="margin-top:8px;font-size:.9rem">Sodium salts of fatty acids → hard soap. Potassium salts (using KOH) → soft/liquid soap.</p>
+  </div>
+  <div class="tb">
+    <h3>How Soap Cleans — Micelle Formation</h3>
+    <ul>
+      <li>Soap molecule: <strong>hydrophilic head</strong> (–COO⁻, water-loving) + <strong>hydrophobic tail</strong> (hydrocarbon chain, oil-loving)</li>
+      <li>Tails embed into grease; heads point into water → spherical <strong>micelle</strong> surrounds grease droplet → rinsed away</li>
+    </ul>
+    <div class="warn">⚠️ Soap forms insoluble scum with Ca²⁺/Mg²⁺ in hard water. Soapless (synthetic) detergents work in hard water as they don't form scum.</div>
+  </div>
+</div>
+
+<div class="slide" id="s8">
+  <div class="slide-title">📊 Summary — Organic Chemistry II</div>
+  <div class="tb">
+    <h3>Functional Groups Quick Reference</h3>
+    <table class="it">
+      <tr><th>Class</th><th>Functional Group</th><th>Example Compound</th></tr>
+      <tr><td>Alcohol</td><td>–OH</td><td>Ethanol (C₂H₅OH)</td></tr>
+      <tr><td>Aldehyde</td><td>–CHO (end)</td><td>Ethanal (CH₃CHO)</td></tr>
+      <tr><td>Ketone</td><td>C=O (middle)</td><td>Propanone (CH₃COCH₃)</td></tr>
+      <tr><td>Carboxylic acid</td><td>–COOH</td><td>Ethanoic acid (CH₃COOH)</td></tr>
+      <tr><td>Ester</td><td>–COO–</td><td>Ethyl ethanoate</td></tr>
+    </table>
+  </div>
+  <div class="tb">
+    <h3>Oxidation Pathway</h3>
+    <div class="rxn">Primary alcohol → Aldehyde → Carboxylic acid &nbsp;(progressive oxidation)</div>
+    <div class="rxn">Secondary alcohol → Ketone only &nbsp;(oxidation stops here)</div>
+    <div class="rxn">Tertiary alcohol → Resistant to oxidation</div>
+  </div>
+  <div class="eg">
+    <strong>Key Reactions Checklist:</strong><br>
+    Fermentation | Hydration of ethene | Oxidation of alcohols | Dehydration | Esterification | Saponification | Addition polymerisation | Condensation polymerisation
+  </div>
+</div>
+
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="tb">
+    <h3>Work Through These</h3>
+    <ol style="font-size:.9rem;line-height:2.2">
+      <li>State the functional group present in (a) ethanol (b) ethanal (c) propanone (d) ethanoic acid.</li>
+      <li>Describe TWO chemical tests that distinguish ethanal from propanone. State the reagent and expected observations.</li>
+      <li>Write a balanced equation for the esterification of propan-1-ol with ethanoic acid. Name the ester and state the conditions required.</li>
+      <li>Explain saponification and write a word equation for the reaction of a fat with NaOH.</li>
+      <li>Describe, with the help of a diagram or description, how a soap micelle enables grease to be removed from a surface.</li>
+      <li>Compare addition polymerisation and condensation polymerisation: one similarity and two differences.</li>
+    </ol>
+  </div>
+  <div class="eg">
+    <strong>Worked Example — Naming an Ester:</strong><br>
+    Butan-1-ol + Propanoic acid → Butyl propanoate + Water<br>
+    Rule: Alkyl (from alcohol) + Alkanoate (from acid name). Conditions: conc. H₂SO₄, warm gently.
+  </div>
+</div>
+
+<div class="slide" id="s10">
+  <div class="slide-title">🧠 Quiz — Organic Chemistry II</div>
+  <div class="qs">
+    <h3>Section A: Fill in the Blanks (5 marks)</h3>
+    <div class="qi">
+      <p>1. The functional group present in all alcohols is <input class="fb" id="f1" placeholder="...">.</p>
+      <div class="fbr" id="f1r"></div>
+    </div>
+    <div class="qi">
+      <p>2. Ethanal produces a <input class="fb" id="f2" placeholder="colour"> precipitate when warmed with Fehling's solution.</p>
+      <div class="fbr" id="f2r"></div>
+    </div>
+    <div class="qi">
+      <p>3. The process of making soap by hydrolysing fats with NaOH is called <input class="fb" id="f3" placeholder="...">.</p>
+      <div class="fbr" id="f3r"></div>
+    </div>
+    <div class="qi">
+      <p>4. In addition polymerisation the monomers must be <input class="fb" id="f4" placeholder="..."> (contain a C=C double bond).</p>
+      <div class="fbr" id="f4r"></div>
+    </div>
+    <div class="qi">
+      <p>5. The ester formed from ethanol and ethanoic acid is named <input class="fb" id="f5" placeholder="...">.</p>
+      <div class="fbr" id="f5r"></div>
+    </div>
+  </div>
+  <div class="qs">
+    <h3>Section B: Short Answer (10 marks)</h3>
+    <div class="qi">
+      <p>6. State TWO differences between aldehydes and ketones in terms of structure and chemical reactivity. (2 marks)</p>
+      <textarea class="sa" id="sa1"></textarea>
+      <button class="gb" onclick="gradeSA('sa1','sf1',{kw:['cho','end','terminal','reducing','fehling','tollens','silver','brick','middle','within'],req:3,marks:2,model:'Aldehydes have –CHO at the end of the chain; ketones have C=O within the chain. Aldehydes are reducing agents (reduce Fehling\'s/Tollens\'); ketones are not.'})">Check</button>
+      <div class="saf" id="sf1"></div>
+    </div>
+    <div class="qi">
+      <p>7. Describe the fermentation process for producing ethanol. Include reactants, conditions and products. (3 marks)</p>
+      <textarea class="sa" id="sa2"></textarea>
+      <button class="gb" onclick="gradeSA('sa2','sf2',{kw:['glucose','yeast','zymase','anaerobic','co2','carbon dioxide','25','37','temperature','ethanol'],req:4,marks:3,model:'Glucose is converted by the enzyme zymase (from yeast) to ethanol and carbon dioxide. Conditions: anaerobic (no oxygen), 25–37°C. Equation: C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂.'})">Check</button>
+      <div class="saf" id="sf2"></div>
+    </div>
+    <div class="qi">
+      <p>8. Explain why most synthetic plastics are an environmental concern and suggest TWO solutions. (2 marks)</p>
+      <textarea class="sa" id="sa3"></textarea>
+      <button class="gb" onclick="gradeSA('sa3','sf3',{kw:['non-biodegradable','decompose','pollution','landfill','ocean','recycle','biodegradable','reduce','reuse'],req:3,marks:2,model:'Most synthetic polymers are non-biodegradable — they do not break down, accumulating in landfills and oceans. Solutions: recycling, using biodegradable plastics, reducing single-use plastic consumption.'})">Check</button>
+      <div class="saf" id="sf3"></div>
+    </div>
+    <div class="qi">
+      <p>9. Explain how a soap micelle enables grease to be removed from a surface during washing. (3 marks)</p>
+      <textarea class="sa" id="sa4"></textarea>
+      <button class="gb" onclick="gradeSA('sa4','sf4',{kw:['hydrophobic','hydrophilic','tail','head','grease','oil','micelle','surround','water','rinse'],req:4,marks:3,model:'Soap has a hydrophilic head (–COO⁻) and a hydrophobic hydrocarbon tail. The tails embed into the grease while the heads face outward into water, forming a micelle around the grease droplet. The micelle is then rinsed away with water.'})">Check</button>
+      <div class="saf" id="sf4"></div>
+    </div>
+  </div>
+  <button class="sub-btn" onclick="submitQuiz()">Submit &amp; See Score</button>
+  <div id="sr"><div class="big" id="sv"></div><div id="sm"></div></div>
+</div>
+
+<div id="navbar">
+  <button class="nb" id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <div id="dn"></div>
+  <button class="nb" id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const d=document.getElementById('dn');d.innerHTML='';for(let i=1;i<=TOTAL;i++){const dot=document.createElement('div');dot.className='dot'+(i===cur?' active':visited.has(i)&&i!==cur?' done':'');dot.onclick=(()=>{const n=i;return()=>goTo(n)})();d.appendChild(dot);}}
+function goTo(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-badge').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=(n===1);document.getElementById('next-btn').disabled=(n===TOTAL);buildDots();window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=1&&cur+d<=TOTAL)goTo(cur+d);}
+buildDots();
+const FA={f1:['–oh','oh','hydroxyl'],f2:['brick-red','brick red','red'],f3:['saponification'],f4:['unsaturated'],f5:['ethyl ethanoate']};
+function checkFills(){let s=0;Object.keys(FA).forEach(id=>{const v=(document.getElementById(id).value||'').toLowerCase().trim();const ok=FA[id].some(a=>v.includes(a));const r=document.getElementById(id+'r');r.style.display='inline-block';if(ok){r.className='fbr ok';r.textContent='✓ Correct (1 mark)';s++;}else{r.className='fbr no';r.textContent='✗ Ans: '+FA[id][0];}});return s;}
+function gradeSA(saId,fbId,cfg){const txt=document.getElementById(saId).value.toLowerCase().trim();if(!txt){alert('Please write your answer first.');return;}const found=cfg.kw.filter(k=>txt.includes(k));const missed=cfg.kw.filter(k=>!txt.includes(k)).slice(0,5);const rate=Math.min(1,found.length/cfg.req);const marks=Math.round(rate*cfg.marks);const fb=document.getElementById(fbId);fb.style.display='block';const cls=marks>=cfg.marks?'ok':marks>0?'partial':'no';fb.className='saf '+cls;fb.innerHTML='<strong>Score: '+marks+' / '+cfg.marks+'</strong><br>✅ Found: <span class="kwf">'+(found.length?found.join(', '):'none')+'</span><br>❌ Missed: <span class="kwm">'+(missed.length?missed.join(', '):'none')+'</span><div class="ma">📖 '+cfg.model+'</div>';}
+function getScore(id){const el=document.getElementById(id);if(!el||el.style.display==='none')return 0;const m=el.innerHTML.match(/Score:\s*(\d+)\s*\//);return m?parseInt(m[1]):0;}
+function submitQuiz(){const fill=checkFills();const sa=getScore('sf1')+getScore('sf2')+getScore('sf3')+getScore('sf4');const tot=fill+sa;const pct=Math.round((tot/15)*100);const grade=pct>=80?'Excellent 🏆':pct>=60?'Good 👍':pct>=50?'Average 📚':'Keep Revising 💪';const r=document.getElementById('sr');r.style.display='block';document.getElementById('sv').textContent=tot+'/15 ('+pct+'%)';document.getElementById('sm').innerHTML='<strong>'+grade+'</strong><br><small>Fill-in: '+fill+'/5 | Short Answer: '+sa+'/10</small>';submitExamToMTTI(tot,15,pct);r.scrollIntoView({behavior:'smooth'});}
+function submitExamToMTTI(score,total,percent){try{fetch('/wp-json/mtti/v1/exam-result',{method:'POST',headers:{'Content-Type':'application/json','X-WP-Nonce':window.mtti_nonce||''},body:JSON.stringify({lesson_id:'f4-chem-1-organic-chemistry-2',score,total,percent,timestamp:new Date().toISOString()})}).then(r=>r.json()).then(d=>{if(d&&d.success)console.log('[MTTI] Score saved',d);}).catch(e=>console.log('[MTTI] Offline mode',e));}catch(e){console.log('[MTTI]',e);}}
+</script>
+</body>
+</html>

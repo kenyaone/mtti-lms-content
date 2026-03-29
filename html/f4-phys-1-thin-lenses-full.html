@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Thin Lenses</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;letter-spacing:.3px;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;line-height:1.3;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;letter-spacing:.5px;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+/* SVG diagram */
+.diagram{background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px;margin:12px 0;text-align:center;overflow-x:auto;}
+/* Quiz */
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;transition:border .2s;}
+input[type=text]:focus{outline:none;border-color:var(--pri);}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-hint{font-size:.78rem;color:var(--muted);margin-top:4px;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;transition:background .2s;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+/* Nav */
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+/* Dot nav */
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h2>⚡ F4 Physics &mdash; Ch.1: Thin Lenses</h2>
+  <span class="meta">MTTI LMS | Form 4</span>
+</div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <span class="slide-label">SLIDE 1 OF 10</span>
+  <h1>📚 Learning Outcomes</h1>
+  <div class="card">
+    <h2>By the end of this lesson you will be able to:</h2>
+    <ol>
+      <li>Define a lens and distinguish between converging and diverging lenses</li>
+      <li>Identify and describe the principal properties of lenses (optical centre, focal length, etc.)</li>
+      <li>Draw ray diagrams for images formed by converging and diverging lenses</li>
+      <li>Apply the lens formula: <strong>1/f = 1/u + 1/v</strong></li>
+      <li>Calculate linear magnification and power of a lens</li>
+      <li>Describe optical devices that use lenses</li>
+      <li>Identify and explain common eye defects and corrections</li>
+    </ol>
+  </div>
+  <div class="highlight">🔑 Key formula: <strong>1/f = 1/u + 1/v</strong> &nbsp;|&nbsp; <strong>m = v/u</strong> &nbsp;|&nbsp; <strong>P = 1/f</strong></div>
+</div>
+
+<!-- SLIDE 2: Types of Lenses -->
+<div class="slide" id="s2">
+  <span class="slide-label">SLIDE 2 OF 10</span>
+  <h1>🔍 Types of Thin Lenses</h1>
+  <div class="card">
+    <p>A <strong>lens</strong> is a piece of glass or plastic used to focus or change the direction of a beam of light passing through it. Lenses are used in spectacles, cameras, microscopes and telescopes.</p>
+    <h2>Converging (Convex) Lens</h2>
+    <p>Thicker at the centre than at the edges. <strong>Converges</strong> (brings together) parallel rays of light to a real focus.</p>
+    <h2>Diverging (Concave) Lens</h2>
+    <p>Thicker at the edges than at the centre. <strong>Diverges</strong> (spreads out) parallel rays — virtual focus.</p>
+  </div>
+  <div class="diagram">
+    <svg viewBox="0 0 500 180" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <!-- Converging lens -->
+      <ellipse cx="120" cy="90" rx="18" ry="60" fill="#b3e5fc" stroke="#0277bd" stroke-width="2"/>
+      <line x1="40" y1="70" x2="110" y2="70" stroke="#e65100" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="40" y1="90" x2="110" y2="90" stroke="#e65100" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="40" y1="110" x2="110" y2="110" stroke="#e65100" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="128" y1="70" x2="190" y2="90" stroke="#e65100" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="128" y1="90" x2="190" y2="90" stroke="#e65100" stroke-width="2" marker-end="url(#arr)"/>
+      <line x1="128" y1="110" x2="190" y2="90" stroke="#e65100" stroke-width="2" marker-end="url(#arr)"/>
+      <circle cx="190" cy="90" r="5" fill="#e65100"/>
+      <text x="120" y="165" text-anchor="middle" font-size="11" fill="#333">Converging Lens</text>
+      <text x="190" y="82" font-size="10" fill="#333">F</text>
+      <!-- Diverging lens -->
+      <path d="M340 30 Q325 90 340 150" fill="none" stroke="#0277bd" stroke-width="2"/>
+      <path d="M360 30 Q375 90 360 150" fill="none" stroke="#0277bd" stroke-width="2"/>
+      <path d="M340 30 Q350 20 360 30" fill="#b3e5fc" stroke="#0277bd" stroke-width="2"/>
+      <path d="M340 150 Q350 160 360 150" fill="#b3e5fc" stroke="#0277bd" stroke-width="2"/>
+      <line x1="260" y1="70" x2="332" y2="70" stroke="#1b5e20" stroke-width="2" marker-end="url(#arr2)"/>
+      <line x1="260" y1="90" x2="332" y2="90" stroke="#1b5e20" stroke-width="2" marker-end="url(#arr2)"/>
+      <line x1="260" y1="110" x2="332" y2="110" stroke="#1b5e20" stroke-width="2" marker-end="url(#arr2)"/>
+      <line x1="368" y1="70" x2="430" y2="55" stroke="#1b5e20" stroke-width="2" marker-end="url(#arr2)"/>
+      <line x1="368" y1="90" x2="430" y2="90" stroke="#1b5e20" stroke-width="2" marker-end="url(#arr2)"/>
+      <line x1="368" y1="110" x2="430" y2="125" stroke="#1b5e20" stroke-width="2" marker-end="url(#arr2)"/>
+      <text x="350" y="165" text-anchor="middle" font-size="11" fill="#333">Diverging Lens</text>
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#e65100"/>
+        </marker>
+        <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#1b5e20"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+<!-- SLIDE 3: Properties -->
+<div class="slide" id="s3">
+  <span class="slide-label">SLIDE 3 OF 10</span>
+  <h1>🏷️ Properties of Lenses</h1>
+  <div class="card">
+    <h2>Key Terms</h2>
+    <table>
+      <tr><th>Property</th><th>Definition</th></tr>
+      <tr><td><strong>Optical Centre (O)</strong></td><td>Geometric centre of the lens. Rays passing through O are undeviated.</td></tr>
+      <tr><td><strong>Principal Axis</strong></td><td>Imaginary line through O, perpendicular to the lens.</td></tr>
+      <tr><td><strong>Principal Focus (F)</strong></td><td>Point where rays parallel to principal axis converge (convex) or appear to diverge from (concave) after refraction.</td></tr>
+      <tr><td><strong>Focal Length (f)</strong></td><td>Distance from optical centre to principal focus.</td></tr>
+      <tr><td><strong>Centre of Curvature</strong></td><td>Centre of the sphere of which the lens surface is part. Denoted C and C₁.</td></tr>
+    </table>
+  </div>
+  <div class="highlight">⚠️ The principal focus for a <strong>converging lens is real</strong>; for a <strong>diverging lens it is virtual</strong>.</div>
+  <div class="warn">📌 Unlike mirrors, the principal focus is <strong>NOT</strong> halfway between the optical centre and centre of curvature.</div>
+</div>
+
+<!-- SLIDE 4: Ray Diagrams & Images -->
+<div class="slide" id="s4">
+  <span class="slide-label">SLIDE 4 OF 10</span>
+  <h1>📐 Images Formed by a Converging Lens</h1>
+  <div class="card">
+    <h2>3 Important Rays for Construction</h2>
+    <ol>
+      <li>Ray parallel to principal axis → refracts through F</li>
+      <li>Ray through optical centre → passes straight through (undeviated)</li>
+      <li>Ray through F → refracts parallel to principal axis</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>Summary of Image Positions</h2>
+    <table>
+      <tr><th>Object Position</th><th>Image Position</th><th>Nature</th><th>Size</th></tr>
+      <tr><td>Between F and lens</td><td>Behind object</td><td>Virtual, Erect</td><td>Magnified</td></tr>
+      <tr><td>At F</td><td>Infinity</td><td>—</td><td>—</td></tr>
+      <tr><td>Between F and 2F</td><td>Beyond 2F</td><td>Real, Inverted</td><td>Magnified</td></tr>
+      <tr><td>At 2F</td><td>At 2F</td><td>Real, Inverted</td><td>Same size</td></tr>
+      <tr><td>Beyond 2F</td><td>Between F and 2F</td><td>Real, Inverted</td><td>Diminished</td></tr>
+      <tr><td>At infinity</td><td>At F</td><td>Real, Inverted</td><td>Diminished</td></tr>
+    </table>
+  </div>
+  <div class="highlight">📌 Diverging lens: images are <strong>always virtual, erect and diminished</strong> for all object positions.</div>
+</div>
+
+<!-- SLIDE 5: Lens Formula -->
+<div class="slide" id="s5">
+  <span class="slide-label">SLIDE 5 OF 10</span>
+  <h1>📏 The Lens Formula</h1>
+  <div class="formula">1/f = 1/u + 1/v</div>
+  <div class="card">
+    <p><strong>u</strong> = object distance (positive for real object)<br>
+    <strong>v</strong> = image distance (positive for real image, negative for virtual)<br>
+    <strong>f</strong> = focal length (positive for converging, negative for diverging)</p>
+    <h2>Linear Magnification</h2>
+    <div class="formula">m = v/u = image height / object height</div>
+    <h2>Power of a Lens</h2>
+    <div class="formula">P = 1/f &nbsp;&nbsp; (unit: Dioptre, D)</div>
+    <p>Converging lens → positive power. Diverging lens → negative power.</p>
+  </div>
+  <div class="card">
+    <h2>Worked Example</h2>
+    <p><strong>Q:</strong> An object is 12 cm from a converging lens of focal length 18 cm. Find the image position.</p>
+    <p><strong>Solution:</strong> f = +18, u = +12</p>
+    <p>1/v = 1/f − 1/u = 1/18 − 1/12 = 2/36 − 3/36 = −1/36</p>
+    <p>∴ v = <strong>−36 cm</strong> → virtual, erect image behind the object.</p>
+  </div>
+</div>
+
+<!-- SLIDE 6: Optical Devices -->
+<div class="slide" id="s6">
+  <span class="slide-label">SLIDE 6 OF 10</span>
+  <h1>🔭 Optical Devices Using Lenses</h1>
+  <div class="card">
+    <h2>1. Simple Microscope (Magnifying Glass)</h2>
+    <p>Object placed inside focal length → virtual, magnified, erect image at 25 cm (least distance of distinct vision). <strong>Shorter focal length = greater magnification.</strong></p>
+    <h2>2. Compound Microscope</h2>
+    <p>Two lenses: <strong>objective lens</strong> (near object) + <strong>eyepiece lens</strong> (near eye). Used to observe micro-organisms, cells, Brownian motion.</p>
+    <h2>3. Astronomical Telescope</h2>
+    <p>Two lenses: <strong>objective</strong> (large f) + <strong>eyepiece</strong> (small f). Used to view distant objects like stars.</p>
+    <h2>4. Camera</h2>
+    <p>Converging lens system + shutter + diaphragm (aperture) + film/sensor in a light-proof box.</p>
+    <h2>5. Human Eye</h2>
+    <p>Cornea + aqueous humour + crystalline lens = converging system. Ciliary muscles change lens curvature (<strong>accommodation</strong>). Image on retina is inverted but brain corrects it.</p>
+  </div>
+</div>
+
+<!-- SLIDE 7: Eye Defects -->
+<div class="slide" id="s7">
+  <span class="slide-label">SLIDE 7 OF 10</span>
+  <h1>👁️ Common Eye Defects</h1>
+  <div class="card">
+    <table>
+      <tr><th>Defect</th><th>Cause</th><th>Correction</th></tr>
+      <tr><td><strong>Short-sightedness (Myopia)</strong></td><td>Eyeball too long; image forms in front of retina</td><td>Concave (diverging) lens</td></tr>
+      <tr><td><strong>Long-sightedness (Hypermetropia)</strong></td><td>Eyeball too short; image forms behind retina</td><td>Convex (converging) lens</td></tr>
+      <tr><td><strong>Presbyopia</strong></td><td>Ciliary muscles weaken with age; loss of accommodation</td><td>Spectacles (bifocals)</td></tr>
+      <tr><td><strong>Astigmatism</strong></td><td>Cornea not perfectly spherical; two focal lengths</td><td>Cylindrical lens</td></tr>
+      <tr><td><strong>Colour Blindness</strong></td><td>Deficiency of colour-detecting cells in retina</td><td>No optical correction</td></tr>
+    </table>
+  </div>
+  <div class="warn">⚠️ Short-sightedness is also called <strong>hypermetropia</strong> in some texts (but note: some books reverse the naming). Check your syllabus!</div>
+</div>
+
+<!-- SLIDE 8: More Examples -->
+<div class="slide" id="s8">
+  <span class="slide-label">SLIDE 8 OF 10</span>
+  <h1>✏️ More Worked Examples</h1>
+  <div class="card">
+    <h2>Example 1 — Magnification</h2>
+    <p>A converging lens (f = 10 cm) forms an image 5× magnified on a screen. Find object distance.</p>
+    <p>m = v/u = 5 → v = 5u</p>
+    <p>1/f = 1/u + 1/v → 1/10 = 1/u + 1/5u = 6/5u → u = <strong>12 cm</strong></p>
+  </div>
+  <div class="card">
+    <h2>Example 2 — Power</h2>
+    <p>Find the power of a concave lens of focal length 25 cm.</p>
+    <p>f = −0.25 m (negative for concave)</p>
+    <p>P = 1/f = 1/(−0.25) = <strong>−4 D</strong></p>
+  </div>
+  <div class="card">
+    <h2>Example 3 — Slide Projector</h2>
+    <p>Image height 1.5 m on screen 9.0 m away. Slide picture height 6.5 cm. Find (a) object distance (b) focal length.</p>
+    <p>m = 150/6.5 = 900/u → u = <strong>39 cm</strong></p>
+    <p>1/f = 1/39 + 1/900 → f ≈ <strong>37.4 cm</strong></p>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="s9">
+  <span class="slide-label">SLIDE 9 OF 10</span>
+  <h1>🧪 Practice Problems</h1>
+  <div class="card">
+    <h3>Problem 1</h3>
+    <p>A converging lens has focal length 15 cm. An object is placed 30 cm from the lens. Find: (a) image distance, (b) magnification, (c) state the nature of the image.</p>
+    <div class="highlight">
+      <strong>Solution:</strong><br>
+      1/v = 1/15 − 1/30 = 2/30 − 1/30 = 1/30<br>
+      v = <strong>30 cm</strong> (real, same side as image)<br>
+      m = 30/30 = <strong>1</strong> (same size, inverted, real)
+    </div>
+  </div>
+  <div class="card">
+    <h3>Problem 2</h3>
+    <p>A diverging lens has focal length 20 cm. An object is 40 cm away. Find the image position and magnification.</p>
+    <div class="highlight">
+      <strong>Solution:</strong><br>
+      f = −20 cm, u = +40 cm<br>
+      1/v = 1/(−20) − 1/40 = −2/40 − 1/40 = −3/40<br>
+      v = −13.3 cm (virtual, same side as object)<br>
+      m = 13.3/40 = <strong>0.33</strong> (diminished, erect)
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <span class="slide-label">SLIDE 10 OF 10</span>
+  <h1>📝 Quiz — Thin Lenses</h1>
+  <div class="quiz-wrap">
+    <h2>Fill in the Blanks (8 marks)</h2>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q1.</span> The distance from the optical centre to the principal focus is called the __________ length. (1 mk)</div>
+      <input type="text" id="q1" placeholder="your answer">
+      <div class="q-hint">Hint: starts with 'f'</div>
+      <div class="q-fb" id="q1f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q2.</span> A lens that is thicker at the centre than at the edges is called a __________ lens. (1 mk)</div>
+      <input type="text" id="q2" placeholder="your answer">
+      <div class="q-fb" id="q2f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q3.</span> Images formed by a diverging lens are always virtual, erect and __________. (1 mk)</div>
+      <input type="text" id="q3" placeholder="your answer">
+      <div class="q-fb" id="q3f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q4.</span> The lens formula is: 1/f = 1/u + 1/__. (1 mk)</div>
+      <input type="text" id="q4" placeholder="one letter">
+      <div class="q-fb" id="q4f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q5.</span> The unit of power of a lens is the __________. (1 mk)</div>
+      <input type="text" id="q5" placeholder="your answer">
+      <div class="q-fb" id="q5f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q6.</span> Short-sightedness is corrected using a __________ lens. (1 mk)</div>
+      <input type="text" id="q6" placeholder="your answer">
+      <div class="q-fb" id="q6f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q7.</span> A converging lens has f = 20 cm. Its power = __________ D. (1 mk)</div>
+      <input type="text" id="q7" placeholder="numerical answer">
+      <div class="q-fb" id="q7f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q8.</span> When an object is placed at 2F of a converging lens, the image is formed at __________ and is the same size as the object. (1 mk)</div>
+      <input type="text" id="q8" placeholder="your answer">
+      <div class="q-fb" id="q8f"></div>
+    </div>
+
+    <h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+
+    <div class="q-block q-sa">
+      <div class="q-text"><span>Q9.</span> An object is placed 24 cm from a converging lens of focal length 8 cm. Calculate (a) the image distance and (b) the magnification. (3 mks)</div>
+      <textarea id="q9" placeholder="Show your working..."></textarea>
+      <div class="q-fb" id="q9f"></div>
+    </div>
+
+    <div class="q-block q-sa">
+      <div class="q-text"><span>Q10.</span> State THREE differences between a converging lens and a diverging lens. (3 mks)</div>
+      <textarea id="q10" placeholder="1. ... 2. ... 3. ..."></textarea>
+      <div class="q-fb" id="q10f"></div>
+    </div>
+
+    <div class="q-block q-sa">
+      <div class="q-text"><span>Q11.</span> Explain how the human eye accommodates to view both near and distant objects. (1 mk)</div>
+      <textarea id="q11" placeholder="Mention ciliary muscles..."></textarea>
+      <div class="q-fb" id="q11f"></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div class="score-box" id="scorebox">
+      <h3 id="score-txt"></h3>
+      <p id="score-msg"></p>
+    </div>
+  </div>
+</div>
+
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <span id="slide-counter">1 / 10</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+// build dots
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+
+// Quiz
+const ans={
+  q1:{kw:['focal'],pts:1},
+  q2:{kw:['convex','converging'],pts:1},
+  q3:{kw:['diminished','smaller','reduced'],pts:1},
+  q4:{kw:['v'],pts:1},
+  q5:{kw:['dioptre','diopter','d'],pts:1},
+  q6:{kw:['concave','diverging'],pts:1},
+  q7:{kw:['5','5.0','+5'],pts:1},
+  q8:{kw:['2f','2 f','2focal'],pts:1},
+};
+const saAns={
+  q9:`1/v = 1/8 − 1/24 = 3/24 − 1/24 = 2/24 = 1/12; v = 12 cm. m = v/u = 12/24 = 0.5 (diminished, real, inverted)`,
+  q10:`1. Convex is thicker at centre; concave thicker at edges. 2. Converging lens has real focus; diverging has virtual focus. 3. Converging can form real images; diverging only forms virtual images.`,
+  q11:`Ciliary muscles contract for nearby objects (shorter focal length) and relax for distant objects (longer focal length), changing the curvature of the crystalline lens.`
+};
+let score=0;
+function submitQuiz(){
+  score=0;
+  // fill blanks
+  ['q1','q2','q3','q4','q5','q6','q7','q8'].forEach(id=>{
+    const val=document.getElementById(id).value.trim().toLowerCase();
+    const correct=ans[id].kw.some(k=>val.includes(k));
+    const fb=document.getElementById(id+'f');
+    if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}
+    else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}
+  });
+  // short answer keyword check
+  const q9v=document.getElementById('q9').value.toLowerCase();
+  const q9ok=q9v.includes('12')&&(q9v.includes('0.5')||q9v.includes('1/2'));
+  const q9fb=document.getElementById('q9f');
+  if(q9ok){score+=3;q9fb.className='q-fb ok';q9fb.textContent='✓ Correct! v=12cm, m=0.5';}
+  else{q9fb.className='q-fb no';q9fb.textContent='Model: '+saAns.q9;}
+
+  const q10v=document.getElementById('q10').value.toLowerCase();
+  const q10ok=(q10v.includes('convex')||q10v.includes('thicker'))&&(q10v.includes('real')||q10v.includes('virtual'));
+  const q10fb=document.getElementById('q10f');
+  if(q10ok){score+=3;q10fb.className='q-fb ok';q10fb.textContent='✓ Good answer!';}
+  else{q10fb.className='q-fb no';q10fb.textContent='Model: '+saAns.q10;}
+
+  const q11v=document.getElementById('q11').value.toLowerCase();
+  const q11ok=q11v.includes('ciliary')||q11v.includes('muscle');
+  const q11fb=document.getElementById('q11f');
+  if(q11ok){score+=1;q11fb.className='q-fb ok';q11fb.textContent='✓ Correct!';}
+  else{q11fb.className='q-fb no';q11fb.textContent='Model: '+saAns.q11;}
+
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');sb.style.display='block';
+  document.getElementById('score-txt').textContent='Score: '+score+' / 15 ('+pct+'%)';
+  const msg=pct>=80?'Excellent! 🌟':pct>=60?'Good work! Keep revising.':'Keep studying and try again.';
+  document.getElementById('score-msg').textContent=msg;
+  showTotalScore(score,15,pct);
+}
+function showTotalScore(s,t,p){
+  if(typeof submitExamToMTTI==='function'){submitExamToMTTI(s,t,p);}
+}
+</script>
+</body>
+</html>

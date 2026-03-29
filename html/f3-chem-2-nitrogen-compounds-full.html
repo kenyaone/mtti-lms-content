@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Chemistry – Nitrogen and Its Compounds</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--sub:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+#topbar .title{font-weight:700;font-size:1rem;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-wrap{height:5px;background:rgba(255,255,255,.25);margin-top:6px;}
+#progress-bar{height:5px;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 100px;max-width:820px;margin:0 auto;animation:fadeIn .35s;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2{color:var(--pri);font-size:1.25rem;margin-bottom:14px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{color:var(--pri);font-size:1rem;margin:14px 0 6px;}
+p,li{font-size:.93rem;line-height:1.65;color:var(--sub);margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.eq{background:#e8f5e9;border-left:3px solid var(--ok);padding:8px 12px;border-radius:6px;font-family:monospace;font-size:.88rem;margin:8px 0;color:#1b5e20;}
+.warn{background:#fff8e1;border-left:3px solid var(--acc);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:8px 0;}
+.danger{background:#ffebee;border-left:3px solid var(--no);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:8px 0;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0;}
+th{background:var(--pri);color:#fff;padding:7px 9px;text-align:left;}
+td{padding:6px 9px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9f9f9;}
+.outcomes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.outcome{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:20px;padding:5px 12px;font-size:.82rem;color:var(--ok);}
+.q-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.q-block .q{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.q-block input[type=text]{width:100%;padding:8px 10px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;}
+.q-block input.correct{border-color:var(--ok);background:#e8f5e9;}
+.q-block input.wrong{border-color:var(--no);background:#ffebee;}
+.feedback{font-size:.82rem;margin-top:5px;display:none;}
+.feedback.show{display:block;}
+.quiz-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.quiz-block .qn{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.quiz-block textarea{width:100%;padding:8px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;resize:vertical;min-height:70px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;font-weight:700;margin:2px;}
+.tag.found{background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:var(--no);border:1px solid #ef9a9a;}
+.model-ans{background:#f3e5f5;border-left:3px solid #7b1fa2;padding:8px 12px;border-radius:6px;font-size:.85rem;margin-top:8px;display:none;}
+.model-ans.show{display:block;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:16px;font-size:.83rem;}
+.rubric h4{color:#e65100;margin-bottom:6px;}
+.rubric table th{background:#e65100;}
+#score-box{background:var(--card);border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12);}
+#score-circle{width:110px;height:110px;border-radius:50%;background:var(--pri);color:#fff;font-size:1.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;z-index:99;}
+#nav button{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.9rem;cursor:pointer;font-weight:600;}
+#nav button:disabled{background:#bbb;}
+#nav .dots{display:flex;gap:5px;}
+#nav .dots span{width:9px;height:9px;border-radius:50%;background:#ccc;cursor:pointer;}
+#nav .dots span.active{background:var(--pri);}
+.btn-submit{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:10px 26px;font-size:.93rem;cursor:pointer;font-weight:700;margin-top:12px;}
+.btn-check{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;cursor:pointer;font-weight:600;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">F3 Chemistry – Nitrogen and Its Compounds</div>
+    <div class="meta">Form 3 | MTTI LMS</div>
+  </div>
+  <div class="meta" id="slide-indicator">1 / 10</div>
+</div>
+<div id="progress-wrap"><div id="progress-bar" style="width:10%"></div></div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="outcomes">
+    <div class="outcome">Describe occurrence and properties of nitrogen</div>
+    <div class="outcome">Explain isolation of N₂ from air and liquid air</div>
+    <div class="outcome">Describe preparation and properties of ammonia</div>
+    <div class="outcome">Explain the Haber process for making ammonia</div>
+    <div class="outcome">Describe properties of ammonia and its reactions</div>
+    <div class="outcome">Describe preparation and reactions of nitric acid</div>
+    <div class="outcome">Explain the Ostwald process for making HNO₃</div>
+    <div class="outcome">Describe nitrogen oxides and nitrate decomposition</div>
+    <div class="outcome">Explain pollution by nitrogen compounds</div>
+  </div>
+  <div class="card">
+    <h3>Introduction to Nitrogen</h3>
+    <p>Nitrogen makes up about <strong>78%</strong> of air as diatomic molecules (N₂). The N≡N triple bond is very strong, making nitrogen largely unreactive (inert).</p>
+    <p>Its inert nature means it dilutes oxygen in air, slowing down respiration, burning, and rusting.</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: Properties of Nitrogen & Lab Preparation -->
+<div class="slide" id="s2">
+  <h2>Properties of Nitrogen & Preparation</h2>
+  <div class="card">
+    <h3>Physical & Chemical Properties</h3>
+    <ul>
+      <li>Colourless, odourless, tasteless gas; almost insoluble in water</li>
+      <li>Slightly lighter than air</li>
+      <li>Inert (unreactive) due to strong N≡N triple bond</li>
+      <li>Neither burns nor supports combustion</li>
+    </ul>
+    <p><strong>Chemical test for nitrogen:</strong> Confirmed by elimination — it extinguishes a splint, has no smell/colour, does not turn lime water milky, neutral to litmus.</p>
+  </div>
+  <div class="card">
+    <h3>Laboratory Preparation</h3>
+    <p>Heat concentrated sodium nitrite + ammonium chloride:</p>
+    <div class="eq">NaNO₂(aq) + NH₄Cl(aq) → NaCl(aq) + N₂(g) + 2H₂O(l) [heat]</div>
+    <p>Collected over water. This N₂ is purer than N₂ isolated from air (no noble gas impurities).</p>
+    <p>Alternatively, heat ammonium nitrite:</p>
+    <div class="eq">NH₄NO₂(s) → N₂(g) + 2H₂O(g) [heat]</div>
+  </div>
+  <div class="card">
+    <h3>Isolation from Liquid Air (Fractional Distillation)</h3>
+    <table>
+      <tr><th>Step</th><th>Process</th></tr>
+      <tr><td>1</td><td>Remove dust by filtration/electrostatic precipitation</td></tr>
+      <tr><td>2</td><td>Remove CO₂ with KOH solution</td></tr>
+      <tr><td>3</td><td>Remove water vapour with conc. H₂SO₄ or condensation at –25°C</td></tr>
+      <tr><td>4</td><td>Compress at ~200 atm, cool, expand → liquid air</td></tr>
+      <tr><td>5</td><td>Fractional distillation: N₂ boils at –196°C, O₂ at –183°C → N₂ taken off first</td></tr>
+    </table>
+    <p><strong>Reaction of N₂ with burning Mg:</strong></p>
+    <div class="eq">3Mg(s) + N₂(g) → Mg₃N₂(s) [heat]</div>
+    <p><strong>Mg₃N₂ + H₂O → ammonia smell detected:</strong></p>
+    <div class="eq">Mg₃N₂(s) + 6H₂O(l) → 2NH₃(g) + 3Mg(OH)₂(aq)</div>
+  </div>
+  <div class="card">
+    <h3>Uses of Nitrogen</h3>
+    <ul>
+      <li>Haber process: manufacture of ammonia</li>
+      <li>Filling electric bulbs (inert — no soot formation)</li>
+      <li>Liquid N₂ as inert refrigerant (semen storage for AI)</li>
+      <li>Food preservation in canned products</li>
+      <li>Enhanced oil recovery in oil fields</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 3: Oxides of Nitrogen & Nitrates -->
+<div class="slide" id="s3">
+  <h2>Oxides of Nitrogen & Decomposition of Nitrates</h2>
+  <div class="card">
+    <h3>Three Main Oxides of Nitrogen</h3>
+    <table>
+      <tr><th>Oxide</th><th>Formula</th><th>Colour</th><th>Solubility</th><th>Litmus</th><th>Test</th></tr>
+      <tr><td>Nitrogen(I) oxide</td><td>N₂O</td><td>Colourless</td><td>Fairly soluble in cold water</td><td>Neutral</td><td>Relights glowing splint</td></tr>
+      <tr><td>Nitrogen(II) oxide</td><td>NO</td><td>Colourless → brown in air</td><td>Almost insoluble</td><td>Neutral</td><td>Brown fumes with O₂</td></tr>
+      <tr><td>Nitrogen(IV) oxide</td><td>NO₂</td><td>Red-brown</td><td>Readily soluble</td><td>Acidic (turns red)</td><td>Red-brown pungent gas</td></tr>
+    </table>
+    <p><strong>Preparation of N₂O:</strong> gentle heating of ammonium nitrate</p>
+    <div class="eq">NH₄NO₃(s) → N₂O(g) + 2H₂O(l) [gentle heat]</div>
+    <p><strong>Preparation of NO:</strong> dilute HNO₃ + copper</p>
+    <div class="eq">3Cu(s) + 8HNO₃(dil) → 3Cu(NO₃)₂(aq) + 4H₂O(l) + 2NO(g)</div>
+    <p><strong>Preparation of NO₂:</strong> conc. HNO₃ + copper</p>
+    <div class="eq">Cu(s) + 4HNO₃(conc) → Cu(NO₃)₂(aq) + 2NO₂(g) + 2H₂O(l)</div>
+    <p><strong>NO₂ + water (→ HNO₃ manufacturing):</strong></p>
+    <div class="eq">2NO₂(g) + H₂O(l) → HNO₃(aq) + HNO₂(aq)</div>
+  </div>
+  <div class="card">
+    <h3>Action of Heat on Nitrates</h3>
+    <table>
+      <tr><th>Metal group</th><th>Products</th><th>Example</th></tr>
+      <tr><td>Very reactive (Na, K)</td><td>Metal nitrite + O₂</td><td>2KNO₃ → 2KNO₂ + O₂</td></tr>
+      <tr><td>Most other metals (Pb, Cu, Zn)</td><td>Metal oxide + NO₂ + O₂</td><td>2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂</td></tr>
+      <tr><td>Low reactivity (Ag, Hg)</td><td>Metal + NO₂ + O₂</td><td>2AgNO₃ → 2Ag + 2NO₂ + O₂</td></tr>
+      <tr><td>Ammonium nitrate</td><td>N₂O + H₂O</td><td>NH₄NO₃ → N₂O + 2H₂O</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 4: Ammonia – Preparation & Properties -->
+<div class="slide" id="s4">
+  <h2>Ammonia – Preparation and Properties</h2>
+  <div class="card">
+    <h3>Laboratory Preparation</h3>
+    <p>Heat ammonium chloride + slaked lime (calcium hydroxide):</p>
+    <div class="eq">Ca(OH)₂(s) + 2NH₄Cl(s) → CaCl₂(aq) + 2NH₃(g) + 2H₂O(g)</div>
+    <p><strong>Drying:</strong> Passed through quicklime (CaO) or caustic potash (KOH pellets).</p>
+    <p><strong>NOT dried</strong> with conc. H₂SO₄ (reacts: 2NH₃ + H₂SO₄ → (NH₄)₂SO₄) or anhydrous CaCl₂ (forms complex CaCl₂·4NH₃).</p>
+    <p><strong>Collection:</strong> Upward delivery (lighter than air; very soluble in water).</p>
+  </div>
+  <div class="card">
+    <h3>Tests for Ammonia</h3>
+    <ul>
+      <li>Pungent smell (urine-like)</li>
+      <li><strong>Only common alkaline gas</strong> — turns moist red litmus paper blue</li>
+      <li>Dense white fumes with HCl gas: <div class="eq">NH₃(g) + HCl(g) → NH₄Cl(s) [white fumes]</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Physical Properties</h3>
+    <ul>
+      <li>Colourless gas, pungent smell</li>
+      <li>Lighter than air (collected by upward delivery)</li>
+      <li>Highly soluble in water (1 vol water dissolves ~750 vol NH₃)</li>
+    </ul>
+    <p><strong>Fountain experiment:</strong> A drop of water dissolving in the flask creates a partial vacuum → atmospheric pressure forces water in as a fountain (turns blue from alkali).</p>
+    <p><strong>NH₃ dissolves in water:</strong></p>
+    <div class="eq">NH₃(g) + H₂O(l) ⇌ NH₄⁺(aq) + OH⁻(aq) [weakly alkaline]</div>
+  </div>
+  <div class="card">
+    <h3>Chemical Properties of Ammonia</h3>
+    <p><strong>Burning in oxygen:</strong></p>
+    <div class="eq">4NH₃(g) + 3O₂(g) → 2N₂(g) + 6H₂O(g)</div>
+    <p><strong>Catalytic oxidation (Pt catalyst → basis of Ostwald process):</strong></p>
+    <div class="eq">4NH₃(g) + 5O₂(g) → 4NO(g) + 6H₂O(g) [Pt catalyst]</div>
+    <p><strong>As reducing agent (reduces CuO):</strong></p>
+    <div class="eq">3CuO(s) + 2NH₃(g) → 3Cu(s) + 3H₂O(l) + N₂(g)</div>
+    <p><strong>Reaction with chlorine:</strong></p>
+    <div class="eq">8NH₃(g) + 3Cl₂(g) → 6NH₄Cl(s) + N₂(g)</div>
+    <p><strong>With acids (neutralisation):</strong></p>
+    <div class="eq">NH₃(g) + HCl(aq) → NH₄Cl(aq)</div>
+    <div class="eq">2NH₃(g) + H₂SO₄(aq) → (NH₄)₂SO₄(aq)</div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Haber Process -->
+<div class="slide" id="s5">
+  <h2>The Haber Process – Industrial Manufacture of Ammonia</h2>
+  <div class="card">
+    <h3>Raw Materials</h3>
+    <ul>
+      <li><strong>Nitrogen:</strong> Fractional distillation of liquid air</li>
+      <li><strong>Hydrogen:</strong> From water gas (Bosch process) or cracking of crude oil</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Overall Equation</h3>
+    <div class="eq">N₂(g) + 3H₂(g) ⇌ 2NH₃(g) + Heat (–92 kJ/mol)</div>
+    <p>Only <strong>6–10%</strong> of the gases combine in one pass. Unreacted gases are recycled.</p>
+  </div>
+  <div class="card">
+    <h3>Conditions and Reasons</h3>
+    <table>
+      <tr><th>Condition</th><th>Value</th><th>Reason</th></tr>
+      <tr><td>Pressure</td><td>200–500 atm</td><td>Reactants have more volume than products → high pressure shifts equilibrium right (more NH₃)</td></tr>
+      <tr><td>Temperature</td><td>~450°C (compromise)</td><td>Low temp favours NH₃ (exothermic), but too slow → 450°C balances yield and rate</td></tr>
+      <tr><td>Catalyst</td><td>Finely divided Fe + Al₂O₃</td><td>Fe speeds up equilibrium; Al₂O₃ (promoter) increases catalyst activity</td></tr>
+      <tr><td>Purification</td><td>Remove CO₂, H₂O, dust, SO₂</td><td>These poison the catalyst</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Process Steps</h3>
+    <ol>
+      <li><strong>Purification</strong> — remove impurities that poison catalyst</li>
+      <li><strong>Compression</strong> — gases compressed at ~500 atm</li>
+      <li><strong>Heat exchanger</strong> — gases heated to reaction temperature</li>
+      <li><strong>Catalytic chamber</strong> — N₂ + H₂ react at 450°C over Fe catalyst</li>
+      <li><strong>Second heat exchanger</strong> — hot products cool incoming gases (energy efficiency)</li>
+      <li><strong>Condenser</strong> — NH₃ liquefied and drawn off; unreacted N₂/H₂ recycled</li>
+    </ol>
+    <div class="warn">💡 Siting factors: availability of raw materials (natural gas/crude oil), cheap energy, transport, technology and labour force.</div>
+  </div>
+  <div class="card">
+    <h3>Ammonium Salts as Fertilizers</h3>
+    <table>
+      <tr><th>Fertilizer</th><th>Equation</th></tr>
+      <tr><td>Ammonium sulphate</td><td>2NH₃ + H₂SO₄ → (NH₄)₂SO₄</td></tr>
+      <tr><td>Ammonium nitrate</td><td>NH₃ + HNO₃ → NH₄NO₃</td></tr>
+      <tr><td>Ammonium phosphate</td><td>3NH₃ + H₃PO₄ → (NH₄)₃PO₄</td></tr>
+      <tr><td>Urea</td><td>NH₃ + CO₂ → CO(NH₂)₂ + H₂O</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 6: Nitric Acid & Ostwald Process -->
+<div class="slide" id="s6">
+  <h2>Nitric(V) Acid & The Ostwald Process</h2>
+  <div class="card">
+    <h3>Laboratory Preparation of HNO₃</h3>
+    <p>React conc. H₂SO₄ with solid potassium nitrate (KNO₃) gently — all-glass apparatus (HNO₃ attacks rubber):</p>
+    <div class="eq">KNO₃(s) + H₂SO₄(aq) → KHSO₄(aq) + HNO₃(g)</div>
+    <p>HNO₃ vapour condenses in a cooled collection flask. Appears brown due to thermal decomposition into NO₂.</p>
+  </div>
+  <div class="card">
+    <h3>Ostwald Process (Industrial)</h3>
+    <p><strong>Raw materials:</strong> Ammonia (from Haber process) + atmospheric air</p>
+    <table>
+      <tr><th>Step</th><th>Reaction</th></tr>
+      <tr><td>1. Catalytic oxidation of NH₃</td><td>4NH₃ + 5O₂ → 4NO + 6H₂O [Pt-Rh, 900°C]</td></tr>
+      <tr><td>2. Oxidation of NO to NO₂</td><td>2NO + O₂ → 2NO₂</td></tr>
+      <tr><td>3. Absorption in water</td><td>2NO₂ + H₂O → HNO₃ + HNO₂</td></tr>
+      <tr><td>4. Oxidation of HNO₂</td><td>2HNO₂ + O₂ → 2HNO₃</td></tr>
+    </table>
+    <p>Result: ~55–65% HNO₃; concentrated further by distillation with conc. H₂SO₄.</p>
+  </div>
+  <div class="card">
+    <h3>Properties of Dilute HNO₃</h3>
+    <p>Dilute HNO₃ is a typical acid but reacts with metals to give NO (not H₂):</p>
+    <div class="eq">3Mg(s) + 8HNO₃(dil) → 3Mg(NO₃)₂(aq) + 2NO(g) + 4H₂O(l)</div>
+    <p>Also neutralises bases, reacts with carbonates and metal oxides.</p>
+  </div>
+  <div class="card">
+    <h3>Properties of Concentrated HNO₃</h3>
+    <p>Strong oxidising agent. Reduced to NO₂ and water:</p>
+    <div class="eq">Cu(s) + 4HNO₃(conc) → Cu(NO₃)₂ + 2NO₂ + 2H₂O</div>
+    <p>Oxidises C, S, Fe²⁺ to Fe³⁺. Decomposes on heating:</p>
+    <div class="eq">4HNO₃(l) → 4NO₂(g) + O₂(g) + 2H₂O(g)</div>
+    <p>Stored in dark bottles (light causes decomposition).</p>
+  </div>
+  <div class="card">
+    <h3>Test for Nitrates – Brown Ring Test</h3>
+    <p>Dissolve test substance in H₂O, acidify with dil H₂SO₄, add FeSO₄ solution, then carefully add conc. H₂SO₄ down the side of the tube:</p>
+    <p>→ <strong>Brown ring</strong> at interface = NO₃⁻ present</p>
+    <div class="eq">Fe²⁺(aq) + NO(g) → [Fe(H₂O)₅NO]²⁺(aq) [brown ring complex]</div>
+    <p><strong>Uses of nitric acid:</strong> fertilisers, explosives (TNT), dyes, nylon, metal refining, oxidising agent.</p>
+  </div>
+</div>
+
+<!-- SLIDE 7: Qualitative Analysis (Cations & Anions) -->
+<div class="slide" id="s7">
+  <h2>Qualitative Analysis – Cations and Anions</h2>
+  <div class="card">
+    <h3>Reactions of Metal Ions with NaOH and NH₃</h3>
+    <table>
+      <tr><th>Ion</th><th>With NaOH (few)</th><th>NaOH excess</th><th>With NH₃ (few)</th><th>NH₃ excess</th></tr>
+      <tr><td>Ca²⁺</td><td>White ppt</td><td>Persists</td><td>White ppt</td><td>Persists</td></tr>
+      <tr><td>Mg²⁺</td><td>White ppt</td><td>Persists</td><td>White ppt</td><td>Persists</td></tr>
+      <tr><td>Al³⁺</td><td>White ppt</td><td>Dissolves</td><td>White ppt</td><td>Persists</td></tr>
+      <tr><td>Zn²⁺</td><td>White ppt</td><td>Dissolves</td><td>White ppt</td><td>Dissolves (colourless)</td></tr>
+      <tr><td>Fe²⁺</td><td>Pale green ppt</td><td>Persists</td><td>Pale green ppt</td><td>Persists</td></tr>
+      <tr><td>Fe³⁺</td><td>Red-brown ppt</td><td>Persists</td><td>Red-brown ppt</td><td>Persists</td></tr>
+      <tr><td>Pb²⁺</td><td>White ppt</td><td>Dissolves</td><td>White ppt</td><td>Persists</td></tr>
+      <tr><td>Cu²⁺</td><td>Pale blue ppt</td><td>Persists</td><td>Pale blue ppt</td><td>Dissolves (deep blue)</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Important Complex Ions</h3>
+    <p><strong>Zn²⁺ + excess NH₃:</strong> [Zn(NH₃)₄]²⁺ (colourless, tetrammine zinc)</p>
+    <p><strong>Cu²⁺ + excess NH₃:</strong> [Cu(NH₃)₄]²⁺ (deep blue, tetrammine copper)</p>
+    <p><strong>Zn²⁺ + excess NaOH:</strong> [Zn(OH)₄]²⁻ (zincate ion)</p>
+    <p><strong>Al³⁺ + excess NaOH:</strong> [Al(OH)₄]⁻ (aluminate ion)</p>
+  </div>
+  <div class="card">
+    <h3>Test for Common Anions</h3>
+    <table>
+      <tr><th>Anion</th><th>Test</th><th>Observation</th></tr>
+      <tr><td>SO₄²⁻</td><td>Add Ba²⁺, acidify with dil HNO₃</td><td>White ppt (BaSO₄) insoluble in acid</td></tr>
+      <tr><td>Cl⁻</td><td>Add Ag⁺, acidify with dil HNO₃</td><td>White ppt (AgCl) insoluble in acid</td></tr>
+      <tr><td>NO₃⁻</td><td>FeSO₄ + conc H₂SO₄ (brown ring)</td><td>Brown ring at interface</td></tr>
+      <tr><td>CO₃²⁻</td><td>Add dil HNO₃; bubble gas through lime water</td><td>White ppt in lime water (CO₂)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 8: Pollution by Nitrogen Compounds -->
+<div class="slide" id="s8">
+  <h2>Environmental Pollution by Nitrogen Compounds</h2>
+  <div class="card">
+    <h3>1. Acid Rain</h3>
+    <p>NO from combustion engines → NO₂ → dissolves in rain → HNO₂/HNO₃ (acid rain)</p>
+    <p>Effects of acid rain:</p>
+    <ul>
+      <li>Loss of chlorophyll (chlorosis) from plant leaves</li>
+      <li>Corrosion of stone buildings and metallic structures</li>
+      <li>Leaching of minerals from soil → poor crop yields</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>2. Smog Formation</h3>
+    <p>NO₂ undergoes chemical reactions in air to form smog — reduces visibility, irritates eyes, causes breathing problems.</p>
+  </div>
+  <div class="card">
+    <h3>3. Eutrophication</h3>
+    <p>Excess nitrate ions (from fertilisers) in water → rapid algal growth → reduced dissolved O₂ → kills aquatic animals. Nitrates in drinking water may form carcinogenic compounds.</p>
+  </div>
+  <div class="card">
+    <h3>Prevention Measures</h3>
+    <ol>
+      <li>Recycle unreacted gases in HNO₃ manufacture</li>
+      <li>Treat sewage before releasing to rivers</li>
+      <li>Fit exhaust systems with catalytic converters (convert NOₓ → N₂)</li>
+      <li>Add lime to acidified lakes and soils</li>
+      <li>Apply fertilisers in correct proportions</li>
+    </ol>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="q-block">
+    <div class="q">1. Name the catalyst used in the Haber process.</div>
+    <input type="text" id="q1" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q1','Finely divided iron (Fe)',['iron','fe'])">Check</button>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">2. What is the brown ring in the nitrate test made of?</div>
+    <input type="text" id="q2" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q2','[Fe(H₂O)₅NO]²⁺ (nitroso-iron complex)',['feso4.no','nitroso','iron','no','fe'])">Check</button>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">3. What colour precipitate is formed when Fe³⁺ ions react with NaOH?</div>
+    <input type="text" id="q3" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q3','Red-brown precipitate',['red','brown'])">Check</button>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">4. Write the equation for the reaction that is the first step in the Ostwald process.</div>
+    <input type="text" id="q4" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q4','4NH₃ + 5O₂ → 4NO + 6H₂O',['nh3','o2','no','h2o','900','platinum'])">Check</button>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">5. Why is ammonia NOT dried using concentrated sulphuric acid?</div>
+    <input type="text" id="q5" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q5','It reacts with ammonia forming ammonium sulphate',['reacts','ammonium sulphate','(nh4)2so4'])">Check</button>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz – Nitrogen and Its Compounds</h2>
+  <p style="font-size:.85rem;color:var(--sub);margin-bottom:14px;">Answer all questions carefully.</p>
+
+  <div class="quiz-block">
+    <div class="qn">Q1. The Haber process uses nitrogen and hydrogen in the ratio ___.</div>
+    <input type="text" id="fib1" placeholder="e.g. 1:..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q2. Ammonia turns moist red litmus paper ___.</div>
+    <input type="text" id="fib2" placeholder="colour..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q3. The test for ammonia gas uses ___ gas, producing white fumes of ammonium chloride.</div>
+    <input type="text" id="fib3" placeholder="gas name..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q4. Nitric acid is stored in dark bottles because it decomposes when exposed to ___.</div>
+    <input type="text" id="fib4" placeholder="one word..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q5. Explain with equations why high pressure is used in the Haber process but a compromise temperature of ~450°C is used instead of a very low temperature.</div>
+    <textarea id="sa1" placeholder="Write your answer here..."></textarea>
+    <div id="sa1-tags"></div>
+    <div class="model-ans" id="sa1-model">High pressure is used because the forward reaction produces fewer moles of gas (4 moles) from more moles of reactants (4 moles N₂ + H₂ = combined), so high pressure shifts equilibrium right producing more NH₃. A very low temperature would give a higher yield (reaction is exothermic) but the rate would be too slow. A compromise of ~450°C balances an acceptable yield with a reasonable rate of reaction.</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q6. Describe the laboratory test to distinguish between SO₄²⁻ and CO₃²⁻ ions in solution.</div>
+    <textarea id="sa2" placeholder="Write your answer here..."></textarea>
+    <div id="sa2-tags"></div>
+    <div class="model-ans" id="sa2-model">Add barium chloride solution to both samples. Both form white precipitates (BaSO₄ and BaCO₃). Then acidify with dilute hydrochloric acid or nitric acid. BaCO₃ dissolves (effervescence of CO₂) while BaSO₄ remains as a white precipitate. The sample that dissolves contains CO₃²⁻; the one that does not dissolve contains SO₄²⁻.</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q7. Describe what happens when lead(II) nitrate is heated. Write the equation and state all observations.</div>
+    <textarea id="sa3" placeholder="Write your answer and equation..." rows="3"></textarea>
+    <div id="sa3-tags"></div>
+    <div class="model-ans" id="sa3-model">White crystalline lead(II) nitrate crystals decrepitate (cracking sound) on heating. A colourless gas (oxygen) is produced first, immediately followed by red-brown fumes of nitrogen(IV) oxide (NO₂). A residue remains which is red when hot and yellow on cooling (lead(II) oxide, PbO). A pale yellow liquid (dinitrogen tetroxide, N₂O₄) may condense on cooling.
+Equation: 2Pb(NO₃)₂(s) → 2PbO(s) + 4NO₂(g) + O₂(g)</div>
+  </div>
+
+  <button class="btn-submit" onclick="submitExam()">Submit Quiz</button>
+  <div id="score-box" style="display:none;margin-top:18px;">
+    <div id="score-circle"></div>
+    <div id="score-msg" style="font-size:1rem;font-weight:600;margin-bottom:8px;"></div>
+    <div id="score-detail" style="font-size:.87rem;color:var(--sub);"></div>
+    <div class="rubric">
+      <h4>CBC Assessment Rubric</h4>
+      <table>
+        <tr><th>Score</th><th>Performance Level</th><th>Descriptor</th></tr>
+        <tr><td>85–100%</td><td>Exceeding Expectation</td><td>Thorough understanding of nitrogen chemistry</td></tr>
+        <tr><td>70–84%</td><td>Meeting Expectation</td><td>Good command of Haber, Ostwald and reactions</td></tr>
+        <tr><td>50–69%</td><td>Approaching Expectation</td><td>Basic understanding; revise industrial processes</td></tr>
+        <tr><td>0–49%</td><td>Below Expectation</td><td>Review nitrogen and its compounds thoroughly</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+const TOTAL=10; let current=0;
+const slides=document.querySelectorAll('.slide');
+function buildDots(){const dc=document.getElementById('dots');for(let i=0;i<TOTAL;i++){const s=document.createElement('span');s.onclick=()=>goTo(i);dc.appendChild(s);}updateDots();}
+function updateDots(){document.querySelectorAll('#dots span').forEach((s,i)=>s.classList.toggle('active',i===current));document.getElementById('slide-indicator').textContent=(current+1)+' / '+TOTAL;document.getElementById('progress-bar').style.width=((current+1)/TOTAL*100)+'%';document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===TOTAL-1;}
+function goTo(n){slides[current].classList.remove('active');current=n;slides[current].classList.add('active');updateDots();window.scrollTo(0,0);}
+function changeSlide(d){goTo(current+d);}
+function checkFill(id,correct,keywords){const inp=document.getElementById(id);const val=inp.value.trim().toLowerCase();const fb=document.getElementById(id+'-fb');const hit=keywords.some(k=>val.includes(k.toLowerCase()));inp.className=hit?'correct':'wrong';fb.className='feedback show';fb.style.color=hit?'var(--ok)':'var(--no)';fb.textContent=hit?'✓ Correct!':'✗ Expected: '+correct;}
+const FIB_ANSWERS=[
+  {id:'fib1',answer:'1:3',keys:['1:3','1 : 3']},
+  {id:'fib2',answer:'blue',keys:['blue']},
+  {id:'fib3',answer:'hydrogen chloride (HCl)',keys:['hcl','hydrogen chloride']},
+  {id:'fib4',answer:'light',keys:['light']},
+];
+const SA_QUESTIONS=[
+  {id:'sa1',keys:['pressure','equilibrium','exothermic','rate','slow','yield','compromise','450'],required:3,modelId:'sa1-model'},
+  {id:'sa2',keys:['barium','white precipitate','dissolve','co2','baso4','baco3','acid','hcl'],required:3,modelId:'sa2-model'},
+  {id:'sa3',keys:['pbo','no2','o2','decrepitate','white','brown','yellow','equation','red','2pb'],required:3,modelId:'sa3-model'},
+];
+function submitExam(){let score=0,total=0;
+  FIB_ANSWERS.forEach(q=>{total+=2;const val=(document.getElementById(q.id).value||'').trim().toLowerCase();const hit=q.keys.some(k=>val.includes(k));if(hit)score+=2;document.getElementById(q.id).style.borderColor=hit?'var(--ok)':'var(--no)';document.getElementById(q.id).style.background=hit?'#e8f5e9':'#ffebee';});
+  SA_QUESTIONS.forEach(q=>{total+=4;const val=(document.getElementById(q.id).value||'').trim().toLowerCase();const found=q.keys.filter(k=>val.includes(k.toLowerCase()));const missed=q.keys.filter(k=>!val.includes(k.toLowerCase()));const pts=Math.min(4,Math.round((found.length/q.required)*4));score+=pts;document.getElementById(q.id+'-tags').innerHTML=found.map(k=>`<span class="tag found">✓ ${k}</span>`).join('')+missed.slice(0,4).map(k=>`<span class="tag missed">✗ ${k}</span>`).join('');document.getElementById(q.modelId).classList.add('show');});
+  const pct=Math.round(score/total*100);
+  document.getElementById('score-box').style.display='block';
+  document.getElementById('score-circle').textContent=pct+'%';
+  document.getElementById('score-msg').textContent=pct>=85?'🏆 Excellent! Exceeding Expectation':pct>=70?'✅ Well done! Meeting Expectation':pct>=50?'📘 Approaching Expectation — keep revising':'📝 Below Expectation — review nitrogen topics';
+  document.getElementById('score-detail').textContent=`Score: ${score} / ${total} marks`;
+  document.getElementById('score-box').scrollIntoView({behavior:'smooth'});
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,total,pct);
+}
+buildDots();
+</script>
+</body>
+</html>

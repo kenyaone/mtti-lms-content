@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Chemistry – Organic Chemistry I: Hydrocarbons</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--sub:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+#topbar .title{font-weight:700;font-size:1rem;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-wrap{height:5px;background:rgba(255,255,255,.25);margin-top:6px;}
+#progress-bar{height:5px;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 100px;max-width:820px;margin:0 auto;animation:fadeIn .35s;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2{color:var(--pri);font-size:1.25rem;margin-bottom:14px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{color:var(--pri);font-size:1rem;margin:14px 0 6px;}
+p,li{font-size:.93rem;line-height:1.65;color:var(--sub);margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.eq{background:#e8f5e9;border-left:3px solid var(--ok);padding:8px 12px;border-radius:6px;font-family:monospace;font-size:.88rem;margin:8px 0;color:#1b5e20;}
+.warn{background:#fff8e1;border-left:3px solid var(--acc);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:8px 0;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0;}
+th{background:var(--pri);color:#fff;padding:7px 9px;text-align:left;}
+td{padding:6px 9px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9f9f9;}
+/* outcome badges */
+.outcomes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.outcome{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:20px;padding:5px 12px;font-size:.82rem;color:var(--ok);}
+/* practice */
+.q-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.q-block .q{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.q-block input[type=text]{width:100%;padding:8px 10px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;}
+.q-block input.correct{border-color:var(--ok);background:#e8f5e9;}
+.q-block input.wrong{border-color:var(--no);background:#ffebee;}
+.feedback{font-size:.82rem;margin-top:5px;display:none;}
+.feedback.show{display:block;}
+/* quiz */
+.quiz-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.quiz-block .qn{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.quiz-block textarea{width:100%;padding:8px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;resize:vertical;min-height:70px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;font-weight:700;margin:2px;}
+.tag.found{background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:var(--no);border:1px solid #ef9a9a;}
+.model-ans{background:#f3e5f5;border-left:3px solid #7b1fa2;padding:8px 12px;border-radius:6px;font-size:.85rem;margin-top:8px;display:none;}
+.model-ans.show{display:block;}
+/* rubric */
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:16px;font-size:.83rem;}
+.rubric h4{color:#e65100;margin-bottom:6px;}
+.rubric table th{background:#e65100;}
+/* score box */
+#score-box{background:var(--card);border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12);}
+#score-circle{width:110px;height:110px;border-radius:50%;background:var(--pri);color:#fff;font-size:1.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+/* nav */
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;z-index:99;}
+#nav button{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.9rem;cursor:pointer;font-weight:600;}
+#nav button:disabled{background:#bbb;}
+#nav .dots{display:flex;gap:5px;}
+#nav .dots span{width:9px;height:9px;border-radius:50%;background:#ccc;cursor:pointer;}
+#nav .dots span.active{background:var(--pri);}
+.btn-submit{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:10px 26px;font-size:.93rem;cursor:pointer;font-weight:700;margin-top:12px;}
+.btn-check{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;cursor:pointer;font-weight:600;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">F3 Chemistry – Organic Chemistry I: Hydrocarbons</div>
+    <div class="meta">Form 3 | MTTI LMS</div>
+  </div>
+  <div class="meta" id="slide-indicator">1 / 10</div>
+</div>
+<div id="progress-wrap"><div id="progress-bar" style="width:10%"></div></div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <p>By the end of this lesson, you will be able to:</p>
+  <div class="outcomes">
+    <div class="outcome">Define organic chemistry and hydrocarbons</div>
+    <div class="outcome">Distinguish saturated and unsaturated hydrocarbons</div>
+    <div class="outcome">Name and write formulae for alkanes, alkenes, and alkynes</div>
+    <div class="outcome">Describe homologous series characteristics</div>
+    <div class="outcome">Explain fractional distillation of crude oil</div>
+    <div class="outcome">Write equations for preparation & reactions of hydrocarbons</div>
+    <div class="outcome">Explain polymerisation and cracking reactions</div>
+  </div>
+  <div class="card">
+    <h3>What is Organic Chemistry?</h3>
+    <p>Organic chemistry is the study of carbon compounds except the oxides of carbon (CO, CO₂) and carbonates. It focuses on the chemistry of hydrogen-carbon chain compounds.</p>
+    <p><strong>Hydrocarbons</strong> are compounds containing hydrogen and carbon only — the simplest organic compounds.</p>
+  </div>
+</div>
+
+<!-- SLIDE 2: Alkanes -->
+<div class="slide" id="s2">
+  <h2>Alkanes – Saturated Hydrocarbons</h2>
+  <div class="card">
+    <h3>Definition</h3>
+    <p>Alkanes are hydrocarbons in which all carbon atoms are linked by single covalent bonds. General formula: <strong>CₙH₂ₙ₊₂</strong></p>
+    <p>They are <strong>saturated</strong> — they do not decolourise bromine water or acidified KMnO₄.</p>
+  </div>
+  <h3>First 10 Alkanes</h3>
+  <table>
+    <tr><th>Name</th><th>Formula</th><th>State at 20°C</th></tr>
+    <tr><td>Methane</td><td>CH₄</td><td>Gas</td></tr>
+    <tr><td>Ethane</td><td>C₂H₆</td><td>Gas</td></tr>
+    <tr><td>Propane</td><td>C₃H₈</td><td>Gas</td></tr>
+    <tr><td>Butane</td><td>C₄H₁₀</td><td>Gas</td></tr>
+    <tr><td>Pentane</td><td>C₅H₁₂</td><td>Liquid</td></tr>
+    <tr><td>Hexane</td><td>C₆H₁₄</td><td>Liquid</td></tr>
+    <tr><td>Heptane</td><td>C₇H₁₆</td><td>Liquid</td></tr>
+    <tr><td>Octane</td><td>C₈H₁₈</td><td>Liquid</td></tr>
+    <tr><td>Nonane</td><td>C₉H₂₀</td><td>Liquid</td></tr>
+    <tr><td>Decane</td><td>C₁₀H₂₂</td><td>Liquid</td></tr>
+  </table>
+  <div class="card">
+    <h3>Fractional Distillation of Crude Oil</h3>
+    <p>Crude oil is a mixture of alkanes separated by fractional distillation based on boiling points:</p>
+    <table>
+      <tr><th>Fraction</th><th>Carbon atoms</th><th>Use</th></tr>
+      <tr><td>Gases</td><td>1–4</td><td>Lab/cooking gas</td></tr>
+      <tr><td>Petrol</td><td>5–12</td><td>Fuel for car engines</td></tr>
+      <tr><td>Kerosene</td><td>9–16</td><td>Jet fuel, domestic use</td></tr>
+      <tr><td>Diesel</td><td>15–18</td><td>Heavy engines, ships</td></tr>
+      <tr><td>Lubricating oils</td><td>20–70</td><td>Engine lubrication</td></tr>
+      <tr><td>Bitumen</td><td>&gt;70</td><td>Road tarmacking</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Chemical Properties of Methane</h3>
+    <p><strong>Combustion (burning):</strong></p>
+    <div class="eq">CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)</div>
+    <p><strong>Substitution with Bromine (UV light):</strong></p>
+    <div class="eq">CH₄(g) + Br₂(g) → CH₃Br(g) + HBr(g)</div>
+    <p><strong>Cracking of Alkanes</strong> — breaking large molecules into smaller alkanes and alkenes at 400–700°C.</p>
+    <p><strong>Lab preparation of methane:</strong></p>
+    <div class="eq">CH₃COONa(s) + NaOH(s) → CH₄(g) + Na₂CO₃(aq)</div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Alkenes -->
+<div class="slide" id="s3">
+  <h2>Alkenes – Unsaturated Hydrocarbons</h2>
+  <div class="card">
+    <h3>Definition</h3>
+    <p>Alkenes contain at least one carbon–carbon double bond. General formula: <strong>CₙH₂ₙ</strong></p>
+    <p>They are <strong>unsaturated</strong> — they decolourise bromine water and acidified KMnO₄ by addition reactions at the double bond.</p>
+  </div>
+  <h3>First 5 Alkenes</h3>
+  <table>
+    <tr><th>Name</th><th>Formula</th><th>B.P (°C)</th></tr>
+    <tr><td>Ethene</td><td>C₂H₄</td><td>–104</td></tr>
+    <tr><td>Propene</td><td>C₃H₆</td><td>–47.7</td></tr>
+    <tr><td>But-1-ene</td><td>C₄H₈</td><td>–6.2</td></tr>
+    <tr><td>Pent-1-ene</td><td>C₅H₁₀</td><td>30</td></tr>
+    <tr><td>Hex-1-ene</td><td>C₆H₁₂</td><td>63.5</td></tr>
+  </table>
+  <div class="card">
+    <h3>Lab Preparation of Ethene</h3>
+    <p>Ethanol + concentrated H₂SO₄ heated to 160–180°C (dehydration):</p>
+    <div class="eq">C₂H₅OH(l) → C₂H₄(g) + H₂O(l)  [conc. H₂SO₄, 160–180°C]</div>
+  </div>
+  <div class="card">
+    <h3>Reactions of Ethene (Addition Reactions)</h3>
+    <p>The double bond is the reactive site:</p>
+    <table>
+      <tr><th>Reagent</th><th>Product</th><th>Observation</th></tr>
+      <tr><td>Br₂(aq) — bromine water</td><td>1,2-dibromoethane</td><td>Red-brown decolourised</td></tr>
+      <tr><td>KMnO₄ (acidified)</td><td>Ethan-1,2-diol</td><td>Purple → colourless</td></tr>
+      <tr><td>H₂ (hydrogenation)</td><td>Ethane</td><td>Ni catalyst, 200°C</td></tr>
+      <tr><td>HBr</td><td>Bromoethane</td><td>Addition across double bond</td></tr>
+    </table>
+    <p><strong>Polymerisation of Ethene → Polythene:</strong></p>
+    <div class="eq">nCH₂=CH₂ → –(CH₂–CH₂)ₙ–  [2000°C, 1000 atm, O₂ catalyst]</div>
+    <p>Polythene uses: domestic containers, pipes, reagent bottles.</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: Alkynes -->
+<div class="slide" id="s4">
+  <h2>Alkynes – Highly Unsaturated Hydrocarbons</h2>
+  <div class="card">
+    <h3>Definition</h3>
+    <p>Alkynes contain at least one carbon–carbon triple bond. General formula: <strong>CₙH₂ₙ₋₂</strong></p>
+    <p>Functional group: –C≡C– (triple bond)</p>
+  </div>
+  <h3>First 4 Alkynes</h3>
+  <table>
+    <tr><th>Name</th><th>Formula</th><th>Structural</th></tr>
+    <tr><td>Ethyne</td><td>C₂H₂</td><td>HC≡CH</td></tr>
+    <tr><td>Propyne</td><td>C₃H₄</td><td>CH₃C≡CH</td></tr>
+    <tr><td>But-1-yne</td><td>C₄H₆</td><td>CH₃CH₂C≡CH</td></tr>
+    <tr><td>Pent-1-yne</td><td>C₅H₈</td><td>CH₃(CH₂)₂C≡CH</td></tr>
+  </table>
+  <div class="card">
+    <h3>Lab Preparation of Ethyne</h3>
+    <p>Calcium carbide + water at room temperature:</p>
+    <div class="eq">CaC₂(s) + 2H₂O(l) → C₂H₂(g) + Ca(OH)₂(aq)</div>
+    <p>Collected over water (insoluble, lighter than water).</p>
+  </div>
+  <div class="card">
+    <h3>Reactions of Ethyne</h3>
+    <p><strong>Combustion:</strong> Burns with a luminous sooty flame (high C content).</p>
+    <div class="eq">2C₂H₂(g) + 5O₂(g) → 4CO₂(g) + 2H₂O(g)</div>
+    <p><strong>Addition with Br₂:</strong> Decolourises bromine water (two stages — triple bond breaks).</p>
+    <div class="eq">C₂H₂ + Br₂ → CHBr=CHBr → CHBr₂–CHBr₂ (1,1,2,2-tetrabromoethane)</div>
+    <p><strong>Addition with H₂ (hydrogenation):</strong> Ni catalyst, ~200°C → ethene then ethane.</p>
+    <p><strong>Test for alkynes:</strong> Decolourise bromine water and acidified KMnO₄ (like alkenes).</p>
+    <p><strong>Uses of ethyne:</strong> Oxy-acetylene welding and cutting metals; manufacture of adhesives and plastics.</p>
+  </div>
+</div>
+
+<!-- SLIDE 5: Homologous Series & Isomerism -->
+<div class="slide" id="s5">
+  <h2>Homologous Series, Isomerism & Nomenclature</h2>
+  <div class="card">
+    <h3>Homologous Series</h3>
+    <p>A group of organic compounds that:</p>
+    <ul>
+      <li>Have the same general formula</li>
+      <li>Consecutive members differ by –CH₂–</li>
+      <li>Have similar chemical properties</li>
+      <li>Show a steady gradation of physical properties</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Isomerism</h3>
+    <p>Two or more compounds with the same <strong>molecular formula</strong> but different <strong>structural formulae</strong>.</p>
+    <p>Example: Butane (C₄H₁₀) has two structural isomers:</p>
+    <ul>
+      <li>n-butane: CH₃CH₂CH₂CH₃</li>
+      <li>2-methylpropane: (CH₃)₃CH</li>
+    </ul>
+    <p>Alkenes show: <strong>branching isomerism</strong> and <strong>positional isomerism</strong> (position of double bond).</p>
+  </div>
+  <div class="card">
+    <h3>Naming Rules (IUPAC Nomenclature)</h3>
+    <p><strong>Alkanes:</strong> Suffix <em>-ane</em>. For branched chains:
+      <ol>
+        <li>Find longest carbon chain (parent name)</li>
+        <li>Number carbons so branches get lowest numbers</li>
+        <li>Name substituents (methyl, ethyl, etc.) as prefixes</li>
+      </ol>
+    </p>
+    <p><strong>Alkenes:</strong> Suffix <em>-ene</em>. Double bond position stated (e.g. but-2-ene).</p>
+    <p><strong>Alkynes:</strong> Suffix <em>-yne</em>. Triple bond position stated (e.g. pent-2-yne).</p>
+    <p><strong>Alkyl groups:</strong> Alkane minus one H → methyl (–CH₃), ethyl (–C₂H₅), propyl (–C₃H₇)</p>
+  </div>
+  <div class="card">
+    <h3>Test to Distinguish Saturated vs Unsaturated</h3>
+    <table>
+      <tr><th>Test</th><th>Saturated</th><th>Unsaturated</th></tr>
+      <tr><td>Bromine water</td><td>No change (red-brown persists)</td><td>Decolourised</td></tr>
+      <tr><td>Acidified KMnO₄</td><td>Purple persists</td><td>Purple → colourless</td></tr>
+    </table>
+    <div class="warn">💡 Decolourisation proves the presence of a double or triple bond (unsaturation).</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Summary Comparison -->
+<div class="slide" id="s6">
+  <h2>Comparison Summary: Alkanes vs Alkenes vs Alkynes</h2>
+  <table>
+    <tr><th>Feature</th><th>Alkanes</th><th>Alkenes</th><th>Alkynes</th></tr>
+    <tr><td>General formula</td><td>CₙH₂ₙ₊₂</td><td>CₙH₂ₙ</td><td>CₙH₂ₙ₋₂</td></tr>
+    <tr><td>Bonds</td><td>Single (C–C)</td><td>Double (C=C)</td><td>Triple (C≡C)</td></tr>
+    <tr><td>Saturation</td><td>Saturated</td><td>Unsaturated</td><td>Highly unsaturated</td></tr>
+    <tr><td>Reaction type</td><td>Substitution</td><td>Addition</td><td>Addition (2 stages)</td></tr>
+    <tr><td>Bromine water</td><td>No change</td><td>Decolourises</td><td>Decolourises</td></tr>
+    <tr><td>KMnO₄ (acidified)</td><td>No change</td><td>Decolourises</td><td>Decolourises</td></tr>
+    <tr><td>Simplest member</td><td>Methane (CH₄)</td><td>Ethene (C₂H₄)</td><td>Ethyne (C₂H₂)</td></tr>
+    <tr><td>Preparation</td><td>Sodium salt + NaOH</td><td>Dehydration of ethanol</td><td>CaC₂ + H₂O</td></tr>
+  </table>
+  <div class="card" style="margin-top:14px">
+    <h3>Key Reactions Summary</h3>
+    <p><strong>Alkane combustion:</strong></p>
+    <div class="eq">CₙH₂ₙ₊₂ + O₂ → CO₂ + H₂O</div>
+    <p><strong>Alkane substitution (halogenation):</strong></p>
+    <div class="eq">CH₄ + Br₂ → CH₃Br + HBr  [UV light]</div>
+    <p><strong>Alkene addition (hydrogenation):</strong></p>
+    <div class="eq">CH₂=CH₂ + H₂ → CH₃–CH₃  [Ni, ~200°C]</div>
+    <p><strong>Polymerisation:</strong></p>
+    <div class="eq">nCH₂=CH₂ → –(CH₂–CH₂)ₙ–  (polythene)</div>
+  </div>
+</div>
+
+<!-- SLIDE 7: Crude Oil & Environmental Context -->
+<div class="slide" id="s7">
+  <h2>Crude Oil, Natural Gas & Environmental Context</h2>
+  <div class="card">
+    <h3>Natural Sources of Alkanes</h3>
+    <ul>
+      <li><strong>Natural gas:</strong> Mainly methane (CH₄)</li>
+      <li><strong>Crude oil:</strong> Mixture of many alkanes; separated by fractional distillation</li>
+      <li><strong>Biogas:</strong> 60–75% methane (from decomposition of organic matter)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Gradation of Physical Properties in Alkane Series</h3>
+    <p>As the number of carbon atoms increases in the alkane homologous series:</p>
+    <ul>
+      <li>Boiling point increases (stronger van der Waals forces)</li>
+      <li>Viscosity increases</li>
+      <li>Colour intensity increases</li>
+      <li>Flammability decreases</li>
+      <li>State changes from gas → liquid → solid</li>
+    </ul>
+    <div class="warn">⚠️ A mixture of methane and air (ratio ~1:10) is explosive when ignited — the cause of coal mine explosions.</div>
+  </div>
+  <div class="card">
+    <h3>Cracking</h3>
+    <p>Cracking breaks large alkane molecules into smaller, more useful molecules including alkenes:</p>
+    <div class="eq">C₁₀H₂₂ → C₄H₈ + C₃H₆ + CH₄ + H₂  [400–700°C, catalyst]</div>
+    <p>Cracking is important industrially to produce petrol and alkenes for polymer manufacture.</p>
+  </div>
+  <div class="card">
+    <h3>Uses of Hydrocarbons</h3>
+    <table>
+      <tr><th>Hydrocarbon</th><th>Uses</th></tr>
+      <tr><td>Methane</td><td>Fuel, manufacture of methanol, ammonia, carbon black</td></tr>
+      <tr><td>Ethene</td><td>Make polythene, ethanol, glycol (antifreeze), PVC</td></tr>
+      <tr><td>Ethyne</td><td>Oxy-acetylene welding, adhesives, plastics</td></tr>
+      <tr><td>Crude oil fractions</td><td>Fuels, lubricants, road tar</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 8: Functional Groups & Organic Reactions -->
+<div class="slide" id="s8">
+  <h2>Functional Groups, Reactions & Key Equations</h2>
+  <div class="card">
+    <h3>Important Functional Groups</h3>
+    <table>
+      <tr><th>Group</th><th>Name</th><th>Example</th></tr>
+      <tr><td>–OH</td><td>Hydroxyl (alcohol)</td><td>Ethanol (C₂H₅OH)</td></tr>
+      <tr><td>–COOH</td><td>Carboxyl (acid)</td><td>Ethanoic acid</td></tr>
+      <tr><td>C=C</td><td>Alkene double bond</td><td>Ethene</td></tr>
+      <tr><td>C≡C</td><td>Alkyne triple bond</td><td>Ethyne</td></tr>
+      <tr><td>–X (halogen)</td><td>Halogenoalkane</td><td>Chloroethane</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Complete Combustion vs Incomplete Combustion</h3>
+    <p><strong>Complete combustion</strong> (excess O₂): CO₂ + H₂O, pale blue flame</p>
+    <div class="eq">C₄H₁₀ + 6½O₂ → 4CO₂ + 5H₂O</div>
+    <p><strong>Incomplete combustion</strong> (limited O₂): CO + C (soot) + H₂O, luminous sooty flame</p>
+    <div class="warn">💡 A sooty flame when a hydrocarbon burns is an indication of unsaturation or high carbon content.</div>
+  </div>
+  <div class="card">
+    <h3>All Key Reactions at a Glance</h3>
+    <p><strong>Methane + NaOH (lab prep):</strong></p>
+    <div class="eq">CH₃COONa + NaOH → CH₄ + Na₂CO₃ [heat]</div>
+    <p><strong>Ethene + H₂SO₄ (industrial ethanol):</strong></p>
+    <div class="eq">CH₂=CH₂ + H₂SO₄ → CH₃CH₂HSO₄ → CH₃CH₂OH [hydrolysis]</div>
+    <p><strong>Ethyne + CaC₂:</strong></p>
+    <div class="eq">CaC₂ + 2H₂O → HC≡CH + Ca(OH)₂</div>
+    <p><strong>Butene + Br₂:</strong></p>
+    <div class="eq">CH₃CH=CHCH₃ + Br₂ → CH₃CHBr–CHBrCH₃</div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="q-block">
+    <div class="q">1. What is the general formula for alkenes?</div>
+    <input type="text" id="q1" placeholder="Type your answer...">
+    <button class="btn-check" onclick="checkFill('q1','CnH2n',['cnh2n','cnh₂n','cn h2n'])">Check</button>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">2. Name the process used to break large alkane molecules into smaller ones.</div>
+    <input type="text" id="q2" placeholder="Type your answer...">
+    <button class="btn-check" onclick="checkFill('q2','cracking',['cracking'])">Check</button>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">3. What observation confirms an alkene is present when tested with bromine water?</div>
+    <input type="text" id="q3" placeholder="Type your answer...">
+    <button class="btn-check" onclick="checkFill('q3','bromine water is decolourised',['decolourised','decolorized','decolourized','colourless','turns colourless'])">Check</button>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">4. Write the equation for the lab preparation of ethyne from calcium carbide.</div>
+    <input type="text" id="q4" placeholder="Type your answer...">
+    <button class="btn-check" onclick="checkFill('q4','CaC2 + 2H2O → C2H2 + Ca(OH)2',['cac2','calcium carbide','c2h2','ethyne'])">Check</button>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">5. State TWO differences between ethanol and dimethyl ether (both have formula C₂H₆O).</div>
+    <input type="text" id="q5" placeholder="Type your answer...">
+    <button class="btn-check" onclick="checkFill('q5','isomers with different properties',['ethanol','liquid','boiling','ether','gas','isomer'])">Check</button>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz – Organic Chemistry I</h2>
+  <p style="font-size:.85rem;color:var(--sub);margin-bottom:14px;">Answer all questions. Fill-in-blank questions are auto-graded. Short answer questions use keyword matching.</p>
+
+  <div class="quiz-block">
+    <div class="qn">Q1. The general formula for alkynes is ___.</div>
+    <input type="text" id="fib1" placeholder="e.g. CnH..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q2. Alkanes are called ___ hydrocarbons because they cannot decolourise bromine water.</div>
+    <input type="text" id="fib2" placeholder="one word..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q3. The catalyst used in the hydrogenation of ethene is ___.</div>
+    <input type="text" id="fib3" placeholder="metal name..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q4. Polythene is formed by the ___ of ethene molecules.</div>
+    <input type="text" id="fib4" placeholder="process name..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q5. Explain what is meant by a homologous series and give two characteristics.</div>
+    <textarea id="sa1" placeholder="Write your answer here..."></textarea>
+    <div id="sa1-tags"></div>
+    <div class="model-ans" id="sa1-model">A homologous series is a group of organic compounds with the same general formula, where consecutive members differ by a –CH₂– unit. They have similar chemical properties and show a steady gradation of physical properties.</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q6. Describe the test for an unsaturated hydrocarbon and state the expected result.</div>
+    <textarea id="sa2" placeholder="Write your answer here..."></textarea>
+    <div id="sa2-tags"></div>
+    <div class="model-ans" id="sa2-model">Add bromine water to the compound. If the compound is unsaturated (alkene or alkyne), the red-brown bromine water is decolourised. Alternatively, acidified potassium manganate(VII) can be used — the purple colour turns colourless with unsaturated compounds.</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q7. Write the equation for the complete combustion of propane (C₃H₈).</div>
+    <textarea id="sa3" placeholder="Write balanced equation..." rows="2"></textarea>
+    <div id="sa3-tags"></div>
+    <div class="model-ans" id="sa3-model">C₃H₈(g) + 5O₂(g) → 3CO₂(g) + 4H₂O(g)</div>
+  </div>
+
+  <button class="btn-submit" onclick="submitExam()">Submit Quiz</button>
+  <div id="score-box" style="display:none;margin-top:18px;">
+    <div id="score-circle"></div>
+    <div id="score-msg" style="font-size:1rem;font-weight:600;margin-bottom:8px;"></div>
+    <div id="score-detail" style="font-size:.87rem;color:var(--sub);"></div>
+    <div class="rubric">
+      <h4>CBC Assessment Rubric</h4>
+      <table>
+        <tr><th>Score</th><th>Performance Level</th><th>Descriptor</th></tr>
+        <tr><td>85–100%</td><td>Exceeding Expectation</td><td>Thorough understanding of hydrocarbons</td></tr>
+        <tr><td>70–84%</td><td>Meeting Expectation</td><td>Good grasp of key concepts</td></tr>
+        <tr><td>50–69%</td><td>Approaching Expectation</td><td>Basic understanding, needs revision</td></tr>
+        <tr><td>0–49%</td><td>Below Expectation</td><td>Review organic chemistry fundamentals</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+const TOTAL = 10;
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+
+function buildDots(){
+  const dc = document.getElementById('dots');
+  for(let i=0;i<TOTAL;i++){
+    const s=document.createElement('span');
+    s.onclick=()=>goTo(i);
+    dc.appendChild(s);
+  }
+  updateDots();
+}
+
+function updateDots(){
+  document.querySelectorAll('#dots span').forEach((s,i)=>{
+    s.classList.toggle('active',i===current);
+  });
+  document.getElementById('slide-indicator').textContent=(current+1)+' / '+TOTAL;
+  document.getElementById('progress-bar').style.width=((current+1)/TOTAL*100)+'%';
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').disabled=current===TOTAL-1;
+}
+
+function goTo(n){
+  slides[current].classList.remove('active');
+  current=n;
+  slides[current].classList.add('active');
+  updateDots();
+  window.scrollTo(0,0);
+}
+
+function changeSlide(d){goTo(current+d);}
+
+function checkFill(id,correct,keywords){
+  const inp=document.getElementById(id);
+  const val=inp.value.trim().toLowerCase();
+  const fb=document.getElementById(id+'-fb');
+  const hit=keywords.some(k=>val.includes(k.toLowerCase()));
+  inp.className=hit?'correct':'wrong';
+  fb.className='feedback show';
+  fb.style.color=hit?'var(--ok)':'var(--no)';
+  fb.textContent=hit?'✓ Correct!':'✗ Expected: '+correct;
+}
+
+// Quiz grading
+const FIB_ANSWERS=[
+  {id:'fib1',answer:'CnH2n-2',keys:['cnh2n-2','cnh₂n₋₂','cnh2n','2n-2']},
+  {id:'fib2',answer:'saturated',keys:['saturated']},
+  {id:'fib3',answer:'nickel (Ni)',keys:['nickel','ni']},
+  {id:'fib4',answer:'polymerisation',keys:['polymerisation','polymerization']},
+];
+
+const SA_QUESTIONS=[
+  {id:'sa1',keys:['general formula','consecutive','ch2','differ','homologous','same','chemical properties'],required:3,modelId:'sa1-model'},
+  {id:'sa2',keys:['bromine water','decolourised','decolorized','unsaturated','double','purple','colourless','kmnO4','acidified'],required:3,modelId:'sa2-model'},
+  {id:'sa3',keys:['c3h8','o2','co2','h2o','5','3','4','propane','combustion'],required:3,modelId:'sa3-model'},
+];
+
+function submitExam(){
+  let score=0, total=0;
+
+  // FIB (4 x 2 marks each = 8)
+  FIB_ANSWERS.forEach(q=>{
+    total+=2;
+    const val=(document.getElementById(q.id).value||'').trim().toLowerCase();
+    const hit=q.keys.some(k=>val.includes(k));
+    if(hit) score+=2;
+    document.getElementById(q.id).style.borderColor=hit?'var(--ok)':'var(--no)';
+    document.getElementById(q.id).style.background=hit?'#e8f5e9':'#ffebee';
+  });
+
+  // Short answer (3 x 4 marks each = 12) → keyword matching
+  SA_QUESTIONS.forEach(q=>{
+    total+=4;
+    const val=(document.getElementById(q.id).value||'').trim().toLowerCase();
+    const found=q.keys.filter(k=>val.includes(k.toLowerCase()));
+    const missed=q.keys.filter(k=>!val.includes(k.toLowerCase()));
+    const pts=Math.min(4,Math.round((found.length/q.required)*4));
+    score+=pts;
+    // Show tags
+    const tagDiv=document.getElementById(q.id+'-tags');
+    tagDiv.innerHTML=found.map(k=>`<span class="tag found">✓ ${k}</span>`).join('')+
+      missed.slice(0,4).map(k=>`<span class="tag missed">✗ ${k}</span>`).join('');
+    // Show model answer
+    document.getElementById(q.modelId).classList.add('show');
+  });
+
+  const pct=Math.round(score/total*100);
+  document.getElementById('score-box').style.display='block';
+  document.getElementById('score-circle').textContent=pct+'%';
+  document.getElementById('score-msg').textContent=
+    pct>=85?'🏆 Excellent! Exceeding Expectation':
+    pct>=70?'✅ Well done! Meeting Expectation':
+    pct>=50?'📘 Approaching Expectation — keep revising':
+    '📝 Below Expectation — review hydrocarbons';
+  document.getElementById('score-detail').textContent=`Score: ${score} / ${total} marks`;
+  document.getElementById('score-box').scrollIntoView({behavior:'smooth'});
+
+  if(typeof submitExamToMTTI === 'function') submitExamToMTTI(score, total, pct);
+}
+
+buildDots();
+</script>
+</body>
+</html>

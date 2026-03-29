@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Biology | Evolution</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a2e1a;--sub:#4a6a4a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{position:sticky;top:0;z-index:100;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;box-shadow:0 2px 8px #0005;}
+#topbar .meta{font-size:.75rem;opacity:.8;}
+#topbar .title{font-weight:700;font-size:.95rem;text-align:center;flex:1;}
+#slide-counter{font-size:.78rem;background:#ffffff28;padding:3px 10px;border-radius:20px;}
+#dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px;flex-wrap:wrap;}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+#slides-wrap{max-width:820px;margin:0 auto;padding:12px 14px 80px;}
+.slide{display:none;animation:fadeIn .35s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;padding:14px 18px;border-radius:12px 12px 0 0;font-size:1.1rem;font-weight:700;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:18px;box-shadow:0 2px 12px #0001;}
+.info-card{background:#f0f7f0;border-left:4px solid var(--pri);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.warn-card{background:#fff8e1;border-left:4px solid var(--acc);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.danger-card{background:#fce8e8;border-left:4px solid var(--no);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.def-box{background:var(--pri);color:#fff;border-radius:10px;padding:13px 16px;margin:12px 0;font-size:.95rem;}
+h3{color:var(--pri);margin:14px 0 7px;font-size:1rem;}
+h4{color:var(--sub);margin:10px 0 5px;font-size:.93rem;}
+p,li{font-size:.93rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:20px;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.86rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e8e0;}
+tr:nth-child(even) td{background:#f5faf5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:13px;}
+.col-card h4{color:var(--pri);margin-top:0;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e0e8e0;display:flex;justify-content:center;align-items:center;gap:14px;padding:10px 16px;z-index:99;}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}
+.btn-pri:hover{background:#0d7a36;}
+.btn-sec{background:#e8f0e8;color:var(--pri);}
+.btn-sec:hover{background:#d0e4d0;}
+.btn-acc{background:var(--acc);color:#fff;}
+.q-block{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:15px;margin:14px 0;}
+.q-block p{font-weight:600;margin-bottom:8px;}
+.fill-input{width:100%;padding:9px 12px;border:2px solid #cde;border-radius:7px;font-size:.92rem;margin-top:5px;}
+.fill-input:focus{outline:none;border-color:var(--pri);}
+textarea.fill-input{resize:vertical;min-height:70px;}
+.feedback{margin-top:8px;padding:8px 12px;border-radius:7px;font-size:.87rem;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--ok);display:block;}
+.feedback.wrong{background:#fce8e8;border:1px solid #ef9a9a;color:var(--no);display:block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;margin:2px;}
+.tag.found{background:#c8e6c9;color:#1b5e20;}
+.tag.missed{background:#ffcdd2;color:#b71c1c;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric strong{color:#e65100;}
+#score-board{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:14px;}
+#score-board .big{font-size:2.5rem;font-weight:800;}
+.practice-q{background:#f0f7ff;border:1px solid #bbdefb;border-radius:9px;padding:14px;margin:12px 0;}
+.practice-q p{font-weight:600;color:#1565c0;}
+.reveal-btn{margin-top:8px;background:#1565c0;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;}
+.answer-reveal{display:none;margin-top:10px;background:#e3f2fd;border-radius:7px;padding:10px;font-size:.87rem;}
+.outcome-list li{margin:6px 0;padding:6px 10px;background:#f0f7f0;border-radius:6px;border-left:3px solid var(--acc);}
+/* THEORY CARDS */
+.theory-card{border-radius:12px;padding:16px;margin:12px 0;border:2px solid;}
+.lamarck{background:#f3e5f5;border-color:#9c27b0;}
+.darwin{background:#e3f2fd;border-color:#1565c0;}
+.theory-card h4{margin:0 0 8px;font-size:.98rem;}
+/* EVIDENCE GRID */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0;}
+.ev-card{border-radius:10px;padding:14px;border:1px solid;}
+.ev-fossil{background:#fff3e0;border-color:#ff9800;}
+.ev-anatomy{background:#e8f5e9;border-color:#4caf50;}
+.ev-embryo{background:#e3f2fd;border-color:#2196f3;}
+.ev-sero{background:#fce4ec;border-color:#e91e63;}
+.ev-geo{background:#f3e5f5;border-color:#9c27b0;}
+.ev-cell{background:#e8eaf6;border-color:#3f51b5;}
+.ev-card h4{margin:0 0 7px;font-size:.93rem;}
+/* MOTH DIAGRAM */
+.moth-box{display:flex;gap:14px;margin:12px 0;flex-wrap:wrap;}
+.moth-card{flex:1;min-width:150px;border-radius:10px;padding:14px;text-align:center;border:2px solid;}
+.moth-white{background:#f9f9f9;border-color:#aaa;}
+.moth-black{background:#2d2d2d;color:#fff;border-color:#111;}
+.moth-icon{font-size:2.2rem;margin-bottom:6px;}
+/* COMPARISON TABLE */
+.vs-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.78rem;font-weight:700;}
+.vs-accept{background:#c8e6c9;color:#1b5e20;}
+.vs-reject{background:#ffcdd2;color:#b71c1c;}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="meta">F4 Biology</div>
+  <div class="title">🦕 Evolution</div>
+  <div id="slide-counter">1 / 10</div>
+</div>
+
+<div id="dots"></div>
+<div id="slides-wrap">
+
+<!-- SLIDE 1: LEARNING OUTCOMES -->
+<div class="slide active" id="s1">
+  <div class="slide-title">🎯 Learning Outcomes</div>
+  <div class="slide-body">
+    <div class="info-card">By the end of this lesson, you should be able to:</div>
+    <ul class="outcome-list">
+      <li>Define evolution and distinguish organic from chemical evolution</li>
+      <li>Describe six types of evidence for evolution</li>
+      <li>Explain homologous, analogous and vestigial structures</li>
+      <li>Compare Lamarck's and Darwin's theories of evolution</li>
+      <li>Explain natural selection and its advantages to organisms</li>
+      <li>Describe industrial melanism (peppered moth) as an example of natural selection</li>
+      <li>Explain the significance of mutation and sexual reproduction in evolution</li>
+      <li>State evolutionary characteristics of Homo sapiens vs Homo habilis</li>
+    </ul>
+    <div class="warn-card">📚 <strong>Source:</strong> Form IV Biology Notes — Topic 2: Evolution</div>
+  </div>
+</div>
+
+<!-- SLIDE 2: WHAT IS EVOLUTION -->
+<div class="slide" id="s2">
+  <div class="slide-title">🌍 What is Evolution?</div>
+  <div class="slide-body">
+    <div class="def-box">🌍 <strong>Evolution:</strong> A gradual change in living organisms from simple life forms to more complex forms over a long period of time.</div>
+
+    <h3>Theories of Origin of Life</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Organic Evolution</h4>
+        <p>Present forms of organisms emerged gradually from <strong>pre-existing forms</strong> (some of which no longer exist). Organisms changed over millions of years.</p>
+      </div>
+      <div class="col-card">
+        <h4>Chemical Evolution</h4>
+        <p>Life originated when <strong>simple chemical compounds reacted</strong> to form the simplest life forms. Explains how life first began from non-living chemicals.</p>
+      </div>
+    </div>
+
+    <div class="col-card" style="margin:12px 0;border:1px solid #d0e8d0;border-radius:10px;padding:13px;">
+      <h4>Special Creation</h4>
+      <p>Maintains that the whole universe and all living organisms came into being due to the act of a <strong>supernatural being</strong>. Not a scientific theory.</p>
+    </div>
+
+    <h3>Human Evolution — Key Differences</h3>
+    <table>
+      <tr><th>Feature</th><th>Homo habilis</th><th>Homo sapiens</th></tr>
+      <tr><td>Posture</td><td>Semi-upright</td><td>Fully upright/erect</td></tr>
+      <tr><td>Brain capacity</td><td>Smaller brain</td><td>Much larger brain/higher intellect</td></tr>
+      <tr><td>Communication</td><td>Limited</td><td>Complex language and speech</td></tr>
+    </table>
+
+    <h3>Evolutionary Adaptations of Humans</h3>
+    <div class="info-card">
+      Key evolutionary characteristics: <strong>Large brain</strong> (intelligence) | <strong>Forward-facing eyes</strong> (depth perception) | <strong>Upright posture / bipedal locomotion</strong> | <strong>Prehensile hands/arms</strong> (grasping) | <strong>Speech</strong> (complex communication)
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: EVIDENCE FOR EVOLUTION -->
+<div class="slide" id="s3">
+  <div class="slide-title">🔍 Evidence for Evolution</div>
+  <div class="slide-body">
+    <div class="ev-grid">
+      <div class="ev-card ev-fossil">
+        <h4>🦴 1. Fossils</h4>
+        <p>Remains of organisms preserved in natural materials for millions of years. Show types of organisms that existed long ago and structural changes over time (e.g. human skull, horse leg).</p>
+      </div>
+      <div class="ev-card ev-anatomy">
+        <h4>🦴 2. Comparative Anatomy</h4>
+        <p>Similar structures in different organisms suggest common ancestry. Key concepts: <strong>homologous structures</strong>, <strong>analogous structures</strong>, <strong>vestigial structures</strong>, adaptive radiation, convergence, divergence.</p>
+      </div>
+      <div class="ev-card ev-embryo">
+        <h4>🐣 3. Comparative Embryology</h4>
+        <p>Embryos of different animals appear very similar — shows relationship and common ancestry. e.g. vertebrate embryos all have gill slits early in development.</p>
+      </div>
+      <div class="ev-card ev-sero">
+        <h4>🩸 4. Comparative Serology</h4>
+        <p>Biochemical and immunological comparisons of blood — antigen-antibody reactions, blood groups, Rh factor — show relatedness and common ancestry.</p>
+      </div>
+      <div class="ev-card ev-geo">
+        <h4>🗺️ 5. Geographical Distribution</h4>
+        <p>Organisms differ by region due to continental drift (Pangea → present continents). Isolation led to different evolution patterns — e.g. marsupials in Australia, llamas in S. America.</p>
+      </div>
+      <div class="ev-card ev-cell">
+        <h4>🔬 6. Cell Biology (Cytology)</h4>
+        <p>Similar cell structures and organelles (e.g. mitochondria) in all organisms point to a common ancestry.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: STRUCTURAL EVIDENCE -->
+<div class="slide" id="s4">
+  <div class="slide-title">🦴 Comparative Anatomy — Structural Evidence</div>
+  <div class="slide-body">
+
+    <h3>Homologous Structures</h3>
+    <div class="def-box">🦴 <strong>Homologous structures:</strong> Have a common embryonic origin but are modified to perform <em>different functions</em> in different organisms.</div>
+    <div class="info-card">
+      Example: The <strong>pentadactyl limb</strong> — the forelimb of vertebrates (human arm, whale flipper, bat wing, horse leg) all share the same basic bone structure (humerus, radius, ulna, carpals, phalanges) but serve different functions.
+    </div>
+    <div class="warn-card">🔑 <strong>Divergence / Adaptive Radiation:</strong> A basic structural form modified to serve different functions in different environments — e.g. beaks of Darwin's finches, birds' feet, vertebrate forelimbs.</div>
+
+    <h3>Analogous Structures</h3>
+    <div class="def-box" style="background:#1565c0;">🦋 <strong>Analogous structures:</strong> Different structures modified to perform a <em>similar function</em> but with NO common embryonic origin.</div>
+    <div class="info-card">Example: Wings of birds and wings of insects — both used for flying but developed from completely different structures. Also: eyes of humans vs eyes of octopuses.</div>
+    <div class="warn-card">🔑 <strong>Convergence:</strong> Different organisms evolving similar structures to adapt to similar environments.</div>
+
+    <h3>Vestigial Structures</h3>
+    <div class="def-box" style="background:#6a1b9a;">🔻 <strong>Vestigial structures:</strong> Greatly reduced in size and have ceased to function — remnants of structures that were useful in ancestors.</div>
+    <table>
+      <tr><th>Organism</th><th>Vestigial Structure</th></tr>
+      <tr><td>Humans</td><td>Appendix, coccyx, nictitating membrane, ear muscles, body hair</td></tr>
+      <tr><td>Kiwi (flightless bird)</td><td>Reduced wings</td></tr>
+      <tr><td>Python</td><td>Hind limb pad</td></tr>
+      <tr><td>Whale</td><td>Pelvic girdle</td></tr>
+      <tr><td>Insects</td><td>Halteres (modified hindwings)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 5: THEORIES OF EVOLUTION -->
+<div class="slide" id="s5">
+  <div class="slide-title">📜 Theories of Evolution: Lamarck vs Darwin</div>
+  <div class="slide-body">
+
+    <div class="theory-card lamarck">
+      <h4 style="color:#6a1b9a;">🧪 Lamarck's Theory — "Use and Disuse"</h4>
+      <ul>
+        <li>Organisms develop characteristics in response to their <strong>environment</strong></li>
+        <li><strong>Use</strong> of a body part leads to its development; <strong>disuse</strong> leads to degeneration</li>
+        <li>These <strong>acquired characteristics are inherited</strong> by offspring</li>
+        <li>Example: Giraffes stretched their necks reaching for leaves → longer necks passed to offspring</li>
+      </ul>
+      <div style="margin-top:10px;"><span class="vs-badge vs-reject">❌ NOT accepted today</span></div>
+    </div>
+
+    <div class="warn-card"><strong>Why Lamarck's theory is rejected:</strong> Evidence does NOT support it. Acquired characteristics are NOT inherited — inherited characteristics are found only in <strong>reproductive cells (gametes)</strong>, not in body cells that are changed by use/environment.</div>
+
+    <div class="theory-card darwin">
+      <h4 style="color:#1565c0;">🌿 Darwin's Theory — "Natural Selection"</h4>
+      <ul>
+        <li>Variations arise <strong>spontaneously</strong> (by chance) in a population</li>
+        <li>Some variations give the organism an <strong>advantage</strong> in its environment</li>
+        <li>Advantaged organisms <strong>survive and reproduce</strong> ("survival of the fittest")</li>
+        <li>The <strong>favourable characteristic is inherited</strong> by offspring</li>
+        <li>Unfavourable variations lead to elimination from the population</li>
+      </ul>
+      <div style="margin-top:10px;"><span class="vs-badge vs-accept">✅ Accepted by biologists</span></div>
+    </div>
+
+    <h3>Comparison</h3>
+    <table>
+      <tr><th>Aspect</th><th>Lamarck</th><th>Darwin</th></tr>
+      <tr><td>Cause of variation</td><td>Environment/use of body parts</td><td>Spontaneous random variation</td></tr>
+      <tr><td>Inheritance</td><td>Acquired characteristics inherited</td><td>Only genetic variations inherited</td></tr>
+      <tr><td>Mechanism</td><td>Use and disuse</td><td>Natural selection</td></tr>
+      <tr><td>Status</td><td>Rejected</td><td>Accepted</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 6: NATURAL SELECTION -->
+<div class="slide" id="s6">
+  <div class="slide-title">🌿 Natural Selection</div>
+  <div class="slide-body">
+    <div class="def-box">🌿 <strong>Natural Selection:</strong> A process where organisms with certain characteristics are favoured by the environment, tend to survive and produce viable offspring, while others not favoured are eliminated from subsequent generations.</div>
+
+    <h3>How Natural Selection Works</h3>
+    <ol>
+      <li>Organisms produce <strong>more offspring than can survive</strong> → struggle for survival</li>
+      <li>Organisms in a population show <strong>natural variation</strong></li>
+      <li>Some variations give an <strong>advantage</strong> in the environment</li>
+      <li>Advantaged organisms <strong>survive and reproduce</strong> ("survival of the fittest")</li>
+      <li>Disadvantaged organisms are <strong>eliminated</strong></li>
+      <li>If the favourable character is inherited, <strong>offspring are better adapted</strong></li>
+      <li>As environment changes, <strong>survival value of characters may change</strong></li>
+    </ol>
+
+    <h3>Advantages of Natural Selection</h3>
+    <ul>
+      <li>Eliminates disadvantageous characteristics from the population</li>
+      <li>Perpetuates advantageous characteristics</li>
+      <li>Allows better-adapted organisms to survive adverse environmental changes</li>
+    </ul>
+
+    <h3>Role of Sexual Reproduction in Evolution</h3>
+    <div class="info-card">
+      Sexual reproduction is important in evolution because it:
+      <ul>
+        <li>Brings about <strong>useful variations</strong> through recombination of genes</li>
+        <li>Makes offspring <strong>better adapted for survival</strong> and more resistant to diseases</li>
+        <li>May lead to the <strong>origin of new species</strong></li>
+      </ul>
+    </div>
+
+    <h3>Role of Mutation in Evolution</h3>
+    <div class="info-card">
+      <ul>
+        <li>Mutations bring about <strong>heritable variation</strong> in a population</li>
+        <li>Advantageous mutations → organism competes better → <strong>new adapted species/varieties</strong></li>
+        <li>Disadvantageous mutations → organism eliminated from population</li>
+        <li>Only mutations in <strong>gametes</strong> influence evolution (gametes form the new offspring)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: INDUSTRIAL MELANISM -->
+<div class="slide" id="s7">
+  <div class="slide-title">🦋 Industrial Melanism — Peppered Moth</div>
+  <div class="slide-body">
+    <div class="def-box">🦋 <strong>Industrial Melanism:</strong> A classic example of natural selection where the frequency of dark (melanic) forms of the peppered moth increased in polluted industrial areas.</div>
+
+    <div class="moth-box">
+      <div class="moth-card moth-white">
+        <div class="moth-icon">🦋</div>
+        <h4>Speckled White (Normal)</h4>
+        <ul style="text-align:left;font-size:.83rem;">
+          <li>Camouflaged on lichen-covered bark</li>
+          <li>Protected from predatory birds</li>
+          <li>Predominated in unpolluted areas</li>
+          <li>In polluted areas — easily seen and eaten</li>
+        </ul>
+      </div>
+      <div class="moth-card moth-black">
+        <div class="moth-icon" style="filter:invert(1);">🦋</div>
+        <h4>Melanic Black (Mutant)</h4>
+        <ul style="text-align:left;font-size:.83rem;">
+          <li>Arose by mutation from the white form</li>
+          <li>Camouflaged on soot-blackened bark</li>
+          <li>Selective advantage in industrial areas</li>
+          <li>Survived better where soot covered trees</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The Full Story (Step by Step)</h3>
+    <ol>
+      <li>Originally, <strong>speckled white moths predominated</strong> in unpolluted England — camouflaged on lichen-covered tree bark</li>
+      <li>Industrial pollution caused tree barks to be <strong>blackened with soot</strong></li>
+      <li>White moths on blackened bark became <strong>visible to predatory birds</strong> and were eaten</li>
+      <li>A <strong>black mutant</strong> appeared suddenly by mutation</li>
+      <li>Black moths had a <strong>selective advantage</strong> on soot-covered bark — they survived and reproduced</li>
+      <li>Over time, <strong>black moths became more common</strong> in industrial areas</li>
+      <li>White moths remained abundant in <strong>unpolluted areas</strong> (rural/forest)</li>
+    </ol>
+
+    <div class="info-card">🔑 This demonstrates: <strong>Natural selection acts on existing variation</strong>. The environment did NOT cause the mutation — it simply <em>selected for</em> the already-existing black mutant which happened to be better camouflaged.</div>
+
+    <h3>Proof that Evolution is Still Occurring</h3>
+    <ul>
+      <li>Bacteria developing <strong>resistance to antibiotics</strong> (e.g. penicillin-resistant bacteria)</li>
+      <li>Houseflies and mosquitoes becoming <strong>resistant to DDT</strong></li>
+      <li>New bacterial strains through mutation and natural selection</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 8: GEOGRAPHICAL DISTRIBUTION & SUMMARY -->
+<div class="slide" id="s8">
+  <div class="slide-title">🗺️ Geographical Distribution &amp; Summary</div>
+  <div class="slide-body">
+
+    <h3>Continental Drift and Evolution</h3>
+    <div class="info-card">
+      Present continents were once joined as one large land mass called <strong>Pangea</strong> (also Eurasia/Gondwanaland). As continents drifted apart, organisms became <strong>isolated</strong>, leading to different patterns of evolution and emergence of new species.
+    </div>
+
+    <table>
+      <tr><th>Continent</th><th>Unique Organisms (Examples)</th></tr>
+      <tr><td>Australia</td><td>Marsupials (kangaroo, koala, wallaby)</td></tr>
+      <tr><td>South America</td><td>Llama, jaguar, panther</td></tr>
+      <tr><td>Africa</td><td>Lion, camel (in N. Africa)</td></tr>
+      <tr><td>Asia</td><td>Tiger</td></tr>
+    </table>
+
+    <h3>Summary of Key Concepts</h3>
+    <table>
+      <tr><th>Concept</th><th>Definition/Key Point</th></tr>
+      <tr><td>Evolution</td><td>Gradual change from simple to complex organisms over long time</td></tr>
+      <tr><td>Natural selection</td><td>Survival and reproduction of best-adapted organisms</td></tr>
+      <tr><td>Homologous</td><td>Same embryonic origin, different functions (e.g. pentadactyl limb)</td></tr>
+      <tr><td>Analogous</td><td>Different origin, same function (e.g. bird wing vs insect wing)</td></tr>
+      <tr><td>Vestigial</td><td>Reduced non-functional remnants (e.g. human appendix)</td></tr>
+      <tr><td>Adaptive radiation</td><td>One structure modified for different functions in different niches</td></tr>
+      <tr><td>Convergence</td><td>Different structures modified for similar function</td></tr>
+      <tr><td>Lamarck</td><td>Acquired characteristics inherited — REJECTED</td></tr>
+      <tr><td>Darwin</td><td>Natural selection of random variations — ACCEPTED</td></tr>
+      <tr><td>Industrial melanism</td><td>Black peppered moth — natural selection example</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 9: PRACTICE -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="slide-body">
+
+    <div class="practice-q">
+      <p>1. Distinguish between homologous and analogous structures. Give ONE example of each.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        <strong>Homologous:</strong> Structures with the same embryonic origin but modified to perform different functions. e.g. The pentadactyl limb (human arm, whale flipper, bat wing — same bone arrangement, different uses).<br><br>
+        <strong>Analogous:</strong> Structures with different origins but modified to perform the same function. e.g. Wings of birds and wings of insects (both for flying, but developed from completely different structures).
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>2. Explain why Lamarck's theory of evolution is not accepted by biologists today.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        Lamarck's theory is rejected because:<br>
+        1. Evidence does NOT support the idea that acquired characteristics are inherited.<br>
+        2. Changes in body cells due to use/environment are NOT passed to offspring — only characteristics coded in <strong>gametes (reproductive cells)</strong> can be inherited.<br>
+        3. Experiments have consistently failed to demonstrate inheritance of acquired characteristics.
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>3. Using the peppered moth example, explain how natural selection operates.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        Before pollution: White/speckled moths were camouflaged on lichen-covered bark → predatory birds could not see them → they survived and reproduced. Black mutants were visible on light bark → eaten by birds → eliminated.<br><br>
+        After industrial pollution: Tree bark turned black with soot. White moths became visible → eaten. Black moths were now camouflaged → survived and reproduced in greater numbers. The environment SELECTED the better-adapted variety — this is natural selection.
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>4. State THREE pieces of evidence that evolution is still occurring today.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        1. <strong>Antibiotic resistance</strong> in bacteria — new strains of bacteria resistant to penicillin and other antibiotics have evolved through mutation and natural selection.<br>
+        2. <strong>Pesticide resistance</strong> — houseflies and mosquitoes have become resistant to DDT.<br>
+        3. <strong>Industrial melanism</strong> — the increase in black peppered moths in polluted areas represents ongoing natural selection.
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>5. Give FOUR vestigial structures found in humans and explain what they suggest about human evolution.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        Vestigial structures in humans: <strong>Appendix</strong> (remnant of larger caecum in herbivore ancestors), <strong>coccyx</strong> (remnant of a tail), <strong>nictitating membrane</strong> (third eyelid), <strong>ear muscles</strong> (for moving ears, useful in ancestors).<br><br>
+        These suggest humans share ancestry with other organisms in which these structures were functional — providing evidence that humans evolved from earlier, different life forms.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Evolution</div>
+  <div class="slide-body">
+
+    <div class="q-block">
+      <p>Q1. Evolution is defined as a gradual change in living organisms from ____________ life forms to more ____________ forms over a long period of time.</p>
+      <input class="fill-input" id="q1" placeholder="Type both words..."/>
+      <div class="feedback" id="f1"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q2. Structures that have a common embryonic origin but are modified to perform different functions are called ____________ structures.</p>
+      <input class="fill-input" id="q2" placeholder="Type your answer..."/>
+      <div class="feedback" id="f2"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q3. Name THREE vestigial structures found in the human body.</p>
+      <input class="fill-input" id="q3" placeholder="List three..."/>
+      <div class="feedback" id="f3"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q4. State ONE reason why only mutations in gametes (sex cells) can influence evolution.</p>
+      <input class="fill-input" id="q4" placeholder="Type your answer..."/>
+      <div class="feedback" id="f4"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q5. The large land mass that all present continents were once part of is called ____________.</p>
+      <input class="fill-input" id="q5" placeholder="Type your answer..."/>
+      <div class="feedback" id="f5"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q6 (Short Answer): Explain Darwin's theory of evolution by natural selection. Include the role of variation, survival and inheritance in your answer.</p>
+      <textarea class="fill-input" id="q6" placeholder="Write your explanation..."></textarea>
+      <div class="feedback" id="f6"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q7 (Short Answer): Explain how the industrial melanism of the peppered moth is evidence for natural selection. In your answer, describe what happened BEFORE and AFTER industrial pollution.</p>
+      <textarea class="fill-input" id="q7" placeholder="Write your answer..."></textarea>
+      <div class="feedback" id="f7"></div>
+    </div>
+
+    <button class="btn btn-acc" onclick="submitExam()" style="width:100%;margin-top:10px;padding:13px;font-size:1rem;">✅ Submit Quiz</button>
+    <div id="score-area"></div>
+  </div>
+</div>
+
+</div><!-- end slides-wrap -->
+
+<div id="nav">
+  <button class="btn btn-sec" id="prevBtn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <button class="btn btn-pri" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;
+let current=1;
+
+function buildDots(){
+  const c=document.getElementById('dots');
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===1?' active':'');
+    d.onclick=()=>goTo(i);
+    d.id='dot'+i;
+    c.appendChild(d);
+  }
+}
+
+function goTo(n){
+  document.querySelector('.slide.active').classList.remove('active');
+  document.getElementById('s'+n).classList.add('active');
+  document.getElementById('dot'+current).classList.remove('active');
+  if(current<n) document.getElementById('dot'+current).classList.add('done');
+  current=n;
+  document.getElementById('dot'+current).classList.add('active');
+  document.getElementById('slide-counter').textContent=current+' / '+TOTAL;
+  document.getElementById('prevBtn').disabled=current===1;
+  document.getElementById('nextBtn').disabled=current===TOTAL;
+  window.scrollTo(0,0);
+}
+
+function changeSlide(d){goTo(Math.min(Math.max(1,current+d),TOTAL));}
+
+function reveal(btn){
+  const ans=btn.nextElementSibling;
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide Answer':'Show Answer';
+}
+
+const ANSWERS={
+  q1:{kw:['simple','complex'],pts:2,need:2},
+  q2:{kw:['homologous'],pts:2},
+  q3:{kw:['appendix','coccyx','nictitating','ear muscle','body hair','caecum'],pts:3,need:3},
+  q4:{kw:['gametes','offspring','new generation','inherited','passed on','reproduce'],pts:2},
+  q5:{kw:['pangea','gondwanaland','eurasia'],pts:2},
+};
+
+function checkFill(id,fb,data){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).textContent='Please write an answer.';return 0;}
+  const found=data.kw.filter(k=>val.includes(k.toLowerCase()));
+  const need=data.need||1;
+  const got=Math.min(found.length>=need?data.pts:Math.floor((found.length/need)*data.pts),data.pts);
+  const tags=data.kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');
+  document.getElementById(fb).innerHTML=`Keywords: ${tags}`;
+  document.getElementById(fb).className='feedback '+(found.length>=need?'correct':'wrong');
+  return got;
+}
+
+function scoreShort(id,fb,kw,pts,rubric){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).innerHTML='Please write an answer.';return 0;}
+  const found=kw.filter(k=>val.includes(k.toLowerCase()));
+  const tags=kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');
+  const score=Math.min(Math.round((found.length/kw.length)*pts),pts);
+  document.getElementById(fb).innerHTML=`Keywords found: ${tags}<div class="rubric"><strong>Model Answer:</strong> ${rubric}</div>`;
+  document.getElementById(fb).className='feedback '+(score>=Math.ceil(pts/2)?'correct':'wrong');
+  return score;
+}
+
+function submitExam(){
+  let total=0,max=0;
+  total+=checkFill('q1','f1',ANSWERS.q1); max+=ANSWERS.q1.pts;
+  total+=checkFill('q2','f2',ANSWERS.q2); max+=ANSWERS.q2.pts;
+  total+=checkFill('q3','f3',ANSWERS.q3); max+=ANSWERS.q3.pts;
+  total+=checkFill('q4','f4',ANSWERS.q4); max+=ANSWERS.q4.pts;
+  total+=checkFill('q5','f5',ANSWERS.q5); max+=ANSWERS.q5.pts;
+
+  total+=scoreShort('q6','f6',
+    ['variation','spontaneous','advantage','survive','reproduce','inherit','fittest','offspring','eliminate','environment','selection'],
+    4,
+    'Darwin\'s theory: Organisms in a population show natural variation. Some variations are advantageous in the environment. Organisms with advantageous variations survive and reproduce ("survival of the fittest"). Less adapted organisms are eliminated. Favourable characters are inherited by offspring. Over generations, the population becomes better adapted. As environmental conditions change, different characters may become advantageous.'
+  ); max+=4;
+
+  total+=scoreShort('q7','f7',
+    ['white','speckled','camouflage','lichen','black','soot','pollution','mutation','predator','selected','advantage','industrial'],
+    4,
+    'BEFORE pollution: Speckled white moths predominated — camouflaged on lichen-covered bark. Predatory birds could not easily see them. Black mutants existed but were visible and eaten (eliminated).\n\nAFTER industrial pollution: Tree bark blackened with soot. White moths became visible on dark bark and were eaten by birds. Black moths were now camouflaged on dark bark — survived and reproduced in greater numbers. The environment selected for the better-adapted black form. This is natural selection — the environment acts on existing variation to favour certain traits.'
+  ); max+=4;
+
+  const pct=Math.round((total/max)*100);
+  const grade=pct>=80?'Excellent! 🏆':pct>=60?'Good Work! 👍':pct>=40?'Keep Practising 📚':'Review the lesson 🔄';
+
+  document.getElementById('score-area').innerHTML=`
+    <div id="score-board">
+      <div class="big">${total}/${max}</div>
+      <div style="font-size:1.3rem;font-weight:700;margin:6px 0">${pct}%</div>
+      <div style="font-size:1rem;opacity:.9">${grade}</div>
+      <div style="font-size:.8rem;opacity:.75;margin-top:8px">CBC Rubric: 80–100% = Exceeding | 60–79% = Meeting | 40–59% = Approaching | Below 40% = Below</div>
+    </div>`;
+
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(total,max,pct);
+}
+
+buildDots();
+</script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Probability</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input,.inp-row select{padding:8px 10px;border:2px solid #ccc;border-radius:6px;font-size:.95rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 10px;width:110px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+canvas{border-radius:8px;border:1px solid #ddd;background:#fff;display:block;max-width:100%}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>🎲 F3 Mathematics · Probability</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Define probability and compute experimental probability</li>
+    <li>State the range of probability measure (0 to 1)</li>
+    <li>Define a probability space and list sample spaces</li>
+    <li>Calculate theoretical probability of events</li>
+    <li>Apply addition and multiplication rules for combined events</li>
+    <li>Use tree diagrams to find probabilities of successive events</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Probability</span><span class="key-term">Sample Space S</span>
+    <span class="key-term">Event</span><span class="key-term">Experimental Probability</span>
+    <span class="key-term">Theoretical Probability</span><span class="key-term">Mutually Exclusive</span>
+    <span class="key-term">Independent Events</span><span class="key-term">Tree Diagram</span>
+  </div>
+</div>
+
+<div class="slide" id="s2">
+  <h2>Definition and Range of Probability</h2>
+  <div class="formula-box">
+    <div class="math">P(E) = Number of favourable outcomes / Total outcomes</div>
+    <div style="margin-top:6px">0 ≤ P(E) ≤ 1 &nbsp;&nbsp; P(impossible) = 0 &nbsp;&nbsp; P(certain) = 1</div>
+  </div>
+  <table>
+    <tr><th>Description</th><th>Probability</th></tr>
+    <tr><td>Impossible</td><td>0</td></tr>
+    <tr><td>Very unlikely</td><td>Close to 0</td></tr>
+    <tr><td>Even chance (50:50)</td><td>0.5</td></tr>
+    <tr><td>Very likely</td><td>Close to 1</td></tr>
+    <tr><td>Certain</td><td>1</td></tr>
+  </table>
+  <div class="worked">
+    <strong>Example:</strong> A fair die is rolled. Find P(even number).<br>
+    <div class="step">S = {1,2,3,4,5,6}; even = {2,4,6} → P(even) = 3/6 = <strong>½</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s3">
+  <h2>Sample Space and Theoretical Probability</h2>
+  <p>The <strong>sample space S</strong> is the set of all possible outcomes.</p>
+  <div class="worked">
+    <strong>Two coins tossed:</strong><br>
+    <div class="step">S = {HH, HT, TH, TT} → |S| = 4</div>
+    <div class="step">P(two heads) = 1/4 &nbsp;&nbsp; P(at least one head) = 3/4</div>
+  </div>
+  <div class="worked">
+    <strong>Two dice rolled — P(sum = 7):</strong><br>
+    <div class="step">Favourable: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) → 6 outcomes</div>
+    <div class="step">P(sum=7) = 6/36 = <strong>1/6</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <h2>Combined Events — Addition Rule</h2>
+  <div class="formula-box">
+    <div><strong>Mutually exclusive events</strong> (cannot both occur):</div>
+    <div class="math">P(A or B) = P(A) + P(B)</div>
+    <div style="margin-top:8px"><strong>Not mutually exclusive:</strong></div>
+    <div class="math">P(A or B) = P(A) + P(B) − P(A and B)</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> From a pack of 52 cards. P(King or Heart).<br>
+    <div class="step">P(King)=4/52; P(Heart)=13/52; P(King of Hearts)=1/52</div>
+    <div class="step">P(King or Heart) = 4/52 + 13/52 − 1/52 = 16/52 = <strong>4/13</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s5">
+  <h2>Combined Events — Multiplication Rule</h2>
+  <div class="formula-box">
+    <div><strong>Independent events</strong>:</div>
+    <div class="math">P(A and B) = P(A) × P(B)</div>
+    <div style="margin-top:8px"><strong>Dependent events (conditional):</strong></div>
+    <div class="math">P(A and B) = P(A) × P(B|A)</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Bag has 3 red and 5 blue balls. Two drawn without replacement. P(both red).<br>
+    <div class="step">P(1st red) = 3/8</div>
+    <div class="step">P(2nd red | 1st red) = 2/7</div>
+    <div class="step">P(both red) = 3/8 × 2/7 = 6/56 = <strong>3/28</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s6">
+  <h2>Tree Diagrams</h2>
+  <p>Tree diagrams show all possible outcomes of successive events and their probabilities.</p>
+  <div class="card">
+    <strong>Example:</strong> Coin tossed twice.<br><br>
+    <div style="font-family:monospace;line-height:2">
+      Start ──H (½)──── H (½) → HH = ¼<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; └── T (½) → HT = ¼<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; └──T (½)──── H (½) → TH = ¼<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; └── T (½) → TT = ¼
+    </div>
+    <div style="margin-top:10px">P(exactly 1 head) = P(HT) + P(TH) = ¼ + ¼ = <strong>½</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Key Rule:</strong> Multiply probabilities along branches; add probabilities for separate paths leading to the same outcome.
+  </div>
+</div>
+
+<div class="slide" id="s7">
+  <h2>Probability Simulator</h2>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Theoretical Probability Calculator</h3>
+    <div class="inp-row">
+      <label>Favourable outcomes: <input id="pfav" type="number" value="3" style="width:70px"></label>
+      <label>Total outcomes: <input id="ptot" type="number" value="8" style="width:70px"></label>
+      <button class="go-btn" onclick="calcProb()">Calculate</button>
+    </div>
+    <div id="prob-result" class="result-box">Enter values and click Calculate.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Addition Rule</h3>
+    <div class="inp-row">
+      <label>P(A): <input id="pa" type="number" step="any" value="0.4" style="width:80px"></label>
+      <label>P(B): <input id="pb" type="number" step="any" value="0.3" style="width:80px"></label>
+      <label>P(A∩B): <input id="pab" type="number" step="any" value="0.1" style="width:80px"></label>
+      <button class="go-btn" onclick="addRule()">P(A∪B)</button>
+    </div>
+    <div id="add-result" class="result-box">Click to compute.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Multiplication Rule (Independent)</h3>
+    <div class="inp-row">
+      <label>P(A): <input id="mpa" type="number" step="any" value="0.5" style="width:80px"></label>
+      <label>P(B): <input id="mpb" type="number" step="any" value="0.5" style="width:80px"></label>
+      <button class="go-btn" onclick="mulRule()">P(A and B)</button>
+    </div>
+    <div id="mul-result" class="result-box">Click to compute.</div>
+  </div>
+</div>
+
+<div class="slide" id="s8">
+  <h2>Summary — Probability Rules</h2>
+  <table>
+    <tr><th>Rule</th><th>Formula</th></tr>
+    <tr><td>Basic</td><td>P(E) = n(E)/n(S)</td></tr>
+    <tr><td>Complement</td><td>P(E') = 1 − P(E)</td></tr>
+    <tr><td>Mutually exclusive</td><td>P(A∪B) = P(A)+P(B)</td></tr>
+    <tr><td>General addition</td><td>P(A∪B) = P(A)+P(B)−P(A∩B)</td></tr>
+    <tr><td>Independent</td><td>P(A∩B) = P(A)×P(B)</td></tr>
+    <tr><td>Dependent</td><td>P(A∩B) = P(A)×P(B|A)</td></tr>
+  </table>
+</div>
+
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><ol style="line-height:2.2;padding-left:20px">
+    <li>A bag has 4 red, 3 blue, 5 green balls. One drawn. Find P(red), P(not green).</li>
+    <li>Two dice rolled. Find P(sum ≥ 10) and P(doubles).</li>
+    <li>Cards: P(Ace or Spade). Show whether Ace and Spade are mutually exclusive.</li>
+    <li>Bag: 5 white, 3 black. Two drawn without replacement. P(different colours).</li>
+  </ol></div>
+</div>
+
+<div class="slide" id="s10">
+  <h2>Quiz — Probability</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. P(certain event) = <input class="fib" data-ans="1" id="f1" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">2. P(E') = 1 − <input class="fib" data-ans="P(E)" id="f2" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">3. For mutually exclusive events: P(A or B) = P(A) <input class="fib" data-ans="+" id="f3" type="text" style="width:50px"> P(B)</div></div>
+    <div class="fib-q"><div class="qtext">4. For independent events: P(A and B) = P(A) <input class="fib" data-ans="×" id="f4" type="text" style="width:50px"> P(B)</div></div>
+    <div class="fib-q"><div class="qtext">5. P(head on fair coin) = <input class="fib" data-ans="0.5" id="f5" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">6. The set of all possible outcomes is called the <input class="fib" data-ans="sample space" id="f6" type="text" style="width:160px"></div></div>
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. A die is thrown twice. Find P(sum = 9). List all favourable outcomes.</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. Bag has 5 red and 3 blue balls. Two drawn without replacement. Find P(both same colour).</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. P(A)=0.4, P(B)=0.5, P(A∩B)=0.2. Find P(A∪B) and state if A and B are mutually exclusive.</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+    <button id="quiz-btn" onclick="doQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+
+function submitQuiz(ans_obj, sa_arr, max){
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const g=inp.value.trim().toLowerCase().replace(/\s/g,''),e=(ans_obj[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(g===e){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  let ptB=0;
+  sa_arr.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase();
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase()))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review'}</div><div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th></tr><tr><td>EE</td><td>${Math.round(max*0.9)}–${max}</td></tr><tr><td>ME</td><td>${Math.round(max*0.65)}–${Math.round(max*0.89)}</td></tr><tr><td>AE</td><td>${Math.round(max*0.5)}–${Math.round(max*0.64)}</td></tr><tr><td>BE</td><td>0–${Math.round(max*0.49)}</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+
+
+function calcProb(){const f=+document.getElementById('pfav').value||0,t=+document.getElementById('ptot').value||1;document.getElementById('prob-result').innerHTML=`P(E)=${f}/${t}=<strong>${(f/t).toFixed(4)}</strong> (${(f/t*100).toFixed(2)}%)<br>P(E')=${t-f}/${t}=<strong>${((t-f)/t).toFixed(4)}</strong>`;}
+function addRule(){const pa=+document.getElementById('pa').value||0,pb=+document.getElementById('pb').value||0,pab=+document.getElementById('pab').value||0;document.getElementById('add-result').innerHTML=`P(A∪B)=${pa}+${pb}−${pab}=<strong>${(pa+pb-pab).toFixed(4)}</strong>`;}
+function mulRule(){const pa=+document.getElementById('mpa').value||0,pb=+document.getElementById('mpb').value||0;document.getElementById('mul-result').innerHTML=`P(A∩B)=${pa}×${pb}=<strong>${(pa*pb).toFixed(6)}</strong>`;}
+function doQuiz(){
+  const ans={f1:'1',f2:'P(E)',f3:'+',f4:'×',f5:'0.5',f6:'sample space'};
+  const sa=[
+    {id:'sa1',fb:'fb1',keys:['4/36','1/9','(3,6)','(4,5)','(5,4)','(6,3)'],model:'Favourable: (3,6),(4,5),(5,4),(6,3) → 4 outcomes. P=4/36=1/9'},
+    {id:'sa2',fb:'fb2',keys:['20/56','3/7','P(both red)','P(both blue)','10/56'],model:'P(both red)=5/8×4/7=20/56; P(both blue)=3/8×2/7=6/56; Total=26/56=13/28'},
+    {id:'sa3',fb:'fb3',keys:['0.7','not mutually exclusive','0.2','P(A∩B)≠0'],model:'P(A∪B)=0.4+0.5−0.2=0.7. Not mutually exclusive since P(A∩B)=0.2≠0'},
+  ];
+  submitQuiz(ans,sa,12);
+}
+
+</script>
+</body>
+</html>

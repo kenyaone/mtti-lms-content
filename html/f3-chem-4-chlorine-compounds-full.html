@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Chemistry – Chlorine and Its Compounds</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--sub:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+#topbar .title{font-weight:700;font-size:1rem;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-wrap{height:5px;background:rgba(255,255,255,.25);margin-top:6px;}
+#progress-bar{height:5px;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 100px;max-width:820px;margin:0 auto;animation:fadeIn .35s;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2{color:var(--pri);font-size:1.25rem;margin-bottom:14px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{color:var(--pri);font-size:1rem;margin:14px 0 6px;}
+p,li{font-size:.93rem;line-height:1.65;color:var(--sub);margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.eq{background:#e8f5e9;border-left:3px solid var(--ok);padding:8px 12px;border-radius:6px;font-family:monospace;font-size:.88rem;margin:8px 0;color:#1b5e20;}
+.warn{background:#fff8e1;border-left:3px solid var(--acc);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:8px 0;}
+.danger{background:#ffebee;border-left:3px solid var(--no);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:8px 0;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0;}
+th{background:var(--pri);color:#fff;padding:7px 9px;text-align:left;}
+td{padding:6px 9px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9f9f9;}
+.outcomes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.outcome{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:20px;padding:5px 12px;font-size:.82rem;color:var(--ok);}
+.q-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.q-block .q{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.q-block input[type=text]{width:100%;padding:8px 10px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;}
+.q-block input.correct{border-color:var(--ok);background:#e8f5e9;}
+.q-block input.wrong{border-color:var(--no);background:#ffebee;}
+.feedback{font-size:.82rem;margin-top:5px;display:none;}
+.feedback.show{display:block;}
+.quiz-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.quiz-block .qn{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.quiz-block textarea{width:100%;padding:8px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;resize:vertical;min-height:70px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;font-weight:700;margin:2px;}
+.tag.found{background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:var(--no);border:1px solid #ef9a9a;}
+.model-ans{background:#f3e5f5;border-left:3px solid #7b1fa2;padding:8px 12px;border-radius:6px;font-size:.85rem;margin-top:8px;display:none;}
+.model-ans.show{display:block;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:16px;font-size:.83rem;}
+.rubric h4{color:#e65100;margin-bottom:6px;}
+.rubric table th{background:#e65100;}
+#score-box{background:var(--card);border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12);}
+#score-circle{width:110px;height:110px;border-radius:50%;background:var(--pri);color:#fff;font-size:1.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;z-index:99;}
+#nav button{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.9rem;cursor:pointer;font-weight:600;}
+#nav button:disabled{background:#bbb;}
+#nav .dots{display:flex;gap:5px;}
+#nav .dots span{width:9px;height:9px;border-radius:50%;background:#ccc;cursor:pointer;}
+#nav .dots span.active{background:var(--pri);}
+.btn-submit{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:10px 26px;font-size:.93rem;cursor:pointer;font-weight:700;margin-top:12px;}
+.btn-check{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;cursor:pointer;font-weight:600;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">F3 Chemistry – Chlorine and Its Compounds</div>
+    <div class="meta">Form 3 | MTTI LMS</div>
+  </div>
+  <div class="meta" id="slide-indicator">1 / 10</div>
+</div>
+<div id="progress-wrap"><div id="progress-bar" style="width:10%"></div></div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="outcomes">
+    <div class="outcome">Describe preparation and properties of chlorine</div>
+    <div class="outcome">Explain bleaching action of chlorine</div>
+    <div class="outcome">Describe reactions of Cl₂ with metals and non-metals</div>
+    <div class="outcome">Explain industrial manufacture (mercury cathode cell)</div>
+    <div class="outcome">Describe preparation and properties of HCl gas</div>
+    <div class="outcome">State the test for chloride ions</div>
+    <div class="outcome">Explain large-scale manufacture of HCl acid</div>
+    <div class="outcome">Describe pollution by chlorine compounds</div>
+  </div>
+  <div class="card">
+    <h3>Introduction to Chlorine</h3>
+    <p>Chlorine is a diatomic non-metallic element (Cl₂). Electron arrangement: <strong>2.8.7</strong> — belongs to the halogen family (Group VII).</p>
+    <div class="danger">⚠️ Chlorine is very <strong>poisonous</strong>. All experiments must be done in a fume cupboard.</div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Preparation of Chlorine -->
+<div class="slide" id="s2">
+  <h2>Preparation and Collection of Chlorine</h2>
+  <div class="card">
+    <h3>Lab Preparation: MnO₂ + HCl</h3>
+    <p>Heat concentrated HCl with manganese(IV) oxide (oxidising agent):</p>
+    <div class="eq">MnO₂(s) + 4HCl(aq) → MnCl₂(aq) + 2H₂O(l) + Cl₂(g) [heat]</div>
+    <p><strong>Purification:</strong></p>
+    <ul>
+      <li>Pass through water → removes HCl gas (very soluble in water)</li>
+      <li>Pass through conc. H₂SO₄ or anhydrous CaCl₂ → dries the gas</li>
+    </ul>
+    <div class="warn">⚠️ First bottle MUST be water (to remove HCl), second must be conc. H₂SO₄ (to dry). NOT the other way around — gas would be made wet again by passing through H₂SO₄ first then water.</div>
+    <p><strong>Collection:</strong></p>
+    <ul>
+      <li><strong>Wet Cl₂:</strong> Over brine (saturated NaCl) or hot water (less soluble in hot/salt water)</li>
+      <li><strong>Dry Cl₂:</strong> By downward delivery (2.5× denser than air)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 3: Properties of Chlorine Gas -->
+<div class="slide" id="s3">
+  <h2>Properties of Chlorine Gas</h2>
+  <div class="card">
+    <h3>Physical Properties</h3>
+    <ul>
+      <li>Greenish-yellow gas; irritating pungent smell; attacks nose and lungs</li>
+      <li>2.5× denser than air → collected by downward delivery</li>
+      <li>Fairly soluble in water → greenish-yellow chlorine water</li>
+    </ul>
+    <div class="eq">Cl₂(g) + H₂O(l) → HCl(aq) + HOCl(aq) [chlorine water = HCl + hypochlorous acid]</div>
+  </div>
+  <div class="card">
+    <h3>Action on Litmus Paper & Bleaching</h3>
+    <p>Moist chlorine: turns litmus paper <strong>red</strong> (acidic) then <strong>bleaches</strong> it</p>
+    <p>Dry chlorine: has NO effect on dry litmus paper (needs moisture to react)</p>
+    <p><strong>Mechanism of bleaching:</strong></p>
+    <ol>
+      <li>Cl₂ + H₂O → HCl + HOCl (hypochlorous acid)</li>
+      <li>HOCl is a strong oxidising agent → oxidises the dye (adds O to it) → colourless product</li>
+    </ol>
+    <div class="eq">Dye(coloured) + HOCl → HCl + {Dye+O} [colourless]</div>
+    <div class="warn">💡 Chlorine bleaches by <strong>oxidation</strong> — this is permanent. SO₂ bleaches by reduction — not permanent (original colour returns in air). Chlorine does NOT bleach printers ink (made of carbon).</div>
+  </div>
+  <div class="card">
+    <h3>Effects of Sunlight on Chlorine Water</h3>
+    <p>Exposed to sunlight: HOCl decomposes → releases O₂:</p>
+    <div class="eq">2HOCl(aq) → 2HCl(aq) + O₂(g) [slow, in sunlight]</div>
+    <p>Overall: 2H₂O + 2Cl₂ → 4HCl + O₂ (in sunlight)</p>
+    <p>O₂ collected relights a glowing splint.</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: Reactions of Chlorine with Metals & Non-Metals -->
+<div class="slide" id="s4">
+  <h2>Reactions of Chlorine with Metals and Non-Metals</h2>
+  <div class="card">
+    <h3>Reaction with Hot Metals</h3>
+    <p>Chlorine reacts with hot metals to form metal chlorides. Where two chlorides exist, the <strong>higher chloride</strong> is formed (more stable):</p>
+    <p><strong>Iron (iron(III) chloride — FeCl₃ not FeCl₂):</strong></p>
+    <div class="eq">2Fe(s) + 3Cl₂(g) → 2FeCl₃(g) [red-brown fumes; black solid on cooling]</div>
+    <p>FeCl₃ sublimes — collected in cooler part of apparatus. Note: iron must be hot; chlorine must be dry.</p>
+    <p><strong>Magnesium:</strong></p>
+    <div class="eq">Mg(s) + Cl₂(g) → MgCl₂(s) [blinding white flame; white powder]</div>
+    <p><strong>Aluminium chloride:</strong></p>
+    <div class="eq">2Al(s) + 3Cl₂(g) → Al₂Cl₆(s) [also sublimes on heating]</div>
+  </div>
+  <div class="card">
+    <h3>Reactions with Non-Metals</h3>
+    <p><strong>With phosphorus:</strong></p>
+    <div class="eq">P₄(s) + 6Cl₂(g) → 4PCl₃(s) [limited Cl₂; white fumes]</div>
+    <div class="eq">P₄(s) + 10Cl₂(g) → 4PCl₅(s) [excess Cl₂]</div>
+    <p><strong>With hydrogen (explosive!):</strong></p>
+    <div class="eq">Cl₂(g) + H₂(g) → 2HCl(g) [heat/UV light; explosive mixture]</div>
+    <p>HCl produced gives white fumes of NH₄Cl with NH₃ at the tube mouth.</p>
+    <p><strong>With burning candle/turpentine (hydrocarbons):</strong></p>
+    <p>Cl₂ combines with H from hydrocarbon → HCl; carbon (soot) left behind.</p>
+    <div class="eq">C₁₀H₁₆(l) + 8Cl₂(g) → 16HCl(g) + 10C(s) [black cloud of carbon]</div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Chlorine as Oxidising Agent & Reactions with Alkalis -->
+<div class="slide" id="s5">
+  <h2>Chlorine as Oxidising Agent & Reactions with Alkalis</h2>
+  <div class="card">
+    <h3>Chlorine as Oxidising Agent</h3>
+    <p>Chlorine readily accepts electrons — oxidises many substances while being reduced to Cl⁻:</p>
+    <p><strong>With H₂S:</strong></p>
+    <div class="eq">Cl₂(g) + H₂S(g) → 2HCl(g) + S(s) [yellow deposits; at least one gas must be moist]</div>
+    <p><strong>With Na₂SO₃ → oxidises SO₃²⁻ to SO₄²⁻:</strong></p>
+    <div class="eq">Cl₂(g) + Na₂SO₃(aq) + H₂O → Na₂SO₄(aq) + 2HCl(aq)</div>
+    <p><strong>With NH₃ → oxidises N in NH₃ to N₂:</strong></p>
+    <div class="eq">8NH₃(g) + 3Cl₂(g) → 6NH₄Cl(s) + N₂(g)</div>
+  </div>
+  <div class="card">
+    <h3>Displacement of Halogens</h3>
+    <p>Cl₂ is a stronger oxidising agent than Br₂ and I₂ → displaces them from their salts:</p>
+    <table>
+      <tr><th>Solution</th><th>Observation</th><th>Explanation</th></tr>
+      <tr><td>KF (fluoride)</td><td>No change</td><td>Cl₂ weaker oxidising agent than F₂</td></tr>
+      <tr><td>KBr (bromide)</td><td>Colourless → red-brown</td><td>Cl₂ displaces Br₂: 2KBr + Cl₂ → 2KCl + Br₂</td></tr>
+      <tr><td>KI (iodide)</td><td>Colourless → black</td><td>Cl₂ displaces I₂: 2KI + Cl₂ → 2KCl + I₂</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Reactions with Alkalis</h3>
+    <p><strong>With cold dilute NaOH → sodium hypochlorite (bleach):</strong></p>
+    <div class="eq">Cl₂(g) + 2NaOH(aq) → NaCl(aq) + NaClO(aq) + H₂O(l) [pale yellow solution]</div>
+    <p>NaClO (sodium chlorate(I)) bleaches by oxidation.</p>
+    <p><strong>With hot concentrated NaOH:</strong></p>
+    <div class="eq">3Cl₂(g) + 6NaOH(conc,hot) → 5NaCl(aq) + NaClO₃(aq) + 3H₂O(l)</div>
+    <p><strong>With slaked lime Ca(OH)₂ → bleaching powder:</strong></p>
+    <div class="eq">Cl₂(g) + Ca(OH)₂(s) → CaOCl₂(s) + H₂O(l) [bleaching powder, CaOCl₂]</div>
+    <p>Bleaching powder smells of Cl₂ because CO₂ in air reacts with it:</p>
+    <div class="eq">CaOCl₂(s) + CO₂(g) → CaCO₃(s) + Cl₂(g)</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Industrial Manufacture of Chlorine (Mercury Cathode Cell) -->
+<div class="slide" id="s6">
+  <h2>Industrial Manufacture of Chlorine – Mercury Cathode Cell</h2>
+  <div class="card">
+    <h3>Electrolysis of Brine</h3>
+    <p><strong>Electrolyte:</strong> Brine (concentrated NaCl solution)</p>
+    <p><strong>Electrodes:</strong> Carbon (graphite) anode; flowing mercury cathode</p>
+    <p><strong>Ions present:</strong> Na⁺, Cl⁻, H⁺, OH⁻</p>
+    <table>
+      <tr><th>Electrode</th><th>Reaction</th><th>Reason</th></tr>
+      <tr><td>Anode (+)</td><td>2Cl⁻(aq) → Cl₂(g) + 2e⁻</td><td>High concentration of Cl⁻ → preferentially discharged over OH⁻</td></tr>
+      <tr><td>Cathode (–)</td><td>2Na⁺(aq) + 2e⁻ → 2Na(s)</td><td>Mercury cathode discharges Na⁺ preferentially over H⁺</td></tr>
+    </table>
+    <p><strong>Sodium amalgam formed:</strong> Na dissolves in flowing mercury → Na/Hg (sodium amalgam)</p>
+    <p><strong>Amalgam + water:</strong></p>
+    <div class="eq">2Na/Hg(l) + 2H₂O(l) → 2NaOH(aq) + H₂(g) + 2Hg(l)</div>
+    <p>Mercury is recycled.</p>
+  </div>
+  <div class="card">
+    <h3>Products of Brine Electrolysis</h3>
+    <ul>
+      <li><strong>Chlorine gas</strong> at the anode</li>
+      <li><strong>Hydrogen gas</strong> and <strong>sodium hydroxide</strong> at the cathode</li>
+    </ul>
+    <div class="warn">💡 All three products are commercially valuable: Cl₂ for water treatment and PVC; NaOH for soap; H₂ for ammonia (Haber process).</div>
+  </div>
+  <div class="card">
+    <h3>Uses of Chlorine and Its Compounds</h3>
+    <ul>
+      <li>Manufacture of HCl</li>
+      <li>Bleaching powder for textiles and paper</li>
+      <li>Sterilisation of drinking water and swimming pools</li>
+      <li>Sewage treatment</li>
+      <li>Manufacture of PVC (polyvinyl chloride)</li>
+      <li>Manufacture of germicides, pesticides, fungicides (DDT, CFCs)</li>
+      <li>CFCs as aerosol propellants and refrigerants (freons)</li>
+      <li>Manufacture of chloroform (aesthetic)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 7: Hydrogen Chloride Gas -->
+<div class="slide" id="s7">
+  <h2>Hydrogen Chloride Gas (HCl)</h2>
+  <div class="card">
+    <h3>Laboratory Preparation</h3>
+    <p>Concentrated H₂SO₄ + NaCl, heat gently:</p>
+    <div class="eq">H₂SO₄(l) + NaCl(s) → NaHSO₄(s) + HCl(g)</div>
+    <p>Gas dried with conc. H₂SO₄. Collected by downward delivery (slightly denser than air).</p>
+    <div class="warn">💡 HCl gas is very soluble in water — when making aqueous HCl solution, use an inverted funnel arrangement to prevent "sucking back" (water rushing up tube into hot flask).</div>
+  </div>
+  <div class="card">
+    <h3>Properties of HCl Gas</h3>
+    <ul>
+      <li>Colourless; strong, irritating pungent smell</li>
+      <li>1¼× denser than air → collected by downward delivery</li>
+      <li>Very soluble in water → fumes strongly in moist air (hydrochloric acid)</li>
+      <li>Solution (hydrochloric acid) is a <strong>strong acid</strong> — fully ionises: HCl(aq) → H⁺(aq) + Cl⁻(aq)</li>
+    </ul>
+    <p><strong>Test for HCl gas:</strong> White fumes of NH₄Cl when brought near ammonia gas:</p>
+    <div class="eq">NH₃(g) + HCl(g) → NH₄Cl(s) [white fumes]</div>
+    <p><strong>HCl decomposed by oxidising agents (gives Cl₂):</strong></p>
+    <div class="eq">MnO₂(s) + 4HCl(g) → MnCl₂(s) + 2H₂O(l) + Cl₂(g)</div>
+  </div>
+  <div class="card">
+    <h3>Properties of Hydrochloric Acid (HCl in water)</h3>
+    <p><strong>With metals above H:</strong></p>
+    <div class="eq">Zn(s) + 2HCl(aq) → ZnCl₂(aq) + H₂(g)</div>
+    <div class="eq">Mg(s) + 2HCl(aq) → MgCl₂(aq) + H₂(g)</div>
+    <p><strong>Neutralisation:</strong></p>
+    <div class="eq">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)</div>
+    <div class="eq">2HCl(aq) + CuO(s) → CuCl₂(aq) + H₂O(l)</div>
+    <p><strong>With carbonates:</strong></p>
+    <div class="eq">CaCO₃(s) + 2HCl(aq) → CaCl₂(aq) + H₂O(l) + CO₂(g)</div>
+    <p>Note: Metals BELOW hydrogen (e.g. Cu) do NOT react with HCl.</p>
+  </div>
+</div>
+
+<!-- SLIDE 8: Test for Chlorides, HCl Manufacture & Pollution -->
+<div class="slide" id="s8">
+  <h2>Tests for Chlorides, HCl Manufacture & Pollution</h2>
+  <div class="card">
+    <h3>Test for Chloride Ions (Cl⁻)</h3>
+    <p><strong>Test 1 – Silver ions:</strong></p>
+    <p>Add AgNO₃ solution, then acidify with dil HNO₃:</p>
+    <div class="eq">NaCl(aq) + AgNO₃(aq) → NaNO₃(aq) + AgCl(s) [white precipitate]</div>
+    <p>White precipitate (AgCl) is insoluble in dil HNO₃ but dissolves in excess ammonia. AgCl turns violet in light.</p>
+    <p><em>Note:</em> Ag₂CO₃ also forms white ppt but dissolves in dil HNO₃ → AgCl confirmed if precipitate persists.</p>
+    <p><strong>Test 2 – Lead ions:</strong></p>
+    <p>Add Pb(NO₃)₂, warm solution:</p>
+    <div class="eq">Pb²⁺(aq) + 2Cl⁻(aq) → PbCl₂(s) [white ppt; dissolves on warming, recrystallises on cooling]</div>
+  </div>
+  <div class="card">
+    <h3>Large-Scale Manufacture of HCl</h3>
+    <p>Burn H₂ in excess Cl₂ (from brine electrolysis):</p>
+    <div class="eq">H₂(g) + Cl₂(g) → 2HCl(g)</div>
+    <p>HCl gas dissolved in water over glass beads (large surface area). Commercial HCl is ~35% pure.</p>
+    <div class="danger">⚠️ Equal volumes of H₂ and Cl₂ explode in sunlight! H₂ is burned in excess Cl₂ for safety.</div>
+    <p><strong>Uses of HCl:</strong> Sewage treatment, water chlorination, removing rust from metals before galvanising/electroplating, making dyes, drugs, photographic materials.</p>
+  </div>
+  <div class="card">
+    <h3>Environmental Pollution by Chlorine Compounds</h3>
+    <ul>
+      <li><strong>Chlorine:</strong> Dissolves in rain → acid rain; adverse effects on plants, animals, buildings, soil</li>
+      <li><strong>CFCs (chlorofluorocarbons):</strong> Non-biodegradable; diffuse into atmosphere; break down to free Cl and F atoms → deplete ozone layer (greenhouse gas). DDT banned in Kenya (NEMA recommends pyrethroids).</li>
+      <li><strong>PVCs:</strong> Non-biodegradable; accumulate as plastic waste</li>
+      <li><strong>DDT:</strong> Long-lasting pesticide; affects plant and animal life</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="q-block">
+    <div class="q">1. Give the equation for the preparation of chlorine gas in the laboratory.</div>
+    <input type="text" id="q1" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q1','MnO₂ + 4HCl → MnCl₂ + 2H₂O + Cl₂',['mno2','hcl','cl2','mncl2'])">Check</button>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">2. Why does dry chlorine have no effect on dry litmus paper?</div>
+    <input type="text" id="q2" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q2','Chlorine needs moisture/water to form hypochlorous acid',['moisture','water','hocl','hypochlorous'])">Check</button>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">3. What is the name and formula of the product when Cl₂ reacts with cold dilute NaOH?</div>
+    <input type="text" id="q3" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q3','Sodium hypochlorite NaClO (sodium chlorate I)',['naclo','sodium hypochlorite','naocl','chlorate'])">Check</button>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">4. State the colour of iron(III) chloride (a) as a solid and (b) as fumes.</div>
+    <input type="text" id="q4" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q4','(a) Black solid (b) Red-brown fumes',['black','red','brown'])">Check</button>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">5. How would you confirm the presence of Cl⁻ ions using silver nitrate? State equation and observation.</div>
+    <input type="text" id="q5" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q5','White precipitate of AgCl insoluble in dil HNO₃',['white','agcl','silver chloride','precipitate','insoluble'])">Check</button>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz – Chlorine and Its Compounds</h2>
+  <p style="font-size:.85rem;color:var(--sub);margin-bottom:14px;">Answer all questions carefully.</p>
+
+  <div class="quiz-block">
+    <div class="qn">Q1. The bleaching agent formed when Cl₂ reacts with Ca(OH)₂ is called ___.</div>
+    <input type="text" id="fib1" placeholder="name or formula..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q2. Chlorine gas is collected by downward delivery because it is ___ times denser than air.</div>
+    <input type="text" id="fib2" placeholder="number..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q3. In the mercury cathode cell, sodium is discharged at the cathode instead of hydrogen because the cathode is made of ___.</div>
+    <input type="text" id="fib3" placeholder="material..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q4. The chemical test for HCl gas uses ___ gas and produces white fumes of ___.</div>
+    <input type="text" id="fib4" placeholder="complete both..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q5. Explain with equations what happens when chlorine water is exposed to sunlight. State all observations.</div>
+    <textarea id="sa1" placeholder="Write your answer here..."></textarea>
+    <div id="sa1-tags"></div>
+    <div class="model-ans" id="sa1-model">Chlorine water contains HCl and HOCl (hypochlorous acid). On exposure to sunlight, HOCl is unstable and decomposes, releasing oxygen gas: 2HOCl(aq) → 2HCl(aq) + O₂(g). Observation: gas collects (colourless) that relights a glowing splint, confirming it is oxygen. The overall reaction is: 2H₂O(l) + 2Cl₂(g) → 4HCl(aq) + O₂(g) [in sunlight].</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q6. Describe with equations the reactions that occur at both electrodes during the electrolysis of brine in the mercury cathode cell. State all products.</div>
+    <textarea id="sa2" placeholder="Write your answer here..."></textarea>
+    <div id="sa2-tags"></div>
+    <div class="model-ans" id="sa2-model">At the anode (graphite): Cl⁻ ions are preferentially discharged (high concentration) producing chlorine gas: 2Cl⁻(aq) → Cl₂(g) + 2e⁻. At the cathode (mercury): Na⁺ ions are preferentially discharged (mercury cathode discharges Na⁺ over H⁺): 2Na⁺(aq) + 2e⁻ → 2Na(s). Sodium dissolves in flowing mercury forming sodium amalgam (Na/Hg). This reacts with water: 2Na/Hg + 2H₂O → 2NaOH(aq) + H₂(g) + 2Hg(l). Mercury is recycled. Products: Cl₂ (at anode), H₂ and NaOH (from cathode reaction).</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q7. Compare the bleaching action of chlorine and sulphur(IV) oxide. State the mechanism and relative permanence of each.</div>
+    <textarea id="sa3" placeholder="Write your answer here..." rows="3"></textarea>
+    <div id="sa3-tags"></div>
+    <div class="model-ans" id="sa3-model">Chlorine bleaches by oxidation: HOCl adds oxygen to the dye, destroying its colour permanently. The colour cannot be restored. SO₂ bleaches by reduction: sulphurous acid removes oxygen from the dye, making it colourless. This is NOT permanent — the original colour can be restored by oxidation or prolonged exposure to air. Chlorine is a stronger bleaching agent but SO₂ is preferred for delicate materials (wool, straw) because it is milder.</div>
+  </div>
+
+  <button class="btn-submit" onclick="submitExam()">Submit Quiz</button>
+  <div id="score-box" style="display:none;margin-top:18px;">
+    <div id="score-circle"></div>
+    <div id="score-msg" style="font-size:1rem;font-weight:600;margin-bottom:8px;"></div>
+    <div id="score-detail" style="font-size:.87rem;color:var(--sub);"></div>
+    <div class="rubric">
+      <h4>CBC Assessment Rubric</h4>
+      <table>
+        <tr><th>Score</th><th>Performance Level</th><th>Descriptor</th></tr>
+        <tr><td>85–100%</td><td>Exceeding Expectation</td><td>Thorough understanding of chlorine chemistry</td></tr>
+        <tr><td>70–84%</td><td>Meeting Expectation</td><td>Good command of properties, HCl, and industrial processes</td></tr>
+        <tr><td>50–69%</td><td>Approaching Expectation</td><td>Basic understanding; revise bleaching and electrolysis</td></tr>
+        <tr><td>0–49%</td><td>Below Expectation</td><td>Review chlorine and its compounds thoroughly</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+const TOTAL=10;let current=0;
+const slides=document.querySelectorAll('.slide');
+function buildDots(){const dc=document.getElementById('dots');for(let i=0;i<TOTAL;i++){const s=document.createElement('span');s.onclick=()=>goTo(i);dc.appendChild(s);}updateDots();}
+function updateDots(){document.querySelectorAll('#dots span').forEach((s,i)=>s.classList.toggle('active',i===current));document.getElementById('slide-indicator').textContent=(current+1)+' / '+TOTAL;document.getElementById('progress-bar').style.width=((current+1)/TOTAL*100)+'%';document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===TOTAL-1;}
+function goTo(n){slides[current].classList.remove('active');current=n;slides[current].classList.add('active');updateDots();window.scrollTo(0,0);}
+function changeSlide(d){goTo(current+d);}
+function checkFill(id,correct,keywords){const inp=document.getElementById(id);const val=inp.value.trim().toLowerCase();const fb=document.getElementById(id+'-fb');const hit=keywords.some(k=>val.includes(k.toLowerCase()));inp.className=hit?'correct':'wrong';fb.className='feedback show';fb.style.color=hit?'var(--ok)':'var(--no)';fb.textContent=hit?'✓ Correct!':'✗ Expected: '+correct;}
+const FIB_ANSWERS=[
+  {id:'fib1',answer:'Bleaching powder (CaOCl₂)',keys:['bleaching powder','caocl2','calcium chlorate']},
+  {id:'fib2',answer:'2.5',keys:['2.5','2½']},
+  {id:'fib3',answer:'mercury',keys:['mercury','hg']},
+  {id:'fib4',answer:'ammonia (NH₃); ammonium chloride (NH₄Cl)',keys:['ammonia','nh3','nh4cl','ammonium chloride']},
+];
+const SA_QUESTIONS=[
+  {id:'sa1',keys:['hocl','sunlight','oxygen','splint','decomposes','2hcl','o2','relights','hcl'],required:3,modelId:'sa1-model'},
+  {id:'sa2',keys:['anode','cathode','cl2','na','mercury','amalgam','naoh','h2','2cl','sodium'],required:3,modelId:'sa2-model'},
+  {id:'sa3',keys:['oxidation','reduction','so2','chlorine','permanent','colour','mild','hocl','sulphurous'],required:3,modelId:'sa3-model'},
+];
+function submitExam(){let score=0,total=0;
+  FIB_ANSWERS.forEach(q=>{total+=2;const val=(document.getElementById(q.id).value||'').trim().toLowerCase();const hit=q.keys.some(k=>val.includes(k));if(hit)score+=2;document.getElementById(q.id).style.borderColor=hit?'var(--ok)':'var(--no)';document.getElementById(q.id).style.background=hit?'#e8f5e9':'#ffebee';});
+  SA_QUESTIONS.forEach(q=>{total+=4;const val=(document.getElementById(q.id).value||'').trim().toLowerCase();const found=q.keys.filter(k=>val.includes(k.toLowerCase()));const missed=q.keys.filter(k=>!val.includes(k.toLowerCase()));const pts=Math.min(4,Math.round((found.length/q.required)*4));score+=pts;document.getElementById(q.id+'-tags').innerHTML=found.map(k=>`<span class="tag found">✓ ${k}</span>`).join('')+missed.slice(0,4).map(k=>`<span class="tag missed">✗ ${k}</span>`).join('');document.getElementById(q.modelId).classList.add('show');});
+  const pct=Math.round(score/total*100);
+  document.getElementById('score-box').style.display='block';
+  document.getElementById('score-circle').textContent=pct+'%';
+  document.getElementById('score-msg').textContent=pct>=85?'🏆 Excellent! Exceeding Expectation':pct>=70?'✅ Well done! Meeting Expectation':pct>=50?'📘 Approaching Expectation — keep revising':'📝 Below Expectation — review chlorine topics';
+  document.getElementById('score-detail').textContent=`Score: ${score} / ${total} marks`;
+  document.getElementById('score-box').scrollIntoView({behavior:'smooth'});
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,total,pct);
+}
+buildDots();
+</script>
+</body>
+</html>

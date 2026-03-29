@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Compound Proportion & Rates of Work</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input,.inp-row select{padding:8px 10px;border:2px solid #ccc;border-radius:6px;font-size:.95rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 10px;width:110px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+canvas{border-radius:8px;border:1px solid #ddd;background:#fff;display:block;max-width:100%}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>⚖️ F3 Mathematics · Compound Proportion & Rates of Work</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Understand and apply compound proportions</li>
+    <li>Find missing values in proportional relationships</li>
+    <li>Solve problems involving proportional parts</li>
+    <li>Calculate rates of work (individual and combined)</li>
+    <li>Solve mixture problems using alligation</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Proportion</span><span class="key-term">Compound Proportion</span>
+    <span class="key-term">Continued Proportion</span><span class="key-term">Proportional Parts</span>
+    <span class="key-term">Rate of Work</span><span class="key-term">Combined Rate</span>
+    <span class="key-term">Mixture</span>
+  </div>
+</div>
+
+<div class="slide" id="s2">
+  <h2>Proportions</h2>
+  <p>Four numbers a, b, c, d are in proportion if <strong>a/b = c/d</strong>, i.e., a:b = c:d.</p>
+  <div class="formula-box">
+    <div class="math">a/b = c/d &nbsp;&nbsp;→&nbsp;&nbsp; ad = bc (cross-multiply)</div>
+  </div>
+  <div class="worked">
+    <strong>Example 1:</strong> Find a if 4, 10, a, 50 are in proportion.<br>
+    <div class="step">4/10 = a/50 → 10a = 200 → a = <strong>20</strong></div>
+  </div>
+  <h3>Continued Proportion</h3>
+  <p>a, b, c are in continued proportion if a:b = b:c, i.e., b² = ac.</p>
+  <div class="worked">
+    <strong>Example 2:</strong> Find b if 4, b, 9 are in continued proportion.<br>
+    <div class="step">b² = 4×9 = 36 → b = <strong>6</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s3">
+  <h2>Compound Proportion</h2>
+  <p>When a quantity depends on more than one other quantity simultaneously.</p>
+  <div class="worked">
+    <strong>Example:</strong> 5 workers take 12 days to build a wall. How long for 8 workers?<br>
+    <div class="step">More workers → fewer days (inverse proportion)</div>
+    <div class="step">5 × 12 = 8 × d → d = 60/8 = <strong>7.5 days</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Example 2 (compound):</strong> 6 men working 8 hrs/day take 5 days. How many days for 4 men working 10 hrs/day?<br>
+    <div class="step">Total worker-hours = 6 × 8 × 5 = 240</div>
+    <div class="step">New: 4 × 10 × d = 240 → d = 240/40 = <strong>6 days</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <h2>Proportional Parts</h2>
+  <p>Divide a quantity in a given ratio.</p>
+  <div class="formula-box">
+    <div class="math">Each part = (ratio share / sum of ratio) × total</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Divide Ksh 12 000 among A, B, C in ratio 2:3:5.<br>
+    <div class="step">Sum = 2+3+5 = 10</div>
+    <div class="step">A = (2/10)×12000 = <strong>Ksh 2 400</strong></div>
+    <div class="step">B = (3/10)×12000 = <strong>Ksh 3 600</strong></div>
+    <div class="step">C = (5/10)×12000 = <strong>Ksh 6 000</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s5">
+  <h2>Rates of Work</h2>
+  <p>Rate of work = fraction of task completed per unit time.</p>
+  <div class="formula-box">
+    <div class="math">If a person completes a job in n days → rate = 1/n per day</div>
+    <div style="margin-top:6px">Combined rate = sum of individual rates</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> A takes 6 days, B takes 4 days. Working together, how long?<br>
+    <div class="step">Combined rate = 1/6 + 1/4 = 2/12 + 3/12 = 5/12 per day</div>
+    <div class="step">Time = 12/5 = <strong>2.4 days</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Example 2:</strong> Pipe A fills in 3 hrs, pipe B fills in 6 hrs. Both open. How long to fill?<br>
+    <div class="step">Rate = 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = ½ per hr → <strong>2 hours</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s6">
+  <h2>Mixtures</h2>
+  <p>When two quantities of different concentrations or values are mixed.</p>
+  <div class="worked">
+    <strong>Example:</strong> Tea at Ksh 80/kg mixed with tea at Ksh 120/kg in ratio 3:2 to get 50 kg mixture. Find quantities and cost.<br>
+    <div class="step">Quantity at 80: (3/5)×50 = 30 kg; Cost = 30×80 = Ksh 2 400</div>
+    <div class="step">Quantity at 120: (2/5)×50 = 20 kg; Cost = 20×120 = Ksh 2 400</div>
+    <div class="step">Total cost = Ksh 4 800; Price per kg = 4800/50 = <strong>Ksh 96/kg</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s7">
+  <h2>Calculator Tools</h2>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Proportional Parts Division</h3>
+    <div class="inp-row">
+      <label>Total: <input id="pt" type="number" value="12000" style="width:100px"></label>
+      <label>Ratio (a:b:c): <input id="ra" type="number" value="2" style="width:55px">:<input id="rb" type="number" value="3" style="width:55px">:<input id="rc" type="number" value="5" style="width:55px"></label>
+      <button class="go-btn" onclick="divideRatio()">Divide</button>
+    </div>
+    <div id="ratio-result" class="result-box">Click Divide.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Combined Rate of Work</h3>
+    <div class="inp-row">
+      <label>A finishes in: <input id="wa" type="number" value="6" style="width:70px"> days</label>
+      <label>B finishes in: <input id="wb" type="number" value="4" style="width:70px"> days</label>
+      <button class="go-btn" onclick="combineWork()">Together?</button>
+    </div>
+    <div id="work-result" class="result-box">Click Together?</div>
+  </div>
+</div>
+
+<div class="slide" id="s8">
+  <h2>Summary</h2>
+  <table>
+    <tr><th>Topic</th><th>Key Formula</th></tr>
+    <tr><td>Proportion</td><td>a/b = c/d → ad = bc</td></tr>
+    <tr><td>Continued proportion</td><td>b² = ac</td></tr>
+    <tr><td>Proportional parts</td><td>Share = (ratio/total ratio) × amount</td></tr>
+    <tr><td>Rate of work</td><td>Rate = 1/time</td></tr>
+    <tr><td>Combined rate</td><td>1/T = 1/a + 1/b</td></tr>
+    <tr><td>Compound proportion</td><td>Total work = workers × hrs × days</td></tr>
+  </table>
+</div>
+
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><ol style="line-height:2.2;padding-left:20px">
+    <li>Find x if 3:x = 12:20</li>
+    <li>Find the middle term if 4, ?, 25 are in continued proportion</li>
+    <li>Divide Ksh 18 000 among P, Q, R in ratio 1:2:3</li>
+    <li>Tap A fills a tank in 4 hours, tap B in 6 hours. Both open together — how long to fill?</li>
+    <li>8 men take 9 days working 6 hrs/day. How many men needed to do same job in 6 days, 8 hrs/day?</li>
+  </ol></div>
+</div>
+
+<div class="slide" id="s10">
+  <h2>Quiz — Compound Proportion & Rates of Work</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. If a:b = c:d then ad = <input class="fib" data-ans="bc" id="f1" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">2. Rate of work if job done in 6 days = <input class="fib" data-ans="1/6" id="f2" type="text"> per day</div></div>
+    <div class="fib-q"><div class="qtext">3. Combined rate formula: 1/T = 1/a <input class="fib" data-ans="+" id="f3" type="text" style="width:50px"> 1/b</div></div>
+    <div class="fib-q"><div class="qtext">4. b² = ac means a, b, c are in <input class="fib" data-ans="continued proportion" id="f4" type="text" style="width:200px"></div></div>
+    <div class="fib-q"><div class="qtext">5. A:B:C = 1:2:3. A's share of Ksh 6000 = Ksh <input class="fib" data-ans="1000" id="f5" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">6. More workers → _________ time (direct/inverse): <input class="fib" data-ans="inverse" id="f6" type="text" style="width:100px"></div></div>
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. Pipe A fills a tank in 3 hours, Pipe B in 6 hours. Both open together — how long to fill the tank?</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. Divide Ksh 24 000 in ratio 3:4:5. Find each person's share.</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. 5 men take 12 days to complete a job. How many days will 9 men take to do the same job?</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+    <button id="quiz-btn" onclick="doQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+
+function submitQuiz(ans_obj, sa_arr, max){
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const g=inp.value.trim().toLowerCase().replace(/\s/g,''),e=(ans_obj[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(g===e){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  let ptB=0;
+  sa_arr.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase();
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase()))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review'}</div><div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th></tr><tr><td>EE</td><td>${Math.round(max*0.9)}–${max}</td></tr><tr><td>ME</td><td>${Math.round(max*0.65)}–${Math.round(max*0.89)}</td></tr><tr><td>AE</td><td>${Math.round(max*0.5)}–${Math.round(max*0.64)}</td></tr><tr><td>BE</td><td>0–${Math.round(max*0.49)}</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+
+
+function divideRatio(){
+  const t=+document.getElementById('pt').value||0;
+  const ra=+document.getElementById('ra').value||1,rb=+document.getElementById('rb').value||1,rc=+document.getElementById('rc').value||1;
+  const sum=ra+rb+rc;
+  document.getElementById('ratio-result').innerHTML=`Total=${t}, Ratio=${ra}:${rb}:${rc} (sum=${sum})<br>
+  A = (${ra}/${sum})×${t} = <strong>${(ra/sum*t).toFixed(2)}</strong><br>
+  B = (${rb}/${sum})×${t} = <strong>${(rb/sum*t).toFixed(2)}</strong><br>
+  C = (${rc}/${sum})×${t} = <strong>${(rc/sum*t).toFixed(2)}</strong>`;
+}
+function combineWork(){
+  const a=+document.getElementById('wa').value||1,b=+document.getElementById('wb').value||1;
+  const T=1/(1/a+1/b);
+  document.getElementById('work-result').innerHTML=`Rate A = 1/${a}/day; Rate B = 1/${b}/day<br>
+  Combined = 1/${a}+1/${b} = ${(1/a+1/b).toFixed(4)}/day<br>
+  Time together = <strong>${T.toFixed(4)} days</strong>`;
+}
+function doQuiz(){
+  const ans={f1:'bc',f2:'1/6',f3:'+',f4:'continued proportion',f5:'1000',f6:'inverse'};
+  const sa=[
+    {id:'sa1',fb:'fb1',keys:['2 hours','2hrs','1/3','1/6','1/2','rate'],model:'Rate=1/3+1/6=3/6=1/2 per hour. Time=2 hours'},
+    {id:'sa2',fb:'fb2',keys:['6000','8000','10000','3:4:5','12'],model:'Sum=12; A=3/12×24000=6000; B=4/12×24000=8000; C=5/12×24000=10000'},
+    {id:'sa3',fb:'fb3',keys:['6.67','20/3','5×12','60','9×d'],model:'5×12=9×d→d=60/9=6.67 days'},
+  ];
+  submitQuiz(ans,sa,12);
+}
+
+</script>
+</body>
+</html>

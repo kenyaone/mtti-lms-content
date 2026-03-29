@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Mathematics – Quadratic Equations</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f0f4f0;--card:#fff;--border:#d0e4d8;--text:#1a2e1a;--muted:#6b8c6b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.topbar .brand{font-weight:700;font-size:.95rem}.topbar .brand span{color:var(--acc)}
+.slide-info{font-size:.8rem;opacity:.8}
+.nav-dots{display:flex;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .2s}
+.dot.active{background:var(--acc)}
+.slide{display:none;flex:1;padding:24px 20px;max-width:860px;margin:0 auto;width:100%}
+.slide.active{display:block}
+h1{font-size:1.4rem;color:var(--pri);margin-bottom:6px}
+h2{font-size:1.15rem;color:var(--pri);margin-bottom:10px}
+h3{font-size:1rem;color:var(--ok);margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(10,94,42,.06)}
+.card.highlight{border-left:4px solid var(--acc)}
+.card.green{border-left:4px solid var(--ok)}
+.card.red{border-left:4px solid var(--no)}
+.outcome-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.outcome-list li{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:.9rem}
+.outcome-list li::before{content:'✓';color:var(--ok);font-weight:700;flex-shrink:0;margin-top:1px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.grid2{grid-template-columns:1fr}}
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px}
+.tbl th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.tbl tr:nth-child(even) td{background:#f5faf5}
+.fact{background:linear-gradient(135deg,rgba(10,94,42,.06),rgba(245,166,35,.06));border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0;font-size:.88rem}
+.fact strong{color:var(--pri)}
+.formula-box{background:#f0f8f0;border:2px solid var(--border);border-radius:10px;padding:14px;text-align:center;font-size:1.1rem;font-weight:700;margin:12px 0;font-family:monospace}
+.steps{counter-reset:step;display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start;background:#f8faf8;border:1px solid var(--border);border-radius:8px;padding:12px}
+.step::before{counter-increment:step;content:counter(step);min-width:28px;height:28px;background:var(--pri);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.step p{font-size:.87rem;margin:0}
+.nav-btns{display:flex;justify-content:space-between;padding:16px 20px;max-width:860px;margin:0 auto;width:100%;gap:10px}
+.btn{padding:10px 24px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;transition:all .2s}
+.btn-prev{background:#fff;color:var(--pri);border:2px solid var(--pri)}.btn-prev:hover{background:var(--pri);color:#fff}
+.btn-next{background:var(--pri);color:#fff}.btn-next:hover{background:#0d7a37}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.quiz-q{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.quiz-q p{font-weight:600;margin-bottom:10px;font-size:.92rem}
+.fib input{border:none;border-bottom:2px solid var(--pri);background:transparent;width:120px;font-size:.92rem;padding:2px 6px;outline:none;color:var(--text)}
+.sa-input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.88rem;resize:vertical;min-height:60px;font-family:inherit}
+.sa-input:focus{outline:none;border-color:var(--pri)}
+.check-btn{background:var(--ok);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-weight:700;cursor:pointer;margin-top:10px;font-size:.85rem}
+.model-ans{background:#f5faf5;border-left:3px solid var(--ok);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px;font-size:.85rem;display:none}
+.score-box{background:var(--pri);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-top:16px}
+.score-box h2{color:#fff;font-size:1.5rem}
+.rubric{background:#fff;border-radius:8px;padding:12px;margin-top:12px;font-size:.82rem;color:var(--text)}
+.rubric-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">M.T.T.I <span>LMS</span> — F3 Mathematics</div>
+  <div class="nav-dots" id="dots"></div>
+  <div class="slide-info" id="slideInfo">1 / 10</div>
+</div>
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="s1">
+  <h1>Quadratic Equations</h1>
+  <p class="subtitle">Form Three Mathematics — KLB Book 3</p>
+  <div class="card highlight">
+    <h3>🎯 Learning Outcomes</h3>
+    <ul class="outcome-list">
+      <li>Identify and write quadratic equations in standard form ax² + bx + c = 0</li>
+      <li>Solve quadratic equations by factorisation</li>
+      <li>Solve quadratic equations by completing the square</li>
+      <li>Apply the quadratic formula to solve equations</li>
+      <li>Solve word problems involving quadratic equations</li>
+      <li>Interpret the discriminant to determine the nature of roots</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide" id="s2">
+  <h2>Introduction to Quadratic Equations</h2>
+  <div class="card highlight">
+    <h3>Standard Form</h3>
+    <div class="formula-box">ax² + bx + c = 0</div>
+    <p style="font-size:.87rem">where <strong>a ≠ 0</strong>, and a, b, c are constants.</p>
+  </div>
+  <div class="grid2">
+    <div class="card green">
+      <h3>✅ Quadratic Equations</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:2">
+        <li>x² + 5x + 6 = 0</li>
+        <li>2x² - 3x = 0</li>
+        <li>x² - 9 = 0</li>
+        <li>3x² + 7x - 2 = 0</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>❌ Not Quadratic</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:2">
+        <li>x + 5 = 0 (linear)</li>
+        <li>x³ + x = 0 (cubic)</li>
+        <li>5 = 0 (no variable)</li>
+        <li>1/x + 3 = 0 (rational)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fact"><strong>Key:</strong> The highest power of x must be <strong>2</strong> for an equation to be quadratic. The coefficient 'a' of x² must not be zero.</div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide" id="s3">
+  <h2>Method 1: Factorisation</h2>
+  <div class="card highlight">
+    <h3>Steps for Factorisation</h3>
+    <div class="steps">
+      <div class="step"><p>Write the equation in standard form: ax² + bx + c = 0</p></div>
+      <div class="step"><p>Find two numbers that <strong>multiply to give ac</strong> and <strong>add to give b</strong></p></div>
+      <div class="step"><p>Split the middle term using these two numbers</p></div>
+      <div class="step"><p>Factorise by grouping</p></div>
+      <div class="step"><p>Set each factor to zero and solve</p></div>
+    </div>
+  </div>
+  <div class="card green">
+    <h3>📝 Worked Example: x² + 5x + 6 = 0</h3>
+    <div style="font-size:.87rem;line-height:2">
+      <p>Find two numbers: multiply to <strong>6</strong>, add to <strong>5</strong> → <strong>2 and 3</strong></p>
+      <p>x² + 2x + 3x + 6 = 0</p>
+      <p>x(x + 2) + 3(x + 2) = 0</p>
+      <p>(x + 3)(x + 2) = 0</p>
+      <p>x + 3 = 0 &nbsp;or&nbsp; x + 2 = 0</p>
+      <p><strong>x = −3 &nbsp;or&nbsp; x = −2</strong></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📝 Example 2: 2x² − 5x − 3 = 0</h3>
+    <div style="font-size:.87rem;line-height:2">
+      <p>ac = 2 × (−3) = <strong>−6</strong>, b = <strong>−5</strong></p>
+      <p>Two numbers: multiply to −6, add to −5 → <strong>1 and −6</strong></p>
+      <p>2x² + x − 6x − 3 = 0</p>
+      <p>x(2x + 1) − 3(2x + 1) = 0</p>
+      <p>(x − 3)(2x + 1) = 0</p>
+      <p><strong>x = 3 &nbsp;or&nbsp; x = −½</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide" id="s4">
+  <h2>Method 2: Completing the Square</h2>
+  <div class="card highlight">
+    <h3>Steps</h3>
+    <div class="steps">
+      <div class="step"><p>Make coefficient of x² equal to 1 (divide through if needed)</p></div>
+      <div class="step"><p>Move constant term to the right side</p></div>
+      <div class="step"><p>Add (b/2)² to both sides</p></div>
+      <div class="step"><p>Write left side as a perfect square</p></div>
+      <div class="step"><p>Take square root of both sides and solve</p></div>
+    </div>
+  </div>
+  <div class="card green">
+    <h3>📝 Example: x² + 6x − 7 = 0</h3>
+    <div style="font-size:.87rem;line-height:2">
+      <p>x² + 6x = 7</p>
+      <p>Add (6/2)² = 9 to both sides:</p>
+      <p>x² + 6x + 9 = 7 + 9</p>
+      <p>(x + 3)² = 16</p>
+      <p>x + 3 = ±4</p>
+      <p>x = 4 − 3 = <strong>1</strong> &nbsp;or&nbsp; x = −4 − 3 = <strong>−7</strong></p>
+    </div>
+  </div>
+  <div class="fact"><strong>Key formula:</strong> (x + b/2)² = x² + bx + (b/2)²</div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide" id="s5">
+  <h2>Method 3: Quadratic Formula</h2>
+  <div class="card highlight">
+    <h3>The Quadratic Formula</h3>
+    <div class="formula-box">x = (−b ± √(b² − 4ac)) / 2a</div>
+    <p style="font-size:.87rem">Used when factorisation is difficult or impossible. Works for <strong>all</strong> quadratic equations.</p>
+  </div>
+  <div class="card green">
+    <h3>📝 Example: 2x² + 3x − 2 = 0</h3>
+    <div style="font-size:.87rem;line-height:2">
+      <p>a = 2, b = 3, c = −2</p>
+      <p>x = (−3 ± √(3² − 4×2×(−2))) / (2×2)</p>
+      <p>x = (−3 ± √(9 + 16)) / 4</p>
+      <p>x = (−3 ± √25) / 4</p>
+      <p>x = (−3 ± 5) / 4</p>
+      <p>x = (−3 + 5)/4 = <strong>½</strong> &nbsp;or&nbsp; x = (−3 − 5)/4 = <strong>−2</strong></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>The Discriminant: b² − 4ac</h3>
+    <table class="tbl">
+      <tr><th>Value</th><th>Nature of Roots</th></tr>
+      <tr><td>b² − 4ac > 0</td><td>Two distinct real roots</td></tr>
+      <tr><td>b² − 4ac = 0</td><td>One repeated real root</td></tr>
+      <tr><td>b² − 4ac &lt; 0</td><td>No real roots (complex)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide" id="s6">
+  <h2>Special Cases</h2>
+  <div class="grid2">
+    <div class="card green">
+      <h3>Difference of Two Squares</h3>
+      <div class="formula-box" style="font-size:.95rem">x² − a² = (x+a)(x−a)</div>
+      <p style="font-size:.87rem;margin-top:8px"><strong>Example:</strong> x² − 25 = 0</p>
+      <p style="font-size:.87rem">(x + 5)(x − 5) = 0</p>
+      <p style="font-size:.87rem"><strong>x = 5 or x = −5</strong></p>
+    </div>
+    <div class="card highlight">
+      <h3>Perfect Square Trinomial</h3>
+      <div class="formula-box" style="font-size:.9rem">(x + a)² = x² + 2ax + a²</div>
+      <p style="font-size:.87rem;margin-top:8px"><strong>Example:</strong> x² + 10x + 25 = 0</p>
+      <p style="font-size:.87rem">(x + 5)² = 0</p>
+      <p style="font-size:.87rem"><strong>x = −5 (repeated root)</strong></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>When b = 0: Pure Quadratic</h3>
+    <p style="font-size:.87rem;margin-bottom:8px"><strong>Example:</strong> 3x² − 48 = 0</p>
+    <div style="font-size:.87rem;line-height:2">
+      <p>3x² = 48</p>
+      <p>x² = 16</p>
+      <p>x = ±4</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>When c = 0</h3>
+    <p style="font-size:.87rem;margin-bottom:8px"><strong>Example:</strong> x² − 5x = 0</p>
+    <div style="font-size:.87rem;line-height:2">
+      <p>x(x − 5) = 0</p>
+      <p><strong>x = 0 or x = 5</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide" id="s7">
+  <h2>Word Problems</h2>
+  <div class="card highlight">
+    <h3>Problem-Solving Steps</h3>
+    <div class="steps">
+      <div class="step"><p>Read carefully and identify the unknown (let x = ...)</p></div>
+      <div class="step"><p>Form a quadratic equation from the given information</p></div>
+      <div class="step"><p>Solve the equation using appropriate method</p></div>
+      <div class="step"><p>Check answers in context (reject negative values where inappropriate)</p></div>
+    </div>
+  </div>
+  <div class="card green">
+    <h3>📝 Example 1: Area Problem</h3>
+    <p style="font-size:.87rem">A rectangular garden is 3m longer than it is wide. Its area is 40m². Find its dimensions.</p>
+    <div style="font-size:.87rem;line-height:2;margin-top:8px">
+      <p>Let width = x, length = x + 3</p>
+      <p>x(x + 3) = 40</p>
+      <p>x² + 3x − 40 = 0</p>
+      <p>(x + 8)(x − 5) = 0</p>
+      <p>x = 5 (reject x = −8)</p>
+      <p><strong>Width = 5m, Length = 8m</strong></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📝 Example 2: Number Problem</h3>
+    <p style="font-size:.87rem">The product of two consecutive even numbers is 48. Find the numbers.</p>
+    <div style="font-size:.87rem;line-height:2;margin-top:8px">
+      <p>Let numbers = n and n + 2</p>
+      <p>n(n + 2) = 48 → n² + 2n − 48 = 0</p>
+      <p>(n + 8)(n − 6) = 0</p>
+      <p><strong>n = 6 → numbers are 6 and 8</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide" id="s8">
+  <h2>Graphs of Quadratic Functions</h2>
+  <div class="card highlight">
+    <h3>y = ax² + bx + c — The Parabola</h3>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.87rem"><strong>When a > 0:</strong> U-shaped (minimum point)</p>
+        <div style="text-align:center;font-size:2rem;padding:10px">∪</div>
+      </div>
+      <div>
+        <p style="font-size:.87rem"><strong>When a &lt; 0:</strong> ∩-shaped (maximum point)</p>
+        <div style="text-align:center;font-size:2rem;padding:10px">∩</div>
+      </div>
+    </div>
+  </div>
+  <div class="card green">
+    <h3>Key Features</h3>
+    <table class="tbl">
+      <tr><th>Feature</th><th>Description</th><th>Formula</th></tr>
+      <tr><td>Axis of symmetry</td><td>Vertical line through vertex</td><td>x = −b/2a</td></tr>
+      <tr><td>Vertex</td><td>Turning point</td><td>(−b/2a, f(−b/2a))</td></tr>
+      <tr><td>x-intercepts</td><td>Roots of equation</td><td>Set y = 0</td></tr>
+      <tr><td>y-intercept</td><td>Where graph crosses y-axis</td><td>Set x = 0 → y = c</td></tr>
+    </table>
+  </div>
+  <div class="fact"><strong>The roots</strong> of a quadratic equation are the x-coordinates where the parabola crosses the x-axis.</div>
+</div>
+
+<!-- SLIDE 9 -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="quiz-q">
+    <p>1. Solve x² − 7x + 12 = 0 by factorisation. x = <span class="fib"><input type="text" id="q1" placeholder="x ="></span></p>
+    <button class="check-btn" onclick="checkFIB('q1',['3','4','3 and 4','3 or 4'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>2. In the quadratic formula, the discriminant is <span class="fib"><input type="text" id="q2" placeholder="formula"></span>.</p>
+    <button class="check-btn" onclick="checkFIB('q2',['b2-4ac','b²-4ac','b^2-4ac'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>3. Solve 2x² − 8 = 0. x = <span class="fib"><input type="text" id="q3" placeholder="x ="></span></p>
+    <button class="check-btn" onclick="checkFIB('q3',['2','-2','±2','2 or -2'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>4. Solve x² + 4x − 12 = 0 using the quadratic formula. Show your working:</p>
+    <textarea class="sa-input" id="q4" placeholder="Show working and solutions..."></textarea>
+    <button class="check-btn" onclick="checkSA('q4',['2','-6','a=1','b=4','c=-12'],this)">Check</button>
+    <div class="model-ans" id="q4-model">
+      <strong>Model Answer:</strong> a=1, b=4, c=−12. Discriminant = 16+48 = 64. x = (−4 ± 8)/2. x = 2 or x = −6.
+    </div>
+  </div>
+  <div class="quiz-q">
+    <p>5. A number exceeds its reciprocal by 3/2. Form and solve a quadratic equation to find the number.</p>
+    <textarea class="sa-input" id="q5" placeholder="Show your working..."></textarea>
+    <button class="check-btn" onclick="checkSA('q5',['2','x2','x=2','reciprocal'],this)">Check</button>
+    <div class="model-ans" id="q5-model">
+      <strong>Model Answer:</strong> Let x − 1/x = 3/2. Multiply by 2x: 2x² − 2 = 3x → 2x² − 3x − 2 = 0 → (2x+1)(x−2) = 0. x = 2 or x = −½.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="slide" id="s10">
+  <h2>Quiz — Quadratic Equations</h2>
+  <div id="quizArea">
+    <div class="quiz-q">
+      <p>1. Solve by factorisation: x² + x − 6 = 0. x = <span class="fib"><input type="text" id="fq1" placeholder="..."></span></p>
+    </div>
+    <div class="quiz-q">
+      <p>2. The equation x² − 6x + 9 = 0 has <span class="fib"><input type="text" id="fq2" placeholder="..."></span> root(s).</p>
+    </div>
+    <div class="quiz-q">
+      <p>3. Using the quadratic formula, solve 3x² − 5x − 2 = 0. x = <span class="fib"><input type="text" id="fq3" placeholder="..."></span></p>
+    </div>
+    <div class="quiz-q">
+      <p>4. Complete the square: x² − 8x + 7 = 0</p>
+      <textarea class="sa-input" id="fq4" placeholder="Show working..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <p>5. The length of a rectangle is 4cm more than its width. If the area is 45cm², find the width:</p>
+      <textarea class="sa-input" id="fq5" placeholder="Show working and answer..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <p>6. State the nature of roots if the discriminant is negative:</p>
+      <textarea class="sa-input" id="fq6" placeholder="State the nature..."></textarea>
+    </div>
+    <button class="check-btn" style="width:100%;padding:12px;font-size:1rem" onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+  <div id="scoreBox" style="display:none"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="btn btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
+  <button class="btn btn-next" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let current=0;const total=10;
+const dots=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dots.appendChild(d);}
+function updateUI(){
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  document.getElementById('slideInfo').textContent=(current+1)+' / '+total;
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').textContent=current===total-1?'Finish':'Next →';
+}
+function changeSlide(d){if(current+d>=0&&current+d<total){current+=d;updateUI();window.scrollTo(0,0);}}
+function goTo(i){current=i;updateUI();window.scrollTo(0,0);}
+function checkFIB(id,answers,btn){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  const ok=answers.some(a=>val.includes(a.toLowerCase()));
+  btn.style.background=ok?'var(--ok)':'var(--no)';
+  btn.textContent=ok?'✓ Correct':'✗ Try Again';
+}
+function checkSA(id,keywords,btn){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  const found=keywords.filter(k=>val.includes(k.toLowerCase()));
+  const model=document.getElementById(id+'-model');
+  if(model)model.style.display='block';
+  const pct=Math.round(found.length/keywords.length*100);
+  btn.style.background=pct>=40?'var(--ok)':'var(--no)';
+  btn.textContent=pct>=40?'✓ Good Answer':'✗ Review Model Answer';
+}
+function submitQuiz(){
+  const ans={
+    fq1:{v:document.getElementById('fq1').value.trim().toLowerCase(),k:['2','-3','2 or','or -3'],p:2},
+    fq2:{v:document.getElementById('fq2').value.trim().toLowerCase(),k:['one','1','repeated'],p:1},
+    fq3:{v:document.getElementById('fq3').value.trim().toLowerCase(),k:['2','-1/3','1/3'],p:2},
+    fq4:{v:document.getElementById('fq4').value.trim().toLowerCase(),k:['x-4','16','1','7'],p:2},
+    fq5:{v:document.getElementById('fq5').value.trim().toLowerCase(),k:['5','width','5cm'],p:2},
+    fq6:{v:document.getElementById('fq6').value.trim().toLowerCase(),k:['no real','complex','imaginary'],p:1},
+  };
+  let score=0,total=0;
+  for(const k in ans){total+=ans[k].p;if(ans[k].k.some(kw=>ans[k].v.includes(kw)))score+=ans[k].p;}
+  const pct=Math.round(score/total*100);
+  const grade=pct>=80?'Excellent!':pct>=60?'Good Work!':pct>=40?'Keep Practising':'Review the Notes';
+  document.getElementById('quizArea').style.display='none';
+  document.getElementById('scoreBox').style.display='block';
+  document.getElementById('scoreBox').innerHTML=`<div class="score-box"><h2>${score} / ${total}</h2><p style="font-size:1.1rem;margin:8px 0">${grade} (${pct}%)</p><div class="rubric"><div class="rubric-row"><span>Exceeding (80–100%)</span><span>🌟</span></div><div class="rubric-row"><span>Meeting (60–79%)</span><span>✅</span></div><div class="rubric-row"><span>Approaching (40–59%)</span><span>📖</span></div><div class="rubric-row"><span>Below (0–39%)</span><span>🔄</span></div></div></div>`;
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,total,pct);
+}
+updateUI();
+</script>
+</body>
+</html>

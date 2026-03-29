@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Biology | Nitrogen Cycle & Pollution</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f9fafb;--card:#fff;--txt:#1a1a1a;--muted:#666;--border:#e0e0e0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
+#topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar .title{font-size:14px;font-weight:700;}
+#topbar .meta{font-size:12px;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.3);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;width:10%;}
+#slide-wrap{flex:1;max-width:860px;width:100%;margin:0 auto;padding:20px 16px 100px;}
+.slide{display:none;animation:fadeIn .4s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide-header{background:var(--pri);color:#fff;border-radius:12px 12px 0 0;padding:18px 24px;}
+.slide-header .slide-num{font-size:11px;opacity:.75;text-transform:uppercase;letter-spacing:1px;}
+.slide-header h2{font-size:20px;font-weight:700;margin-top:4px;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.outcome-list{list-style:none;padding:0;}
+.outcome-list li{padding:10px 14px;margin:8px 0;background:#e8f5e9;border-left:4px solid var(--pri);border-radius:6px;font-size:14px;line-height:1.5;}
+.outcome-list li::before{content:"✓ ";color:var(--pri);font-weight:700;}
+.info-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:16px 20px;margin:12px 0;}
+.info-box h3{color:var(--pri);font-size:15px;margin-bottom:8px;}
+.info-box p,.info-box li{font-size:13.5px;line-height:1.6;color:#333;}
+.info-box ul{padding-left:18px;margin-top:6px;}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.compare-table th{background:var(--pri);color:#fff;padding:10px 12px;text-align:left;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table tr:nth-child(even) td{background:#f5f5f5;}
+/* Nitrogen cycle diagram */
+.n-cycle{position:relative;background:linear-gradient(135deg,#e8f5e9,#f0f7f0);border-radius:16px;padding:20px;margin:16px 0;min-height:420px;}
+.n-node{position:absolute;background:var(--pri);color:#fff;border-radius:10px;padding:8px 12px;font-size:11.5px;font-weight:600;text-align:center;line-height:1.3;cursor:pointer;transition:transform .2s,box-shadow .2s;z-index:2;}
+.n-node:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(10,94,42,.3);}
+.n-node.atm{background:#1565c0;}
+.n-node.soil{background:#6d4c41;}
+.n-node.org{background:#2e7d32;}
+.n-arrow{position:absolute;font-size:11px;color:#333;font-style:italic;text-align:center;z-index:1;}
+.cycle-steps{counter-reset:step;}
+.step{counter-increment:step;padding:10px 14px;margin:6px 0;background:#fff;border-left:4px solid var(--acc);border-radius:6px;font-size:13.5px;line-height:1.5;position:relative;padding-left:44px;}
+.step::before{content:counter(step);position:absolute;left:12px;top:10px;background:var(--acc);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;}
+/* Pollution tabs */
+.poll-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.ptab{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;}
+.ptab.active,.ptab:hover{background:var(--pri);color:#fff;border-color:var(--pri);}
+.poll-content{display:none;animation:fadeIn .3s ease;}
+.poll-content.active{display:block;}
+.practice-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;}
+.practice-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.practice-q textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:80px;font-family:inherit;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:10px;}
+.feedback{margin-top:10px;padding:12px;border-radius:8px;font-size:13.5px;display:none;line-height:1.6;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;}
+.quiz-q .qnum{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.quiz-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.fib-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;line-height:2.2;}
+.fib-wrap input{border:none;border-bottom:2px solid var(--pri);background:transparent;font-size:14px;padding:2px 6px;width:160px;outline:none;color:var(--pri);font-weight:600;}
+.fib-wrap input.correct{border-color:var(--ok);color:var(--ok);}
+.fib-wrap input.wrong{border-color:var(--no);color:var(--no);}
+.sa-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:70px;font-family:inherit;margin-top:8px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;margin:2px;font-weight:600;}
+.tag.found{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.model-answer{margin-top:8px;padding:10px;background:#f5f5f5;border-radius:6px;font-size:13px;color:#444;border-left:3px solid var(--acc);}
+#submit-quiz{display:block;width:100%;padding:14px;background:var(--pri);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;}
+#submit-quiz:hover{background:#085220;}
+#quiz-result{display:none;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-top:20px;}
+#quiz-result .score-big{font-size:52px;font-weight:900;color:var(--pri);}
+.cbc-rubric{background:#e8f5e9;border-radius:8px;padding:14px;margin-top:16px;font-size:13px;text-align:left;line-height:1.7;}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+#nav-bar button{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+#nav-bar button:hover{background:#085220;}
+#nav-bar button:disabled{background:#ccc;cursor:not-allowed;}
+#slide-dots{display:flex;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">🌱 Biology Form 3 | Nitrogen Cycle &amp; Pollution</div>
+    <div class="meta">MTTI LMS &nbsp;|&nbsp; Lesson 3 of 6</div>
+  </div>
+  <div id="slide-counter">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="slide-wrap">
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <div class="slide-header"><div class="slide-num">Slide 1</div><h2>📚 Learning Outcomes</h2></div>
+  <div class="slide-body">
+    <ul class="outcome-list">
+      <li>Describe the <strong>nitrogen cycle</strong> in nature</li>
+      <li>Identify bacteria involved in each stage of the nitrogen cycle</li>
+      <li>Explain how energy flows through <strong>trophic levels</strong> in an ecosystem</li>
+      <li>Define and describe <strong>food chains, food webs, pyramids of numbers and biomass</strong></li>
+      <li>Define <strong>pollution</strong> and explain its causes, effects, and control (air, water, soil)</li>
+      <li>Define <strong>eutrophication</strong> and <strong>biological control</strong></li>
+      <li>Describe symptoms, transmission and control of <strong>cholera, typhoid, malaria</strong> and <strong>amoebic dysentery</strong></li>
+    </ul>
+    <div class="info-box" style="margin-top:16px;"><h3>🔑 Key Vocabulary</h3><p><strong>Nitrogen fixation · Nitrification · Denitrification · Decomposers · Eutrophication · Biological control · Pollution · Trophic level · Pyramid of numbers · Pyramid of biomass</strong></p></div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="s2">
+  <div class="slide-header"><div class="slide-num">Slide 2</div><h2>🔄 The Nitrogen Cycle</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>What is the Nitrogen Cycle?</h3><p>The process by which <strong>nitrogen in the air</strong> is made available to plants and animals, and eventually returns to the air.</p><p style="margin-top:8px;font-style:italic;">Nitrogen gas (N₂) makes up 78% of the atmosphere but cannot be directly used by most organisms.</p></div>
+    <div class="cycle-steps">
+      <div class="step"><strong>Nitrogen fixation (atmospheric):</strong> Lightning/thunderstorms → N₂ + O₂ → nitrogen oxides → dissolve in rain → nitric acid → deposited in soil as nitrates</div>
+      <div class="step"><strong>Nitrogen fixation (biological):</strong> Symbiotic bacteria (Rhizobium) in root nodules of legumes; Free-living bacteria (Clostridium, Azotobacter); Nostoc algae (Anabaena, Chlorella) — all fix N₂ to nitrates</div>
+      <div class="step"><strong>Plant uptake:</strong> Plants absorb nitrates from soil → synthesise plant proteins → animals eat plants → animal proteins</div>
+      <div class="step"><strong>Decomposition:</strong> Dead plants/animals + nitrogenous wastes → decomposed by putrefying bacteria and fungi (saprophytes) → release ammonia</div>
+      <div class="step"><strong>Nitrification:</strong> Ammonia → Nitrites (by Nitrosomonas & Nitrococcus) → Nitrates (by Nitrobacter)</div>
+      <div class="step"><strong>Denitrification:</strong> Nitrates in soil → free nitrogen gas (by denitrifying bacteria: Pseudomonas, Thiobacillus, some fungi) — reduces soil fertility</div>
+    </div>
+    <div class="info-box" style="margin-top:12px;background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">🦠 Key Bacteria in the Nitrogen Cycle</h3>
+      <table class="compare-table">
+        <tr><th>Process</th><th>Bacteria / Organism</th><th>Role</th></tr>
+        <tr><td>Nitrogen fixation</td><td>Rhizobium, Azotobacter, Clostridium, Anabaena</td><td>Fix atmospheric N₂ into ammonia/nitrates</td></tr>
+        <tr><td>Nitrification step 1</td><td>Nitrosomonas, Nitrococcus</td><td>Ammonia → Nitrites</td></tr>
+        <tr><td>Nitrification step 2</td><td>Nitrobacter</td><td>Nitrites → Nitrates</td></tr>
+        <tr><td>Denitrification</td><td>Pseudomonas, Thiobacillus</td><td>Nitrates → N₂ (reduces soil fertility)</td></tr>
+        <tr><td>Putrefaction</td><td>Putrefying bacteria, saprophytic fungi</td><td>Proteins → Ammonia</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S3: Diseases -->
+<div class="slide" id="s3">
+  <div class="slide-header"><div class="slide-num">Slide 3</div><h2>🦟 Communicable Diseases</h2></div>
+  <div class="slide-body">
+    <table class="compare-table">
+      <tr><th>Disease</th><th>Causative Agent</th><th>Transmission</th><th>Symptoms</th><th>Control</th></tr>
+      <tr>
+        <td><strong>Cholera</strong></td>
+        <td><em>Vibrio cholerae</em> (bacterium)</td>
+        <td>Contaminated food/water; flies from faeces</td>
+        <td>Intestinal pain, diarrhoea, vomiting, dehydration</td>
+        <td>Proper hygiene; boil drinking water; vaccination</td>
+      </tr>
+      <tr>
+        <td><strong>Typhoid</strong></td>
+        <td><em>Salmonella typhi</em> (bacterium)</td>
+        <td>Contaminated food/water; flies from faeces</td>
+        <td>Fever, rashes, diarrhoea with blood</td>
+        <td>Proper sanitation; vaccination</td>
+      </tr>
+      <tr>
+        <td><strong>Malaria</strong></td>
+        <td><em>Plasmodium</em> (protozoa)</td>
+        <td>Bite of infected female Anopheles mosquito</td>
+        <td>Fever, joint pains, vomiting, headache, anaemia</td>
+        <td>Kill mosquitoes/larvae; drain stagnant water; clear bushes; mosquito nets; treatment</td>
+      </tr>
+      <tr>
+        <td><strong>Amoebic Dysentery</strong></td>
+        <td><em>Entamoeba histolytica</em> (protozoa)</td>
+        <td>Contaminated food/water; improper disposal of faeces</td>
+        <td>Intestinal pain, diarrhoea, vomiting, dehydration</td>
+        <td>Sanitation; personal hygiene; cook food well; treatment with drugs</td>
+      </tr>
+    </table>
+    <div class="info-box" style="margin-top:14px;">
+      <h3>🪱 Parasites: Ascaris &amp; Schistosoma</h3>
+      <table class="compare-table">
+        <tr><th></th><th>Ascaris lumbricoides (roundworm)</th><th>Schistosoma (blood fluke)</th></tr>
+        <tr><td>Transmission</td><td>Ingestion of contaminated food/water</td><td>Contact with contaminated water (snail as intermediate host)</td></tr>
+        <tr><td>Effects</td><td>Lung inflammation, pneumonia, intestinal obstruction</td><td>Bleeding in lungs, blood-stained urine, unthriftiness</td></tr>
+        <tr><td>Control</td><td>Proper sanitation; wash hands before eating</td><td>Use toilets; avoid infected water; molluscicides; drainage</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S4: Pollution -->
+<div class="slide" id="s4">
+  <div class="slide-header"><div class="slide-num">Slide 4</div><h2>🏭 Pollution: Causes, Effects &amp; Control</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>Definition</h3><p><strong>Pollution:</strong> Any process which leads to adverse or harmful changes in the environment.</p></div>
+    <div class="poll-tabs">
+      <div class="ptab active" onclick="showPoll(event,'air')">💨 Air Pollution</div>
+      <div class="ptab" onclick="showPoll(event,'water')">💧 Water Pollution</div>
+      <div class="ptab" onclick="showPoll(event,'soil')">🌱 Soil Pollution</div>
+    </div>
+    <div id="poll-air" class="poll-content active">
+      <div class="info-box"><h3>Air Pollution — Causes &amp; Effects</h3><ul><li>Sulphur IV oxide, H₂S, nitrogen oxides → acid rain, damages plant leaves</li><li>CFCs, aerosols, insecticides → deplete ozone layer; affect respiratory organs</li><li>Smoke/fumes from industries/vehicles → CO poisoning; settles on leaves, stops photosynthesis</li><li>CO₂ → greenhouse effect → temperature inversion</li><li>Noise from machines/aircraft → affects hearing</li><li>Dust from cement factories → limits photosynthesis</li><li>Radioactive emissions → cancer, mutations, death</li></ul></div>
+      <div class="info-box" style="background:#e3f2fd;border-color:#90caf9;"><h3 style="color:#1565c0;">Control of Air Pollution</h3><ul><li>Lead-free petrol in vehicles</li><li>Smokeless fuels and electricity</li><li>Filtration and chemical treatment of harmful gases</li><li>Factories far from residential areas; tall chimneys</li><li>Reduce noise intensity (ear muffs)</li></ul></div>
+    </div>
+    <div id="poll-water" class="poll-content">
+      <div class="info-box"><h3>Water Pollution — Causes &amp; Effects</h3><ul><li>Agrochemical fertilizers → eutrophication → algal bloom</li><li>Silting → shallow water; clogs gills and stomata</li><li>Industrial/domestic waste → toxic materials kill producers</li><li>Untreated sewage → reduces O₂; promotes bacterial growth; epidemics</li><li>Oil spillage → blocks O₂; kills organisms</li><li>Hot industrial water → reduces dissolved O₂</li></ul></div>
+      <div class="info-box" style="background:#e3f2fd;border-color:#90caf9;"><h3 style="color:#1565c0;">Control of Water Pollution</h3><ul><li>Treat domestic/industrial waste before discharge</li><li>Ban phosphate-based detergents; use biodegradable ones</li><li>Environmental impact assessment before industries</li><li>Biological control; organic farming</li><li>Contour farming; reafforestation to control silting</li></ul></div>
+    </div>
+    <div id="poll-soil" class="poll-content">
+      <div class="info-box"><h3>Soil Pollution — Causes &amp; Effects</h3><ul><li>Acid rain → alters soil pH</li><li>Aerosols/pesticides → accumulate in soil; toxic to plants</li><li>Petroleum spillage → prevents root O₂ uptake</li><li>Heavy metals from inorganic fertilizers → soil microorganisms cannot survive</li><li>Household/industrial waste → renders soil unsuitable for agriculture</li></ul></div>
+      <div class="info-box" style="background:#e3f2fd;border-color:#90caf9;"><h3 style="color:#1565c0;">Control of Soil Pollution</h3><ul><li>Organic farming techniques</li><li>Biological control of pests</li><li>Recycle non-degradable materials or bury safely</li><li>Controlled burning of garbage</li><li>Treatment of human and industrial waste</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="s5">
+  <div class="slide-header"><div class="slide-num">Slide 5</div><h2>🌊 Eutrophication &amp; Biological Control</h2></div>
+  <div class="slide-body">
+    <div class="info-box" style="background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">🌿 Eutrophication</h3>
+      <p><strong>Definition:</strong> Enrichment of water bodies with nutrients (nitrates/phosphates) due to discharge of sewage/agrochemicals, leading to rapid growth of surface plants (algae).</p>
+      <h3 style="color:#e65100;margin-top:12px;">Effects of Eutrophication</h3>
+      <ul>
+        <li>Algae block sunlight from submerged plants → no photosynthesis → plants die</li>
+        <li>Dead organic matter decomposed by bacteria → consume dissolved O₂</li>
+        <li>Aquatic animals suffocate and die → collapse of food web</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin-top:14px;">
+      <h3>🐛 Biological Control</h3>
+      <p><strong>Definition:</strong> Using a living organism to regulate, control or reduce the population of another organism.</p>
+      <ul style="margin-top:8px;">
+        <li>Beetles introduced to feed on water hyacinth</li>
+        <li>Fish introduced to feed on mosquito larvae</li>
+        <li>Ladybirds to control aphids on crops</li>
+        <li>Advantage: No chemical pollution; self-sustaining</li>
+        <li>Risk: Introduced organism may become invasive</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin-top:14px;background:#fce4ec;border-color:#f48fb1;">
+      <h3 style="color:#880e4f;">⚠️ Conservation Efforts</h3>
+      <ul>
+        <li>Reforestation to restore habitats</li>
+        <li>Wildlife reserves and national parks</li>
+        <li>Laws against poaching and illegal logging</li>
+        <li>Sustainable agriculture practices</li>
+        <li>Environmental impact assessment (EIA)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="s6">
+  <div class="slide-header"><div class="slide-num">Slide 6</div><h2>🔄 Interactive: Nitrogen Cycle Steps</h2></div>
+  <div class="slide-body">
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">Click each step below to reveal the organisms and process involved. Complete the cycle by going through all 6 steps.</p>
+    <div id="cycle-game">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="cycle-card" onclick="revealStep(0)"><div class="cc-title">Step 1: Atmospheric Fixation</div><div class="cc-body" id="cc0" style="display:none;">Lightning → N₂ + O₂ → Nitrogen oxides → Nitric acid (HNO₃) → dissolves in rainwater → deposited in soil as nitrates (NO₃⁻).</div></div>
+        <div class="cycle-card" onclick="revealStep(1)"><div class="cc-title">Step 2: Biological Fixation</div><div class="cc-body" id="cc1" style="display:none;"><strong>Rhizobium</strong> (root nodules of legumes), <strong>Azotobacter &amp; Clostridium</strong> (free-living), <strong>Anabaena</strong> (algae) → fix N₂ to NH₃/nitrates.</div></div>
+        <div class="cycle-card" onclick="revealStep(2)"><div class="cc-title">Step 3: Plant Uptake</div><div class="cc-body" id="cc2" style="display:none;">Plants absorb nitrates → form plant proteins. Animals eat plants → convert to animal proteins.</div></div>
+        <div class="cycle-card" onclick="revealStep(3)"><div class="cc-title">Step 4: Decomposition</div><div class="cc-body" id="cc3" style="display:none;">Putrefying bacteria &amp; saprophytic fungi break down dead organic matter → release ammonia (NH₃).</div></div>
+        <div class="cycle-card" onclick="revealStep(4)"><div class="cc-title">Step 5: Nitrification</div><div class="cc-body" id="cc4" style="display:none;">NH₃ → Nitrites (NO₂⁻) via <strong>Nitrosomonas &amp; Nitrococcus</strong>. Nitrites → Nitrates (NO₃⁻) via <strong>Nitrobacter</strong>.</div></div>
+        <div class="cycle-card" onclick="revealStep(5)"><div class="cc-title">Step 6: Denitrification</div><div class="cc-body" id="cc5" style="display:none;">Denitrifying bacteria (<strong>Pseudomonas, Thiobacillus</strong>) → convert nitrates back to N₂ → returned to atmosphere. Reduces soil fertility.</div></div>
+      </div>
+      <div id="cycle-complete" style="display:none;background:#e8f5e9;border-radius:10px;padding:16px;text-align:center;margin-top:14px;">
+        <div style="font-size:24px;">🎉</div>
+        <div style="font-weight:700;color:var(--pri);font-size:16px;">Nitrogen Cycle Complete!</div>
+        <p style="font-size:13px;color:var(--muted);margin-top:4px;">You have traced all 6 steps of the nitrogen cycle.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="s7">
+  <div class="slide-header"><div class="slide-num">Slide 7</div><h2>🎯 Apply Your Knowledge</h2></div>
+  <div class="slide-body">
+    <div class="info-box" style="background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">📋 Scenario: A Farmer's Dilemma</h3>
+      <p>A farmer in Eldoret uses excessive nitrogen fertilizers on his maize farm. Heavy rains wash the fertilizer into a nearby river. Within months, the river is covered with green algae, fish are dying, and the water smells terrible.</p>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q1: Using your knowledge of the nitrogen cycle and eutrophication, explain step-by-step what is happening in the river.</div>
+      <textarea placeholder="Excess nitrogen fertilizer washes into the river..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model:</strong> (1) Excess nitrates (fertilizer) wash into river by surface runoff → eutrophication; (2) Algae grow rapidly at the surface, blocking sunlight; (3) Submerged plants can't photosynthesise → die; (4) Dead plants decomposed by aerobic bacteria → O₂ consumed rapidly; (5) Dissolved O₂ levels drop → fish suffocate and die (BOD increases); (6) Anaerobic decomposition continues → produces H₂S and other foul-smelling gases.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q2: Suggest TWO biological and TWO non-biological methods the farmer could use to prevent future pollution.</div>
+      <textarea placeholder="Biological methods: ...&#10;Non-biological methods: ..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Biological:</strong> (1) Use biological control — introduce organisms that limit algae growth; (2) Plant buffer strips of vegetation along the river bank to absorb runoff; (3) Practice organic farming using compost instead of chemical fertilizers.<br><strong>Non-biological:</strong> (1) Reduce the quantity of fertilizer applied (precision farming); (2) Contour/terrace farming to reduce surface runoff; (3) Apply fertilizer only when soil is dry, not before rain; (4) Construct settling ponds to trap fertilizer-laden runoff.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="s8">
+  <div class="slide-header"><div class="slide-num">Slide 8</div><h2>🦟 Disease Control: Malaria Deep Dive</h2></div>
+  <div class="slide-body">
+    <div class="info-box">
+      <h3>Malaria Life Cycle Overview</h3>
+      <p style="margin-bottom:10px;">Malaria is caused by <em>Plasmodium</em> (a protozoan) transmitted by the <strong>bite of infected female Anopheles mosquito</strong>.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px;">
+        <div style="background:#fff;border:2px solid var(--border);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;">🦟</div><div style="font-size:12px;font-weight:700;color:var(--pri);">Mosquito bites human</div><div style="font-size:11px;color:var(--muted);">Injects Plasmodium sporozoites</div></div>
+        <div style="background:#fff;border:2px solid var(--border);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;">🫀</div><div style="font-size:12px;font-weight:700;color:var(--pri);">Liver stage</div><div style="font-size:11px;color:var(--muted);">Plasmodium multiplies in liver cells</div></div>
+        <div style="background:#fff;border:2px solid var(--border);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;">🩸</div><div style="font-size:12px;font-weight:700;color:var(--pri);">Blood stage</div><div style="font-size:11px;color:var(--muted);">Infects red blood cells → fever, anaemia</div></div>
+        <div style="background:#fff;border:2px solid var(--border);border-radius:8px;padding:12px;text-align:center;"><div style="font-size:22px;">🦟</div><div style="font-size:12px;font-weight:700;color:var(--pri);">Cycle continues</div><div style="font-size:11px;color:var(--muted);">Mosquito takes blood meal → picks up gametocytes</div></div>
+      </div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q: Explain why the female Anopheles mosquito is called a vector for malaria, not the causative agent.</div>
+      <textarea placeholder="The female Anopheles mosquito is a vector because..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model:</strong> The causative agent (pathogen) of malaria is <em>Plasmodium</em> — a protozoan that directly causes disease symptoms. The female Anopheles mosquito is a <strong>vector</strong> (biological vector) because it transmits the pathogen from one host to another without itself being the cause of the disease. The mosquito acts as an intermediate host where Plasmodium undergoes sexual reproduction (sporogony), but the disease malaria is caused by Plasmodium's destruction of red blood cells in the human host.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="slide" id="s9">
+  <div class="slide-header"><div class="slide-num">Slide 9</div><h2>✏️ Practice Questions</h2></div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <div class="qtext">1. State TWO ways in which nitrogen in the atmosphere is made available for plant use.</div>
+      <textarea placeholder="Two ways..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ (1) <strong>Biological fixation</strong> by microorganisms — Rhizobium (in root nodules of legumes), Azotobacter/Clostridium (free-living in soil), Anabaena (algae) fix atmospheric N₂ into nitrates.<br>(2) <strong>Atmospheric/electrical fixation</strong> — lightning and thunderstorms cause N₂ to combine with O₂ to form nitrogen oxides → dissolve in rainwater as nitric acid → deposited in soil as nitrates.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">2. Distinguish between nitrifying bacteria and denitrifying bacteria. Give examples of each.</div>
+      <textarea placeholder="Nitrifying bacteria...&#10;Denitrifying bacteria..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Nitrifying bacteria:</strong> Convert ammonia to nitrites and then to nitrates, <em>increasing</em> soil fertility. Examples: Nitrosomonas (NH₃ → NO₂⁻), Nitrococcus, Nitrobacter (NO₂⁻ → NO₃⁻).<br><br><strong>Denitrifying bacteria:</strong> Convert nitrates back to free atmospheric nitrogen gas (N₂), thereby <em>reducing</em> soil fertility. Examples: Pseudomonas, Thiobacillus.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">3. Define biological control and give ONE advantage and ONE disadvantage.</div>
+      <textarea placeholder="Biological control is..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Definition:</strong> Using a living organism to regulate, control, or reduce the population of another organism (pest).<br><strong>Advantage:</strong> No chemical pollution; long-lasting; self-sustaining; does not harm non-target species (if well-managed).<br><strong>Disadvantage:</strong> The introduced organism may become invasive and disrupt the ecosystem; may not be effective if the pest has no natural enemies in the new area; takes time to show results.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-header"><div class="slide-num">Slide 10 • Assessment</div><h2>📝 Quiz: Nitrogen Cycle &amp; Pollution</h2></div>
+  <div class="slide-body">
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 1</div>
+      <div class="fib-wrap">
+        The process by which nitrogen in the air is made available to organisms is the <input type="text" id="f1" placeholder="..."> cycle.
+        Bacteria that convert ammonia to nitrites are called <input type="text" id="f2" placeholder="...">.
+        Bacteria that reduce nitrates to free nitrogen are <input type="text" id="f3" placeholder="..."> bacteria.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 2</div>
+      <div class="fib-wrap">
+        Malaria is caused by <input type="text" id="f4" placeholder="..."> and transmitted by the <input type="text" id="f5" placeholder="..."> mosquito.
+        Excessive growth of algae in water bodies due to nutrient enrichment is called <input type="text" id="f6" placeholder="...">.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 1</div>
+      <div class="qtext">Describe the role of Rhizobium bacteria in the nitrogen cycle. Why are legumes important in crop rotation?</div>
+      <textarea class="sa-input" id="sa1" placeholder="Rhizobium..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 2</div>
+      <div class="qtext">State the symptoms, mode of transmission and ONE control measure for cholera.</div>
+      <textarea class="sa-input" id="sa2" placeholder="Cholera: Symptoms...Transmission...Control..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 3</div>
+      <div class="qtext">Explain THREE effects of untreated industrial waste being discharged into a river.</div>
+      <textarea class="sa-input" id="sa3" placeholder="1.&#10;2.&#10;3."></textarea>
+    </div>
+    <button id="submit-quiz" onclick="submitQuiz()">Submit Quiz ✓</button>
+    <div id="quiz-result">
+      <div class="score-big" id="score-display">0%</div>
+      <div class="grade" id="grade-display"></div>
+      <div id="fib-feedback"></div>
+      <div id="sa-feedback"></div>
+      <div class="cbc-rubric"><strong>CBC Assessment Rubric:</strong><br><strong>Exceeds Expectations (80–100%):</strong> Demonstrates comprehensive understanding of the nitrogen cycle, disease transmission, and pollution control.<br><strong>Meets Expectations (50–79%):</strong> Adequately describes the nitrogen cycle and key diseases.<br><strong>Approaching Expectations (30–49%):</strong> Partial understanding; some key concepts identified.<br><strong>Below Expectations (&lt;30%):</strong> Needs additional support; review all sections.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="nav-bar">
+  <button id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Previous</button>
+  <div id="slide-dots"></div>
+  <button id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+<style>
+.cycle-card{background:#fff;border:2px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;}
+.cycle-card:hover{border-color:var(--pri);box-shadow:0 4px 12px rgba(10,94,42,.12);}
+.cc-title{font-weight:700;color:var(--pri);font-size:13.5px;margin-bottom:6px;}
+.cc-body{font-size:12.5px;line-height:1.6;color:#444;margin-top:8px;padding:8px;background:#e8f5e9;border-radius:6px;}
+</style>
+<script>
+let current=0;const total=10;
+function buildDots(){const d=document.getElementById('slide-dots');d.innerHTML='';for(let i=0;i<total;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot);}}
+function goTo(n){document.querySelectorAll('.slide')[current].classList.remove('active');document.querySelectorAll('.dot')[current].classList.remove('active');current=n;document.querySelectorAll('.slide')[current].classList.add('active');document.querySelectorAll('.dot')[current].classList.add('active');document.getElementById('slide-counter').textContent='Slide '+(current+1)+' / '+total;document.getElementById('progress-fill').style.width=((current+1)/total*100)+'%';document.getElementById('prev-btn').disabled=current===0;document.getElementById('next-btn').disabled=current===total-1;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSlide(dir){goTo(current+dir);}
+buildDots();
+function showPoll(e,name){document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));e.target.classList.add('active');document.querySelectorAll('.poll-content').forEach(c=>c.classList.remove('active'));document.getElementById('poll-'+name).classList.add('active');}
+function showFeedback(btn){btn.parentElement.querySelectorAll('.feedback').forEach(f=>f.style.display='block');}
+let stepsRevealed=new Set();
+function revealStep(n){document.getElementById('cc'+n).style.display='block';stepsRevealed.add(n);if(stepsRevealed.size===6)document.getElementById('cycle-complete').style.display='block';}
+function submitQuiz(){
+  const fibs=[{id:'f1',ans:['nitrogen']},{id:'f2',ans:['nitrosomonas','nitrobacter','nitrifying']},{id:'f3',ans:['denitrifying']},{id:'f4',ans:['plasmodium']},{id:'f5',ans:['anopheles','female anopheles']},{id:'f6',ans:['eutrophication']}];
+  let fibScore=0;
+  fibs.forEach(f=>{const inp=document.getElementById(f.id);const val=inp.value.trim().toLowerCase();const ok=f.ans.some(a=>val.includes(a));inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok);if(ok)fibScore++;});
+  const saData=[
+    {id:'sa1',keys:['root nodules','legumes','fix','nitrogen','nitrates','crop rotation','soil fertility'],model:'Rhizobium is a symbiotic bacterium living in root nodules of leguminous plants (beans, peas, clover). It fixes atmospheric N₂ into ammonia/nitrates, which the plant uses for protein synthesis. Legumes are important in crop rotation because when ploughed back, they enrich the soil with nitrogen, reducing the need for synthetic fertilizers.'},
+    {id:'sa2',keys:['intestinal','diarrhoea','vomiting','dehydration','contaminated','water','flies','boiling','vaccination'],model:'Cholera: Symptoms: intestinal pain, severe diarrhoea, vomiting, dehydration. Transmission: ingestion of contaminated food or water; spread by flies from faeces. Control: boil drinking water; proper sanitation; vaccination against cholera.'},
+    {id:'sa3',keys:['toxic','oxygen','organisms','fish','pH','oil','temperature'],model:'(1) Industrial waste may contain toxic materials that kill aquatic organisms directly; (2) Oily substances in waste clog fish gills and reduce oxygen solubility in water, causing fish to suffocate; (3) High temperatures of discharged water reduce dissolved O₂ concentration, causing organisms to die; (4) Industrial chemicals change the pH of water, affecting metabolic processes of aquatic organisms.'}
+  ];
+  let saScore=0;let saFeedbackHTML='';
+  saData.forEach(sa=>{const val=document.getElementById(sa.id).value.toLowerCase();const found=sa.keys.filter(k=>val.includes(k));const missed=sa.keys.filter(k=>!val.includes(k));const pts=Math.min(2,Math.round(found.length/sa.keys.length*2));saScore+=pts;saFeedbackHTML+=`<div style="margin:10px 0;"><strong>${sa.id.toUpperCase()}:</strong> `;found.forEach(k=>{saFeedbackHTML+=`<span class="tag found">✓ ${k}</span>`;});missed.slice(0,4).forEach(k=>{saFeedbackHTML+=`<span class="tag missed">✗ ${k}</span>`;});saFeedbackHTML+=`<div class="model-answer"><strong>Model Answer:</strong> ${sa.model}</div></div>`;});
+  const tot=fibs.length+6;const pct=Math.round((fibScore+saScore)/tot*100);
+  document.getElementById('score-display').textContent=pct+'%';
+  const grades=[[80,'Exceeds Expectations 🌟'],[50,'Meets Expectations ✅'],[30,'Approaching Expectations 📈'],[0,'Below Expectations — Revise & Retry 📚']];
+  document.getElementById('grade-display').textContent=grades.find(g=>pct>=g[0])[1];
+  document.getElementById('fib-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Fill-in-Blank: '+fibScore+'/'+fibs.length+'</h4>';
+  document.getElementById('sa-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Short Answer: '+saScore+'/6</h4>'+saFeedbackHTML;
+  document.getElementById('quiz-result').style.display='block';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(fibScore+saScore,tot,pct);
+  document.getElementById('quiz-result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

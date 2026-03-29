@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Photoelectric Effect</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar"><h2>⚡ F4 Physics — Ch.9: Photoelectric Effect</h2><span class="meta">MTTI LMS | Form 4</span></div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<div class="slide active" id="s1"><span class="slide-label">SLIDE 1 OF 10</span><h1>📚 Learning Outcomes</h1><div class="card"><ol><li>Define photoelectric effect and explain its discovery</li><li>Define work function, threshold frequency, and cut-off potential</li><li>State factors affecting photoelectric effect</li><li>Apply Einstein's photoelectric equation</li><li>Apply Planck's quantum theory</li><li>Describe applications of photoelectric effect</li></ol></div><div class="highlight">🔑 KE<sub>max</sub> = hf − Φ | eV<sub>co</sub> = hf − hf<sub>co</sub> | E = hf</div></div>
+
+<div class="slide" id="s2"><span class="slide-label">SLIDE 2 OF 10</span><h1>💡 Photoelectric Effect</h1><div class="card"><p>Discovered by <strong>Heinrich Hertz</strong> in 1887.</p><p><strong>Photoelectric effect</strong> — electrons emitted from the surface of a substance when certain EM radiation falls on it.</p><ul><li>Metal surfaces require <strong>ultraviolet radiation</strong></li><li>Caesium oxide requires <strong>visible light</strong></li></ul></div><div class="card"><h2>Key Terms</h2><table><tr><th>Term</th><th>Definition</th></tr><tr><td><strong>Work function (Φ)</strong></td><td>Minimum energy to remove an electron from the surface. Units: electron volts (eV). 1 eV = 1.6×10⁻¹⁹ J</td></tr><tr><td><strong>Threshold frequency (f<sub>co</sub>)</strong></td><td>Minimum frequency that causes photoelectric effect. Φ = hf<sub>co</sub></td></tr><tr><td><strong>Cut-off potential (V<sub>co</sub>)</strong></td><td>P.D. to stop fastest photoelectron. ½mv² = eV<sub>co</sub></td></tr></table></div></div>
+
+<div class="slide" id="s3"><span class="slide-label">SLIDE 3 OF 10</span><h1>⚡ Einstein's Photoelectric Equation</h1><div class="card"><div class="formula">KE<sub>max</sub> = ½mv²<sub>max</sub> = hf − Φ</div><div class="formula">hf<sub>co</sub> = Φ (at threshold)</div><div class="formula">eV<sub>co</sub> = hf − hf<sub>co</sub></div><h2>Planck's Quantum Theory</h2><p>Energy is quantized: E = nhf</p><p>Einstein: light consists of photons with energy E = hf</p><p>Higher frequency → higher photon energy → more energetic photoelectrons.</p></div><div class="card"><h2>Factors Affecting Photoelectric Effect</h2><ul><li><strong>Intensity</strong> — rate of emission proportional to intensity</li><li><strong>Work function</strong> — higher work function = harder to emit electrons</li><li><strong>Frequency</strong> — cut-off potential proportional to frequency</li></ul></div></div>
+
+<div class="slide" id="s4"><span class="slide-label">SLIDE 4 OF 10</span><h1>✏️ Worked Examples</h1><div class="card"><h2>Example 1 — Cut-off Frequency</h2><p>λ = 3.310×10⁻⁷ m. Find f<sub>co</sub>.</p><p>f = c/λ = 3×10⁸/3.310×10⁻⁷ = <strong>9.06×10¹⁴ Hz</strong></p></div><div class="card"><h2>Example 2 — Tungsten</h2><p>Tungsten: Φ=4.52 eV, λ=2.50×10⁻⁷ m. Find cut-off potential.</p><p>E<sub>photon</sub> = hf = hc/λ = 6.62×10⁻³⁴×3×10⁸/2.50×10⁻⁷ = 4.97 eV</p><p>eV<sub>co</sub> = 4.97−4.52 = 0.45 eV → V<sub>co</sub> = <strong>0.45 V</strong></p></div><div class="card"><h2>Example 3 — Sodium</h2><p>Φ=2.0 eV, λ=150 nm. Find max KE and velocity.</p><p>E<sub>photon</sub> = hc/λ = 8.29 eV | KE<sub>max</sub> = 8.29−2.0 = 6.29 eV = 1.01×10⁻¹⁸ J</p><p>v<sub>max</sub> = √(2KE/m) = <strong>1.49×10⁶ m/s</strong></p></div></div>
+
+<div class="slide" id="s5"><span class="slide-label">SLIDE 5 OF 10</span><h1>🔬 Applications</h1><div class="card"><h2>1. Photo-emissive Cells</h2><p>Two electrodes in evacuated glass bulb. Curved cathode + anode rod. Light ejects electrons → current flows. Used in: lift door controls, film sound reproduction.</p><h2>2. Photoconductive Cells (LDR)</h2><p>Semiconductors (e.g. CdS) reduce resistance when light shines on them. Photo-diodes and photo-transistors block current when light increases. Used in: fire alarms, camera exposure meters.</p><h2>3. Photo-voltaic Cells</h2><p>Generate e.m.f using light. Copper disc oxidized on one surface, thin gold film on exposed surface. Current increases with intensity. Used in: solar panels, calculators.</p></div></div>
+
+<div class="slide" id="s6"><span class="slide-label">SLIDE 6 OF 10</span><h1>📊 Summary Table</h1><div class="card"><table><tr><th>Quantity</th><th>Formula</th></tr><tr><td>Photon energy</td><td>E = hf</td></tr><tr><td>Work function</td><td>Φ = hf<sub>co</sub></td></tr><tr><td>Maximum KE</td><td>KE<sub>max</sub> = hf − Φ</td></tr><tr><td>Cut-off potential</td><td>eV<sub>co</sub> = KE<sub>max</sub></td></tr><tr><td>Einstein equation</td><td>eV<sub>co</sub> = hf − hf<sub>co</sub></td></tr><tr><td>1 eV</td><td>1.6×10⁻¹⁹ J</td></tr></table></div></div>
+
+<div class="slide" id="s7"><span class="slide-label">SLIDE 7 OF 10</span><h1>🤔 Wave vs Quantum Model</h1><div class="card"><p>The classical wave model of light cannot explain:</p><ul><li>Why below threshold frequency, no electrons are emitted regardless of intensity</li><li>Why emission is instantaneous (no time delay)</li><li>Why KE<sub>max</sub> depends on frequency, not intensity</li></ul><p>Einstein's photon model explains all these:</p><ul><li>One photon interacts with one electron</li><li>Photon energy = hf must exceed Φ</li><li>More photons (higher intensity) → more electrons emitted (but same KE)</li></ul></div></div>
+
+<div class="slide" id="s8"><span class="slide-label">SLIDE 8 OF 10</span><h1>✏️ More Practice</h1><div class="card"><h2>Example — Lithium</h2><p>Threshold frequency for Li = 5.5×10¹⁴ Hz. Find work function.</p><p>Φ = hf<sub>co</sub> = 6.626×10⁻³⁴ × 5.5×10¹⁴ = <strong>3.64×10⁻¹⁹ J = 2.28 eV</strong></p></div><div class="card"><h2>Minimum frequency for emission</h2><p>Given Φ = 2.0 eV = 3.2×10⁻¹⁹ J. Find f<sub>min</sub>.</p><p>f<sub>min</sub> = Φ/h = 3.2×10⁻¹⁹/6.626×10⁻³⁴ = <strong>4.8×10¹⁴ Hz</strong></p></div></div>
+
+<div class="slide" id="s9"><span class="slide-label">SLIDE 9 OF 10</span><h1>🧪 Practice Problems</h1><div class="card"><h3>P1. Find the maximum KE of photoelectrons emitted when light of f=8×10¹⁴ Hz hits metal with Φ=2.5 eV.</h3><div class="highlight">E<sub>photon</sub>=hf=6.63×10⁻³⁴×8×10¹⁴=5.3×10⁻¹⁹ J=3.31 eV<br>KE<sub>max</sub>=3.31−2.5=<strong>0.81 eV</strong>=1.3×10⁻¹⁹ J</div></div><div class="card"><h3>P2. Explain why increasing light intensity does not increase maximum KE of photoelectrons.</h3><div class="highlight">Each photon interacts with one electron. Intensity determines number of photons but not their individual energy. Only frequency (hence hf) determines KE<sub>max</sub>.</div></div></div>
+
+<div class="slide" id="s10"><span class="slide-label">SLIDE 10 OF 10</span><h1>📝 Quiz — Photoelectric Effect</h1><div class="quiz-wrap"><h2>Fill in the Blanks (8 marks)</h2>
+<div class="q-block"><div class="q-text"><span>Q1.</span> The photoelectric effect was discovered by Heinrich __________. (1 mk)</div><input type="text" id="q1" placeholder="scientist"><div class="q-fb" id="q1f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q2.</span> The work function is the minimum __________ needed to remove an electron from a surface. (1 mk)</div><input type="text" id="q2" placeholder="quantity"><div class="q-fb" id="q2f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q3.</span> Einstein's photoelectric equation: KE<sub>max</sub> = hf − __________. (1 mk)</div><input type="text" id="q3" placeholder="symbol"><div class="q-fb" id="q3f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q4.</span> 1 eV = __________ × 10⁻¹⁹ J. (1 mk)</div><input type="text" id="q4" placeholder="coefficient"><div class="q-fb" id="q4f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q5.</span> Planck's constant h = __________ × 10⁻³⁴ Js. (1 mk)</div><input type="text" id="q5" placeholder="coefficient"><div class="q-fb" id="q5f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q6.</span> LDR stands for Light Dependent __________. (1 mk)</div><input type="text" id="q6" placeholder="word"><div class="q-fb" id="q6f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q7.</span> A photon of frequency 6×10¹⁴ Hz has energy = __________ × 10⁻¹⁹ J. (h=6.63×10⁻³⁴) (1 mk)</div><input type="text" id="q7" placeholder="coefficient"><div class="q-fb" id="q7f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q8.</span> The voltage that stops the fastest photoelectron is called the cut-off __________. (1 mk)</div><input type="text" id="q8" placeholder="word"><div class="q-fb" id="q8f"></div></div>
+<h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+<div class="q-block q-sa"><div class="q-text"><span>Q9.</span> Metal has Φ=3.0 eV. Light of λ=200 nm shines on it. Calculate (a) photon energy in eV, (b) maximum KE of photoelectrons. (h=6.63×10⁻³⁴, c=3×10⁸) (4 mks)</div><textarea id="q9" placeholder="Show working..."></textarea><div class="q-fb" id="q9f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q10.</span> State TWO factors that affect the rate of emission of photoelectrons. (2 mks)</div><textarea id="q10" placeholder="1... 2..."></textarea><div class="q-fb" id="q10f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q11.</span> Give ONE application of the photoelectric effect. (1 mk)</div><textarea id="q11" placeholder="Your answer..."></textarea><div class="q-fb" id="q11f"></div></div>
+<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+<div class="score-box" id="scorebox"><h3 id="score-txt"></h3><p id="score-msg"></p></div></div></div>
+
+<div id="nav"><button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button><span id="slide-counter">1 / 10</span><button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button></div>
+<script>
+
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+
+const ans={q1:{kw:["hertz"],pts:1},q2:{kw:["energy","work"],pts:1},q3:{kw:["φ","phi","work","ϕ"],pts:1},q4:{kw:["1.6"],pts:1},q5:{kw:["6.63","6.6"],pts:1},q6:{kw:["resistor"],pts:1},q7:{kw:["3.98","4.0","3.9"],pts:1},q8:{kw:["potential"],pts:1}};
+
+function submitQuiz(){
+  let score=0;
+  Object.keys(ans).forEach(id=>{const el=document.getElementById(id);if(!el||el.tagName==='TEXTAREA')return;const val=el.value.trim().toLowerCase();const correct=ans[id].kw.some(k=>val.includes(k));const fb=document.getElementById(id+'f');if(fb){if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}}});
+  document.querySelectorAll('.q-sa textarea').forEach(el=>{if(el.value.trim().length>30)score+=Math.min(3,Math.ceil(el.value.trim().length/60));});
+  score=Math.min(score,15);
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');if(sb)sb.style.display='block';
+  const st=document.getElementById('score-txt');if(st)st.textContent='Score: '+score+' / 15 ('+pct+'%)';
+  const sm=document.getElementById('score-msg');if(sm)sm.textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+
+</script>
+</body>
+</html>

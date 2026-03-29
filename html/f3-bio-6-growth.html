@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Biology | Growth, Germination &amp; Metamorphosis</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f9fafb;--card:#fff;--txt:#1a1a1a;--muted:#666;--border:#e0e0e0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
+#topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar .title{font-size:14px;font-weight:700;}
+#topbar .meta{font-size:12px;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.3);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;width:10%;}
+#slide-wrap{flex:1;max-width:860px;width:100%;margin:0 auto;padding:20px 16px 100px;}
+.slide{display:none;animation:fadeIn .4s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide-header{background:var(--pri);color:#fff;border-radius:12px 12px 0 0;padding:18px 24px;}
+.slide-header .slide-num{font-size:11px;opacity:.75;text-transform:uppercase;letter-spacing:1px;}
+.slide-header h2{font-size:20px;font-weight:700;margin-top:4px;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.outcome-list{list-style:none;padding:0;}
+.outcome-list li{padding:10px 14px;margin:8px 0;background:#e8f5e9;border-left:4px solid var(--pri);border-radius:6px;font-size:14px;line-height:1.5;}
+.outcome-list li::before{content:"✓ ";color:var(--pri);font-weight:700;}
+.info-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:16px 20px;margin:12px 0;}
+.info-box h3{color:var(--pri);font-size:15px;margin-bottom:8px;}
+.info-box p,.info-box li{font-size:13.5px;line-height:1.6;color:#333;}
+.info-box ul{padding-left:18px;margin-top:6px;}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.compare-table th{background:var(--pri);color:#fff;padding:10px 12px;text-align:left;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table tr:nth-child(even) td{background:#f5f5f5;}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.tab{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;}
+.tab.active,.tab:hover{background:var(--pri);color:#fff;border-color:var(--pri);}
+.tab-content{display:none;animation:fadeIn .3s;}
+.tab-content.active{display:block;}
+/* Growth curve SVG chart */
+.chart-wrap{background:#f9fafb;border:1px solid var(--border);border-radius:12px;padding:16px;margin:12px 0;overflow-x:auto;}
+/* Stages timeline */
+.timeline{display:flex;flex-direction:column;gap:0;margin:12px 0;}
+.tl-item{display:flex;gap:14px;padding:12px 0;border-left:3px solid var(--acc);padding-left:16px;position:relative;}
+.tl-item::before{content:'';position:absolute;left:-8px;top:18px;width:14px;height:14px;background:var(--acc);border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px var(--acc);}
+.tl-item .tl-title{font-weight:700;color:var(--pri);font-size:13.5px;min-width:120px;}
+.tl-item .tl-desc{font-size:13px;color:#444;line-height:1.6;}
+.practice-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;}
+.practice-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.practice-q textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:80px;font-family:inherit;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:10px;}
+.check-btn:hover{background:#085220;}
+.feedback{margin-top:10px;padding:12px;border-radius:8px;font-size:13.5px;display:none;line-height:1.6;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+/* Quiz */
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;}
+.quiz-q .qnum{font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+.quiz-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.fib-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;line-height:2.2;}
+.fib-wrap input{border:none;border-bottom:2px solid var(--pri);background:transparent;font-size:14px;padding:2px 6px;width:160px;outline:none;color:var(--pri);font-weight:600;}
+.fib-wrap input.correct{border-color:var(--ok);color:var(--ok);}
+.fib-wrap input.wrong{border-color:var(--no);color:var(--no);}
+.sa-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:70px;font-family:inherit;margin-top:8px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;margin:2px;font-weight:600;}
+.tag.found{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.model-answer{margin-top:8px;padding:10px;background:#f5f5f5;border-radius:6px;font-size:13px;color:#444;border-left:3px solid var(--acc);}
+#submit-quiz{display:block;width:100%;padding:14px;background:var(--pri);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;}
+#submit-quiz:hover{background:#085220;}
+#quiz-result{display:none;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-top:20px;}
+#quiz-result .score-big{font-size:52px;font-weight:900;color:var(--pri);}
+.cbc-rubric{background:#e8f5e9;border-radius:8px;padding:14px;margin-top:16px;font-size:13px;text-align:left;line-height:1.7;}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+#nav-bar button{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+#nav-bar button:hover{background:#085220;}
+#nav-bar button:disabled{background:#ccc;cursor:not-allowed;}
+#slide-dots{display:flex;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+/* Germination sequencer */
+.seq-item{background:#fff;border:2px solid var(--border);border-radius:10px;padding:12px 16px;margin:6px 0;cursor:pointer;font-size:13.5px;transition:all .2s;display:flex;align-items:center;gap:10px;}
+.seq-item:hover{border-color:var(--pri);}
+.seq-item.done{background:#e8f5e9;border-color:var(--ok);}
+.seq-num{background:var(--pri);color:#fff;min-width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.seq-item.done .seq-num{background:var(--ok);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">🌱 Biology Form 3 | Growth, Germination &amp; Metamorphosis</div>
+    <div class="meta">MTTI LMS &nbsp;|&nbsp; Lesson 6 of 6</div>
+  </div>
+  <div id="slide-counter">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="slide-wrap">
+
+<!-- S1: OUTCOMES -->
+<div class="slide active" id="s1">
+  <div class="slide-header"><div class="slide-num">Slide 1</div><h2>📚 Learning Outcomes</h2></div>
+  <div class="slide-body">
+    <ul class="outcome-list">
+      <li>Define <strong>growth</strong> and state its characteristics</li>
+      <li>Describe and interpret <strong>sigmoid growth curves</strong> (absolute and relative growth)</li>
+      <li>Identify regions of growth in plants — <strong>apical, lateral and intercalary meristems</strong></li>
+      <li>Describe <strong>primary and secondary growth</strong> in plants</li>
+      <li>Explain the role of <strong>plant hormones (auxins, gibberellins)</strong> in growth</li>
+      <li>Describe conditions necessary for <strong>seed germination</strong></li>
+      <li>Distinguish between <strong>epigeal and hypogeal germination</strong></li>
+      <li>Describe <strong>complete and incomplete metamorphosis</strong> in insects</li>
+    </ul>
+    <div class="info-box" style="margin-top:16px;"><h3>🔑 Key Vocabulary</h3>
+    <p><strong>Growth · Sigmoid curve · Meristem · Auxin · Gibberellin · Germination · Epigeal · Hypogeal · Metamorphosis · Nymph · Pupa · Larva · Imago · Ecdysis</strong></p></div>
+  </div>
+</div>
+
+<!-- S2: GROWTH -->
+<div class="slide" id="s2">
+  <div class="slide-header"><div class="slide-num">Slide 2</div><h2>📈 Growth — Definition &amp; Characteristics</h2></div>
+  <div class="slide-body">
+    <div class="info-box">
+      <h3>What is Growth?</h3>
+      <p>An <strong>irreversible increase in the dry mass of an organism</strong> due to an increase in the number of cells and the size of existing cells. Dry mass is used (not wet mass) because water content can fluctuate.</p>
+    </div>
+    <div class="info-box" style="margin-top:12px;"><h3>Characteristics of Growth</h3>
+      <ul>
+        <li>Irreversible increase in size</li>
+        <li>Involves cell division (mitosis) and cell enlargement</li>
+        <li>Measured by increase in <strong>dry mass</strong></li>
+        <li>Requires energy (ATP) from respiration</li>
+        <li>Controlled by <strong>hormones</strong></li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin-top:12px;background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">📊 The Sigmoid (S-shaped) Growth Curve</h3>
+      <p>All organisms show a characteristic S-shaped growth curve with 3 phases:</p>
+      <div class="chart-wrap" style="margin-top:12px;">
+        <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:520px;">
+          <rect width="520" height="260" fill="#f9fafb" rx="10"/>
+          <!-- Axes -->
+          <line x1="50" y1="220" x2="490" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="50" y1="30" x2="50" y2="220" stroke="#333" stroke-width="2"/>
+          <!-- Axis labels -->
+          <text x="270" y="250" text-anchor="middle" font-size="13" fill="#333">Time →</text>
+          <text x="15" y="130" text-anchor="middle" font-size="13" fill="#333" transform="rotate(-90,15,130)">Size / Mass →</text>
+          <!-- Sigmoid curve -->
+          <path d="M60,210 C80,208 110,200 140,185 C165,172 175,140 200,100 C225,60 260,42 310,38 C360,34 400,36 490,36" fill="none" stroke="#0a5e2a" stroke-width="3"/>
+          <!-- Phase labels -->
+          <rect x="58" y="170" width="90" height="22" fill="#e8f5e9" rx="5"/>
+          <text x="103" y="185" text-anchor="middle" font-size="11" fill="#0a5e2a" font-weight="bold">Lag Phase</text>
+          <rect x="165" y="80" width="90" height="22" fill="#fff3e0" rx="5"/>
+          <text x="210" y="95" text-anchor="middle" font-size="11" fill="#e65100" font-weight="bold">Log Phase</text>
+          <rect x="330" y="25" width="110" height="22" fill="#e3f2fd" rx="5"/>
+          <text x="385" y="40" text-anchor="middle" font-size="11" fill="#1565c0" font-weight="bold">Stationary Phase</text>
+          <!-- Annotations -->
+          <text x="103" y="212" text-anchor="middle" font-size="10" fill="#666">Slow; adaptation</text>
+          <text x="210" y="120" text-anchor="middle" font-size="10" fill="#666">Rapid growth</text>
+          <text x="390" y="60" text-anchor="middle" font-size="10" fill="#666">Growth = Death</text>
+        </svg>
+      </div>
+      <table class="compare-table" style="margin-top:10px;">
+        <tr><th>Phase</th><th>What happens</th></tr>
+        <tr><td><strong>Lag Phase</strong></td><td>Slow growth; organism adapts to environment; prepares for rapid division</td></tr>
+        <tr><td><strong>Log (Exponential) Phase</strong></td><td>Rapid growth; resources plentiful; cells divide at maximum rate</td></tr>
+        <tr><td><strong>Stationary (Plateau) Phase</strong></td><td>Growth rate = death rate; resources limited; carrying capacity reached</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S3: MERISTEMS -->
+<div class="slide" id="s3">
+  <div class="slide-header"><div class="slide-num">Slide 3</div><h2>🌿 Regions of Growth in Plants</h2></div>
+  <div class="slide-body">
+    <div class="info-box">
+      <h3>What is a Meristem?</h3>
+      <p>A <strong>region of actively dividing cells</strong> in plants (plants grow at specific points, unlike animals that grow throughout the body).</p>
+    </div>
+    <table class="compare-table" style="margin-top:12px;">
+      <tr><th>Meristem Type</th><th>Location</th><th>Function</th><th>Type of Growth</th></tr>
+      <tr><td><strong>Apical meristem</strong></td><td>Tips of roots and shoots</td><td>Increases length of roots and shoots</td><td>Primary growth (elongation)</td></tr>
+      <tr><td><strong>Lateral meristem (Cambium)</strong></td><td>Vascular cambium; cork cambium</td><td>Increases girth (diameter) of stem and root</td><td>Secondary growth (thickening)</td></tr>
+      <tr><td><strong>Intercalary meristem</strong></td><td>Between nodes of stem (e.g. grasses)</td><td>Enables continued growth after grazing/cutting</td><td>Primary growth (elongation at internodes)</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;background:#e3f2fd;border-color:#90caf9;">
+      <h3 style="color:#1565c0;">Primary vs Secondary Growth</h3>
+      <table class="compare-table">
+        <tr><th>Feature</th><th>Primary Growth</th><th>Secondary Growth</th></tr>
+        <tr><td>Meristem</td><td>Apical/intercalary</td><td>Lateral (vascular cambium)</td></tr>
+        <tr><td>Direction</td><td>Elongation (length)</td><td>Increase in girth (width)</td></tr>
+        <tr><td>Occurs in</td><td>All plants</td><td>Dicots and gymnosperms only</td></tr>
+        <tr><td>Result</td><td>Taller plant</td><td>Woody stem (annual rings)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S4: PLANT HORMONES -->
+<div class="slide" id="s4">
+  <div class="slide-header"><div class="slide-num">Slide 4</div><h2>🧪 Plant Growth Hormones</h2></div>
+  <div class="slide-body">
+    <div class="tabs">
+      <div class="tab active" onclick="showTab(event,'auxins')">🌱 Auxins</div>
+      <div class="tab" onclick="showTab(event,'gibberellins')">🌿 Gibberellins</div>
+    </div>
+    <div id="tab-auxins" class="tab-content active info-box">
+      <h3>Auxins (Indole Acetic Acid — IAA)</h3>
+      <ul>
+        <li>Produced at apical meristems (shoot tips)</li>
+        <li>Diffuse downward to elongation zone; stimulate cell elongation</li>
+        <li><strong>Phototropism:</strong> Light causes auxin to concentrate on shaded side → shaded cells elongate → shoot bends toward light</li>
+        <li><strong>Geotropism:</strong> Gravity causes auxin to accumulate on lower side of horizontal roots/shoots → roots: lower side inhibited, curves down (positive geotropism); shoots: lower side stimulated, curves up (negative geotropism)</li>
+        <li><strong>Apical dominance:</strong> High auxin concentration at apex inhibits lateral bud growth — pruning removes apex → lateral buds grow</li>
+        <li><strong>Rooting powder:</strong> Auxins used to stimulate root formation in cuttings</li>
+        <li><strong>Herbicides:</strong> High concentrations toxic to broadleaf plants (selective weedkillers)</li>
+        <li><strong>Parthenocarpy:</strong> Auxins stimulate fruit development without fertilisation</li>
+      </ul>
+    </div>
+    <div id="tab-gibberellins" class="tab-content info-box">
+      <h3>Gibberellins</h3>
+      <ul>
+        <li>Produced in young leaves, embryos, seeds</li>
+        <li>Stimulate <strong>elongation of internodes</strong> → tall plants</li>
+        <li>Break seed <strong>dormancy</strong> → promotes germination</li>
+        <li>Promote <strong>bolting</strong> (rapid shoot elongation before flowering)</li>
+        <li>Promote <strong>fruit development</strong> (larger seedless fruits in grapes)</li>
+        <li>Stimulate <strong>enzyme activity</strong> during germination (e.g. amylase in barley)</li>
+        <li><strong>Genetic dwarfism</strong> in plants is often due to lack of gibberellins</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- S5: GERMINATION -->
+<div class="slide" id="s5">
+  <div class="slide-header"><div class="slide-num">Slide 5</div><h2>🌾 Seed Germination</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>Conditions for Germination</h3>
+      <ul>
+        <li><strong>Water:</strong> Activates enzymes; softens testa; hydrolysis of stored food; provides turgidity</li>
+        <li><strong>Oxygen:</strong> For aerobic respiration to provide energy (ATP) for growth</li>
+        <li><strong>Suitable temperature:</strong> For enzyme activity; optimum ~25°C for most tropical seeds</li>
+        <li><strong>Viability:</strong> Seed must be alive (embryo viable)</li>
+        <li>(Some seeds also need: <strong>light</strong> e.g. lettuce; <strong>after-ripening period</strong>)</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin-top:12px;background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">Process of Germination</h3>
+      <ol style="padding-left:18px;line-height:1.9;font-size:13.5px;">
+        <li>Seed absorbs water through micropyle → testa softens</li>
+        <li>Embryo produces gibberellins → stimulates enzyme production</li>
+        <li>Enzymes (amylase, protease, lipase) hydrolyse stored food → soluble sugars, amino acids</li>
+        <li>Soluble food transported to embryo → energy for growth (aerobic respiration)</li>
+        <li><strong>Radicle</strong> (root) emerges first, anchors seedling</li>
+        <li><strong>Plumule</strong> (shoot) emerges, grows upward</li>
+      </ol>
+    </div>
+    <table class="compare-table" style="margin-top:12px;">
+      <tr><th>Feature</th><th>Epigeal Germination</th><th>Hypogeal Germination</th></tr>
+      <tr><td>Cotyledons</td><td>Rise above soil (become photosynthetic)</td><td>Remain below soil</td></tr>
+      <tr><td>Hypocotyl</td><td>Elongates, pulls cotyledons up</td><td>Does not elongate</td></tr>
+      <tr><td>Epicotyl</td><td>Short (does not elongate much)</td><td>Elongates, pushes plumule up</td></tr>
+      <tr><td>Food reserve</td><td>Cotyledons become green; make food themselves</td><td>Cotyledons remain as food store underground</td></tr>
+      <tr><td>Examples</td><td>Bean, sunflower, castor oil</td><td>Maize, pea, onion, wheat</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S6: METAMORPHOSIS -->
+<div class="slide" id="s6">
+  <div class="slide-header"><div class="slide-num">Slide 6</div><h2>🦋 Metamorphosis in Insects</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>What is Metamorphosis?</h3><p><strong>Series of changes</strong> that some organisms go through from hatching to adult form.</p></div>
+    <div class="tabs" style="margin-top:12px;">
+      <div class="tab active" onclick="showTab(event,'complete')">🦋 Complete Metamorphosis</div>
+      <div class="tab" onclick="showTab(event,'incomplete')">🦗 Incomplete Metamorphosis</div>
+    </div>
+    <div id="tab-complete" class="tab-content">
+      <div class="info-box">
+        <h3>Complete Metamorphosis (Holometabolous)</h3>
+        <p>4 stages: <strong>Egg → Larva → Pupa → Adult (Imago)</strong></p>
+        <ul><li><strong>Egg:</strong> Fertilised egg laid in suitable habitat</li><li><strong>Larva (caterpillar/maggot):</strong> Actively feeds; moults periodically (ecdysis); looks completely different from adult</li><li><strong>Pupa (chrysalis/cocoon):</strong> Non-feeding stage; inside, tissues reorganise to form adult (histolysis and histogenesis)</li><li><strong>Adult (Imago):</strong> Reproductive stage; does not grow; may feed or not</li></ul>
+        <p style="margin-top:8px;font-weight:600;color:var(--pri);">Examples: Butterflies, moths, houseflies, mosquitoes, beetles</p>
+      </div>
+    </div>
+    <div id="tab-incomplete" class="tab-content">
+      <div class="info-box">
+        <h3>Incomplete Metamorphosis (Hemimetabolous)</h3>
+        <p>3 stages: <strong>Egg → Nymph → Adult (Imago)</strong></p>
+        <ul><li><strong>Egg:</strong> Fertilised egg</li><li><strong>Nymph:</strong> Resembles adult but no wings; moults several times (instars) each time becoming more like the adult</li><li><strong>Adult:</strong> Wings fully developed; reproductive</li></ul>
+        <p style="margin-top:8px;font-weight:600;color:var(--pri);">Examples: Grasshoppers, cockroaches, locusts, dragonflies, termites</p>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:14px;">
+      <h3>Economic Importance of Metamorphosis</h3>
+      <table class="compare-table">
+        <tr><th>Stage</th><th>Economic Importance</th></tr>
+        <tr><td>Larva (caterpillar)</td><td>Damages crops and stored food; silk worm larva produces silk</td></tr>
+        <tr><td>Pupa</td><td>Silkworm pupa used for silk production</td></tr>
+        <tr><td>Adult</td><td>Pollinators (bees, butterflies); pests (locusts); food (e.g. winged termites)</td></tr>
+        <tr><td>Overall</td><td>Larva and adult occupy different niches → reduce competition within species</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S7: INTERACTIVE — GERMINATION SEQUENCER -->
+<div class="slide" id="s7">
+  <div class="slide-header"><div class="slide-num">Slide 7</div><h2>🎮 Interactive: Order of Germination Events</h2></div>
+  <div class="slide-body">
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">Click each event below in the correct sequence of germination (1 = first, 6 = last).</p>
+    <div id="seq-pool">
+      <div class="seq-item" onclick="clickSeq(this)" data-order="3"><div class="seq-num" id="sq3-n">?</div><div>Enzymes (amylase, protease, lipase) hydrolyse stored food into soluble form</div></div>
+      <div class="seq-item" onclick="clickSeq(this)" data-order="6"><div class="seq-num" id="sq6-n">?</div><div>Plumule (shoot) emerges and grows upward toward light</div></div>
+      <div class="seq-item" onclick="clickSeq(this)" data-order="1"><div class="seq-num" id="sq1-n">?</div><div>Seed absorbs water through the micropyle; testa softens</div></div>
+      <div class="seq-item" onclick="clickSeq(this)" data-order="4"><div class="seq-num" id="sq4-n">?</div><div>Soluble food transported to embryo; aerobic respiration provides energy</div></div>
+      <div class="seq-item" onclick="clickSeq(this)" data-order="2"><div class="seq-num" id="sq2-n">?</div><div>Embryo produces gibberellins → stimulates enzyme production in cotyledons</div></div>
+      <div class="seq-item" onclick="clickSeq(this)" data-order="5"><div class="seq-num" id="sq5-n">?</div><div>Radicle (root) emerges first; anchors seedling and absorbs water</div></div>
+    </div>
+    <button onclick="checkSeq()" style="background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;margin-top:14px;">Check Order ✓</button>
+    <div id="seq-result" style="display:none;margin-top:12px;padding:14px;border-radius:10px;font-size:13.5px;"></div>
+    <button onclick="resetSeq()" style="background:#aaa;color:#fff;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;margin-top:8px;">Reset</button>
+  </div>
+</div>
+
+<!-- S8: SCENARIO -->
+<div class="slide" id="s8">
+  <div class="slide-header"><div class="slide-num">Slide 8</div><h2>🎯 Apply Your Knowledge</h2></div>
+  <div class="slide-body">
+    <div class="info-box" style="background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">📋 Scenario: The Farmer's Experiment</h3>
+      <p>A farmer sprays a plant with high concentrations of a synthetic auxin (2,4-D) on one side only. She notices the treated side stops growing, while the untreated side keeps growing — bending the plant toward the treated side. She also notices the lateral buds on the treated branch stop growing.</p>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q1: Explain why high concentrations of auxin <em>inhibit</em> growth on the treated side, while low concentrations normally <em>promote</em> growth.</div>
+      <textarea placeholder="Auxin at low concentrations...at high concentrations..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model:</strong> Auxins (IAA) have a concentration-dependent effect on cell elongation. At <strong>low concentrations</strong>, auxin stimulates cells in the elongation zone to take in more water by osmosis, expanding the cell wall → cell elongation → growth. At <strong>high concentrations</strong>, auxin may inhibit cell elongation (the same receptor pathway is overstimulated → disrupts normal cell functioning). This is why 2,4-D at high concentrations is used as a herbicide — it causes abnormal, unregulated growth that eventually kills broadleaf plants.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q2: Using the concept of apical dominance, explain why the lateral buds on the auxin-treated side stopped growing, and suggest what would happen if the shoot tip were removed.</div>
+      <textarea placeholder="Apical dominance means..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Apical dominance:</strong> Auxins produced at the shoot apex diffuse downward and inhibit the growth of lateral (axillary) buds. High auxin concentration near the apex keeps lateral buds dormant — this ensures the plant grows upward to reach light rather than sideways. If the shoot tip is removed (pruning), the source of auxin is removed, auxin concentration near lateral buds drops, and lateral buds resume growth → the plant becomes bushier. This is why gardeners prune plants to encourage bushy, lateral growth.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S9: PRACTICE -->
+<div class="slide" id="s9">
+  <div class="slide-header"><div class="slide-num">Slide 9</div><h2>✏️ Practice Questions</h2></div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <div class="qtext">1. Distinguish between epigeal and hypogeal germination using maize and bean as examples.</div>
+      <textarea placeholder="Epigeal (bean)...&#10;Hypogeal (maize)..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Bean (epigeal):</strong> The hypocotyl elongates, pulling the cotyledons above the soil. Cotyledons emerge into light, turn green, photosynthesize, and eventually wither once the seedling becomes self-sufficient. The epicotyl is short.<br><br><strong>Maize (hypogeal):</strong> The epicotyl elongates, pushing the plumule (shoot tip) up through the soil. Cotyledons (scutellum) remain below ground as a food store and gradually shrink as nutrients are used up. The hypocotyl does not elongate significantly.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">2. Explain how a grasshopper undergoes incomplete metamorphosis. State THREE differences between complete and incomplete metamorphosis.</div>
+      <textarea placeholder="Grasshopper stages...&#10;3 differences..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Grasshopper (incomplete metamorphosis):</strong> Egg → Nymph (6 instars, moults each time) → Adult. Nymph resembles adult but has no wings; wings develop progressively with each moult.<br><br><strong>Differences:</strong><br>(1) Complete = 4 stages (egg, larva, pupa, adult); Incomplete = 3 stages (egg, nymph, adult)<br>(2) Complete has a pupa stage; incomplete does not<br>(3) Larva of complete metamorphosis looks completely different from adult; nymph of incomplete metamorphosis resembles the adult<br>(4) Complete: larva and adult exploit different food sources; Incomplete: nymph and adult may share the same food source</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">3. Describe the THREE phases of a sigmoid growth curve and explain what determines the transition from the log phase to the stationary phase.</div>
+      <textarea placeholder="Lag phase...&#10;Log phase...&#10;Stationary phase...&#10;Transition..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Lag phase:</strong> Slow initial growth; organism adapts to environment; few cells.<br><strong>Log (exponential) phase:</strong> Rapid doubling of cell numbers; abundant nutrients; favourable conditions.<br><strong>Stationary phase:</strong> Growth rate equals death rate; population size levels off.<br><br><strong>Transition (log → stationary):</strong> As population grows, resources (food, water, space, light) become limiting. Intraspecific competition increases; metabolic waste accumulates; disease/predation increases. Eventually, the rate of new growth equals the death rate — the carrying capacity is reached.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10: QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-header"><div class="slide-num">Slide 10 • Assessment</div><h2>📝 Quiz: Growth, Germination &amp; Metamorphosis</h2></div>
+  <div class="slide-body">
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 1</div>
+      <div class="fib-wrap">
+        Growth is best measured by increase in <input type="text" id="f1" placeholder="...">.
+        Actively dividing cells in plants are found in regions called <input type="text" id="f2" placeholder="...">.
+        The hormone responsible for cell elongation in shoots is called <input type="text" id="f3" placeholder="...">.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 2</div>
+      <div class="fib-wrap">
+        In germination, the first part of the embryo to emerge is the <input type="text" id="f4" placeholder="...">.
+        When cotyledons rise above the soil during germination, the type is called <input type="text" id="f5" placeholder="...">.
+        Insects that undergo complete metamorphosis pass through the <input type="text" id="f6" placeholder="..."> stage between larva and adult.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 1</div>
+      <div class="qtext">State FOUR conditions necessary for seed germination and explain the role of ONE of them.</div>
+      <textarea class="sa-input" id="sa1" placeholder="Four conditions:&#10;1.&#10;2.&#10;3.&#10;4.&#10;&#10;Role of one:"></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 2</div>
+      <div class="qtext">Describe the role of gibberellins in plant growth. Give TWO practical uses.</div>
+      <textarea class="sa-input" id="sa2" placeholder="Gibberellins...&#10;Practical uses:&#10;1.&#10;2."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 3</div>
+      <div class="qtext">Explain the term "apical dominance" and describe how pruning a plant makes use of this principle.</div>
+      <textarea class="sa-input" id="sa3" placeholder="Apical dominance is...&#10;Pruning..."></textarea>
+    </div>
+    <button id="submit-quiz" onclick="submitQuiz()">Submit Quiz ✓</button>
+    <div id="quiz-result">
+      <div class="score-big" id="score-display">0%</div>
+      <div class="grade" id="grade-display"></div>
+      <div id="fib-feedback"></div>
+      <div id="sa-feedback"></div>
+      <div class="cbc-rubric"><strong>CBC Assessment Rubric:</strong><br><strong>Exceeds Expectations (80–100%):</strong> Demonstrates comprehensive understanding of growth curves, meristems, plant hormones, germination types, and metamorphosis.<br><strong>Meets Expectations (50–79%):</strong> Adequately describes the main concepts of growth, germination, and metamorphosis.<br><strong>Approaching Expectations (30–49%):</strong> Partial understanding; some key concepts identified.<br><strong>Below Expectations (&lt;30%):</strong> Needs additional support; review all sections.</div>
+    </div>
+  </div>
+</div>
+</div><!-- end slide-wrap -->
+
+<div id="nav-bar">
+  <button id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Previous</button>
+  <div id="slide-dots"></div>
+  <button id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+let current=0;const total=10;
+function buildDots(){const d=document.getElementById('slide-dots');d.innerHTML='';for(let i=0;i<total;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot);}}
+function goTo(n){document.querySelectorAll('.slide')[current].classList.remove('active');document.querySelectorAll('.dot')[current].classList.remove('active');current=n;document.querySelectorAll('.slide')[current].classList.add('active');document.querySelectorAll('.dot')[current].classList.add('active');document.getElementById('slide-counter').textContent='Slide '+(current+1)+' / '+total;document.getElementById('progress-fill').style.width=((current+1)/total*100)+'%';document.getElementById('prev-btn').disabled=current===0;document.getElementById('next-btn').disabled=current===total-1;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSlide(dir){goTo(current+dir);}
+buildDots();
+
+function showTab(e,name){
+  const parent=e.target.closest('.slide-body');
+  parent.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  parent.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  parent.querySelector('#tab-'+name).classList.add('active');
+}
+
+function showFeedback(btn){btn.parentElement.querySelectorAll('.feedback').forEach(f=>f.style.display='block');}
+
+// Germination sequencer
+let seqCounter=1;
+const seqClicked=[];
+function clickSeq(el){
+  if(el.classList.contains('done'))return;
+  el.classList.add('done');
+  el.querySelector('.seq-num').textContent=seqCounter;
+  seqClicked.push({el,order:parseInt(el.getAttribute('data-order')),clicked:seqCounter});
+  seqCounter++;
+}
+function checkSeq(){
+  let correct=0;
+  seqClicked.forEach(item=>{
+    if(item.clicked===item.order)correct++;
+  });
+  const res=document.getElementById('seq-result');
+  res.style.display='block';
+  res.style.background=correct===6?'#e8f5e9':'#fff3e0';
+  res.style.border='1px solid '+(correct===6?'#a5d6a7':'#ffe082');
+  res.innerHTML=correct===6?'<strong>🎉 Perfect! All 6 steps in the correct order!</strong>':'<strong>'+correct+'/6 correct.</strong> Correct order: (1) Water absorbed through micropyle → (2) Gibberellins produced → (3) Enzymes hydrolyse stored food → (4) Soluble food transported, respiration → (5) Radicle emerges → (6) Plumule emerges.';
+}
+function resetSeq(){
+  seqCounter=1;seqClicked.length=0;
+  document.querySelectorAll('.seq-item').forEach(el=>{el.classList.remove('done');el.querySelector('.seq-num').textContent='?';});
+  document.getElementById('seq-result').style.display='none';
+}
+
+function submitQuiz(){
+  const fibs=[
+    {id:'f1',ans:['dry mass','dry weight']},
+    {id:'f2',ans:['meristems','meristem']},
+    {id:'f3',ans:['auxin','iaa']},
+    {id:'f4',ans:['radicle']},
+    {id:'f5',ans:['epigeal']},
+    {id:'f6',ans:['pupa','pupal']}
+  ];
+  let fibScore=0;
+  fibs.forEach(f=>{const inp=document.getElementById(f.id);const val=inp.value.trim().toLowerCase();const ok=f.ans.some(a=>val.includes(a));inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok);if(ok)fibScore++;});
+
+  const saData=[
+    {id:'sa1',keys:['water','oxygen','temperature','viable','light','enzymes','testa','energy','atp'],
+     model:'Four conditions: (1) Water — softens testa; activates enzymes; provides medium for transport; (2) Oxygen — for aerobic respiration to provide energy (ATP) for growth; (3) Suitable temperature — for optimal enzyme activity (∼25°C for most tropical seeds); (4) Viable seed — embryo must be alive. Role of water: softens testa allowing radicle to emerge; activates enzymes which hydrolyse stored food into soluble sugars and amino acids used for growth.'},
+    {id:'sa2',keys:['elongation','dormancy','germination','bolting','fruit','dwarf','amylase','barley'],
+     model:'Gibberellins stimulate elongation of internodes (making plants taller), break seed dormancy (promote germination), stimulate bolting (rapid shoot elongation before flowering), promote fruit development. Practical uses: (1) Applied to barley seeds to stimulate amylase production for beer brewing (malting); (2) Applied to grape vines to produce larger seedless grapes; (3) Applied to dwarf varieties to restore normal height.'},
+    {id:'sa3',keys:['apex','lateral','inhibit','auxin','pruning','bushy','remove','dominance'],
+     model:'Apical dominance: The growing shoot apex produces high concentrations of auxin which diffuse downward and inhibit the growth of lateral (axillary) buds, ensuring upward growth dominates. Pruning: When the shoot tip is removed (pruned), the source of auxin is eliminated. Auxin concentration near lateral buds drops, releasing them from inhibition. Lateral buds begin to grow, producing side shoots → plant becomes bushier. Gardeners prune plants to encourage lateral branching and a more compact, bushy shape.'}
+  ];
+  let saScore=0;let saFeedbackHTML='';
+  saData.forEach(sa=>{const val=document.getElementById(sa.id).value.toLowerCase();const found=sa.keys.filter(k=>val.includes(k));const missed=sa.keys.filter(k=>!val.includes(k));const pts=Math.min(2,Math.round(found.length/sa.keys.length*2));saScore+=pts;saFeedbackHTML+=`<div style="margin:10px 0;"><strong>${sa.id.toUpperCase()}:</strong> `;found.forEach(k=>{saFeedbackHTML+=`<span class="tag found">✓ ${k}</span>`;});missed.slice(0,4).forEach(k=>{saFeedbackHTML+=`<span class="tag missed">✗ ${k}</span>`;});saFeedbackHTML+=`<div class="model-answer"><strong>Model Answer:</strong> ${sa.model}</div></div>`;});
+
+  const tot=fibs.length+6;const pct=Math.round((fibScore+saScore)/tot*100);
+  document.getElementById('score-display').textContent=pct+'%';
+  const grades=[[80,'Exceeds Expectations 🌟'],[50,'Meets Expectations ✅'],[30,'Approaching Expectations 📈'],[0,'Below Expectations — Revise & Retry 📚']];
+  document.getElementById('grade-display').textContent=grades.find(g=>pct>=g[0])[1];
+  document.getElementById('fib-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Fill-in-Blank: '+fibScore+'/'+fibs.length+'</h4>';
+  document.getElementById('sa-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Short Answer: '+saScore+'/6</h4>'+saFeedbackHTML;
+  document.getElementById('quiz-result').style.display='block';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(fibScore+saScore,tot,pct);
+  document.getElementById('quiz-result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

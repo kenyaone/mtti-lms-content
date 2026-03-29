@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Math | Differentiation</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f8;--card:#fff;--txt:#1a1a1a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+#topbar .title{font-size:.95rem;font-weight:700;}
+#topbar .meta{font-size:.8rem;opacity:.85;}
+.slide{display:none;padding:16px;max-width:860px;margin:0 auto;}
+.slide.active{display:block;}
+.slide h2{color:var(--pri);font-size:1.2rem;margin-bottom:12px;border-left:4px solid var(--acc);padding-left:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.card h3{color:var(--pri);font-size:1rem;margin-bottom:8px;}
+.card p,.card li{font-size:.95rem;line-height:1.65;margin-bottom:6px;}
+.card ul,.card ol{padding-left:18px;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--pri);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.9rem;}
+.formula{background:#fff8e1;border:1px solid var(--acc);border-radius:8px;padding:12px;margin:10px 0;font-size:.95rem;font-family:monospace;line-height:1.8;}
+.example-box{background:#f3e5f5;border-radius:8px;padding:14px;margin:10px 0;}
+.example-box strong{color:#6a1b9a;}
+.nav-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;margin-top:10px;}
+.btn{padding:10px 22px;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}.btn-pri:hover{opacity:.88;}
+.btn-acc{background:var(--acc);color:#fff;}.btn-acc:hover{opacity:.88;}
+.btn-gray{background:#ccc;color:#555;}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}.dot.done{background:var(--acc);}
+#progress-bar{height:4px;background:#e0e0e0;}#progress-fill{height:4px;background:var(--acc);transition:width .3s;}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.outcome-item .icon{font-size:1.2rem;}
+input[type=text]{border:2px solid #ddd;border-radius:6px;padding:8px 10px;font-size:.9rem;width:100%;margin-top:4px;}
+input[type=text]:focus{outline:none;border-color:var(--pri);}
+.q-block{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.feedback{margin-top:6px;font-size:.85rem;padding:6px 10px;border-radius:6px;}
+.feedback.ok{background:#e8f5e9;color:var(--ok);}
+.feedback.no{background:#ffebee;color:var(--no);}
+#score-board{background:var(--pri);color:#fff;border-radius:14px;padding:24px;text-align:center;margin-top:16px;}
+#score-board h3{font-size:1.5rem;}#score-board p{font-size:1rem;opacity:.9;margin-top:6px;}
+.diff-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.9rem;}
+.diff-table th{background:var(--pri);color:#fff;padding:8px;}
+.diff-table td{padding:8px;border:1px solid #ddd;text-align:center;}
+.diff-table tr:nth-child(even){background:#f9f9f9;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="title">📐 F4 Mathematics — Differentiation</div>
+  <div class="meta" id="slide-label">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div class="dots" id="dot-row"></div>
+
+<div class="slide active" id="s1">
+  <h2>📌 Learning Outcomes</h2>
+  <div class="card">
+    <h3>By the end of this lesson, you will be able to:</h3>
+    <div class="outcome-item"><span class="icon">📈</span><p>Find average and instantaneous rates of change</p></div>
+    <div class="outcome-item"><span class="icon">📉</span><p>Find the gradient of a curve at a point using tangent</p></div>
+    <div class="outcome-item"><span class="icon">∆</span><p>Use delta (Δ) notation for rates of change</p></div>
+    <div class="outcome-item"><span class="icon">🔢</span><p>Find the derivative of polynomials using the rule dy/dx = nxⁿ⁻¹</p></div>
+    <div class="outcome-item"><span class="icon">📐</span><p>Find equations of tangents and normals to curves</p></div>
+    <div class="outcome-item"><span class="icon">⛰️</span><p>Sketch curves and find stationary points (maxima & minima)</p></div>
+    <div class="outcome-item"><span class="icon">🚗</span><p>Apply differentiation in distance, velocity, and acceleration</p></div>
+  </div>
+  <div class="nav-row"><span></span><button class="btn btn-pri" onclick="go(2)">Start Lesson →</button></div>
+</div>
+
+<div class="slide" id="s2">
+  <h2>📈 Rate of Change & Gradient</h2>
+  <div class="card">
+    <h3>What is Differentiation?</h3>
+    <div class="highlight">Differentiation is the process of finding the rate of change of a function. The result is called the <strong>derivative</strong> or <strong>gradient function</strong>.</div>
+    <p>From first principles — for y = x²:</p>
+    <ul>
+      <li>Take point P(x, x²) and nearby point Q(x+h, (x+h)²)</li>
+      <li>Gradient of PQ = [(x+h)² − x²] / h = (2xh + h²) / h = 2x + h</li>
+      <li>As h → 0: gradient = <strong>2x</strong></li>
+    </ul>
+    <div class="formula">If y = xⁿ, then dy/dx = nxⁿ⁻¹</div>
+    <p>This is the <strong>Power Rule</strong> — the most important rule in differentiation.</p>
+  </div>
+  <div class="card">
+    <h3>Delta Notation</h3>
+    <p>Δx (delta x) means a small change in x. Δy means a small change in y.</p>
+    <div class="formula">dy/dx = lim(Δx→0) [Δy/Δx]</div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(1)">← Back</button><button class="btn btn-pri" onclick="go(3)">Next →</button></div>
+</div>
+
+<div class="slide" id="s3">
+  <h2>🔢 Differentiating Polynomials</h2>
+  <div class="card">
+    <h3>The Power Rule</h3>
+    <div class="formula">
+      y = xⁿ  →  dy/dx = nxⁿ⁻¹<br>
+      y = axⁿ →  dy/dx = naxⁿ⁻¹<br>
+      y = c (constant) →  dy/dx = 0
+    </div>
+    <p>For a polynomial, differentiate each term separately:</p>
+  </div>
+  <div class="card">
+    <h3>Examples</h3>
+    <table class="diff-table">
+      <tr><th>y =</th><th>dy/dx =</th></tr>
+      <tr><td>x⁵</td><td>5x⁴</td></tr>
+      <tr><td>3x⁴</td><td>12x³</td></tr>
+      <tr><td>2x³ − 5x² + 7</td><td>6x² − 10x</td></tr>
+      <tr><td>x² + 3x − 4</td><td>2x + 3</td></tr>
+      <tr><td>5x³ − 2x + 4</td><td>15x² − 2</td></tr>
+      <tr><td>4 (constant)</td><td>0</td></tr>
+    </table>
+    <div class="example-box">
+      <strong>Kenyan Context:</strong> A matatu travels s = 3t² + 2t km in t hours. Velocity = ds/dt = 6t + 2 km/h.<br>
+      At t = 3: velocity = 6(3) + 2 = <strong>20 km/h</strong>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(2)">← Back</button><button class="btn btn-pri" onclick="go(4)">Next →</button></div>
+</div>
+
+<div class="slide" id="s4">
+  <h2>📐 Tangents and Normals</h2>
+  <div class="card">
+    <h3>Tangent to a Curve</h3>
+    <p>The tangent at a point on a curve has the same gradient as the curve at that point.</p>
+    <ol>
+      <li>Find dy/dx (the gradient function)</li>
+      <li>Substitute the x-value to get the gradient m</li>
+      <li>Use y − y₁ = m(x − x₁) for the equation</li>
+    </ol>
+    <div class="example-box">
+      <strong>Example:</strong> Find the tangent to y = x² − 3x + 2 at x = 2.<br>
+      dy/dx = 2x − 3. At x=2: m = 2(2)−3 = <strong>1</strong><br>
+      y at x=2: y = 4−6+2 = 0. Point: (2, 0)<br>
+      Tangent: y − 0 = 1(x − 2) → <strong>y = x − 2</strong>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Normal to a Curve</h3>
+    <div class="highlight">The normal is perpendicular to the tangent. If gradient of tangent = m, then gradient of normal = −1/m</div>
+    <div class="example-box">
+      <strong>Example (continued):</strong> Normal at (2,0): gradient = −1/1 = −1<br>
+      Normal: y − 0 = −1(x − 2) → <strong>y = −x + 2</strong>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(3)">← Back</button><button class="btn btn-pri" onclick="go(5)">Next →</button></div>
+</div>
+
+<div class="slide" id="s5">
+  <h2>⛰️ Stationary Points & Curve Sketching</h2>
+  <div class="card">
+    <h3>Stationary Points</h3>
+    <div class="highlight">A stationary point occurs where <strong>dy/dx = 0</strong> (the gradient is zero — the curve is momentarily flat).</div>
+    <p>Types of stationary points:</p>
+    <ul>
+      <li><strong>Maximum:</strong> d²y/dx² &lt; 0 (curve turns from up to down)</li>
+      <li><strong>Minimum:</strong> d²y/dx² &gt; 0 (curve turns from down to up)</li>
+      <li><strong>Point of inflection:</strong> d²y/dx² = 0</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Worked Example</h3>
+    <div class="example-box">
+      Find the stationary points of y = x³ − 3x² − 9x + 5<br><br>
+      <strong>Step 1:</strong> dy/dx = 3x² − 6x − 9<br>
+      <strong>Step 2:</strong> Set to 0: 3x² − 6x − 9 = 0<br>
+      x² − 2x − 3 = 0 → (x−3)(x+1) = 0<br>
+      x = 3 or x = −1<br><br>
+      <strong>Step 3:</strong> d²y/dx² = 6x − 6<br>
+      At x=3: d²y/dx² = 12 > 0 → <strong>Minimum</strong><br>
+      At x=−1: d²y/dx² = −12 < 0 → <strong>Maximum</strong><br><br>
+      Points: Minimum at (3, −22), Maximum at (−1, 10)
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(4)">← Back</button><button class="btn btn-pri" onclick="go(6)">Next →</button></div>
+</div>
+
+<div class="slide" id="s6">
+  <h2>🚗 Applications: Kinematics</h2>
+  <div class="card">
+    <h3>Distance, Velocity, Acceleration</h3>
+    <div class="formula">
+      s = displacement (distance function)<br>
+      v = velocity = ds/dt (1st derivative of s)<br>
+      a = acceleration = dv/dt = d²s/dt² (2nd derivative of s)
+    </div>
+  </div>
+  <div class="card">
+    <h3>Worked Examples</h3>
+    <div class="example-box">
+      <strong>Example 1:</strong> A particle moves with s = 2t³ − 9t² + 12t. Find:<br><br>
+      <strong>(a) Velocity:</strong> v = ds/dt = 6t² − 18t + 12<br><br>
+      <strong>(b) Acceleration:</strong> a = dv/dt = 12t − 18<br><br>
+      <strong>(c) When is velocity zero?</strong><br>
+      6t² − 18t + 12 = 0 → t² − 3t + 2 = 0<br>
+      (t−1)(t−2) = 0 → t = 1 or t = 2<br><br>
+      <strong>(d) Acceleration at t = 3:</strong><br>
+      a = 12(3) − 18 = <strong>18 m/s²</strong>
+    </div>
+    <div class="example-box">
+      <strong>Example 2 (Kenyan context):</strong> The height h of a ball thrown up is h = 20t − 5t².<br>
+      Maximum height when dh/dt = 0: 20 − 10t = 0 → t = 2 s<br>
+      Max height = 20(2) − 5(4) = <strong>20 m</strong>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(5)">← Back</button><button class="btn btn-pri" onclick="go(7)">Next →</button></div>
+</div>
+
+<div class="slide" id="s7">
+  <h2>🏭 Applications: Maxima & Minima</h2>
+  <div class="card">
+    <h3>Optimisation Problems</h3>
+    <p>Many real-world problems involve finding maximum or minimum values. Use differentiation to solve them.</p>
+    <ol>
+      <li>Write an equation for the quantity to optimise</li>
+      <li>Differentiate and set equal to zero</li>
+      <li>Solve for the variable</li>
+      <li>Verify it's a max/min using second derivative</li>
+    </ol>
+  </div>
+  <div class="card">
+    <div class="example-box">
+      <strong>Example:</strong> A farmer in Eldoret has 40 m of fencing to enclose a rectangular garden. Find the dimensions for maximum area.<br><br>
+      Let width = x. Then length = (40−2x)/2 = 20−x<br>
+      Area A = x(20−x) = 20x − x²<br>
+      dA/dx = 20 − 2x = 0 → x = 10<br>
+      d²A/dx² = −2 < 0 (maximum confirmed)<br><br>
+      <strong>Maximum area:</strong> A = 10 × 10 = <strong>100 m²</strong> (a square!)
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(6)">← Back</button><button class="btn btn-pri" onclick="go(8)">Next →</button></div>
+</div>
+
+<div class="slide" id="s8">
+  <h2>📋 Summary of Differentiation Rules</h2>
+  <div class="card">
+    <table class="diff-table">
+      <tr><th>Rule</th><th>Formula</th><th>Example</th></tr>
+      <tr><td>Power Rule</td><td>d/dx(xⁿ) = nxⁿ⁻¹</td><td>d/dx(x⁴) = 4x³</td></tr>
+      <tr><td>Constant</td><td>d/dx(c) = 0</td><td>d/dx(7) = 0</td></tr>
+      <tr><td>Constant×fn</td><td>d/dx(af) = a·f'</td><td>d/dx(3x²) = 6x</td></tr>
+      <tr><td>Sum Rule</td><td>d/dx(f+g) = f'+g'</td><td>d/dx(x²+x) = 2x+1</td></tr>
+      <tr><td>Tangent gradient</td><td>m = dy/dx at point</td><td>—</td></tr>
+      <tr><td>Normal gradient</td><td>m_n = −1/m_t</td><td>—</td></tr>
+      <tr><td>Velocity</td><td>v = ds/dt</td><td>—</td></tr>
+      <tr><td>Acceleration</td><td>a = dv/dt = d²s/dt²</td><td>—</td></tr>
+    </table>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(7)">← Back</button><button class="btn btn-pri" onclick="go(9)">Practice →</button></div>
+</div>
+
+<div class="slide" id="s9">
+  <h2>✏️ Practice Questions</h2>
+  <div class="card">
+    <div class="q-block">
+      <strong>1. Differentiate y = 4x³ − 6x² + 2x − 5</strong>
+      <input type="text" id="p1" placeholder="dy/dx = ?">
+      <div id="pf1"></div>
+    </div>
+    <div class="q-block">
+      <strong>2. Find the gradient of y = x² − 4x at x = 3</strong>
+      <input type="text" id="p2" placeholder="gradient = ?">
+      <div id="pf2"></div>
+    </div>
+    <div class="q-block">
+      <strong>3. If s = t³ − 6t, find the velocity when t = 2</strong>
+      <input type="text" id="p3" placeholder="velocity = ?">
+      <div id="pf3"></div>
+    </div>
+    <button class="btn btn-acc" onclick="checkPractice()" style="margin-top:10px">Check Answers</button>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(8)">← Back</button><button class="btn btn-pri" onclick="go(10)">Take Quiz →</button></div>
+</div>
+
+<div class="slide" id="s10">
+  <h2>🎯 Quiz — Differentiation</h2>
+  <div id="quiz-area">
+    <div class="card">
+      <h3>Fill in the Blanks (1 mark each)</h3>
+      <div class="q-block"><strong>1.</strong> If y = xⁿ, then dy/dx = _____.<input type="text" id="q1"></div>
+      <div class="q-block"><strong>2.</strong> The derivative of a constant is _____.<input type="text" id="q2"></div>
+      <div class="q-block"><strong>3.</strong> At a stationary point, dy/dx = _____.<input type="text" id="q3"></div>
+      <div class="q-block"><strong>4.</strong> If the gradient function is dy/dx = 2x − 6, the stationary point is at x = _____.<input type="text" id="q4"></div>
+      <div class="q-block"><strong>5.</strong> Velocity = d_____/dt (fill in the missing letter).<input type="text" id="q5"></div>
+    </div>
+    <div class="card">
+      <h3>Short Answer (2 marks each)</h3>
+      <div class="q-block">
+        <strong>6.</strong> Differentiate y = 3x⁴ − 2x³ + 5x − 7
+        <input type="text" id="q6"><div id="qf6"></div>
+      </div>
+      <div class="q-block">
+        <strong>7.</strong> Find the equation of the tangent to y = x² + 2x at x = 1.
+        <input type="text" id="q7"><div id="qf7"></div>
+      </div>
+      <div class="q-block">
+        <strong>8.</strong> A stone is thrown and its height is h = 25t − 5t² metres. Find the maximum height.
+        <input type="text" id="q8"><div id="qf8"></div>
+      </div>
+    </div>
+    <button class="btn btn-acc" onclick="submitQuiz()" style="margin-top:10px;width:100%">Submit Quiz</button>
+  </div>
+  <div id="score-board" style="display:none">
+    <h3 id="score-txt"></h3><p id="grade-txt"></p><p id="cbc-comment"></p>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(9)">← Back</button></div>
+</div>
+
+<script>
+let current=1;const total=10;
+const dots=document.getElementById('dot-row');
+for(let i=1;i<=total;i++){const d=document.createElement('div');d.className='dot';d.id='dot'+i;d.onclick=()=>go(i);dots.appendChild(d);}
+function go(n){
+  document.querySelector('.slide.active').classList.remove('active');
+  document.getElementById('s'+n).classList.add('active');
+  current=n;
+  document.getElementById('slide-label').textContent=`Slide ${n} / ${total}`;
+  document.getElementById('progress-fill').style.width=(n/total*100)+'%';
+  for(let i=1;i<=total;i++){const d=document.getElementById('dot'+i);d.className='dot'+(i===n?' active':i<n?' done':'');}
+  window.scrollTo(0,0);
+}go(1);
+
+function checkPractice(){
+  const checks=[
+    {id:'p1',correct:'12x',hint:'12x² − 12x + 2'},
+    {id:'p2',correct:'2',hint:'dy/dx=2x−4; at x=3: 2(3)−4=2'},
+    {id:'p3',correct:'6',hint:'v=3t²−6; at t=2: 3(4)−6=6'}
+  ];
+  checks.forEach((c,i)=>{
+    const v=document.getElementById(c.id).value.trim();
+    const fb=document.getElementById('pf'+(i+1));
+    if(v.includes(c.correct)){fb.innerHTML=`<div class="feedback ok">✅ Correct! Full answer: ${c.hint}</div>`;}
+    else{fb.innerHTML=`<div class="feedback no">❌ Answer: ${c.hint}</div>`;}
+  });
+}
+
+function submitQuiz(){
+  const fills=[
+    {id:'q1',answers:['nxⁿ⁻¹','nx^n-1','nxn-1']},
+    {id:'q2',answers:['0','zero']},
+    {id:'q3',answers:['0','zero']},
+    {id:'q4',answers:['3']},
+    {id:'q5',answers:['s','S']}
+  ];
+  let score=0,tm=11;
+  fills.forEach(f=>{
+    const v=document.getElementById(f.id).value.trim().toLowerCase();
+    if(f.answers.some(a=>v.includes(a.toLowerCase()))){score++;}
+  });
+  const shorts=[
+    {id:'q6',keys:['12x³','−6x²','6x2','12x3'],model:'dy/dx = 12x³ − 6x² + 5',marks:2},
+    {id:'q7',keys:['y=4x','4x-1','y = 4x − 1'],model:'dy/dx=2x+2; at x=1: m=4, y=3; tangent: y=4x−1',marks:2},
+    {id:'q8',keys:['31.25','31','125'],model:'dh/dt=25−10t=0; t=2.5; h=25(2.5)−5(6.25)=62.5−31.25=31.25 m',marks:2}
+  ];
+  shorts.forEach(s=>{
+    const v=document.getElementById(s.id).value.trim().toLowerCase();
+    const fb=document.getElementById(s.id.replace('q','qf'));
+    if(s.keys.some(k=>v.includes(k.toLowerCase()))){
+      score+=s.marks;
+      fb.innerHTML=`<div class="feedback ok">✅ +${s.marks} marks. Model: ${s.model}</div>`;
+    } else {
+      fb.innerHTML=`<div class="feedback no">❌ 0 marks. Model: ${s.model}</div>`;
+    }
+  });
+  const pct=Math.round(score/tm*100);
+  let g='',c='';
+  if(pct>=80){g='Exceeds Expectation (EE)';c='Outstanding! You have mastered differentiation.';}
+  else if(pct>=60){g='Meets Expectation (ME)';c='Good work! Practise the stationary points and kinematics.';}
+  else if(pct>=40){g='Approaches Expectation (AE)';c='Keep going. Focus on the power rule and its applications.';}
+  else{g='Below Expectation (BE)';c='Revisit the lesson. Memorise the power rule and try more examples.';}
+  document.getElementById('score-board').style.display='block';
+  document.getElementById('score-txt').textContent=`Score: ${score} / ${tm} (${pct}%)`;
+  document.getElementById('grade-txt').textContent=g;
+  document.getElementById('cbc-comment').textContent=c;
+  document.getElementById('quiz-area').style.display='none';
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(score,tm,pct);
+}
+</script>
+</body>
+</html>

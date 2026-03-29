@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mathematics Form 4 | Matrices</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--pri) 0%,var(--pri-l) 100%);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#topbar .sub{font-size:.7rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+#topbar .ttl{font-size:.95rem;font-weight:700;flex:1}
+#slide-badge{background:var(--acc);color:#000;font-weight:700;font-size:.78rem;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.slide{display:none;flex:1;padding:16px 16px 80px;animation:fi .3s ease}
+.slide.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-title{font-size:1.2rem;font-weight:800;color:var(--pri);margin-bottom:14px;padding-bottom:8px;border-bottom:3px solid var(--acc)}
+.lo-box{background:#e8f5e9;border-left:5px solid var(--pri);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.lo-box h3{color:var(--pri);font-size:.95rem;margin-bottom:8px}
+.lo-box ol{padding-left:18px;font-size:.9rem;line-height:1.8}
+.inquiry{background:#fff8e1;border:1.5px solid var(--acc);border-radius:8px;padding:10px 14px;font-size:.88rem;color:#5d4037;margin-top:10px}
+.inquiry strong{color:#e65100}
+.teach-block{margin-bottom:18px}
+.teach-block h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--acc);display:inline-block}
+.teach-block p,.teach-block li{font-size:.9rem;line-height:1.7;color:var(--txt)}
+.teach-block ul,.teach-block ol{padding-left:18px;margin-top:6px}
+.key-term{background:#fff8e1;border-left:4px solid var(--acc);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem}
+.key-term strong{color:#e65100}
+.info-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+.info-table th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.info-table td{padding:7px 10px;border-bottom:1px solid #e0e0e0}
+.info-table tr:nth-child(even) td{background:#f1f8e9}
+.example-box{background:#f1f8e9;border:1.5px solid var(--ok);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.88rem}
+.example-box strong{color:var(--ok);display:block;margin-bottom:6px}
+.matrix-wrap{display:inline-flex;align-items:center;margin:8px 4px;font-size:.95rem}
+.matrix{display:inline-grid;gap:4px;padding:8px 6px;position:relative}
+.matrix::before,.matrix::after{content:'';position:absolute;top:0;bottom:0;width:4px;border:2.5px solid var(--pri)}
+.matrix::before{left:0;border-right:none;border-radius:3px 0 0 3px}
+.matrix::after{right:0;border-left:none;border-radius:0 3px 3px 0}
+.matrix span{display:flex;align-items:center;justify-content:center;min-width:30px;height:26px;font-weight:600;color:var(--pri)}
+.m2x2{grid-template-columns:repeat(2,1fr)}
+.m2x3{grid-template-columns:repeat(3,1fr)}
+.m3x3{grid-template-columns:repeat(3,1fr)}
+.m3x2{grid-template-columns:repeat(2,1fr)}
+.m1x2{grid-template-columns:repeat(2,1fr)}
+.m2x1{grid-template-columns:repeat(1,1fr)}
+.op{font-size:1.2rem;font-weight:700;color:var(--pri);margin:0 8px}
+.eq{font-size:1.2rem;font-weight:700;color:var(--muted);margin:0 8px}
+.diagram-wrap{background:#fff;border:1.5px solid #c8e6c9;border-radius:8px;padding:12px;margin:10px 0;text-align:center}
+.warn-box{background:#fff3e0;border-left:4px solid #e65100;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem;color:#5d4037}
+/* Quiz */
+.quiz-section{margin-bottom:20px}
+.quiz-section h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:12px}
+.q-item{background:#fff;border:1.5px solid #c8e6c9;border-radius:10px;padding:14px;margin-bottom:12px}
+.q-item p{font-size:.9rem;font-weight:600;margin-bottom:10px;color:var(--txt)}
+.fill-blank{border:none;border-bottom:2.5px dashed var(--pri);background:transparent;font-size:.9rem;padding:2px 6px;width:120px;outline:none;color:var(--txt);text-align:center}
+.fill-blank:focus{border-bottom-color:var(--acc)}
+.fb-result{font-size:.82rem;font-weight:600;margin-top:6px;padding:4px 8px;border-radius:4px;display:inline-block}
+.fb-result.ok{background:#e8f5e9;color:var(--ok)}
+.fb-result.no{background:#ffebee;color:var(--no)}
+.sa-box{width:100%;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px;font-size:.88rem;font-family:inherit;resize:vertical;min-height:80px;outline:none}
+.sa-box:focus{border-color:var(--pri)}
+.grade-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:8px}
+.grade-btn:hover{background:var(--pri-l)}
+.sa-feedback{font-size:.82rem;margin-top:8px;padding:10px;border-radius:8px;line-height:1.6}
+.sa-feedback.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+.sa-feedback.partial{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.sa-feedback.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c}
+.kw-found{color:var(--ok);font-weight:700}
+.kw-miss{color:var(--no);font-weight:700}
+.model-ans{margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-style:italic}
+#score-result{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:16px;font-size:1rem;display:none}
+#score-result .big{font-size:2rem;font-weight:900;margin:8px 0}
+.submit-btn{background:var(--acc);color:#000;border:none;border-radius:10px;padding:12px 32px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:16px;width:100%}
+.submit-btn:hover{background:#e8961a}
+/* Nav */
+#navbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.nav-btn{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer;transition:background .2s}
+.nav-btn:hover{background:var(--pri-l)}
+.nav-btn:disabled{background:#ccc;cursor:not-allowed}
+#dot-nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:#c8e6c9;cursor:pointer;transition:background .2s,transform .2s}
+.dot.active{background:var(--pri);transform:scale(1.3)}
+.dot.done{background:var(--acc)}
+@media(max-width:600px){.nav-btn{padding:8px 14px;font-size:.8rem}#topbar .ttl{font-size:.85rem}}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div>
+    <div class="sub">Mathematics · Form 4</div>
+    <div class="ttl">Matrices</div>
+  </div>
+  <div id="slide-badge">Slide 1 / 10</div>
+</div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <div class="slide-title">📋 Learning Outcomes</div>
+  <div class="lo-box">
+    <h3>By the end of this lesson, you should be able to:</h3>
+    <ol>
+      <li>Define a matrix and state its order</li>
+      <li>Identify special types of matrices (square, identity, zero, transpose)</li>
+      <li>Add and subtract matrices</li>
+      <li>Multiply matrices by a scalar and by another matrix</li>
+      <li>Find the determinant of a 2×2 matrix</li>
+      <li>Find the inverse of a 2×2 matrix</li>
+      <li>Use matrices to solve simultaneous equations</li>
+    </ol>
+  </div>
+  <div class="inquiry">
+    <strong>🔍 Key Inquiry Question:</strong> How can we use matrices to solve real-life problems involving systems of equations?
+  </div>
+</div>
+
+<!-- SLIDE 2: Introduction to Matrices -->
+<div class="slide" id="s2">
+  <div class="slide-title">📐 What is a Matrix?</div>
+  <div class="teach-block">
+    <h3>Definition</h3>
+    <p>A <strong>matrix</strong> is a rectangular array of numbers arranged in rows and columns, enclosed in brackets.</p>
+    <div class="key-term"><strong>Key Term — Matrix:</strong> An ordered rectangular array of numbers. The <em>order</em> (or size) of a matrix is written as m × n, where m = number of rows and n = number of columns.</div>
+    <p>Example of a 2×3 matrix (2 rows, 3 columns):</p>
+    <div class="diagram-wrap">
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">A =</span>
+        <div class="matrix m2x3">
+          <span>1</span><span>2</span><span>3</span>
+          <span>4</span><span>5</span><span>6</span>
+        </div>
+      </div>
+    </div>
+    <p>Each number in a matrix is called an <strong>element</strong> or <strong>entry</strong>. Element a<sub>ij</sub> is in row i, column j.</p>
+  </div>
+  <div class="teach-block">
+    <h3>Order of a Matrix</h3>
+    <table class="info-table">
+      <tr><th>Matrix</th><th>Rows</th><th>Columns</th><th>Order</th></tr>
+      <tr><td>A</td><td>2</td><td>3</td><td>2 × 3</td></tr>
+      <tr><td>B</td><td>3</td><td>3</td><td>3 × 3 (square)</td></tr>
+      <tr><td>C</td><td>1</td><td>2</td><td>1 × 2 (row matrix)</td></tr>
+      <tr><td>D</td><td>3</td><td>1</td><td>3 × 1 (column matrix)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 3: Types of Matrices -->
+<div class="slide" id="s3">
+  <div class="slide-title">🔷 Types of Matrices</div>
+  <div class="teach-block">
+    <h3>Square Matrix</h3>
+    <p>A matrix where number of rows = number of columns.</p>
+    <div class="diagram-wrap">
+      <div class="matrix-wrap">
+        <div class="matrix m2x2">
+          <span>3</span><span>1</span>
+          <span>2</span><span>4</span>
+        </div>
+        <span style="margin-left:10px;font-size:.85rem;color:var(--muted)">2×2 square matrix</span>
+      </div>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Identity Matrix (I)</h3>
+    <p>A square matrix with 1s on the main diagonal and 0s elsewhere. It behaves like the number 1 in multiplication.</p>
+    <div class="diagram-wrap">
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">I =</span>
+        <div class="matrix m2x2">
+          <span>1</span><span>0</span>
+          <span>0</span><span>1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Zero Matrix (0)</h3>
+    <p>All elements are zero.</p>
+    <div class="diagram-wrap">
+      <div class="matrix-wrap">
+        <div class="matrix m2x2">
+          <span>0</span><span>0</span>
+          <span>0</span><span>0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Transpose of a Matrix (Aᵀ)</h3>
+    <p>Obtained by swapping rows and columns. Row 1 becomes Column 1, etc.</p>
+    <div class="example-box">
+      <strong>Example:</strong>
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">A =</span>
+        <div class="matrix m2x3">
+          <span>1</span><span>2</span><span>3</span>
+          <span>4</span><span>5</span><span>6</span>
+        </div>
+        <span class="op">→</span>
+        <span style="margin-right:6px">Aᵀ =</span>
+        <div class="matrix m3x2">
+          <span>1</span><span>4</span>
+          <span>2</span><span>5</span>
+          <span>3</span><span>6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Addition and Subtraction -->
+<div class="slide" id="s4">
+  <div class="slide-title">➕ Addition & Subtraction of Matrices</div>
+  <div class="teach-block">
+    <h3>Rule</h3>
+    <p>You can only add or subtract matrices of the <strong>same order</strong>. Add/subtract corresponding elements.</p>
+    <div class="warn-box">⚠️ Matrices of different orders <strong>cannot</strong> be added or subtracted.</div>
+  </div>
+  <div class="teach-block">
+    <h3>Addition Example</h3>
+    <div class="example-box">
+      <strong>Worked Example:</strong>
+      <div class="matrix-wrap">
+        <div class="matrix m2x2">
+          <span>1</span><span>2</span>
+          <span>3</span><span>4</span>
+        </div>
+        <span class="op">+</span>
+        <div class="matrix m2x2">
+          <span>5</span><span>6</span>
+          <span>7</span><span>8</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x2">
+          <span>6</span><span>8</span>
+          <span>10</span><span>12</span>
+        </div>
+      </div>
+      <p style="margin-top:8px;font-size:.85rem">1+5=6, 2+6=8, 3+7=10, 4+8=12</p>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Subtraction Example</h3>
+    <div class="example-box">
+      <strong>Worked Example:</strong>
+      <div class="matrix-wrap">
+        <div class="matrix m2x2">
+          <span>8</span><span>6</span>
+          <span>4</span><span>2</span>
+        </div>
+        <span class="op">−</span>
+        <div class="matrix m2x2">
+          <span>3</span><span>1</span>
+          <span>2</span><span>5</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x2">
+          <span>5</span><span>5</span>
+          <span>2</span><span>-3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Scalar & Matrix Multiplication -->
+<div class="slide" id="s5">
+  <div class="slide-title">✖️ Multiplication of Matrices</div>
+  <div class="teach-block">
+    <h3>Scalar Multiplication</h3>
+    <p>Multiply every element of the matrix by the scalar (a single number).</p>
+    <div class="example-box">
+      <strong>Example: 3 × A</strong>
+      <div class="matrix-wrap">
+        <span class="op">3</span>
+        <div class="matrix m2x2">
+          <span>1</span><span>2</span>
+          <span>3</span><span>4</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x2">
+          <span>3</span><span>6</span>
+          <span>9</span><span>12</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Matrix Multiplication (A × B)</h3>
+    <p>Possible only when the number of <strong>columns in A</strong> = number of <strong>rows in B</strong>.</p>
+    <div class="key-term"><strong>Rule:</strong> Row × Column — multiply matching elements and add the products.</div>
+    <div class="example-box">
+      <strong>Example:</strong>
+      <div class="matrix-wrap">
+        <div class="matrix m2x2">
+          <span>1</span><span>2</span>
+          <span>3</span><span>4</span>
+        </div>
+        <span class="op">×</span>
+        <div class="matrix m2x2">
+          <span>5</span><span>6</span>
+          <span>7</span><span>8</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x2">
+          <span>19</span><span>22</span>
+          <span>43</span><span>50</span>
+        </div>
+      </div>
+      <p style="margin-top:8px;font-size:.85rem">
+        Row1 × Col1: (1×5)+(2×7) = 5+14 = <strong>19</strong><br>
+        Row1 × Col2: (1×6)+(2×8) = 6+16 = <strong>22</strong><br>
+        Row2 × Col1: (3×5)+(4×7) = 15+28 = <strong>43</strong><br>
+        Row2 × Col2: (3×6)+(4×8) = 18+32 = <strong>50</strong>
+      </p>
+    </div>
+    <div class="warn-box">⚠️ Matrix multiplication is <strong>NOT commutative</strong>: A×B ≠ B×A in general.</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Determinant -->
+<div class="slide" id="s6">
+  <div class="slide-title">🔢 Determinant of a 2×2 Matrix</div>
+  <div class="teach-block">
+    <h3>Definition</h3>
+    <p>The determinant is a single number calculated from a square matrix. For a 2×2 matrix:</p>
+    <div class="diagram-wrap">
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">A =</span>
+        <div class="matrix m2x2">
+          <span>a</span><span>b</span>
+          <span>c</span><span>d</span>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:1rem;font-weight:700;color:var(--pri)">det(A) = |A| = ad − bc</p>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Worked Examples</h3>
+    <div class="example-box">
+      <strong>Example 1:</strong>
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">A =</span>
+        <div class="matrix m2x2">
+          <span>3</span><span>1</span>
+          <span>2</span><span>4</span>
+        </div>
+      </div>
+      <p style="margin-top:8px">det(A) = (3×4) − (1×2) = 12 − 2 = <strong>10</strong></p>
+    </div>
+    <div class="example-box">
+      <strong>Example 2:</strong>
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">B =</span>
+        <div class="matrix m2x2">
+          <span>5</span><span>2</span>
+          <span>3</span><span>1</span>
+        </div>
+      </div>
+      <p style="margin-top:8px">det(B) = (5×1) − (2×3) = 5 − 6 = <strong>−1</strong></p>
+    </div>
+  </div>
+  <div class="key-term"><strong>Singular Matrix:</strong> A matrix with determinant = 0 has no inverse and is called singular.</div>
+</div>
+
+<!-- SLIDE 7: Inverse of a Matrix -->
+<div class="slide" id="s7">
+  <div class="slide-title">🔄 Inverse of a 2×2 Matrix</div>
+  <div class="teach-block">
+    <h3>Formula</h3>
+    <p>For matrix A = <span style="font-weight:700">[a b; c d]</span>, the inverse A⁻¹ is:</p>
+    <div class="diagram-wrap" style="font-size:.95rem">
+      <p style="font-weight:700;color:var(--pri);font-size:1rem">A⁻¹ = 1/det(A) × [d −b; −c a]</p>
+      <p style="margin-top:8px;font-size:.85rem;color:var(--muted)">Swap the diagonal elements, change the signs of the off-diagonal elements, then multiply by 1/det(A)</p>
+    </div>
+    <div class="key-term"><strong>Check:</strong> A × A⁻¹ = I (the identity matrix)</div>
+  </div>
+  <div class="teach-block">
+    <h3>Worked Example</h3>
+    <div class="example-box">
+      <strong>Find the inverse of A:</strong>
+      <div class="matrix-wrap">
+        <span style="margin-right:6px">A =</span>
+        <div class="matrix m2x2">
+          <span>3</span><span>1</span>
+          <span>2</span><span>4</span>
+        </div>
+      </div>
+      <p style="margin-top:8px">
+        <strong>Step 1:</strong> det(A) = (3×4) − (1×2) = 10<br><br>
+        <strong>Step 2:</strong> Swap diagonal, change signs of off-diagonal:
+      </p>
+      <div class="matrix-wrap" style="margin-top:8px">
+        <span style="margin-right:6px">A⁻¹ = 1/10 ×</span>
+        <div class="matrix m2x2">
+          <span>4</span><span>-1</span>
+          <span>-2</span><span>3</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x2">
+          <span>0.4</span><span>-0.1</span>
+          <span>-0.2</span><span>0.3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Solving Simultaneous Equations -->
+<div class="slide" id="s8">
+  <div class="slide-title">🧮 Solving Simultaneous Equations Using Matrices</div>
+  <div class="teach-block">
+    <h3>Matrix Method</h3>
+    <p>A system of simultaneous equations can be written as AX = B, where A is the coefficient matrix, X is the variable matrix, and B is the constant matrix.</p>
+    <p style="margin-top:8px">Solution: <strong>X = A⁻¹B</strong></p>
+  </div>
+  <div class="teach-block">
+    <h3>Worked Example</h3>
+    <div class="example-box">
+      <strong>Solve: 2x + y = 5 and x + 3y = 10</strong>
+      <p style="margin-top:8px"><strong>Step 1:</strong> Write in matrix form AX = B:</p>
+      <div class="matrix-wrap">
+        <div class="matrix m2x2">
+          <span>2</span><span>1</span>
+          <span>1</span><span>3</span>
+        </div>
+        <div class="matrix m2x1" style="margin-left:4px">
+          <span>x</span>
+          <span>y</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x1">
+          <span>5</span>
+          <span>10</span>
+        </div>
+      </div>
+      <p style="margin-top:8px"><strong>Step 2:</strong> det(A) = (2×3)−(1×1) = 5</p>
+      <p style="margin-top:6px"><strong>Step 3:</strong> A⁻¹ = 1/5 × [3 −1; −1 2]</p>
+      <p style="margin-top:6px"><strong>Step 4:</strong> X = A⁻¹B:</p>
+      <div class="matrix-wrap" style="margin-top:6px">
+        <div class="matrix m2x1">
+          <span>x</span>
+          <span>y</span>
+        </div>
+        <span class="eq">=</span>
+        <span style="margin-right:6px">1/5 ×</span>
+        <div class="matrix m2x2">
+          <span>3</span><span>-1</span>
+          <span>-1</span><span>2</span>
+        </div>
+        <div class="matrix m2x1" style="margin-left:4px">
+          <span>5</span>
+          <span>10</span>
+        </div>
+        <span class="eq">=</span>
+        <div class="matrix m2x1">
+          <span>1</span>
+          <span>3</span>
+        </div>
+      </div>
+      <p style="margin-top:8px;font-weight:700;color:var(--ok)">∴ x = 1, y = 3</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Problems</div>
+  <div class="teach-block">
+    <h3>Problem 1</h3>
+    <p>Given A = [2 3; 1 4] and B = [1 0; 2 5], find A + B and A − B.</p>
+    <div class="example-box">
+      <strong>Solution:</strong>
+      <p>A + B:</p>
+      <div class="matrix-wrap">
+        <div class="matrix m2x2"><span>3</span><span>3</span><span>3</span><span>9</span></div>
+      </div>
+      <p style="margin-top:8px">A − B:</p>
+      <div class="matrix-wrap">
+        <div class="matrix m2x2"><span>1</span><span>3</span><span>-1</span><span>-1</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Problem 2</h3>
+    <p>Find the determinant and inverse of M = [4 2; 3 1].</p>
+    <div class="example-box">
+      <strong>Solution:</strong>
+      <p>det(M) = (4×1) − (2×3) = 4 − 6 = <strong>−2</strong></p>
+      <p style="margin-top:6px">M⁻¹ = 1/(−2) × [1 −2; −3 4] = [−0.5 1; 1.5 −2]</p>
+    </div>
+  </div>
+  <div class="teach-block">
+    <h3>Problem 3</h3>
+    <p>Use matrices to solve: 3x + 2y = 12 and x + y = 5.</p>
+    <div class="example-box">
+      <strong>Solution:</strong>
+      <p>det(A) = (3×1) − (2×1) = 1</p>
+      <p>A⁻¹ = [1 −2; −1 3]</p>
+      <p>X = A⁻¹B = [1×12 + (−2)×5; (−1)×12 + 3×5] = [2; 3]</p>
+      <p style="font-weight:700;color:var(--ok)">∴ x = 2, y = 3</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Matrices</div>
+
+  <!-- Part A: Fill in the Blanks -->
+  <div class="quiz-section">
+    <h3>Part A: Fill in the Blanks (5 marks)</h3>
+
+    <div class="q-item">
+      <p>1. A matrix with equal number of rows and columns is called a <input class="fill-blank" id="f1"> matrix.</p>
+      <div id="f1r" class="fb-result" style="display:none"></div>
+    </div>
+    <div class="q-item">
+      <p>2. For matrix A = [5 3; 2 4], det(A) = <input class="fill-blank" id="f2" style="width:60px">.</p>
+      <div id="f2r" class="fb-result" style="display:none"></div>
+    </div>
+    <div class="q-item">
+      <p>3. The identity matrix has 1s on the main <input class="fill-blank" id="f3"> and 0s elsewhere.</p>
+      <div id="f3r" class="fb-result" style="display:none"></div>
+    </div>
+    <div class="q-item">
+      <p>4. A matrix with determinant equal to zero is called a <input class="fill-blank" id="f4"> matrix.</p>
+      <div id="f4r" class="fb-result" style="display:none"></div>
+    </div>
+    <div class="q-item">
+      <p>5. The solution to AX = B using matrices is X = <input class="fill-blank" id="f5" style="width:80px">.</p>
+      <div id="f5r" class="fb-result" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- Part B: Short Answer -->
+  <div class="quiz-section">
+    <h3>Part B: Short Answer (10 marks)</h3>
+
+    <div class="q-item">
+      <p>6. (4 marks) Given A = [2 1; 3 4] and B = [1 2; 0 3], find the matrix product AB. Show all working.</p>
+      <textarea class="sa-box" id="sa1" placeholder="Show your working step by step..."></textarea>
+      <button class="grade-btn" onclick="gradeAnswer('sa1','fb1',{keywords:['2','7','3','15','ab','row','column','multiply','product','2 7','3 15'],required:5,marks:4,model:'AB = [2×1+1×0, 2×2+1×3; 3×1+4×0, 3×2+4×3] = [2, 7; 3, 15]. Row1×Col1=2, Row1×Col2=7, Row2×Col1=3, Row2×Col2=15.'})">✓ Grade My Answer</button>
+      <div id="fb1" class="sa-feedback" style="display:none"></div>
+    </div>
+
+    <div class="q-item">
+      <p>7. (3 marks) Find the inverse of matrix M = [3 1; 5 2]. Verify your answer.</p>
+      <textarea class="sa-box" id="sa2" placeholder="Show your working..."></textarea>
+      <button class="grade-btn" onclick="gradeAnswer('sa2','fb2',{keywords:['determinant','det','1','inverse','2','-1','-5','3','identity','verify'],required:4,marks:3,model:'det(M) = (3×2)−(1×5) = 6−5 = 1. M⁻¹ = 1/1 × [2 −1; −5 3] = [2 −1; −5 3]. Verify: M×M⁻¹ = [3×2+1×(−5), 3×(−1)+1×3; 5×2+2×(−5), 5×(−1)+2×3] = [1 0; 0 1] = I ✓'})">✓ Grade My Answer</button>
+      <div id="fb2" class="sa-feedback" style="display:none"></div>
+    </div>
+
+    <div class="q-item">
+      <p>8. (3 marks) Use matrices to solve the simultaneous equations: 2x + 3y = 8 and x + 2y = 5.</p>
+      <textarea class="sa-box" id="sa3" placeholder="Set up the matrix equation and solve..."></textarea>
+      <button class="grade-btn" onclick="gradeAnswer('sa3','fb3',{keywords:['determinant','det','1','inverse','x=1','y=2','x = 1','y = 2','1','2','coefficient','matrix'],required:4,marks:3,model:'A=[2 3;1 2], X=[x;y], B=[8;5]. det(A)=(2×2)−(3×1)=1. A⁻¹=[2 −3;−1 2]. X=A⁻¹B=[2×8+(−3)×5; (−1)×8+2×5]=[16−15;−8+10]=[1;2]. ∴ x=1, y=2.'})">✓ Grade My Answer</button>
+      <div id="fb3" class="sa-feedback" style="display:none"></div>
+    </div>
+  </div>
+
+  <button class="submit-btn" onclick="submitQuiz()">📊 Submit & See My Score</button>
+  <div id="score-result"></div>
+</div>
+
+<!-- Navigation -->
+<div id="navbar">
+  <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <div id="dot-nav"></div>
+  <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;
+let cur=1;
+const visited=new Set([1]);
+
+function buildDots(){
+  const dn=document.getElementById('dot-nav');
+  dn.innerHTML='';
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===cur?' active':visited.has(i)&&i!==cur?' done':'');
+    d.onclick=(()=>{const n=i;return()=>goTo(n)})();
+    dn.appendChild(d);
+  }
+}
+
+function goTo(n){
+  document.getElementById('s'+cur).classList.remove('active');
+  cur=n; visited.add(n);
+  document.getElementById('s'+n).classList.add('active');
+  document.getElementById('slide-badge').textContent='Slide '+n+' / '+TOTAL;
+  document.getElementById('prev-btn').disabled=(n===1);
+  document.getElementById('next-btn').disabled=(n===TOTAL);
+  buildDots();
+  window.scrollTo(0,0);
+}
+
+function changeSlide(d){goTo(cur+d);}
+buildDots();
+
+// Fill-in-blanks answers
+const fillAnswers={
+  f1:['square'],
+  f2:['14','14 '],
+  f3:['diagonal'],
+  f4:['singular'],
+  f5:['a⁻¹b','a-1b','a^-1 b','a⁻¹ b','a^(-1)b']
+};
+
+function gradeAnswer(saId,fbId,cfg){
+  const txt=document.getElementById(saId).value.toLowerCase().trim();
+  if(!txt){alert('Please write your answer first.');return;}
+  const found=cfg.keywords.filter(k=>txt.includes(k.toLowerCase()));
+  const missed=cfg.keywords.filter(k=>!txt.includes(k.toLowerCase())).slice(0,4);
+  const hitRate=Math.min(1,found.length/cfg.required);
+  const marks=Math.round(hitRate*cfg.marks);
+  const fb=document.getElementById(fbId);
+  fb.style.display='block';
+  const cls=marks>=cfg.marks?'ok':marks>0?'partial':'no';
+  fb.className='sa-feedback '+cls;
+  fb.innerHTML=`<strong>Score: ${marks} / ${cfg.marks}</strong><br>
+    ✅ Keywords found: <span class="kw-found">${found.length>0?found.join(', '):'none'}</span><br>
+    ❌ Keywords missed: <span class="kw-miss">${missed.length>0?missed.join(', '):'none'}</span>
+    <div class="model-ans">📖 Model Answer: ${cfg.model}</div>`;
+}
+
+function submitQuiz(){
+  // Grade fill-in-blanks
+  let fillScore=0;
+  Object.keys(fillAnswers).forEach(id=>{
+    const val=(document.getElementById(id).value||'').toLowerCase().trim();
+    const correct=fillAnswers[id].some(a=>val===a||val.replace(/\s/g,'')=== a.replace(/\s/g,''));
+    const res=document.getElementById(id+'r');
+    res.style.display='inline-block';
+    if(correct){res.className='fb-result ok';res.textContent='✓ Correct! (1 mark)';fillScore++;}
+    else{res.className='fb-result no';res.textContent='✗ Expected: '+fillAnswers[id][0];}
+  });
+
+  // Tally short answer scores
+  let saTotal=0;
+  ['fb1','fb2','fb3'].forEach(id=>{
+    const fb=document.getElementById(id);
+    if(fb.style.display!=='none'){
+      const m=fb.innerHTML.match(/Score:\s*(\d+)\s*\//);
+      if(m)saTotal+=parseInt(m[1]);
+    }
+  });
+
+  const total=fillScore+saTotal;
+  const pct=Math.round((total/15)*100);
+  const grade=pct>=80?'Excellent (A)':pct>=60?'Good (B)':pct>=50?'Average (C)':'Needs Improvement';
+  const emoji=pct>=80?'🏆':pct>=60?'👍':pct>=50?'📚':'💪';
+
+  const res=document.getElementById('score-result');
+  res.style.display='block';
+  res.innerHTML=`${emoji} <div class="big">${total} / 15 (${pct}%)</div>
+  <strong>Grade: ${grade}</strong><br>
+  <small>Fill-in-Blanks: ${fillScore}/5 &nbsp;|&nbsp; Short Answer: ${saTotal}/10</small>`;
+
+  submitExamToMTTI(total,15,pct);
+  res.scrollIntoView({behavior:'smooth'});
+}
+
+function submitExamToMTTI(score,total,percent){
+  try{
+    fetch('/wp-json/mtti/v1/exam-result',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-WP-Nonce':window.mtti_nonce||''},
+      body:JSON.stringify({lesson_id:'f4-math-1-matrices',score,total,percent,timestamp:new Date().toISOString()})
+    }).then(r=>r.json()).then(d=>{if(d&&d.success)console.log('[MTTI] Result saved:',d);}).catch(e=>console.log('[MTTI] Offline:',e));
+  }catch(e){console.log('[MTTI] Error:',e);}
+}
+</script>
+</body>
+</html>

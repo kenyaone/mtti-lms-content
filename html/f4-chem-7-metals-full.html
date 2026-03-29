@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Chemistry | Metals</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a2e1a;--sub:#4a6a4a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{position:sticky;top:0;z-index:100;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;box-shadow:0 2px 8px #0005;}
+#topbar .meta{font-size:.75rem;opacity:.8;}
+#topbar .title{font-weight:700;font-size:.95rem;text-align:center;flex:1;}
+#slide-counter{font-size:.78rem;background:#ffffff28;padding:3px 10px;border-radius:20px;}
+#dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px;flex-wrap:wrap;}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+#slides-wrap{max-width:820px;margin:0 auto;padding:12px 14px 80px;}
+.slide{display:none;animation:fadeIn .35s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;padding:14px 18px;border-radius:12px 12px 0 0;font-size:1.1rem;font-weight:700;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:18px;box-shadow:0 2px 12px #0001;}
+.info-card{background:#f0f7f0;border-left:4px solid var(--pri);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.warn-card{background:#fff8e1;border-left:4px solid var(--acc);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.def-box{background:var(--pri);color:#fff;border-radius:10px;padding:13px 16px;margin:12px 0;font-size:.95rem;}
+h3{color:var(--pri);margin:14px 0 7px;font-size:1rem;}
+h4{color:var(--sub);margin:10px 0 5px;font-size:.93rem;}
+p,li{font-size:.93rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:20px;margin-bottom:8px;}
+.eq{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;margin:8px 0;font-family:monospace;font-size:.87rem;overflow-x:auto;white-space:pre-wrap;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.84rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e8e0;}
+tr:nth-child(even) td{background:#f5faf5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:13px;}
+.col-card h4{color:var(--pri);margin-top:0;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e0e8e0;display:flex;justify-content:center;align-items:center;gap:14px;padding:10px 16px;z-index:99;}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}
+.btn-pri:hover{background:#0d7a36;}
+.btn-sec{background:#e8f0e8;color:var(--pri);}
+.btn-sec:hover{background:#d0e4d0;}
+.btn-acc{background:var(--acc);color:#fff;}
+.q-block{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:15px;margin:14px 0;}
+.q-block p{font-weight:600;margin-bottom:8px;}
+.fill-input{width:100%;padding:9px 12px;border:2px solid #cde;border-radius:7px;font-size:.92rem;margin-top:5px;}
+.fill-input:focus{outline:none;border-color:var(--pri);}
+textarea.fill-input{resize:vertical;min-height:70px;}
+.feedback{margin-top:8px;padding:8px 12px;border-radius:7px;font-size:.87rem;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--ok);display:block;}
+.feedback.wrong{background:#fce8e8;border:1px solid #ef9a9a;color:var(--no);display:block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;margin:2px;}
+.tag.found{background:#c8e6c9;color:#1b5e20;}
+.tag.missed{background:#ffcdd2;color:#b71c1c;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric strong{color:#e65100;}
+#score-board{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:14px;}
+#score-board .big{font-size:2.5rem;font-weight:800;}
+.practice-q{background:#f0f7ff;border:1px solid #bbdefb;border-radius:9px;padding:14px;margin:12px 0;}
+.practice-q p{font-weight:600;color:#1565c0;}
+.reveal-btn{margin-top:8px;background:#1565c0;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;}
+.answer-reveal{display:none;margin-top:10px;background:#e3f2fd;border-radius:7px;padding:10px;font-size:.87rem;}
+.outcome-list li{margin:6px 0;padding:6px 10px;background:#f0f7f0;border-radius:6px;border-left:3px solid var(--acc);}
+/* REACTIVITY SERIES */
+.react-series{display:flex;flex-direction:column;gap:3px;margin:12px 0;}
+.rs-row{display:flex;align-items:center;gap:10px;padding:6px 12px;border-radius:6px;font-size:.87rem;}
+.rs-metal{font-weight:700;min-width:120px;}
+.rs-method{font-size:.8rem;color:#555;}
+.rs-high{background:#ffebee;}
+.rs-med{background:#fff8e1;}
+.rs-low{background:#e8f5e9;}
+.rs-bar{height:8px;border-radius:4px;background:linear-gradient(to right,#c62828,#f5a623,#0a5e2a);}
+/* METAL CARDS */
+.metal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0;}
+.metal-card{border-radius:10px;padding:14px;border:2px solid;}
+.mc-na{background:#fff3e0;border-color:#ff9800;}
+.mc-al{background:#e3f2fd;border-color:#2196f3;}
+.mc-fe{background:#fce4ec;border-color:#e91e63;}
+.mc-zn{background:#f3e5f5;border-color:#9c27b0;}
+.mc-cu{background:#e8f5e9;border-color:#4caf50;}
+.metal-card h4{margin:0 0 8px;font-size:.95rem;}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="meta">F4 Chemistry</div>
+  <div class="title">⚙️ Metals</div>
+  <div id="slide-counter">1 / 10</div>
+</div>
+
+<div id="dots"></div>
+<div id="slides-wrap">
+
+<!-- SLIDE 1: LEARNING OUTCOMES -->
+<div class="slide active" id="s1">
+  <div class="slide-title">🎯 Learning Outcomes</div>
+  <div class="slide-body">
+    <div class="info-card">By the end of this lesson, you should be able to:</div>
+    <ul class="outcome-list">
+      <li>Describe the general methods of extracting metals from their ores</li>
+      <li>Explain extraction of sodium (Downs process), aluminium (Hall's cell), iron (blast furnace), zinc and copper with full equations</li>
+      <li>Describe physical properties of metals and explain them in terms of metallic bonding</li>
+      <li>Compare chemical reactions of Na, Al, Fe, Zn and Cu with air, water, chlorine and dilute acids</li>
+      <li>Describe uses of metals and their alloys</li>
+      <li>Discuss environmental impacts of metal extraction</li>
+    </ul>
+    <div class="warn-card">📚 <strong>Book Reference:</strong> Longhorn F4 Chemistry — Unit 5 (Pages 191–230)</div>
+  </div>
+</div>
+
+<!-- SLIDE 2: EXTRACTION — GENERAL METHODS -->
+<div class="slide" id="s2">
+  <div class="slide-title">⛏️ General Methods of Metal Extraction</div>
+  <div class="slide-body">
+    <div class="def-box">🪨 <strong>Ore:</strong> A rock from which a metal can be extracted economically. A <strong>mineral</strong> is the useful part of the rock.</div>
+
+    <h3>Steps in Metal Extraction</h3>
+    <ol>
+      <li><strong>Mining</strong> — open-cast (near surface) or deep mining</li>
+      <li><strong>Concentration of ore</strong> — increases % of metal:<br>
+        &nbsp;&nbsp;• <strong>Froth flotation</strong>: ore + oil + water + air; ore floats as froth, waste sinks<br>
+        &nbsp;&nbsp;• <strong>Chemical leaching</strong>: ore dissolved in a selective chemical, filtered, then crystallised</li>
+      <li><strong>Reduction of ore to metal</strong> — method depends on reactivity:</li>
+    </ol>
+
+    <h3>Reactivity vs Extraction Method</h3>
+    <div class="react-series">
+      <div class="rs-row rs-high"><span class="rs-metal">K, Na, Li, Ca, Mg, Al</span><span class="rs-method">→ Electrolysis (too reactive for carbon)</span></div>
+      <div class="rs-row rs-med"><span class="rs-metal">Zn, Fe, Sn, Pb</span><span class="rs-method">→ Reduction by carbon (coke)</span></div>
+      <div class="rs-row rs-low"><span class="rs-metal">Cu, Ag, Au, Pt</span><span class="rs-method">→ Found free OR roasting of ore</span></div>
+    </div>
+    <div class="info-card">🔑 <strong>Rule:</strong> The <em>more reactive</em> the metal, the harder and more expensive it is to extract. Carbon cannot reduce metals above it in the reactivity series.</div>
+
+    <h3>Benefits vs Environmental Costs of Mining</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>✅ Benefits</h4>
+        <ul><li>Employment creation</li><li>Produces useful materials</li><li>National wealth/revenue</li></ul>
+      </div>
+      <div class="col-card">
+        <h4>⚠️ Side Effects</h4>
+        <ul><li>Large holes / land damage</li><li>Dangerous waste materials</li><li>Displacement of communities</li></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: SODIUM & ALUMINIUM EXTRACTION -->
+<div class="slide" id="s3">
+  <div class="slide-title">🔋 Extraction of Sodium &amp; Aluminium</div>
+  <div class="slide-body">
+
+    <h3>Sodium — Downs Process (Electrolysis of molten NaCl)</h3>
+    <div class="info-card">Chief ore: Rock salt (NaCl). CaCl₂ is added to lower melting point from 800°C to 600°C.</div>
+    <table>
+      <tr><th>Electrode</th><th>Reaction</th><th>Product</th></tr>
+      <tr><td>Cathode (–) steel</td><td>2Na⁺(l) + 2e⁻ → 2Na(l)</td><td>Liquid sodium (floats, tapped off)</td></tr>
+      <tr><td>Anode (+) graphite</td><td>2Cl⁻(l) → Cl₂(g) + 2e⁻</td><td>Chlorine gas (kept separate by steel gauze)</td></tr>
+    </table>
+
+    <h3>Aluminium — Hall's Cell (Electrolysis of molten Al₂O₃ in cryolite)</h3>
+    <div class="info-card">Chief ore: Bauxite (Al₂O₃·2H₂O). Al₂O₃ dissolved in <strong>molten cryolite (Na₃AlF₆)</strong> to lower temperature from 2050°C to 900–1000°C.</div>
+
+    <p><strong>Ore concentration steps:</strong></p>
+    <ol>
+      <li>Heat with conc. NaOH → Al₂O₃ dissolves as sodium aluminate; Fe₂O₃ filtered off<br>
+        <div class="eq">Al₂O₃ + 2NaOH + 3H₂O → 2Na[Al(OH)₄](aq)</div></li>
+      <li>Treat with CO₂ → Al(OH)₃ precipitates<br>
+        <div class="eq">Na[Al(OH)₄] + CO₂ → Al(OH)₃↓ + NaOH</div></li>
+      <li>Roast at 1000°C:<br>
+        <div class="eq">2Al(OH)₃ → Al₂O₃ + 3H₂O</div></li>
+    </ol>
+
+    <table>
+      <tr><th>Electrode</th><th>Reaction</th><th>Product</th></tr>
+      <tr><td>Cathode (–) carbon lining</td><td>Al³⁺(l) + 3e⁻ → Al(l)</td><td>Liquid aluminium (tapped off from bottom)</td></tr>
+      <tr><td>Anode (+) carbon rods</td><td>2O²⁻(l) → O₂(g) + 4e⁻</td><td>Oxygen — burns carbon anodes (must replace regularly)</td></tr>
+    </table>
+    <div class="warn-card">⚠️ Overall: 4Al³⁺ + 6O²⁻ → 4Al + 3O₂. Oxygen burns the carbon anodes — they must be replaced frequently.</div>
+  </div>
+</div>
+
+<!-- SLIDE 4: IRON, ZINC & COPPER EXTRACTION -->
+<div class="slide" id="s4">
+  <div class="slide-title">🏭 Extraction of Iron, Zinc &amp; Copper</div>
+  <div class="slide-body">
+
+    <h3>Iron — Blast Furnace</h3>
+    <div class="info-card">Raw materials: Haematite (Fe₂O₃) + Coke (C) + Limestone (CaCO₃). Hot air blasted through tuyères.</div>
+    <div class="eq">1. C + O₂ → CO₂        (coke burns — exothermic, raises temp to 1600°C)
+2. CO₂ + C → 2CO       (CO₂ reduced to CO — endothermic)
+3. Fe₂O₃ + 3CO → 2Fe + 3CO₂   (iron(III) oxide reduced to iron)
+4. CaCO₃ → CaO + CO₂  (limestone decomposes)
+5. CaO + SiO₂ → CaSiO₃(l)      (slag — removes silica impurity)</div>
+    <p>Iron from blast furnace = <strong>pig/cast iron</strong> (~95% Fe, brittle). <strong>Wrought iron</strong> = 99% Fe, not brittle.</p>
+
+    <h3>Zinc — Reduction by Carbon</h3>
+    <div class="info-card">Chief ore: Zinc blende (ZnS). Steps: froth flotation → roast in air → reduce with coke.</div>
+    <div class="eq">2ZnS + 3O₂ → 2ZnO + 2SO₂    (roasting)
+ZnO + C → Zn + CO            (reduction at 1300°C)
+Zinc vapour collected & condensed (b.p. 907°C)</div>
+
+    <h3>Copper — From Copper Pyrites (CuFeS₂)</h3>
+    <div class="info-card">Steps: froth flotation → roasting → reduction → electrolytic refining.</div>
+    <div class="eq">2CuFeS₂ + 4O₂ → Cu₂S + 2FeO + 3SO₂    (roasting)
+FeO + SiO₂ → FeSiO₃(l)                     (slag removal)
+2Cu₂S + 3O₂ → 2Cu₂O + 2SO₂
+2Cu₂O + Cu₂S → 6Cu + SO₂                   (blister copper ~97%)</div>
+    <p><strong>Electrolytic refining:</strong> Impure copper = anode, pure copper = cathode, CuSO₄ solution = electrolyte.</p>
+    <div class="eq">Anode: Cu → Cu²⁺ + 2e⁻    (anode dissolves)
+Cathode: Cu²⁺ + 2e⁻ → Cu   (pure copper deposited)</div>
+    <div class="warn-card">💡 Sludge (gold, silver, platinum) collects below the anode — valuable by-products!</div>
+  </div>
+</div>
+
+<!-- SLIDE 5: PHYSICAL PROPERTIES -->
+<div class="slide" id="s5">
+  <div class="slide-title">🔬 Physical Properties of Metals</div>
+  <div class="slide-body">
+    <table>
+      <tr><th>Metal</th><th>M.P. (°C)</th><th>Density (g/cm³)</th><th>Notable feature</th></tr>
+      <tr><td>Sodium (Na)</td><td>98</td><td>0.97</td><td>Low m.p. — only 1 delocalised e⁻ per atom</td></tr>
+      <tr><td>Aluminium (Al)</td><td>660</td><td>2.70</td><td>Light, strong oxide layer</td></tr>
+      <tr><td>Zinc (Zn)</td><td>420</td><td>7.14</td><td>Tarnishes slowly; used in galvanising</td></tr>
+      <tr><td>Iron (Fe)</td><td>1535</td><td>7.86</td><td>Highest m.p. among common metals</td></tr>
+      <tr><td>Copper (Cu)</td><td>1085</td><td>8.96</td><td>Best electrical conductor (after silver)</td></tr>
+    </table>
+
+    <h3>Explaining Physical Properties</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>High m.p. &amp; b.p.</h4>
+        <p>Strong metallic bonds — fixed positive ions in a "sea" of delocalised electrons. More delocalised e⁻ = stronger bond = higher m.p.</p>
+        <p>Exception: Na has low m.p. — only 1 e⁻ per atom → weak bonds.</p>
+      </div>
+      <div class="col-card">
+        <h4>Thermal &amp; electrical conductivity</h4>
+        <p>Delocalised electrons carry both heat and electrical charge. Heat → electrons vibrate and pass energy along. Electricity → electrons flow along the wire.</p>
+      </div>
+      <div class="col-card">
+        <h4>Ductility</h4>
+        <p>Layers of atoms slip over each other when pulled → wire formation. Metal bond is non-directional, so structure doesn't break.</p>
+      </div>
+      <div class="col-card">
+        <h4>Malleability</h4>
+        <p>Layers slip when hammered → thin sheets. Same principle as ductility — atoms slide without shattering.</p>
+      </div>
+    </div>
+    <div class="info-card">📏 Density increases with atomic number because atomic mass increases. Group I metals (Na, K) are exceptions — low density due to large atomic radius and weak metallic bonds.</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: CHEMICAL REACTIONS — AIR & WATER -->
+<div class="slide" id="s6">
+  <div class="slide-title">🔥 Chemical Reactions: Air &amp; Water</div>
+  <div class="slide-body">
+
+    <h3>Reaction with Air</h3>
+    <div class="metal-grid">
+      <div class="metal-card mc-na">
+        <h4>🧂 Sodium</h4>
+        <p>Burns with yellow flame → Na₂O and Na₂O₂</p>
+        <div class="eq">4Na + O₂ → 2Na₂O
+2Na + O₂ → Na₂O₂</div>
+      </div>
+      <div class="metal-card mc-al">
+        <h4>⚡ Aluminium</h4>
+        <p>Burns if oxide layer removed → Al₂O₃</p>
+        <div class="eq">4Al + 3O₂ → 2Al₂O₃</div>
+        <p><em>Oxide layer = passive protection</em></p>
+      </div>
+      <div class="metal-card mc-fe">
+        <h4>🔩 Iron</h4>
+        <p>Burns slowly → Fe₃O₄</p>
+        <div class="eq">3Fe + 2O₂ → Fe₃O₄</div>
+      </div>
+      <div class="metal-card mc-cu">
+        <h4>🪙 Copper</h4>
+        <p>Does NOT burn. Surface turns black.</p>
+        <div class="eq">2Cu + O₂ → 2CuO (black)</div>
+      </div>
+      <div class="metal-card mc-zn">
+        <h4>🔗 Zinc</h4>
+        <p>Burns with blue-green flame → ZnO</p>
+        <div class="eq">2Zn + O₂ → 2ZnO
+(yellow when hot, white when cold)</div>
+      </div>
+    </div>
+
+    <h3>Reaction with Water / Steam</h3>
+    <table>
+      <tr><th>Metal</th><th>Cold water</th><th>Steam</th><th>Equation</th></tr>
+      <tr><td>Sodium</td><td>✅ Vigorous</td><td>—</td><td>2Na + 2H₂O → 2NaOH + H₂↑</td></tr>
+      <tr><td>Aluminium</td><td>Very slow</td><td>✅ Reacts</td><td>2Al + 3H₂O(g) → Al₂O₃ + 3H₂↑</td></tr>
+      <tr><td>Iron</td><td>❌ No reaction</td><td>✅ Reacts</td><td>2Fe + 3H₂O(g) → Fe₂O₃ + 3H₂↑</td></tr>
+      <tr><td>Zinc</td><td>❌ No reaction</td><td>✅ Reacts</td><td>Zn + H₂O(g) → ZnO + H₂↑</td></tr>
+      <tr><td>Copper</td><td>❌ No reaction</td><td>❌ No reaction</td><td>—</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 7: CHEMICAL REACTIONS — ACIDS & CHLORINE -->
+<div class="slide" id="s7">
+  <div class="slide-title">⚗️ Chemical Reactions: Acids &amp; Chlorine</div>
+  <div class="slide-body">
+
+    <h3>Reaction with Dilute HCl</h3>
+    <table>
+      <tr><th>Metal</th><th>Reaction</th><th>Equation</th></tr>
+      <tr><td>Sodium</td><td>Explosive — dangerous!</td><td>2Na + 2HCl → 2NaCl + H₂↑</td></tr>
+      <tr><td>Aluminium</td><td>Very slow (oxide layer)</td><td>2Al + 6HCl → 2AlCl₃ + 3H₂↑</td></tr>
+      <tr><td>Iron</td><td>Reacts readily</td><td>Fe + 2HCl → FeCl₂ + H₂↑</td></tr>
+      <tr><td>Zinc</td><td>Reacts readily</td><td>Zn + 2HCl → ZnCl₂ + H₂↑</td></tr>
+      <tr><td>Copper</td><td>❌ No reaction with dilute acids</td><td>—</td></tr>
+    </table>
+
+    <h3>Reaction with Concentrated Acids</h3>
+    <div class="info-card">Al and Fe are <strong>passivated</strong> by conc. HNO₃ — a protective oxide layer forms, stopping further reaction.</div>
+    <table>
+      <tr><th>Metal</th><th>Conc. H₂SO₄</th><th>Conc. HNO₃</th></tr>
+      <tr><td>Aluminium</td><td>Al + 3H₂SO₄ → Al₂(SO₄)₃ + 3SO₂ + H₂O</td><td>❌ Passivated</td></tr>
+      <tr><td>Iron</td><td>2Fe + 6H₂SO₄ → Fe₂(SO₄)₃ + 3SO₂ + 6H₂O</td><td>❌ Passivated</td></tr>
+      <tr><td>Zinc</td><td>Zn + 2H₂SO₄ → ZnSO₄ + SO₂ + 2H₂O</td><td>Zn + 4HNO₃ → Zn(NO₃)₂ + 2NO₂ + 2H₂O</td></tr>
+      <tr><td>Copper</td><td>Cu + 2H₂SO₄ → CuSO₄ + SO₂ + 2H₂O</td><td>Cu + 4HNO₃ → Cu(NO₃)₂ + 2NO₂ + 2H₂O</td></tr>
+    </table>
+
+    <h3>Reaction with Chlorine Gas</h3>
+    <table>
+      <tr><th>Metal</th><th>Product</th><th>Equation</th></tr>
+      <tr><td>Sodium</td><td>NaCl (white salt)</td><td>2Na + Cl₂ → 2NaCl</td></tr>
+      <tr><td>Aluminium</td><td>AlCl₃ (white sublimate)</td><td>2Al + 3Cl₂ → 2AlCl₃</td></tr>
+      <tr><td>Iron</td><td>FeCl₃ (brown sublimate)</td><td>2Fe + 3Cl₂ → 2FeCl₃</td></tr>
+      <tr><td>Copper</td><td>CuCl₂ (green solid)</td><td>Cu + Cl₂ → CuCl₂</td></tr>
+      <tr><td>Zinc</td><td>ZnCl₂ (white solid)</td><td>Zn + Cl₂ → ZnCl₂</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 8: USES & ALLOYS -->
+<div class="slide" id="s8">
+  <div class="slide-title">🛠️ Uses of Metals &amp; Alloys</div>
+  <div class="slide-body">
+
+    <h3>Uses of Metals</h3>
+    <table>
+      <tr><th>Metal</th><th>Key Uses</th></tr>
+      <tr><td>Sodium</td><td>Street lighting (Na vapour lamps), reducing agent, manufacture of NaOH, NaCN (gold extraction), sodium peroxide (bleach)</td></tr>
+      <tr><td>Aluminium</td><td>Overhead power lines (light + conductive), aircraft parts (duralumin), food packaging (foil), window frames, jewellery</td></tr>
+      <tr><td>Zinc</td><td>Galvanising iron (prevents corrosion), batteries, roof cladding, sacrificial anodes, alloys (brass)</td></tr>
+      <tr><td>Iron/Steel</td><td>Construction, machinery, bridges, vehicles (as alloys)</td></tr>
+      <tr><td>Copper</td><td>Electrical wiring (best conductor after silver), pipes, coins, saucepans, jewellery (brass/bronze)</td></tr>
+    </table>
+
+    <h3>Important Alloys</h3>
+    <table>
+      <tr><th>Alloy</th><th>Composition</th><th>Properties</th><th>Uses</th></tr>
+      <tr><td>Brass</td><td>70% Cu + 30% Zn</td><td>Harder than Cu, gold-coloured</td><td>Utensils, screws, radiators</td></tr>
+      <tr><td>Bronze</td><td>90% Cu + 10% Sn</td><td>Harder than Cu</td><td>Machinery, decoration</td></tr>
+      <tr><td>Duralumin</td><td>95% Al + 4% Cu + others</td><td>Strong + lightweight</td><td>Aircraft, rockets, cans</td></tr>
+      <tr><td>Stainless steel</td><td>74% Fe + 18% Cr + 8% Ni</td><td>Tough, corrosion-resistant</td><td>Cutlery, surgical instruments</td></tr>
+      <tr><td>Mild steel</td><td>99.7% Fe + 0.3% C</td><td>Stronger than pure Fe, not brittle</td><td>Car bodies, bridges</td></tr>
+      <tr><td>Cast iron</td><td>95.5% Fe + 4.5% C</td><td>Easily moulded</td><td>Gear boxes, engine blocks</td></tr>
+    </table>
+    <div class="info-card">💡 Alloys are made by mixing molten metals. They improve appearance, strength, resistance to wear/corrosion, and lower melting points.</div>
+  </div>
+</div>
+
+<!-- SLIDE 9: PRACTICE -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="slide-body">
+
+    <div class="practice-q">
+      <p>1. Why is electrolysis used to extract sodium but not iron?</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Sodium is very high in the reactivity series (electrochemical series) and has a very high negative electrode potential. Carbon cannot displace it from its compounds. Electrolysis must be used. Iron has a lower reactivity and carbon (coke) can easily reduce iron(III) oxide to iron in the blast furnace.</div>
+    </div>
+
+    <div class="practice-q">
+      <p>2. Why are carbon anodes in the Hall's cell replaced frequently?</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Oxygen gas is produced at the carbon anodes. At the high temperature of 900–1000°C, this oxygen reacts with and burns the carbon anodes, forming CO₂ and CO. The anodes gradually burn away and must be replaced.</div>
+    </div>
+
+    <div class="practice-q">
+      <p>3. State the role of limestone (CaCO₃) in the blast furnace. Give equations.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        Limestone removes acidic impurities (silica SiO₂ and alumina Al₂O₃) as slag.<br>
+        CaCO₃ → CaO + CO₂<br>
+        CaO + SiO₂ → CaSiO₃(l) [slag]<br>
+        The slag is less dense than molten iron, floats on top, and is tapped off separately.
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>4. Which metal reacts with cold water but not steam? Which reacts with steam but not cold water? Give equations.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        <strong>Sodium</strong> reacts vigorously with cold water: 2Na + 2H₂O → 2NaOH + H₂↑<br>
+        <strong>Iron and zinc</strong> react only with steam:<br>
+        2Fe + 3H₂O(g) → Fe₂O₃ + 3H₂↑<br>
+        Zn + H₂O(g) → ZnO + H₂↑<br>
+        Copper does NOT react with either.
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>5. Explain why galvanising iron with zinc prevents corrosion even when the zinc coating is scratched.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Zinc is higher than iron in the electrochemical series, making it a more reactive metal. When the zinc coating is scratched and both metals are exposed, zinc acts as a <strong>sacrificial anode</strong> — it oxidises (corrodes) preferentially, protecting the iron underneath. Zinc continues to protect iron even when damaged.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Metals</div>
+  <div class="slide-body">
+
+    <div class="q-block">
+      <p>Q1. The process used to extract sodium in the Downs cell is ____________ of molten ____________.</p>
+      <input class="fill-input" id="q1" placeholder="Type your answer..."/>
+      <div class="feedback" id="f1"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q2. In the Hall's cell, aluminium oxide is dissolved in molten ____________ to lower the operating temperature.</p>
+      <input class="fill-input" id="q2" placeholder="Type your answer..."/>
+      <div class="feedback" id="f2"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q3. Name the THREE raw materials charged into the blast furnace for iron extraction.</p>
+      <input class="fill-input" id="q3" placeholder="e.g. iron ore, ..."/>
+      <div class="feedback" id="f3"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q4. Write the equation for the reaction of zinc with steam.</p>
+      <input class="fill-input" id="q4" placeholder="Type equation..."/>
+      <div class="feedback" id="f4"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q5. State the composition of duralumin and one reason why it is used in aircraft construction.</p>
+      <input class="fill-input" id="q5" placeholder="composition / reason..."/>
+      <div class="feedback" id="f5"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q6 (Short Answer): Explain why aluminium does not react with concentrated nitric acid, even though it is high in the reactivity series.</p>
+      <textarea class="fill-input" id="q6" placeholder="Write your explanation..."></textarea>
+      <div class="feedback" id="f6"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q7 (Short Answer): Describe how copper is purified by electrolysis. State what happens at each electrode and explain why the blue colour of CuSO₄ solution does not change.</p>
+      <textarea class="fill-input" id="q7" placeholder="Write your answer..."></textarea>
+      <div class="feedback" id="f7"></div>
+    </div>
+
+    <button class="btn btn-acc" onclick="submitExam()" style="width:100%;margin-top:10px;padding:13px;font-size:1rem;">✅ Submit Quiz</button>
+    <div id="score-area"></div>
+  </div>
+</div>
+
+</div><!-- end slides-wrap -->
+
+<div id="nav">
+  <button class="btn btn-sec" id="prevBtn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <button class="btn btn-pri" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;
+let current=1;
+
+function buildDots(){
+  const c=document.getElementById('dots');
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===1?' active':'');
+    d.onclick=()=>goTo(i);
+    d.id='dot'+i;
+    c.appendChild(d);
+  }
+}
+
+function goTo(n){
+  document.querySelector('.slide.active').classList.remove('active');
+  document.getElementById('s'+n).classList.add('active');
+  document.getElementById('dot'+current).classList.remove('active');
+  if(current<n) document.getElementById('dot'+current).classList.add('done');
+  current=n;
+  document.getElementById('dot'+current).classList.add('active');
+  document.getElementById('slide-counter').textContent=current+' / '+TOTAL;
+  document.getElementById('prevBtn').disabled=current===1;
+  document.getElementById('nextBtn').disabled=current===TOTAL;
+  window.scrollTo(0,0);
+}
+
+function changeSlide(d){goTo(Math.min(Math.max(1,current+d),TOTAL));}
+
+function reveal(btn){
+  const ans=btn.nextElementSibling;
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide Answer':'Show Answer';
+}
+
+const ANSWERS={
+  q1:{kw:['electrolysis','sodium chloride','nacl','molten'],pts:2},
+  q2:{kw:['cryolite','na3alf6','sodium aluminium fluoride'],pts:2},
+  q3:{kw:['iron ore','haematite','coke','limestone','calcium carbonate'],pts:3,need:3},
+  q4:{kw:['zn','h2o','zno','h2','steam'],pts:2},
+  q5:{kw:['aluminium','copper','95','4','lightweight','light','strong'],pts:2},
+};
+
+function checkFill(id,fb,data){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).textContent='Please write an answer.';return 0;}
+  const found=data.kw.filter(k=>val.includes(k.toLowerCase()));
+  const need=data.need||1;
+  const got=Math.min(found.length>=need?data.pts:Math.floor((found.length/need)*data.pts),data.pts);
+  const tags=data.kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');
+  document.getElementById(fb).innerHTML=`Keywords: ${tags}`;
+  document.getElementById(fb).className='feedback '+(found.length>=need?'correct':'wrong');
+  return got;
+}
+
+function scoreShort(id,fb,kw,pts,rubric){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).innerHTML='Please write an answer.';return 0;}
+  const found=kw.filter(k=>val.includes(k.toLowerCase()));
+  const tags=kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');
+  const score=Math.min(Math.round((found.length/kw.length)*pts),pts);
+  document.getElementById(fb).innerHTML=`Keywords found: ${tags}<div class="rubric"><strong>Model Answer:</strong> ${rubric}</div>`;
+  document.getElementById(fb).className='feedback '+(score>=Math.ceil(pts/2)?'correct':'wrong');
+  return score;
+}
+
+function submitExam(){
+  let total=0,max=0;
+  total+=checkFill('q1','f1',ANSWERS.q1); max+=ANSWERS.q1.pts;
+  total+=checkFill('q2','f2',ANSWERS.q2); max+=ANSWERS.q2.pts;
+  total+=checkFill('q3','f3',ANSWERS.q3); max+=ANSWERS.q3.pts;
+  total+=checkFill('q4','f4',ANSWERS.q4); max+=ANSWERS.q4.pts;
+  total+=checkFill('q5','f5',ANSWERS.q5); max+=ANSWERS.q5.pts;
+
+  total+=scoreShort('q6','f6',
+    ['oxidising agent','oxide layer','passive','insoluble','al2o3','concentrated nitric','coating','prevents','further reaction'],
+    3,
+    'Concentrated nitric acid is a strong oxidising agent. When it contacts aluminium, it immediately forms a thin, dense, insoluble layer of aluminium oxide (Al₂O₃) on the surface. This protective (passive) layer prevents any further reaction between the concentrated nitric acid and the aluminium metal underneath.'
+  ); max+=3;
+
+  total+=scoreShort('q7','f7',
+    ['impure copper','anode','pure copper','cathode','cu2+','dissolves','deposits','blue colour','concentration','unchanged','replenished','sludge'],
+    4,
+    'Anode: impure copper dissolves — Cu → Cu²⁺ + 2e⁻. Cathode: pure copper is deposited — Cu²⁺ + 2e⁻ → Cu. The blue colour of CuSO₄ does not change because as Cu²⁺ ions are used up at the cathode, they are replenished at the same rate by the dissolving anode — so the concentration of Cu²⁺ stays constant. Impurities (gold, silver, platinum) fall below the anode as sludge.'
+  ); max+=4;
+
+  const pct=Math.round((total/max)*100);
+  const grade=pct>=80?'Excellent! 🏆':pct>=60?'Good Work! 👍':pct>=40?'Keep Practising 📚':'Review the lesson 🔄';
+
+  document.getElementById('score-area').innerHTML=`
+    <div id="score-board">
+      <div class="big">${total}/${max}</div>
+      <div style="font-size:1.3rem;font-weight:700;margin:6px 0">${pct}%</div>
+      <div style="font-size:1rem;opacity:.9">${grade}</div>
+      <div style="font-size:.8rem;opacity:.75;margin-top:8px">CBC Rubric: 80–100% = Exceeding | 60–79% = Meeting | 40–59% = Approaching | Below 40% = Below</div>
+    </div>`;
+
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(total,max,pct);
+}
+
+buildDots();
+</script>
+</body>
+</html>

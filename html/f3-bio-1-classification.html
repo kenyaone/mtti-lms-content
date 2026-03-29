@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Biology | Classification of Living Organisms</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f9fafb;--card:#fff;--txt:#1a1a1a;--muted:#666;--border:#e0e0e0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
+/* TOP BAR */
+#topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar .title{font-size:14px;font-weight:700;letter-spacing:.5px;}
+#topbar .meta{font-size:12px;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.3);position:relative;}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s ease;width:10%;}
+/* SLIDE CONTAINER */
+#slide-wrap{flex:1;display:flex;flex-direction:column;max-width:860px;width:100%;margin:0 auto;padding:20px 16px 100px;}
+.slide{display:none;animation:fadeIn .4s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+/* SLIDE ELEMENTS */
+.slide-header{background:var(--pri);color:#fff;border-radius:12px 12px 0 0;padding:18px 24px;}
+.slide-header .slide-num{font-size:11px;opacity:.75;text-transform:uppercase;letter-spacing:1px;}
+.slide-header h2{font-size:20px;font-weight:700;margin-top:4px;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:16px;}
+/* CONTENT STYLES */
+.outcome-list{list-style:none;padding:0;}
+.outcome-list li{padding:10px 14px;margin:8px 0;background:#e8f5e9;border-left:4px solid var(--pri);border-radius:6px;font-size:14px;line-height:1.5;}
+.outcome-list li::before{content:"✓ ";color:var(--pri);font-weight:700;}
+.info-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:16px 20px;margin:12px 0;}
+.info-box h3{color:var(--pri);font-size:15px;margin-bottom:8px;}
+.info-box p,.info-box li{font-size:13.5px;line-height:1.6;color:#333;}
+.info-box ul{padding-left:18px;margin-top:6px;}
+.kingdom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0;}
+.kingdom-card{background:#fff;border:2px solid var(--border);border-radius:10px;padding:14px;transition:border-color .2s,transform .2s;cursor:default;}
+.kingdom-card:hover{border-color:var(--pri);transform:translateY(-2px);box-shadow:0 4px 12px rgba(10,94,42,.15);}
+.kingdom-card .kname{font-weight:700;color:var(--pri);font-size:14px;margin-bottom:6px;}
+.kingdom-card .kex{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:6px;}
+.kingdom-card ul{padding-left:14px;font-size:12.5px;line-height:1.7;color:#444;}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.compare-table th{background:var(--pri);color:#fff;padding:10px 12px;text-align:left;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid var(--border);}
+.compare-table tr:nth-child(even) td{background:#f5f5f5;}
+.compare-table tr:hover td{background:#e8f5e9;}
+/* TAXONOMY TREE */
+.tax-tree{background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:16px 20px;font-size:13px;}
+.tax-tree .level{padding:6px 0 6px 20px;border-left:2px solid var(--acc);margin-left:10px;position:relative;}
+.tax-tree .level::before{content:'';position:absolute;left:-2px;top:50%;width:10px;height:2px;background:var(--acc);}
+.tax-tree .level .lname{font-weight:700;color:var(--pri);}
+/* KEY TOOL */
+.key-container{background:#fff;border:2px solid var(--border);border-radius:12px;padding:20px;margin:10px 0;}
+.key-step{display:none;animation:fadeIn .3s ease;}
+.key-step.active{display:block;}
+.key-q{font-weight:600;font-size:14px;color:var(--txt);margin-bottom:12px;}
+.key-options{display:flex;flex-direction:column;gap:8px;}
+.key-btn{padding:10px 16px;background:#e8f5e9;border:2px solid #a5d6a7;border-radius:8px;font-size:13.5px;cursor:pointer;text-align:left;transition:all .2s;}
+.key-btn:hover{background:var(--pri);color:#fff;border-color:var(--pri);}
+.key-result{background:#fff3e0;border:2px solid var(--acc);border-radius:8px;padding:14px;font-size:14px;text-align:center;}
+.key-result .org{font-size:20px;font-weight:700;color:var(--pri);}
+#key-reset{margin-top:12px;background:var(--pri);color:#fff;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:13px;}
+/* PRACTICE */
+.practice-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;}
+.practice-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;color:var(--txt);}
+.practice-q textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:80px;font-family:inherit;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:10px;transition:background .2s;}
+.check-btn:hover{background:#085220;}
+.feedback{margin-top:10px;padding:12px;border-radius:8px;font-size:13.5px;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.feedback.partial{background:#fff8e1;border:1px solid #ffe082;color:#6d4c00;}
+/* QUIZ */
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;}
+.quiz-q .qnum{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.quiz-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.fib-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;line-height:2;}
+.fib-wrap input{border:none;border-bottom:2px solid var(--pri);background:transparent;font-size:14px;padding:2px 6px;width:140px;outline:none;color:var(--pri);font-weight:600;}
+.fib-wrap input.correct{border-color:var(--ok);color:var(--ok);}
+.fib-wrap input.wrong{border-color:var(--no);color:var(--no);}
+.sa-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:70px;font-family:inherit;margin-top:8px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;margin:2px;font-weight:600;}
+.tag.found{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.model-answer{margin-top:10px;padding:10px;background:#f5f5f5;border-radius:6px;font-size:13px;color:#444;border-left:3px solid var(--acc);}
+.model-answer strong{color:var(--pri);}
+.rubric{margin-top:8px;font-size:12px;color:var(--muted);}
+#submit-quiz{display:block;width:100%;padding:14px;background:var(--pri);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;transition:background .2s;}
+#submit-quiz:hover{background:#085220;}
+#quiz-result{display:none;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-top:20px;}
+#quiz-result .score-big{font-size:52px;font-weight:900;color:var(--pri);}
+#quiz-result .grade{font-size:18px;font-weight:600;margin:8px 0;color:var(--muted);}
+#quiz-result .cbc-rubric{background:#e8f5e9;border-radius:8px;padding:14px;margin-top:16px;font-size:13px;text-align:left;line-height:1.7;}
+/* NAV */
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+#nav-bar button{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;}
+#nav-bar button:hover{background:#085220;}
+#nav-bar button:disabled{background:#ccc;cursor:not-allowed;}
+#slide-dots{display:flex;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div>
+    <div class="title">🌿 Biology Form 3 | Classification of Living Organisms</div>
+    <div class="meta">MTTI LMS &nbsp;|&nbsp; Lesson 1 of 6</div>
+  </div>
+  <div id="slide-counter">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<div id="slide-wrap">
+
+<!-- SLIDE 1: LEARNING OUTCOMES -->
+<div class="slide active" id="s1">
+  <div class="slide-header"><div class="slide-num">Slide 1 • Introduction</div><h2>📚 Learning Outcomes</h2></div>
+  <div class="slide-body">
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">By the end of this lesson, you should be able to:</p>
+    <ul class="outcome-list">
+      <li>Define <strong>binomial nomenclature</strong> and state its principles</li>
+      <li>State the main characteristics of the <strong>five kingdoms</strong> of organisms</li>
+      <li>Describe the economic importance of <strong>fungi</strong> and <strong>bacteria</strong></li>
+      <li>State characteristics of divisions of <strong>Kingdom Plantae</strong></li>
+      <li>Classify plants using the <strong>dichotomous key</strong> method</li>
+      <li>Describe characteristics of the <strong>Phylum Arthropoda</strong> and <strong>Phylum Chordata</strong></li>
+    </ul>
+    <div class="info-box" style="margin-top:16px;">
+      <h3>🔑 Key Vocabulary</h3>
+      <p><strong>Binomial nomenclature · Kingdom · Phylum · Class · Order · Family · Genus · Species · Dichotomous key · Arthropoda · Chordata</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: CLASSIFICATION OVERVIEW -->
+<div class="slide" id="s2">
+  <div class="slide-header"><div class="slide-num">Slide 2 • Content</div><h2>🔬 What is Classification?</h2></div>
+  <div class="slide-body">
+    <div class="info-box">
+      <h3>Binomial Nomenclature</h3>
+      <p>A <strong>scientific system of naming organisms</strong> using two names — the <em>generic</em> (genus) name and the <em>specific</em> (species) name.</p>
+      <ul>
+        <li>Scientific names must be in <strong>Latin</strong> or latinised</li>
+        <li>Family names are formed by adding the suffix <strong>"-idae"</strong> to the stem of the genus (e.g. Rana → Ranidae)</li>
+        <li>Generic names must be a <strong>single unique name</strong></li>
+        <li>Written in <em>italics</em> or underlined, with genus capitalised and species in lowercase</li>
+      </ul>
+    </div>
+    <div class="tax-tree" style="margin-top:14px;">
+      <p style="font-weight:700;color:var(--pri);margin-bottom:10px;">Taxonomic Hierarchy (King Philip Came Over For Good Soup)</p>
+      <div style="padding-left:0;font-size:13px;line-height:2;">
+        <span style="font-weight:700;color:#1b5e20;">Kingdom</span> → <span style="color:#2e7d32;">Phylum</span> → <span style="color:#388e3c;">Class</span> → <span style="color:#43a047;">Order</span> → <span style="color:#f57c00;">Family</span> → <span style="color:#e65100;">Genus</span> → <span style="color:var(--no);">Species</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px;">Example: <em>Homo sapiens</em> — Genus: <em>Homo</em>, Species: <em>sapiens</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: FIVE KINGDOMS -->
+<div class="slide" id="s3">
+  <div class="slide-header"><div class="slide-num">Slide 3 • Content</div><h2>👑 The Five Kingdoms</h2></div>
+  <div class="slide-body">
+    <div class="kingdom-grid">
+      <div class="kingdom-card">
+        <div class="kname">🦠 Monera</div>
+        <div class="kex">e.g. Bacteria</div>
+        <ul>
+          <li>Unicellular</li>
+          <li>Prokaryotic</li>
+          <li>Cell wall (no cellulose)</li>
+          <li>Lack most organelles</li>
+          <li>Microscopic</li>
+        </ul>
+      </div>
+      <div class="kingdom-card">
+        <div class="kname">🔵 Protista</div>
+        <div class="kex">e.g. Protozoa, Algae</div>
+        <ul>
+          <li>Unicellular</li>
+          <li>Eukaryotic</li>
+          <li>Cell walls (no cellulose)</li>
+          <li>Usually microscopic</li>
+        </ul>
+      </div>
+      <div class="kingdom-card">
+        <div class="kname">🍄 Fungi</div>
+        <div class="kex">e.g. Mucor, Rhizopus</div>
+        <ul>
+          <li>Have hyphae (form mycelia)</li>
+          <li>No chlorophyll</li>
+          <li>Have rhizoids</li>
+          <li>Have sporangia</li>
+        </ul>
+      </div>
+      <div class="kingdom-card">
+        <div class="kname">🌿 Plantae</div>
+        <div class="kex">e.g. Ferns, Flowering plants</div>
+        <ul>
+          <li>Contain chlorophyll</li>
+          <li>Autotrophic</li>
+          <li>Cellulose cell walls</li>
+          <li>Indefinite growth</li>
+        </ul>
+      </div>
+      <div class="kingdom-card">
+        <div class="kname">🐾 Animalia</div>
+        <div class="kex">e.g. Insects, Mammals</div>
+        <ul>
+          <li>No cell walls</li>
+          <li>Locomotion</li>
+          <li>Heterotrophic</li>
+          <li>Fast response to stimuli</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: KINGDOM PLANTAE DIVISIONS -->
+<div class="slide" id="s4">
+  <div class="slide-header"><div class="slide-num">Slide 4 • Content</div><h2>🌱 Divisions of Kingdom Plantae</h2></div>
+  <div class="slide-body">
+    <table class="compare-table">
+      <tr><th>Division</th><th>Examples</th><th>Key Characteristics</th></tr>
+      <tr><td><strong>Bryophyta</strong></td><td>Mosses, Liverworts</td><td>Rhizoids; no vascular tissue; no true root/stem/leaf; gametophyte dominant</td></tr>
+      <tr><td><strong>Pteridophyta</strong></td><td>Ferns</td><td>True roots, stems, leaves; fronds with sori; vascular tissue present; sporophyte dominant</td></tr>
+      <tr><td><strong>Spermatophyta</strong></td><td>Seed plants</td><td>Photosynthetic; well differentiated; vascular system; seed-bearing</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>Spermatophyte Sub-divisions</h3>
+      <table class="compare-table">
+        <tr><th>Feature</th><th>Gymnospermae</th><th>Angiospermae</th></tr>
+        <tr><td>Seeds</td><td>Naked (exposed)</td><td>Enclosed in fruit</td></tr>
+        <tr><td>Fertilization</td><td>Single</td><td>Double</td></tr>
+        <tr><td>Xylem</td><td>Tracheids only</td><td>Vessels</td></tr>
+        <tr><td>Phloem</td><td>No companion cells</td><td>Has companion cells</td></tr>
+        <tr><td>Example</td><td>Pine, Cedar</td><td>Maize, Mango</td></tr>
+      </table>
+    </div>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>Angiospermae Classes</h3>
+      <table class="compare-table">
+        <tr><th>Feature</th><th>Dicotyledonae</th><th>Monocotyledonae</th></tr>
+        <tr><td>Seed leaves</td><td>Two (2)</td><td>One (1)</td></tr>
+        <tr><td>Venation</td><td>Network</td><td>Parallel</td></tr>
+        <tr><td>Root system</td><td>Tap root</td><td>Fibrous</td></tr>
+        <tr><td>Secondary growth</td><td>Occurs</td><td>Does not occur</td></tr>
+        <tr><td>Vascular bundles</td><td>Regularly arranged</td><td>Irregularly arranged</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: ARTHROPODA & CHORDATA -->
+<div class="slide" id="s5">
+  <div class="slide-header"><div class="slide-num">Slide 5 • Content</div><h2>🦟 Phylum Arthropoda & Chordata</h2></div>
+  <div class="slide-body">
+    <div class="info-box">
+      <h3>Phylum Arthropoda — General Characteristics</h3>
+      <ul>
+        <li>Jointed appendages</li><li>Exoskeleton present</li><li>Triploblastic and coelomate</li>
+        <li>Segmented body</li><li>Bilateral symmetry</li>
+      </ul>
+    </div>
+    <table class="compare-table" style="margin-top:12px;">
+      <tr><th>Class</th><th>Common name</th><th>Key features</th></tr>
+      <tr><td>Diplopoda</td><td>Millipedes</td><td>2 pairs legs/segment; herbivorous; cylindrical</td></tr>
+      <tr><td>Chilopoda</td><td>Centipedes</td><td>1 pair legs/segment; carnivorous; flattened</td></tr>
+      <tr><td>Insecta</td><td>Insects</td><td>3 body parts; 6 legs; wings; compound eyes</td></tr>
+      <tr><td>Crustacean</td><td>Crabs, Shrimps</td><td>2 body parts; pincers; hard exoskeleton</td></tr>
+      <tr><td>Arachnida</td><td>Spiders, Scorpions</td><td>2 body parts; 8 legs; simple eyes</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>Phylum Chordata — Vertebrate Classes</h3>
+      <table class="compare-table">
+        <tr><th>Class</th><th>Heart</th><th>Temp.</th><th>Other</th></tr>
+        <tr><td>Pisces (Fish)</td><td>2-chambered</td><td>Poikilothermic</td><td>Fins, gills, scales</td></tr>
+        <tr><td>Amphibia</td><td>3-chambered</td><td>Poikilothermic</td><td>Moist skin, webbed feet</td></tr>
+        <tr><td>Reptilia</td><td>3-chambered*</td><td>Poikilothermic</td><td>Dry scales, oviparous</td></tr>
+        <tr><td>Aves (Birds)</td><td>4-chambered</td><td>Homoiothermic</td><td>Feathers, hollow bones, beak</td></tr>
+        <tr><td>Mammalia</td><td>4-chambered</td><td>Homoiothermic</td><td>Hair, mammary glands, viviparous</td></tr>
+      </table>
+      <p style="font-size:11px;color:var(--muted);margin-top:4px;">*Crocodile has 4 chambers</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: ECONOMIC IMPORTANCE -->
+<div class="slide" id="s6">
+  <div class="slide-header"><div class="slide-num">Slide 6 • Content</div><h2>💰 Economic Importance of Fungi & Bacteria</h2></div>
+  <div class="slide-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="info-box">
+          <h3>🍄 Fungi — Beneficial</h3>
+          <ul>
+            <li>Food: mushrooms, yeast (baking/brewing)</li>
+            <li>Antibiotics: penicillin, streptomycin</li>
+            <li>Vitamin B source</li>
+            <li>Nutrient recycling (decomposers)</li>
+            <li>Mycorrhizal association (water absorption)</li>
+            <li>Nitrogen fixation</li>
+          </ul>
+        </div>
+        <div class="info-box" style="border-color:#ef9a9a;background:#ffebee;">
+          <h3 style="color:var(--no);">🍄 Fungi — Harmful</h3>
+          <ul>
+            <li>Food decay</li>
+            <li>Diseases: ringworms</li>
+            <li>Crop diseases: late blight</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="info-box">
+          <h3>🦠 Bacteria — Beneficial</h3>
+          <ul>
+            <li>Antibiotics manufacture</li>
+            <li>Silage, cheese, butter, yoghurt</li>
+            <li>Curing tea, tobacco</li>
+            <li>Vitamins B12 and K</li>
+            <li>Enzymes (amylase, invertase)</li>
+            <li>Insulin production</li>
+            <li>Biogas production</li>
+            <li>Sewage treatment</li>
+            <li>Nitrogen fixation (Rhizobium)</li>
+          </ul>
+        </div>
+        <div class="info-box" style="border-color:#ef9a9a;background:#ffebee;">
+          <h3 style="color:var(--no);">🦠 Bacteria — Harmful</h3>
+          <ul>
+            <li>Diseases in humans & animals</li>
+            <li>Food spoilage</li>
+            <li>Denitrifying bacteria reduce soil fertility</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: INTERACTIVE DICHOTOMOUS KEY -->
+<div class="slide" id="s7">
+  <div class="slide-header"><div class="slide-num">Slide 7 • Interactive Activity</div><h2>🔑 Dichotomous Key Practice</h2></div>
+  <div class="slide-body">
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px;">Use the key below to identify the specimen. Answer each question to follow the key path.</p>
+    <div class="key-container">
+      <div class="key-step active" id="kstep-0">
+        <div class="key-q">1. What is the leaf shape?</div>
+        <div class="key-options">
+          <button class="key-btn" onclick="nextStep(1)">a) Leaf broad →</button>
+          <button class="key-btn" onclick="keyResult('Araicaria (narrow-leaved conifer)')">b) Leaf narrow → <strong>Araicaria</strong></button>
+        </div>
+      </div>
+      <div class="key-step" id="kstep-1">
+        <div class="key-q">2. What is the leaf venation?</div>
+        <div class="key-options">
+          <button class="key-btn" onclick="keyResult('Cynodon (parallel-veined grass)')">a) Leaf parallel-veined → <strong>Cynodon</strong></button>
+          <button class="key-btn" onclick="nextStep(2)">b) Leaf net-veined →</button>
+        </div>
+      </div>
+      <div class="key-step" id="kstep-2">
+        <div class="key-q">3. How many lobes does the leaf have?</div>
+        <div class="key-options">
+          <button class="key-btn" onclick="nextStep(3)">a) Leaf with one lobe (simple) →</button>
+          <button class="key-btn" onclick="keyResult('Grevillea (compound-leaved tree)')">b) Leaf with many lobes (compound) → <strong>Grevillea</strong></button>
+        </div>
+      </div>
+      <div class="key-step" id="kstep-3">
+        <div class="key-q">4. Is the leaf fleshy?</div>
+        <div class="key-options">
+          <button class="key-btn" onclick="keyResult('Kalanchoe (succulent plant)')">a) Leaf fleshy → <strong>Kalanchoa</strong></button>
+          <button class="key-btn" onclick="nextStep(4)">b) Leaf not fleshy →</button>
+        </div>
+      </div>
+      <div class="key-step" id="kstep-4">
+        <div class="key-q">5. Is the leaf petiole modified to form a sheath?</div>
+        <div class="key-options">
+          <button class="key-btn" onclick="nextStep(5)">a) Petiole modified to form sheath →</button>
+          <button class="key-btn" onclick="keyResult('Brassica (kale/cabbage family) ✅ Correct path for kale leaf!')">b) Petiole NOT modified → <strong>Brassica</strong></button>
+        </div>
+      </div>
+      <div class="key-step" id="kstep-5">
+        <div class="key-q">6. What colour is the leaf?</div>
+        <div class="key-options">
+          <button class="key-btn" onclick="keyResult('Tradescantia (purple-leaved ornamental)')">a) Leaf purple → <strong>Tradescantia</strong></button>
+          <button class="key-btn" onclick="keyResult('Commelina (green-leaved herb)')">b) Leaf green → <strong>Commelina</strong></button>
+        </div>
+      </div>
+      <div id="key-result-box" style="display:none;" class="key-result">
+        <div style="font-size:13px;color:var(--muted);">Identified organism:</div>
+        <div class="org" id="key-result-text"></div>
+      </div>
+      <button id="key-reset" onclick="resetKey()">🔄 Start Over</button>
+    </div>
+    <div class="info-box" style="margin-top:14px;">
+      <h3>Rules for constructing a Dichotomous Key</h3>
+      <ul>
+        <li>Use observable characteristics only</li>
+        <li>Start with major characteristics</li>
+        <li>Use a single characteristic at a time</li>
+        <li>Use contrasting characteristics at each stage</li>
+        <li>Avoid repeating the same characteristics</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: SCENARIO/CASE STUDY -->
+<div class="slide" id="s8">
+  <div class="slide-header"><div class="slide-num">Slide 8 • Scenario</div><h2>🎯 Apply Your Knowledge</h2></div>
+  <div class="slide-body">
+    <div class="info-box" style="background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">📋 Scenario: Field Trip to Karura Forest</h3>
+      <p>During a biology field trip, students collected specimens labeled A–D:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>A:</strong> An organism with no nucleus membrane, unicellular, found in soil</li>
+        <li><strong>B:</strong> A green plant with fronds bearing sori on the underside</li>
+        <li><strong>C:</strong> An organism with hyphae, no chlorophyll, found on rotting wood</li>
+        <li><strong>D:</strong> A small animal with 6 legs, 3 body parts, and one pair of wings</li>
+      </ul>
+    </div>
+    <div style="margin-top:16px;">
+      <div class="practice-q">
+        <div class="qtext">Q1: Classify specimens A–D into their correct kingdoms. Give one reason for each classification.</div>
+        <textarea placeholder="e.g. Specimen A belongs to Kingdom Monera because..."></textarea>
+        <button class="check-btn" onclick="checkPractice(0,this)">Check Answer</button>
+        <div class="feedback correct">✅ <strong>Model answer:</strong> A = Monera (prokaryotic, no nuclear membrane); B = Plantae (fronds with sori = fern/Pteridophyta); C = Fungi (hyphae, no chlorophyll, decomposes organic matter); D = Animalia/Insecta (6 legs, 3 body parts, wings = insect class)</div>
+      </div>
+      <div class="practice-q">
+        <div class="qtext">Q2: What class does specimen D belong to in Phylum Arthropoda? Give TWO distinguishing characteristics.</div>
+        <textarea placeholder="Specimen D belongs to class..."></textarea>
+        <button class="check-btn" onclick="checkPractice(1,this)">Check Answer</button>
+        <div class="feedback correct">✅ <strong>Model answer:</strong> Class Insecta. Distinguishing characteristics: (i) Three body parts — head, thorax, abdomen; (ii) Three pairs of legs (six legs); (iii) One pair of antennae; (iv) Compound eyes.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: PRACTICE -->
+<div class="slide" id="s9">
+  <div class="slide-header"><div class="slide-num">Slide 9 • Practice Questions</div><h2>✏️ Practice</h2></div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <div class="qtext">1. Differentiate between a monocot and a dicot plant. Give THREE differences.</div>
+      <textarea placeholder="Monocot vs Dicot differences..."></textarea>
+      <button class="check-btn" onclick="checkPractice(2,this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model answer:</strong> Monocot: one seed leaf, parallel venation, fibrous root system, no secondary growth, narrow leaves. Dicot: two seed leaves, network venation, tap root system, secondary growth occurs, broad leaves. (Accept any 3 points)</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">2. State FOUR economic benefits of bacteria to humans.</div>
+      <textarea placeholder="Economic benefits of bacteria..."></textarea>
+      <button class="check-btn" onclick="checkPractice(3,this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model answer:</strong> (i) Manufacture of antibiotics; (ii) Fermentation of cheese, butter, milk, yoghurt; (iii) Production of vitamins B12 and K; (iv) Biogas production; (v) Sewage treatment; (vi) Nitrogen fixation increases soil fertility; (vii) Production of enzymes (amylase) and hormones (insulin)</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">3. Explain why Gymnosperms and Angiosperms are both classified under Spermatophyta.</div>
+      <textarea placeholder="Your explanation..."></textarea>
+      <button class="check-btn" onclick="checkPractice(4,this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model answer:</strong> Both Gymnosperms and Angiosperms are seed-bearing plants (spermatophytes). They both: are photosynthetic, have well-differentiated roots/stems/leaves, and have a well-developed vascular system. The key distinction is that gymnosperm seeds are naked (exposed) while angiosperm seeds are enclosed in fruits.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-header"><div class="slide-num">Slide 10 • Assessment Quiz</div><h2>📝 Quiz: Classification of Living Organisms</h2></div>
+  <div class="slide-body">
+
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 1</div>
+      <div class="qtext">Complete the sentences:</div>
+      <div class="fib-wrap">
+        The naming of organisms using genus and species names is called
+        <input type="text" id="f1" placeholder="..."> nomenclature.
+        Fungi have thread-like structures called
+        <input type="text" id="f2" placeholder="..."> which form mycelia.
+        Birds belong to class <input type="text" id="f3" placeholder="...">.
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 2</div>
+      <div class="qtext">Complete the statements about vertebrates:</div>
+      <div class="fib-wrap">
+        Fish have a <input type="text" id="f4" placeholder="...">-chambered heart.
+        Mammals are <input type="text" id="f5" placeholder="..."> (give birth to live young).
+        Reptiles are <input type="text" id="f6" placeholder="..."> (body temperature varies with environment).
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 1</div>
+      <div class="qtext">State THREE characteristics that distinguish Kingdom Fungi from Kingdom Plantae.</div>
+      <textarea class="sa-input" id="sa1" placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 2</div>
+      <div class="qtext">Explain what a dichotomous key is and state TWO rules followed in constructing one.</div>
+      <textarea class="sa-input" id="sa2" placeholder="A dichotomous key is..."></textarea>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 3</div>
+      <div class="qtext">State FOUR general characteristics of Phylum Arthropoda.</div>
+      <textarea class="sa-input" id="sa3" placeholder="1. ...&#10;2. ...&#10;3. ...&#10;4. ..."></textarea>
+    </div>
+
+    <button id="submit-quiz" onclick="submitQuiz()">Submit Quiz ✓</button>
+    <div id="quiz-result">
+      <div class="score-big" id="score-display">0%</div>
+      <div class="grade" id="grade-display"></div>
+      <div id="fib-feedback"></div>
+      <div id="sa-feedback"></div>
+      <div class="cbc-rubric">
+        <strong>CBC Assessment Rubric:</strong><br>
+        <strong>Exceeds Expectations (80–100%):</strong> Demonstrates comprehensive understanding of classification, correctly identifies kingdoms, applies dichotomous key accurately.<br>
+        <strong>Meets Expectations (50–79%):</strong> Shows adequate understanding of the five kingdoms and key classification features.<br>
+        <strong>Approaching Expectations (30–49%):</strong> Demonstrates partial understanding; some key concepts identified.<br>
+        <strong>Below Expectations (&lt;30%):</strong> Needs additional support in understanding biological classification.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- end slide-wrap -->
+
+<div id="nav-bar">
+  <button id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Previous</button>
+  <div id="slide-dots"></div>
+  <button id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+let current = 0;
+const total = 10;
+
+function buildDots(){
+  const d=document.getElementById('slide-dots');
+  d.innerHTML='';
+  for(let i=0;i<total;i++){
+    const dot=document.createElement('div');
+    dot.className='dot'+(i===0?' active':'');
+    dot.onclick=()=>goTo(i);
+    d.appendChild(dot);
+  }
+}
+
+function goTo(n){
+  document.querySelectorAll('.slide')[current].classList.remove('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  current=n;
+  document.querySelectorAll('.slide')[current].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.add('active');
+  document.getElementById('slide-counter').textContent='Slide '+(current+1)+' / '+total;
+  document.getElementById('progress-fill').style.width=((current+1)/total*100)+'%';
+  document.getElementById('prev-btn').disabled=current===0;
+  document.getElementById('next-btn').disabled=current===total-1;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function changeSlide(dir){goTo(current+dir);}
+buildDots();
+
+// Dichotomous Key
+let keyPath=[];
+function nextStep(n){
+  document.querySelectorAll('.key-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('kstep-'+n).classList.add('active');
+  document.getElementById('key-result-box').style.display='none';
+}
+function keyResult(txt){
+  document.querySelectorAll('.key-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('key-result-box').style.display='block';
+  document.getElementById('key-result-text').textContent=txt;
+}
+function resetKey(){
+  document.querySelectorAll('.key-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('kstep-0').classList.add('active');
+  document.getElementById('key-result-box').style.display='none';
+}
+
+// Practice
+function checkPractice(idx,btn){
+  const feedbacks=btn.parentElement.querySelectorAll('.feedback');
+  feedbacks.forEach(f=>{f.style.display='block';});
+}
+
+// Quiz
+function submitQuiz(){
+  const fibs=[
+    {id:'f1',ans:['binomial']},
+    {id:'f2',ans:['hyphae']},
+    {id:'f3',ans:['aves','birds']},
+    {id:'f4',ans:['two','2']},
+    {id:'f5',ans:['viviparous']},
+    {id:'f6',ans:['poikilothermic','cold-blooded']}
+  ];
+  let fibScore=0;
+  fibs.forEach(f=>{
+    const inp=document.getElementById(f.id);
+    const val=inp.value.trim().toLowerCase();
+    const ok=f.ans.some(a=>val.includes(a));
+    inp.classList.toggle('correct',ok);
+    inp.classList.toggle('wrong',!ok);
+    if(ok)fibScore++;
+  });
+
+  const saData=[
+    {id:'sa1',keys:['hyphae','no chlorophyll','saprophytic','rhizoids','sporangia','no cellulose','cell wall'],
+     model:'Fungi: (1) Have hyphae forming mycelia; (2) No chlorophyll (heterotrophic/saprophytic); (3) Have rhizoids (lack true roots/stems/leaves); (4) Cell wall not made of cellulose; (5) Reproduce by spores via sporangia. Plantae: have chlorophyll, cellulose cell walls, autotrophic.'},
+    {id:'sa2',keys:['identify','two alternatives','observable','contrasting','single characteristic'],
+     model:'A dichotomous key is a biological tool used to identify organisms by progressively choosing between two alternative observable characteristics. Rules: (1) Use observable characteristics only; (2) Use contrasting characteristics at each stage; (3) Use a single characteristic at a time.'},
+    {id:'sa3',keys:['jointed','exoskeleton','segmented','bilateral','triploblastic','coelomate'],
+     model:'(1) Jointed appendages; (2) Exoskeleton present; (3) Segmented body; (4) Bilateral symmetry; (5) Triploblastic and coelomate.'}
+  ];
+
+  let saScore=0;
+  let saFeedbackHTML='';
+  saData.forEach(sa=>{
+    const val=document.getElementById(sa.id).value.toLowerCase();
+    const found=sa.keys.filter(k=>val.includes(k));
+    const missed=sa.keys.filter(k=>!val.includes(k));
+    const pts=Math.min(2,Math.round(found.length/sa.keys.length*2));
+    saScore+=pts;
+    saFeedbackHTML+=`<div style="margin:10px 0;"><strong>${sa.id.toUpperCase()}:</strong> `;
+    found.forEach(k=>{saFeedbackHTML+=`<span class="tag found">✓ ${k}</span>`;});
+    missed.slice(0,3).forEach(k=>{saFeedbackHTML+=`<span class="tag missed">✗ ${k}</span>`;});
+    saFeedbackHTML+=`<div class="model-answer"><strong>Model Answer:</strong> ${sa.model}</div></div>`;
+  });
+
+  const total_pts=fibs.length+6; // 6 fib + 6 sa
+  const pct=Math.round((fibScore+saScore)/total_pts*100);
+  document.getElementById('score-display').textContent=pct+'%';
+  const grades=[
+    [80,'Exceeds Expectations 🌟'],
+    [50,'Meets Expectations ✅'],
+    [30,'Approaching Expectations 📈'],
+    [0,'Below Expectations — Revise & Retry 📚']
+  ];
+  document.getElementById('grade-display').textContent=grades.find(g=>pct>=g[0])[1];
+  document.getElementById('fib-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Fill-in-Blank Results: '+fibScore+'/'+fibs.length+'</h4>';
+  document.getElementById('sa-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Short Answer Results: '+saScore+'/6</h4>'+saFeedbackHTML;
+  document.getElementById('quiz-result').style.display='block';
+
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(fibScore+saScore,total_pts,pct);
+
+  document.getElementById('quiz-result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

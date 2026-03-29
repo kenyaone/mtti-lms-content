@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Vectors (II)</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.15rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input{padding:7px 10px;border:2px solid #ccc;border-radius:6px;font-size:.95rem;width:70px}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 10px;width:100px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>→ F3 Mathematics · Vectors (II)</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Describe points using position vectors in 2D and 3D</li>
+    <li>Express vectors in terms of unit vectors i, j, k</li>
+    <li>Find magnitude of vectors in 2D and 3D</li>
+    <li>Identify parallel vectors and collinear points</li>
+    <li>Divide a line segment in a given ratio</li>
+    <li>Apply vectors to prove geometric properties</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Position Vector</span><span class="key-term">Column Vector</span>
+    <span class="key-term">Unit Vectors i, j, k</span><span class="key-term">Magnitude |v|</span>
+    <span class="key-term">Parallel Vectors</span><span class="key-term">Collinear Points</span>
+    <span class="key-term">Section Formula</span><span class="key-term">Midpoint</span>
+  </div>
+</div>
+
+<div class="slide" id="s2">
+  <h2>Position Vectors & Column Notation</h2>
+  <p>The position vector <strong>OP</strong> goes from origin O to point P. In 3D, P(x,y,z) has OP = xi + yj + zk.</p>
+  <div class="formula-box">
+    <div class="math">2D: OP = [x; y] &nbsp;&nbsp; 3D: OP = [x; y; z]</div>
+    <div style="margin-top:6px">i=(1,0,0) &nbsp; j=(0,1,0) &nbsp; k=(0,0,1)</div>
+  </div>
+  <table>
+    <tr><th>Point</th><th>Position Vector</th><th>i,j,k form</th><th>|OP|</th></tr>
+    <tr><td>A(3,4)</td><td>[3;4]</td><td>3i + 4j</td><td>5</td></tr>
+    <tr><td>B(1,2,2)</td><td>[1;2;2]</td><td>i + 2j + 2k</td><td>3</td></tr>
+    <tr><td>C(0,5,12)</td><td>[0;5;12]</td><td>5j + 12k</td><td>13</td></tr>
+    <tr><td>D(6,−2,3)</td><td>[6;−2;3]</td><td>6i − 2j + 3k</td><td>7</td></tr>
+  </table>
+  <div class="worked">
+    <strong>Finding AB:</strong> A(2,1,3), B(5,4,7)<br>
+    <div class="step">AB = OB − OA = (5−2, 4−1, 7−3) = <strong>(3, 3, 4)</strong></div>
+    <div class="step">|AB| = √(9+9+16) = √34 ≈ 5.831</div>
+  </div>
+</div>
+
+<div class="slide" id="s3">
+  <h2>Magnitude and Unit Vectors</h2>
+  <div class="formula-box">
+    <div class="math">|v| = √(x² + y² + z²)</div>
+    <div style="margin-top:6px">Unit vector: v̂ = v / |v| &nbsp;&nbsp; (|v̂| = 1)</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> v = (6, −2, 3). Find |v| and unit vector.<br>
+    <div class="step">|v| = √(36+4+9) = √49 = <strong>7</strong></div>
+    <div class="step">v̂ = (6/7, −2/7, 3/7)</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Vector Calculator</h3>
+    <div class="inp-row">
+      <label>x: <input id="vx" type="number" value="3"></label>
+      <label>y: <input id="vy" type="number" value="4"></label>
+      <label>z: <input id="vz" type="number" value="0"></label>
+      <button class="go-btn" onclick="calcMag()">Find |v| and v̂</button>
+    </div>
+    <div id="mag-result" class="result-box">Enter x, y, z above.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">a + b and a − b</h3>
+    <div class="inp-row">
+      <label>a: <input id="ax" type="number" value="2"> <input id="ay" type="number" value="3"> <input id="az" type="number" value="1"></label>
+      <label>b: <input id="bx" type="number" value="1"> <input id="by" type="number" value="-1"> <input id="bz" type="number" value="4"></label>
+      <button class="go-btn" onclick="vecOps()">Compute</button>
+    </div>
+    <div id="vec-result" class="result-box">Click Compute.</div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <h2>Parallel Vectors and Collinearity</h2>
+  <div class="formula-box">
+    <div><strong>Parallel:</strong> b = k·a (one is scalar multiple of other)</div>
+    <div class="math">Collinear A,B,C: AB = k·BC for some k</div>
+  </div>
+  <div class="worked">
+    <strong>Example 1:</strong> a=(2,4,−6), b=(1,2,−3). Are they parallel?<br>
+    <div class="step">b = ½a (each component ×½) → <strong>Yes, parallel</strong> (k=½)</div>
+  </div>
+  <div class="worked">
+    <strong>Example 2:</strong> A(1,2), B(3,6), C(5,10). Collinear?<br>
+    <div class="step">AB=(2,4); BC=(2,4) → AB=1·BC → <strong>Collinear</strong> ✔</div>
+  </div>
+  <div class="worked">
+    <strong>Example 3:</strong> OA=2i+j, OB=5i+4j, OC=8i+7j. Show A,B,C collinear.<br>
+    <div class="step">AB=3i+3j; AC=6i+6j=2·AB → parallel and share A → <strong>Collinear</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s5">
+  <h2>Section Formula</h2>
+  <p>P divides AB internally in ratio m:n:</p>
+  <div class="formula-box">
+    <div class="math">OP = (n·OA + m·OB) / (m + n)</div>
+    <div style="margin-top:6px">Midpoint (m=n=1): OM = (OA + OB) / 2</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> A(2,1), B(8,7). P divides AB in ratio 2:1.<br>
+    <div class="step">OP = (1×(2,1) + 2×(8,7)) / 3 = (2+16, 1+14)/3 = (18,15)/3 = <strong>(6,5)</strong></div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Section Formula Tool (2D)</h3>
+    <div class="inp-row">
+      <label>A(x,y): <input id="ax2" type="number" value="2"> <input id="ay2" type="number" value="1"></label>
+      <label>B(x,y): <input id="bx2" type="number" value="8"> <input id="by2" type="number" value="7"></label>
+    </div>
+    <div class="inp-row">
+      <label>m= <input id="rm" type="number" value="2" style="width:55px"> n= <input id="rn" type="number" value="1" style="width:55px"></label>
+      <button class="go-btn" onclick="sectionF()">Find P</button>
+    </div>
+    <div id="sec-result" class="result-box">Click Find P.</div>
+  </div>
+</div>
+
+<div class="slide" id="s6">
+  <h2>Vector Geometry — Proofs</h2>
+  <div class="worked">
+    <strong>Midpoint theorem (vectors):</strong> OA=a, OB=b. M midpoint of AB.<br>
+    <div class="step">AB = b − a; AM = ½AB = ½(b−a)</div>
+    <div class="step">OM = OA + AM = a + ½(b−a) = <strong>½(a+b)</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Proportional division:</strong> OA=a, OB=b. N divides AB in 1:3.<br>
+    <div class="step">ON = (3·OA + 1·OB) / 4 = (3a+b)/4</div>
+  </div>
+  <div class="card" style="background:#e8f5e9">
+    <strong>General strategy for vector proofs:</strong>
+    <ol style="line-height:2;padding-left:18px;margin-top:6px">
+      <li>Express all vectors in terms of 2 base vectors (usually OA=a, OB=b)</li>
+      <li>Find AB, then use scalar multiples</li>
+      <li>To prove collinear: show AB = k·BC</li>
+      <li>To find a point: use section formula</li>
+    </ol>
+  </div>
+</div>
+
+<div class="slide" id="s7">
+  <h2>Interactive 2D Vector Diagram</h2>
+  <div class="tool-wrap">
+    <div class="inp-row">
+      <label>a=(<input id="da_x" type="number" value="3">, <input id="da_y" type="number" value="2">)</label>
+      <label>b=(<input id="db_x" type="number" value="1">, <input id="db_y" type="number" value="4">)</label>
+      <button class="go-btn" onclick="drawVecs()">Draw</button>
+    </div>
+    <canvas id="vec-canvas" width="500" height="320" style="max-width:100%;border-radius:8px;border:1px solid #ddd"></canvas>
+    <div id="vec-info" style="margin-top:8px;font-size:.9rem;color:var(--pri);font-weight:600"></div>
+  </div>
+</div>
+
+<div class="slide" id="s8">
+  <h2>Summary — Key Formulae</h2>
+  <table>
+    <tr><th>Concept</th><th>Formula</th></tr>
+    <tr><td>Magnitude 2D</td><td>|v| = √(x²+y²)</td></tr>
+    <tr><td>Magnitude 3D</td><td>|v| = √(x²+y²+z²)</td></tr>
+    <tr><td>Unit vector</td><td>v̂ = v/|v|</td></tr>
+    <tr><td>Parallel</td><td>b = ka</td></tr>
+    <tr><td>Collinear A,B,C</td><td>AB = k·BC (shared point)</td></tr>
+    <tr><td>Section formula</td><td>OP = (n·OA + m·OB)/(m+n)</td></tr>
+    <tr><td>Midpoint</td><td>M = (OA+OB)/2</td></tr>
+    <tr><td>AB as vector</td><td>AB = OB − OA</td></tr>
+  </table>
+</div>
+
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><h3>Section A</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>Find |v| for: (a) v=(5,12) (b) v=(2,3,6) (c) v=(−1,2,−2)</li>
+      <li>Find the unit vector of a=(4,−3)</li>
+      <li>A(2,5), B(8,11). Find midpoint M and the point dividing AB in ratio 1:2.</li>
+    </ol>
+  </div>
+  <div class="card"><h3>Section B</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>Show A(1,3), B(3,7), C(7,15) are collinear.</li>
+      <li>OA = 3i+2j, OB = 9i+8j. N divides AB in 2:1. Find ON.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="slide" id="s10">
+  <h2>Quiz — Vectors (II)</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. |v| for v=(3,4) = <input class="fib" data-ans="5" id="f1" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">2. |v| for v=(1,2,2) = <input class="fib" data-ans="3" id="f2" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">3. Vectors a and b are parallel if b = <input class="fib" data-ans="ka" id="f3" type="text"> (ka)</div></div>
+    <div class="fib-q"><div class="qtext">4. Midpoint of A(2,4) and B(6,8) has x-coordinate = <input class="fib" data-ans="4" id="f4" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">5. AB = OB <input class="fib" data-ans="−" id="f5" type="text" style="width:50px"> OA</div></div>
+    <div class="fib-q"><div class="qtext">6. In 3D, the three standard unit vectors are i, j and <input class="fib" data-ans="k" id="f6" type="text" style="width:50px"></div></div>
+
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. OA=(2,1), OB=(8,7). Find point P dividing AB in ratio 2:1.</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. Show A(1,3), B(3,7), C(6,13) are collinear using vectors.</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. Find the unit vector of v=(6,−2,3) and state |v|.</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+
+    <button id="quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();if(n===7)setTimeout(drawVecs,100);}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+function calcMag(){const x=+document.getElementById('vx').value||0,y=+document.getElementById('vy').value||0,z=+document.getElementById('vz').value||0;const m=Math.sqrt(x*x+y*y+z*z);document.getElementById('mag-result').innerHTML=m?`|v|=√(${x}²+${y}²+${z}²)=<strong>${m.toFixed(4)}</strong><br>v̂=(${(x/m).toFixed(4)}, ${(y/m).toFixed(4)}, ${(z/m).toFixed(4)})`:'Zero vector';}
+function vecOps(){const ax=+document.getElementById('ax').value||0,ay=+document.getElementById('ay').value||0,az=+document.getElementById('az').value||0,bx=+document.getElementById('bx').value||0,by=+document.getElementById('by').value||0,bz=+document.getElementById('bz').value||0;document.getElementById('vec-result').innerHTML=`a+b=(${ax+bx},${ay+by},${az+bz})<br>a−b=(${ax-bx},${ay-by},${az-bz})<br>|a|=${Math.sqrt(ax*ax+ay*ay+az*az).toFixed(3)} |b|=${Math.sqrt(bx*bx+by*by+bz*bz).toFixed(3)}`;}
+function sectionF(){const ax=+document.getElementById('ax2').value||0,ay=+document.getElementById('ay2').value||0,bx=+document.getElementById('bx2').value||0,by=+document.getElementById('by2').value||0,m=+document.getElementById('rm').value||1,n=+document.getElementById('rn').value||1;const px=(n*ax+m*bx)/(m+n),py=(n*ay+m*by)/(m+n);document.getElementById('sec-result').innerHTML=`P=(${n}×(${ax},${ay})+${m}×(${bx},${by}))/(${m+n})=<strong>(${px.toFixed(4)}, ${py.toFixed(4)})</strong>`;}
+function drawVecs(){const ax=+document.getElementById('da_x').value||3,ay=+document.getElementById('da_y').value||2,bx=+document.getElementById('db_x').value||1,by=+document.getElementById('db_y').value||4;const cv=document.getElementById('vec-canvas'),ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2,s=40;ctx.clearRect(0,0,W,H);ctx.strokeStyle='#eee';ctx.lineWidth=1;for(let x=-6;x<=6;x++){ctx.beginPath();ctx.moveTo(cx+x*s,0);ctx.lineTo(cx+x*s,H);ctx.stroke();}for(let y=-4;y<=4;y++){ctx.beginPath();ctx.moveTo(0,cy-y*s);ctx.lineTo(W,cy-y*s);ctx.stroke();}ctx.strokeStyle='#aaa';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(W,cy);ctx.stroke();ctx.beginPath();ctx.moveTo(cx,0);ctx.lineTo(cx,H);ctx.stroke();function arr(x1,y1,x2,y2,col,lbl){ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();const ang=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-10*Math.cos(ang-.4),y2-10*Math.sin(ang-.4));ctx.lineTo(x2-10*Math.cos(ang+.4),y2-10*Math.sin(ang+.4));ctx.closePath();ctx.fill();ctx.font='bold 13px sans-serif';ctx.fillText(lbl,(x1+x2)/2+5,(y1+y2)/2-5);}arr(cx,cy,cx+ax*s,cy-ay*s,'#0a5e2a','a');arr(cx,cy,cx+bx*s,cy-by*s,'#f5a623','b');arr(cx,cy,cx+(ax+bx)*s,cy-(ay+by)*s,'#c62828','a+b');document.getElementById('vec-info').textContent=`a=(${ax},${ay}) |a|=${Math.sqrt(ax*ax+ay*ay).toFixed(2)} | b=(${bx},${by}) |b|=${Math.sqrt(bx*bx+by*by).toFixed(2)} | a+b=(${ax+bx},${ay+by})`;}
+function submitQuiz(){const ans={f1:'5',f2:'3',f3:'ka',f4:'4',f5:'−',f6:'k'};let ptA=0;document.querySelectorAll('.fib').forEach(inp=>{const g=inp.value.trim().toLowerCase().replace(/\s/g,''),e=(ans[inp.id]||'').toLowerCase().replace(/\s/g,'');if(g===e){inp.className='fib correct';ptA++;}else inp.className='fib wrong';});
+const sa=[{id:'sa1',fb:'fb1',marks:2,keys:['6','5','(6,5)','18','15'],model:'P=(1×(2,1)+2×(8,7))/3=(18,15)/3=(6,5)'},{id:'sa2',fb:'fb2',marks:2,keys:['ab=(2,4)','bc=(3,6)','collinear','parallel','scalar','1.5'],model:'AB=(2,4);BC=(3,6)=1.5×(2,4). Parallel + share B → collinear'},{id:'sa3',fb:'fb3',marks:2,keys:['7','6/7','-2/7','3/7','unit','49'],model:'|v|=√(36+4+9)=7; v̂=(6/7,−2/7,3/7)'}];
+let ptB=0;sa.forEach(q=>{const text=document.getElementById(q.id).value.toLowerCase().replace(/\s/g,'');const found=[],missed=[];q.keys.forEach(k=>{if(text.includes(k.toLowerCase().replace(/\s/g,'')))found.push(k);else missed.push(k);});const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;});
+const total=ptA+ptB,max=12,pct=Math.round(total/max*100);document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review'}</div><div class="rubric"><strong>CBC:</strong><table><tr><th>Level</th><th>Score</th></tr><tr><td>EE</td><td>11–12</td></tr><tr><td>ME</td><td>8–10</td></tr><tr><td>AE</td><td>6–7</td></tr><tr><td>BE</td><td>0–5</td></tr></table></div>`;document.getElementById('quiz-btn').textContent='Resubmit';if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);}
+</script>
+</body>
+</html>

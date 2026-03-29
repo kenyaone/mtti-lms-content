@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Chemistry – Electrochemistry</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f0f4f0;--card:#fff;--border:#d0e4d8;--text:#1a2e1a;--muted:#6b8c6b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+/* TOP BAR */
+.topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.topbar .brand{font-weight:700;font-size:.95rem;letter-spacing:.5px}.topbar .brand span{color:var(--acc)}
+.slide-info{font-size:.8rem;opacity:.8}
+.nav-dots{display:flex;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .2s}
+.dot.active{background:var(--acc)}
+/* SLIDE */
+.slide{display:none;flex:1;padding:24px 20px;max-width:860px;margin:0 auto;width:100%}
+.slide.active{display:block}
+h1{font-size:1.4rem;color:var(--pri);margin-bottom:6px}
+h2{font-size:1.15rem;color:var(--pri);margin-bottom:10px}
+h3{font-size:1rem;color:var(--ok);margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:20px}
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(10,94,42,.06)}
+.card.highlight{border-left:4px solid var(--acc)}
+.card.green{border-left:4px solid var(--ok)}
+.card.red{border-left:4px solid var(--no)}
+/* OUTCOMES */
+.outcome-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.outcome-list li{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:.9rem}
+.outcome-list li::before{content:'✓';color:var(--ok);font-weight:700;flex-shrink:0;margin-top:1px}
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px}
+.tbl th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.tbl tr:nth-child(even) td{background:#f5faf5}
+/* DIAGRAM */
+.diagram{background:#f8faf8;border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;margin:14px 0;font-size:.85rem}
+.diagram svg{max-width:100%;height:auto}
+/* FACT BOX */
+.fact{background:linear-gradient(135deg,rgba(10,94,42,.06),rgba(245,166,35,.06));border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0;font-size:.88rem}
+.fact strong{color:var(--pri)}
+/* NAV BUTTONS */
+.nav-btns{display:flex;justify-content:space-between;padding:16px 20px;max-width:860px;margin:0 auto;width:100%;gap:10px}
+.btn{padding:10px 24px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;transition:all .2s}
+.btn-prev{background:#fff;color:var(--pri);border:2px solid var(--pri)}.btn-prev:hover{background:var(--pri);color:#fff}
+.btn-next{background:var(--pri);color:#fff}.btn-next:hover{background:#0d7a37}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* QUIZ */
+.quiz-q{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.quiz-q p{font-weight:600;margin-bottom:10px;font-size:.92rem}
+.fib input{border:none;border-bottom:2px solid var(--pri);background:transparent;width:140px;font-size:.92rem;padding:2px 6px;outline:none;color:var(--text)}
+.sa-input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.88rem;resize:vertical;min-height:60px;font-family:inherit}
+.sa-input:focus{outline:none;border-color:var(--pri)}
+.check-btn{background:var(--ok);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-weight:700;cursor:pointer;margin-top:10px;font-size:.85rem}
+.result-tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:700;margin-left:8px}
+.found{background:#e8f5e9;color:var(--ok)}.missed{background:#ffebee;color:var(--no)}
+.model-ans{background:#f5faf5;border-left:3px solid var(--ok);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px;font-size:.85rem;display:none}
+.score-box{background:var(--pri);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-top:16px}
+.score-box h2{color:#fff;font-size:1.5rem}
+.rubric{background:#fff;border-radius:8px;padding:12px;margin-top:12px;font-size:.82rem;color:var(--text)}
+.rubric-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">M.T.T.I <span>LMS</span> — F3 Chemistry</div>
+  <div class="nav-dots" id="dots"></div>
+  <div class="slide-info" id="slideInfo">1 / 10</div>
+</div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <h1>Electrochemistry</h1>
+  <p class="subtitle">Form Three Chemistry — KLB Book 3</p>
+  <div class="card highlight">
+    <h3>🎯 Learning Outcomes</h3>
+    <p style="font-size:.85rem;margin-bottom:12px">By the end of this lesson, you should be able to:</p>
+    <ul class="outcome-list">
+      <li>Define electrolysis and identify electrolytes and non-electrolytes</li>
+      <li>Explain the process of electrolysis with labelled diagrams</li>
+      <li>Describe electrolysis of dilute sulphuric acid and copper(II) sulphate solution</li>
+      <li>State Faraday's laws of electrolysis and apply them in calculations</li>
+      <li>Explain electroplating and its industrial applications</li>
+      <li>Describe the extraction of aluminium and purification of copper by electrolysis</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 2: Electrolytes & Non-Electrolytes -->
+<div class="slide" id="s2">
+  <h2>Electrolytes & Non-Electrolytes</h2>
+  <div class="card highlight">
+    <h3>Key Definitions</h3>
+    <p><strong>Electrolysis</strong> — the decomposition of an ionic compound (electrolyte) by passing an electric current through it in molten or aqueous state.</p>
+    <br>
+    <p><strong>Electrolyte</strong> — a substance that conducts electricity when molten or dissolved in water, and is decomposed in the process.</p>
+    <br>
+    <p><strong>Non-electrolyte</strong> — a substance that does not conduct electricity in any state (e.g. sugar, ethanol).</p>
+  </div>
+  <div class="grid2">
+    <div class="card green">
+      <h3>✅ Strong Electrolytes</h3>
+      <ul style="font-size:.87rem;padding-left:16px;line-height:1.8">
+        <li>HCl (hydrochloric acid)</li>
+        <li>H₂SO₄ (sulphuric acid)</li>
+        <li>NaOH (sodium hydroxide)</li>
+        <li>NaCl (sodium chloride)</li>
+        <li>CuSO₄ (copper sulphate)</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>❌ Non-Electrolytes</h3>
+      <ul style="font-size:.87rem;padding-left:16px;line-height:1.8">
+        <li>C₆H₁₂O₆ (glucose/sugar)</li>
+        <li>C₂H₅OH (ethanol)</li>
+        <li>Distilled water</li>
+        <li>Urea</li>
+        <li>Paraffin oil</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fact"><strong>Note:</strong> Pure water is a very weak electrolyte. Tap water conducts slightly due to dissolved salts.</div>
+</div>
+
+<!-- SLIDE 3: Electrolysis Setup -->
+<div class="slide" id="s3">
+  <h2>Electrolysis — Setup & Terminology</h2>
+  <div class="diagram">
+    <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" style="max-width:480px">
+      <!-- Beaker -->
+      <rect x="100" y="80" width="300" height="160" rx="8" fill="#e8f5e9" stroke="#0a5e2a" stroke-width="2"/>
+      <!-- Electrolyte label -->
+      <text x="250" y="200" text-anchor="middle" font-size="13" fill="#0a5e2a" font-weight="bold">ELECTROLYTE SOLUTION</text>
+      <!-- Anode electrode -->
+      <rect x="150" y="60" width="16" height="140" rx="3" fill="#f5a623"/>
+      <text x="158" y="50" text-anchor="middle" font-size="12" fill="#e65100" font-weight="bold">ANODE (+)</text>
+      <!-- Cathode electrode -->
+      <rect x="334" y="60" width="16" height="140" rx="3" fill="#888"/>
+      <text x="342" y="50" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">CATHODE (−)</text>
+      <!-- Wire -->
+      <line x1="158" y1="60" x2="158" y2="30" stroke="#333" stroke-width="2"/>
+      <line x1="158" y1="30" x2="250" y2="30" stroke="#333" stroke-width="2"/>
+      <line x1="342" y1="60" x2="342" y2="30" stroke="#333" stroke-width="2"/>
+      <line x1="342" y1="30" x2="250" y2="30" stroke="#333" stroke-width="2"/>
+      <!-- Battery -->
+      <rect x="220" y="18" width="60" height="24" rx="4" fill="#ffd54f" stroke="#f5a623" stroke-width="1.5"/>
+      <text x="250" y="34" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">BATTERY</text>
+      <!-- + and - signs -->
+      <text x="175" y="110" font-size="18" fill="#e65100" font-weight="bold">+</text>
+      <text x="325" y="110" font-size="18" fill="#333" font-weight="bold">−</text>
+      <!-- Ions moving -->
+      <text x="250" y="155" text-anchor="middle" font-size="11" fill="#666">Cations → Cathode &nbsp;|&nbsp; Anions → Anode</text>
+      <!-- Bubbles at anode -->
+      <circle cx="160" cy="100" r="4" fill="none" stroke="#f5a623" stroke-width="1.5"/>
+      <circle cx="155" cy="88" r="3" fill="none" stroke="#f5a623" stroke-width="1.5"/>
+      <!-- Bubbles at cathode -->
+      <circle cx="340" cy="100" r="4" fill="none" stroke="#888" stroke-width="1.5"/>
+      <circle cx="345" cy="88" r="3" fill="none" stroke="#888" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>⚡ Anode (+)</h3>
+      <p style="font-size:.87rem">Connected to positive terminal. <strong>Anions</strong> (negative ions) move here and are <strong>oxidised</strong> (lose electrons).</p>
+    </div>
+    <div class="card">
+      <h3>⚡ Cathode (−)</h3>
+      <p style="font-size:.87rem">Connected to negative terminal. <strong>Cations</strong> (positive ions) move here and are <strong>reduced</strong> (gain electrons).</p>
+    </div>
+  </div>
+  <div class="fact"><strong>Memory tip:</strong> <strong>A</strong>node = <strong>O</strong>xidation, <strong>C</strong>athode = <strong>R</strong>eduction → <strong>AOCROC</strong> (An Ox, A Cat Reduces!)</div>
+</div>
+
+<!-- SLIDE 4: Electrolysis of Dilute H2SO4 -->
+<div class="slide" id="s4">
+  <h2>Electrolysis of Dilute Sulphuric Acid</h2>
+  <div class="card highlight">
+    <p style="font-size:.87rem;margin-bottom:10px">Using <strong>platinum electrodes</strong> and dilute H₂SO₄ solution:</p>
+    <p style="font-size:.87rem"><strong>Ions present:</strong> H⁺, SO₄²⁻, OH⁻ (from water)</p>
+  </div>
+  <div class="grid2">
+    <div class="card green">
+      <h3>Cathode (−) — Reduction</h3>
+      <p style="font-size:.87rem;margin-bottom:8px">H⁺ ions are discharged:</p>
+      <div style="background:#f0f8f0;padding:8px;border-radius:6px;font-family:monospace;font-size:.9rem;text-align:center">
+        4H⁺ + 4e⁻ → 2H₂↑
+      </div>
+      <p style="font-size:.82rem;margin-top:8px;color:var(--muted)">Hydrogen gas produced</p>
+    </div>
+    <div class="card red">
+      <h3>Anode (+) — Oxidation</h3>
+      <p style="font-size:.87rem;margin-bottom:8px">OH⁻ ions discharged (SO₄²⁻ not discharged):</p>
+      <div style="background:#fff5f5;padding:8px;border-radius:6px;font-family:monospace;font-size:.9rem;text-align:center">
+        4OH⁻ → 2H₂O + O₂↑ + 4e⁻
+      </div>
+      <p style="font-size:.82rem;margin-top:8px;color:var(--muted)">Oxygen gas produced</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📊 Volume Ratio</h3>
+    <p style="font-size:.88rem">Volume of H₂ : Volume of O₂ = <strong>2 : 1</strong></p>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:6px">This is because 4 moles of H₂ form 2 moles H₂, while 4 moles OH⁻ form only 1 mole O₂</p>
+  </div>
+  <div class="fact"><strong>Overall equation:</strong> 2H₂O(l) → 2H₂(g) + O₂(g)</div>
+</div>
+
+<!-- SLIDE 5: Electrolysis of CuSO4 -->
+<div class="slide" id="s5">
+  <h2>Electrolysis of Copper(II) Sulphate Solution</h2>
+  <div class="grid2">
+    <div class="card green">
+      <h3>With Platinum Electrodes</h3>
+      <p style="font-size:.87rem;margin-bottom:8px"><strong>Cathode:</strong> Cu²⁺ discharged (deposited)</p>
+      <div style="background:#f0f8f0;padding:6px;border-radius:6px;font-family:monospace;font-size:.88rem;text-align:center">Cu²⁺ + 2e⁻ → Cu</div>
+      <p style="font-size:.87rem;margin-top:8px"><strong>Anode:</strong> OH⁻ discharged</p>
+      <div style="background:#f0f8f0;padding:6px;border-radius:6px;font-family:monospace;font-size:.88rem;text-align:center">4OH⁻ → 2H₂O + O₂↑ + 4e⁻</div>
+      <p style="font-size:.82rem;margin-top:6px;color:var(--muted)">Cathode: pink copper deposit. Anode: oxygen gas</p>
+    </div>
+    <div class="card highlight">
+      <h3>With Copper Electrodes</h3>
+      <p style="font-size:.87rem;margin-bottom:8px"><strong>Cathode:</strong> Cu²⁺ deposited</p>
+      <div style="background:#fffbf0;padding:6px;border-radius:6px;font-family:monospace;font-size:.88rem;text-align:center">Cu²⁺ + 2e⁻ → Cu</div>
+      <p style="font-size:.87rem;margin-top:8px"><strong>Anode:</strong> Copper dissolves</p>
+      <div style="background:#fffbf0;padding:6px;border-radius:6px;font-family:monospace;font-size:.88rem;text-align:center">Cu → Cu²⁺ + 2e⁻</div>
+      <p style="font-size:.82rem;margin-top:6px;color:var(--muted)">Anode loses mass, cathode gains mass. Solution concentration unchanged.</p>
+    </div>
+  </div>
+  <div class="fact"><strong>Application:</strong> Copper electrodes in CuSO₄ is the basis of <strong>electroplating</strong> and <strong>copper refining</strong>.</div>
+</div>
+
+<!-- SLIDE 6: Faraday's Laws -->
+<div class="slide" id="s6">
+  <h2>Faraday's Laws of Electrolysis</h2>
+  <div class="card green">
+    <h3>First Law</h3>
+    <p style="font-size:.88rem">The mass of a substance deposited or liberated at an electrode is <strong>directly proportional to the quantity of electricity</strong> (charge) passed through the electrolyte.</p>
+    <div style="background:#f0f8f0;padding:10px;border-radius:8px;text-align:center;margin-top:10px;font-size:1rem;font-weight:700">m ∝ Q &nbsp;&nbsp; where Q = It</div>
+  </div>
+  <div class="card highlight">
+    <h3>Second Law</h3>
+    <p style="font-size:.88rem">When the same quantity of electricity passes through different electrolytes, the masses of substances deposited are <strong>proportional to their chemical equivalents</strong> (molar mass ÷ valency).</p>
+  </div>
+  <div class="card">
+    <h3>🔢 Key Formula</h3>
+    <div style="background:#f5faf5;padding:12px;border-radius:8px;text-align:center;font-size:1rem;font-weight:700">
+      m = (M × I × t) / (n × F)
+    </div>
+    <table class="tbl" style="margin-top:10px">
+      <tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+      <tr><td>m</td><td>Mass deposited</td><td>grams</td></tr>
+      <tr><td>M</td><td>Molar mass</td><td>g/mol</td></tr>
+      <tr><td>I</td><td>Current</td><td>Amperes (A)</td></tr>
+      <tr><td>t</td><td>Time</td><td>seconds (s)</td></tr>
+      <tr><td>n</td><td>Valency/charge of ion</td><td>—</td></tr>
+      <tr><td>F</td><td>Faraday constant</td><td>96500 C/mol</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 7: Electroplating & Industrial Applications -->
+<div class="slide" id="s7">
+  <h2>Electroplating & Industrial Applications</h2>
+  <div class="card highlight">
+    <h3>Electroplating</h3>
+    <p style="font-size:.88rem;margin-bottom:10px">Coating a metal object with a thin layer of another metal using electrolysis.</p>
+    <div class="grid2">
+      <div>
+        <p style="font-size:.85rem"><strong>Setup:</strong></p>
+        <ul style="font-size:.84rem;padding-left:16px;line-height:1.9">
+          <li>Object to plate = <strong>cathode</strong></li>
+          <li>Plating metal = <strong>anode</strong></li>
+          <li>Salt of plating metal = <strong>electrolyte</strong></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:.85rem"><strong>Uses:</strong></p>
+        <ul style="font-size:.84rem;padding-left:16px;line-height:1.9">
+          <li>Prevent corrosion (tin cans)</li>
+          <li>Decoration (jewellery)</li>
+          <li>Hardening surfaces (chrome)</li>
+          <li>Electrical conductivity</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card green">
+      <h3>Extraction of Aluminium</h3>
+      <p style="font-size:.87rem">Aluminium is extracted from <strong>bauxite (Al₂O₃)</strong> by electrolysis of molten aluminium oxide mixed with <strong>cryolite</strong> (lowers melting point).</p>
+      <br>
+      <p style="font-size:.85rem"><strong>Cathode:</strong> Al³⁺ + 3e⁻ → Al</p>
+      <p style="font-size:.85rem"><strong>Anode:</strong> 2O²⁻ → O₂ + 4e⁻</p>
+    </div>
+    <div class="card">
+      <h3>Purification of Copper</h3>
+      <p style="font-size:.87rem">Impure copper = <strong>anode</strong>, pure copper = <strong>cathode</strong>, CuSO₄ solution = electrolyte.</p>
+      <br>
+      <p style="font-size:.85rem">Impurities fall as anode sludge. Pure copper deposits on cathode.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Discharge of Ions -->
+<div class="slide" id="s8">
+  <h2>Preferential Discharge of Ions</h2>
+  <div class="card highlight">
+    <p style="font-size:.88rem;margin-bottom:12px">When a mixture of ions is present, not all are discharged equally. The order of preference depends on:</p>
+    <ul style="font-size:.87rem;padding-left:18px;line-height:1.9">
+      <li><strong>Position in the electrochemical series</strong></li>
+      <li><strong>Concentration</strong> of ions</li>
+      <li><strong>Nature of electrode</strong> (active vs inert)</li>
+    </ul>
+  </div>
+  <div class="grid2">
+    <div class="card green">
+      <h3>Cations — Cathode Order</h3>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:8px">(Most readily discharged first)</p>
+      <ol style="font-size:.86rem;padding-left:18px;line-height:2">
+        <li>Ag⁺ (silver)</li>
+        <li>Cu²⁺ (copper)</li>
+        <li>H⁺ (hydrogen)</li>
+        <li>Zn²⁺ (zinc)</li>
+        <li>Al³⁺ (aluminium)</li>
+        <li>Na⁺ (sodium)</li>
+      </ol>
+    </div>
+    <div class="card red">
+      <h3>Anions — Anode Order</h3>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:8px">(Most readily discharged first)</p>
+      <ol style="font-size:.86rem;padding-left:18px;line-height:2">
+        <li>I⁻ (iodide)</li>
+        <li>Br⁻ (bromide)</li>
+        <li>Cl⁻ (chloride)</li>
+        <li>OH⁻ (hydroxide)</li>
+        <li>SO₄²⁻ (sulphate)</li>
+        <li>NO₃⁻ (nitrate)</li>
+      </ol>
+    </div>
+  </div>
+  <div class="fact"><strong>Key rule:</strong> In dilute solutions, OH⁻ is discharged at the anode. In concentrated halide solutions, the halide ion (Cl⁻, Br⁻) is preferentially discharged.</div>
+</div>
+
+<!-- SLIDE 9: Practice Questions -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="quiz-q">
+    <p>1. The electrode connected to the positive terminal of a battery in an electrolytic cell is called the <span class="fib"><input type="text" id="q1" placeholder="answer"></span>.</p>
+    <button class="check-btn" onclick="checkFIB('q1',['anode'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>2. In electrolysis of dilute H₂SO₄, the gas produced at the cathode is <span class="fib"><input type="text" id="q2" placeholder="answer"></span>.</p>
+    <button class="check-btn" onclick="checkFIB('q2',['hydrogen','h2'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>3. The Faraday constant has a value of <span class="fib"><input type="text" id="q3" placeholder="answer"></span> coulombs per mole.</p>
+    <button class="check-btn" onclick="checkFIB('q3',['96500','96,500'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>4. In electroplating, the object to be plated is made the <span class="fib"><input type="text" id="q4" placeholder="answer"></span>.</p>
+    <button class="check-btn" onclick="checkFIB('q4',['cathode'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>5. Explain why the anode loses mass during electrolysis of CuSO₄ with copper electrodes.</p>
+    <textarea class="sa-input" id="q5" placeholder="Type your answer here..."></textarea>
+    <button class="check-btn" onclick="checkSA('q5',['copper dissolves','cu oxidised','anode dissolves','cu → cu2+'],this)">Check</button>
+    <div class="model-ans" id="q5-model">
+      <strong>Model Answer:</strong> During electrolysis of CuSO₄ with copper electrodes, the copper anode is oxidised: Cu → Cu²⁺ + 2e⁻. The copper atoms lose electrons and enter the solution as Cu²⁺ ions, causing the anode to gradually lose mass. Meanwhile, Cu²⁺ ions deposit on the cathode, so the cathode gains mass.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz — Electrochemistry</h2>
+  <div id="quizArea">
+    <div class="quiz-q">
+      <p>1. Complete: During electrolysis, cations move to the <span class="fib"><input type="text" id="fq1" placeholder="..."></span> and are <span class="fib"><input type="text" id="fq2" placeholder="..."></span>.</p>
+    </div>
+    <div class="quiz-q">
+      <p>2. The volume ratio of H₂ to O₂ produced during electrolysis of dilute H₂SO₄ is <span class="fib"><input type="text" id="fq3" placeholder="..."></span>.</p>
+    </div>
+    <div class="quiz-q">
+      <p>3. The formula for mass deposited in electrolysis is m = <span class="fib"><input type="text" id="fq4" placeholder="..."></span>.</p>
+    </div>
+    <div class="quiz-q">
+      <p>4. In extraction of aluminium, cryolite is added to <span class="fib"><input type="text" id="fq5" placeholder="..."></span>.</p>
+    </div>
+    <div class="quiz-q">
+      <p>5. Write the half-equation for the reaction at the anode during electrolysis of dilute H₂SO₄:</p>
+      <textarea class="sa-input" id="fq6" placeholder="Write the half-equation..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <p>6. State Faraday's First Law of Electrolysis:</p>
+      <textarea class="sa-input" id="fq7" placeholder="State the law..."></textarea>
+    </div>
+    <button class="check-btn" style="width:100%;padding:12px;font-size:1rem" onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+  <div id="scoreBox" style="display:none"></div>
+</div>
+
+<!-- NAV BUTTONS -->
+<div class="nav-btns">
+  <button class="btn btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
+  <button class="btn btn-next" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let current = 0;
+const total = 10;
+const dots = document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dots.appendChild(d);}
+
+function updateUI(){
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  document.getElementById('slideInfo').textContent=(current+1)+' / '+total;
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').textContent=current===total-1?'Finish':'Next →';
+}
+function changeSlide(d){if(current+d>=0&&current+d<total){current+=d;updateUI();window.scrollTo(0,0);}}
+function goTo(i){current=i;updateUI();window.scrollTo(0,0);}
+
+function checkFIB(id,answers,btn){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  const ok=answers.some(a=>val.includes(a.toLowerCase()));
+  btn.style.background=ok?'var(--ok)':'var(--no)';
+  btn.textContent=ok?'✓ Correct':'✗ Try Again';
+}
+
+function checkSA(id,keywords,btn){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  const found=keywords.filter(k=>val.includes(k.toLowerCase()));
+  const model=document.getElementById(id+'-model');
+  model.style.display='block';
+  const pct=Math.round(found.length/keywords.length*100);
+  btn.style.background=pct>=50?'var(--ok)':'var(--no)';
+  btn.textContent=pct>=50?'✓ Good Answer':'✗ Review Model Answer';
+  const tags=keywords.map(k=>`<span class="result-tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join(' ');
+  model.innerHTML='<strong>Keywords:</strong> '+tags+'<br><br><strong>Model Answer:</strong> The copper anode is oxidised (Cu → Cu²⁺ + 2e⁻). Copper atoms lose electrons and dissolve into solution as Cu²⁺ ions, causing the anode to lose mass. The Cu²⁺ ions deposit on the cathode.';
+}
+
+function submitQuiz(){
+  const answers={
+    fq1:{val:document.getElementById('fq1').value.trim().toLowerCase(),keys:['cathode'],pts:1},
+    fq2:{val:document.getElementById('fq2').value.trim().toLowerCase(),keys:['reduced','reduction'],pts:1},
+    fq3:{val:document.getElementById('fq3').value.trim().toLowerCase(),keys:['2:1','2 : 1','2to1'],pts:1},
+    fq4:{val:document.getElementById('fq4').value.trim().toLowerCase(),keys:['lower melting point','reduce melting point','lower the melting','decrease melting'],pts:1},
+    fq6:{val:document.getElementById('fq6').value.trim().toLowerCase(),keys:['oh','4oh','oxygen','o2','h2o'],pts:2},
+    fq7:{val:document.getElementById('fq7').value.trim().toLowerCase(),keys:['proportional','quantity of electricity','charge','mass'],pts:3},
+  };
+  let score=0,total=0;
+  for(const k in answers){
+    const a=answers[k];
+    total+=a.pts;
+    const ok=a.keys.some(kw=>a.val.includes(kw.toLowerCase()));
+    if(ok)score+=a.pts;
+  }
+  const pct=Math.round(score/total*100);
+  const grade=pct>=80?'Excellent!':pct>=60?'Good Work!':pct>=40?'Keep Practising':'Review the Notes';
+  document.getElementById('quizArea').style.display='none';
+  document.getElementById('scoreBox').style.display='block';
+  document.getElementById('scoreBox').innerHTML=`
+    <div class="score-box">
+      <h2>${score} / ${total}</h2>
+      <p style="font-size:1.1rem;margin:8px 0">${grade} (${pct}%)</p>
+      <div class="rubric">
+        <div class="rubric-row"><span>Exceeding (80–100%)</span><span>🌟</span></div>
+        <div class="rubric-row"><span>Meeting (60–79%)</span><span>✅</span></div>
+        <div class="rubric-row"><span>Approaching (40–59%)</span><span>📖</span></div>
+        <div class="rubric-row"><span>Below (0–39%)</span><span>🔄</span></div>
+      </div>
+    </div>`;
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(score,total,pct);
+}
+updateUI();
+</script>
+</body>
+</html>

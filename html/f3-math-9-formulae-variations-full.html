@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Formulae and Variations</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input,.inp-row select{padding:8px 12px;border:2px solid #ccc;border-radius:6px;font-size:1rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 12px;width:110px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>∝ F3 Mathematics · Formulae and Variations</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Change the subject of a formula</li>
+    <li>Evaluate formulae by substitution</li>
+    <li>Understand and apply direct variation (y ∝ x)</li>
+    <li>Understand and apply inverse variation (y ∝ 1/x)</li>
+    <li>Work with joint and partial variation</li>
+    <li>Solve problems involving variation constants</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Formula</span><span class="key-term">Subject</span><span class="key-term">Substitution</span>
+    <span class="key-term">Direct Variation</span><span class="key-term">Inverse Variation</span>
+    <span class="key-term">Joint Variation</span><span class="key-term">Partial Variation</span>
+    <span class="key-term">Constant of Variation (k)</span>
+  </div>
+</div>
+
+<!-- S2 Formulae -->
+<div class="slide" id="s2">
+  <h2>Formulae — Changing the Subject</h2>
+  <p>To make a variable the <strong>subject</strong>, isolate it using inverse operations (same as solving equations).</p>
+  <div class="worked">
+    <strong>Example 1:</strong> Make t the subject of v = u + at<br>
+    <div class="step">v − u = at → t = (v − u)/a</div>
+  </div>
+  <div class="worked">
+    <strong>Example 2:</strong> Make r the subject of V = πr²h<br>
+    <div class="step">r² = V/(πh) → r = √(V/πh)</div>
+  </div>
+  <div class="worked">
+    <strong>Example 3:</strong> Make b the subject of A = ½h(a + b)<br>
+    <div class="step">2A = h(a + b) → 2A/h = a + b → b = 2A/h − a</div>
+  </div>
+  <div class="worked">
+    <strong>Example 4:</strong> Make x the subject of y = (2x + 3)/(x − 1)<br>
+    <div class="step">y(x − 1) = 2x + 3 → yx − y = 2x + 3</div>
+    <div class="step">yx − 2x = 3 + y → x(y − 2) = 3 + y → x = (3 + y)/(y − 2)</div>
+  </div>
+</div>
+
+<!-- S3 Subject-changer tool -->
+<div class="slide" id="s3">
+  <h2>Formula Evaluator Tool</h2>
+  <p>Evaluate common physics/math formulas by substitution.</p>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Select and Evaluate Formula</h3>
+    <div class="inp-row">
+      <select id="formula-sel" onchange="updateFormula()" style="width:260px">
+        <option value="v=u+at">v = u + at (kinematics)</option>
+        <option value="A=pir2h">V = πr²h (cylinder)</option>
+        <option value="A=halfhab">A = ½h(a+b) (trapezium)</option>
+        <option value="s=ut+half">s = ut + ½at² (displacement)</option>
+        <option value="E=half mv2">E = ½mv² (kinetic energy)</option>
+      </select>
+    </div>
+    <div id="formula-inputs"></div>
+    <button class="go-btn" onclick="evalFormula()" style="margin-top:8px">Evaluate</button>
+    <div id="formula-result" class="result-box" style="margin-top:10px">Select a formula above.</div>
+  </div>
+</div>
+
+<!-- S4 Direct Variation -->
+<div class="slide" id="s4">
+  <h2>Direct Variation</h2>
+  <p>y varies directly as x means: as x increases, y increases proportionally.</p>
+  <div class="formula-box">
+    <div class="math">y ∝ x &nbsp;&nbsp;→&nbsp;&nbsp; y = kx</div>
+    <div style="margin-top:6px">k = y/x = constant of variation</div>
+  </div>
+  <div class="worked">
+    <strong>Example 1:</strong> y = 15 when x = 3. Find k, then find y when x = 8.<br>
+    <div class="step">k = y/x = 15/3 = 5 &nbsp;→&nbsp; y = 5x</div>
+    <div class="step">When x = 8: y = 5 × 8 = <strong>40</strong></div>
+  </div>
+  <table>
+    <tr><th>Type</th><th>Statement</th><th>Equation</th></tr>
+    <tr><td>y ∝ x</td><td>y varies as x</td><td>y = kx</td></tr>
+    <tr><td>y ∝ x²</td><td>y varies as square of x</td><td>y = kx²</td></tr>
+    <tr><td>y ∝ √x</td><td>y varies as square root of x</td><td>y = k√x</td></tr>
+    <tr><td>y ∝ x³</td><td>y varies as cube of x</td><td>y = kx³</td></tr>
+  </table>
+</div>
+
+<!-- S5 Inverse Variation -->
+<div class="slide" id="s5">
+  <h2>Inverse Variation</h2>
+  <p>y varies inversely as x: as x increases, y decreases.</p>
+  <div class="formula-box">
+    <div class="math">y ∝ 1/x &nbsp;&nbsp;→&nbsp;&nbsp; y = k/x &nbsp;&nbsp;→&nbsp;&nbsp; xy = k</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> y = 6 when x = 4. Find y when x = 12.<br>
+    <div class="step">k = xy = 6 × 4 = 24</div>
+    <div class="step">y = 24/12 = <strong>2</strong></div>
+  </div>
+  <table>
+    <tr><th>Type</th><th>Statement</th><th>Equation</th></tr>
+    <tr><td>y ∝ 1/x</td><td>y varies inversely as x</td><td>y = k/x</td></tr>
+    <tr><td>y ∝ 1/x²</td><td>y inv. varies as x²</td><td>y = k/x²</td></tr>
+    <tr><td>y ∝ 1/√x</td><td>y inv. varies as √x</td><td>y = k/√x</td></tr>
+  </table>
+  <div class="worked">
+    <strong>Example 2:</strong> P varies inversely as Q². P=9 when Q=2. Find P when Q=6.<br>
+    <div class="step">k = PQ² = 9 × 4 = 36 &nbsp;→&nbsp; P = 36/Q²</div>
+    <div class="step">P = 36/36 = <strong>1</strong></div>
+  </div>
+</div>
+
+<!-- S6 Joint & Partial Variation -->
+<div class="slide" id="s6">
+  <h2>Joint and Partial Variation</h2>
+  <h3>Joint Variation</h3>
+  <p>y varies jointly as x and z: y ∝ xz → y = kxz</p>
+  <div class="worked">
+    <strong>Example:</strong> V ∝ r²h. V=12π when r=3, h=4/3. Find k, then V when r=2, h=5.<br>
+    <div class="step">12π = k × 9 × (4/3) = 12k → k = π</div>
+    <div class="step">V = πr²h (cylinder formula confirmed!)</div>
+    <div class="step">V = π × 4 × 5 = <strong>20π cm³</strong></div>
+  </div>
+  <h3>Partial Variation</h3>
+  <p>y = ax + b (fixed part b + variable part ax)</p>
+  <div class="worked">
+    <strong>Example:</strong> y = ax + b. y=11 when x=2, y=23 when x=5.<br>
+    <div class="step">11 = 2a + b … (i) &nbsp;&nbsp; 23 = 5a + b … (ii)</div>
+    <div class="step">(ii)−(i): 12 = 3a → a = 4</div>
+    <div class="step">b = 11 − 8 = 3 &nbsp;→&nbsp; y = 4x + 3</div>
+  </div>
+</div>
+
+<!-- S7 Variation Calculator -->
+<div class="slide" id="s7">
+  <h2>Variation Calculator</h2>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Direct / Inverse Variation</h3>
+    <div class="inp-row">
+      <select id="var-type" style="width:220px">
+        <option value="direct">y = kx (direct)</option>
+        <option value="direct2">y = kx² (direct square)</option>
+        <option value="inverse">y = k/x (inverse)</option>
+        <option value="inverse2">y = k/x² (inverse square)</option>
+      </select>
+    </div>
+    <div class="inp-row">
+      <label>x₁:<input id="vx1" type="number" value="3" style="width:70px"></label>
+      <label>y₁:<input id="vy1" type="number" value="15" style="width:70px"></label>
+      <label>Find y when x₂:<input id="vx2" type="number" value="8" style="width:70px"></label>
+      <button class="go-btn" onclick="calcVar()">Calculate</button>
+    </div>
+    <div id="var-result" class="result-box">Enter values and click Calculate.</div>
+  </div>
+</div>
+
+<!-- S8 Summary -->
+<div class="slide" id="s8">
+  <h2>Summary — Variation Types</h2>
+  <table>
+    <tr><th>Type</th><th>Symbol</th><th>Equation</th><th>Graph</th></tr>
+    <tr><td>Direct</td><td>y ∝ x</td><td>y = kx</td><td>Straight line through origin</td></tr>
+    <tr><td>Direct square</td><td>y ∝ x²</td><td>y = kx²</td><td>Parabola through origin</td></tr>
+    <tr><td>Inverse</td><td>y ∝ 1/x</td><td>y = k/x</td><td>Hyperbola</td></tr>
+    <tr><td>Joint</td><td>y ∝ xz</td><td>y = kxz</td><td>3D surface</td></tr>
+    <tr><td>Partial</td><td>—</td><td>y = ax + b</td><td>Straight line (not through origin)</td></tr>
+  </table>
+  <div class="card" style="background:#e8f5e9;margin-top:12px">
+    <strong>Key Steps for Variation Problems:</strong>
+    <ol style="line-height:2;padding-left:18px;margin-top:6px">
+      <li>Write the variation statement (∝)</li>
+      <li>Replace ∝ with = k</li>
+      <li>Substitute known values to find k</li>
+      <li>Rewrite formula with k, then find unknown</li>
+    </ol>
+  </div>
+</div>
+
+<!-- S9 Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><h3>Section A: Formulae</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>Make r the subject of A = 2πrl + 2πr²</li>
+      <li>Make x the subject of p = (3x − 1)/(2x + 5)</li>
+    </ol>
+  </div>
+  <div class="card"><h3>Section B: Variation</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>y varies directly as x². y=50 when x=5. Find y when x=3.</li>
+      <li>V varies inversely as P. V=8 when P=5. Find V when P=20.</li>
+      <li>y = ax² + bx. y=6 when x=1, y=20 when x=2. Find a and b, then find y when x=4.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- S10 Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz — Formulae and Variations</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. In y ∝ x, the equation is y = <input class="fib" data-ans="kx" id="f1" type="text" style="width:70px"></div></div>
+    <div class="fib-q"><div class="qtext">2. If y ∝ 1/x and y=8 when x=3, then k = <input class="fib" data-ans="24" id="f2" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">3. Make r the subject of V = πr²h: r = <input class="fib" data-ans="√(V/πh)" id="f3" type="text" style="width:130px"> (write as √(V/πh))</div></div>
+    <div class="fib-q"><div class="qtext">4. y varies as x². y=12 when x=2. Find k: <input class="fib" data-ans="3" id="f4" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">5. Direct variation graph is a straight line through the <input class="fib" data-ans="origin" id="f5" type="text" style="width:100px"></div></div>
+    <div class="fib-q"><div class="qtext">6. Partial variation equation: y = ax <input class="fib" data-ans="+" id="f6" type="text" style="width:50px"> b</div></div>
+
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. y varies directly as x². y=75 when x=5. Find: (a) the equation, (b) y when x=3.</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. V varies inversely as P. V=6 when P=4. Find V when P=12 and find P when V=2.</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. Make x the subject of the formula: y = (5x + 2)/(3x − 1)</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+
+    <button id="quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+const formulas={
+  'v=u+at':{label:'v = u + at',inputs:['u (initial velocity)','a (acceleration)','t (time)'],ids:['f_u','f_a','f_t'],calc:v=>parseFloat(v[0])+parseFloat(v[1])*parseFloat(v[2]),result:'v'},
+  'A=pir2h':{label:'V = πr²h (cylinder)',inputs:['r (radius)','h (height)'],ids:['f_r','f_h'],calc:v=>Math.PI*Math.pow(parseFloat(v[0]),2)*parseFloat(v[1]),result:'V'},
+  'A=halfhab':{label:'A = ½h(a+b)',inputs:['h','a','b'],ids:['f_h2','f_a2','f_b2'],calc:v=>0.5*parseFloat(v[0])*(parseFloat(v[1])+parseFloat(v[2])),result:'A'},
+  's=ut+half':{label:'s = ut + ½at²',inputs:['u','a','t'],ids:['f_u2','f_a3','f_t2'],calc:v=>parseFloat(v[0])*parseFloat(v[2])+0.5*parseFloat(v[1])*Math.pow(parseFloat(v[2]),2),result:'s'},
+  'E=half mv2':{label:'E = ½mv²',inputs:['m (mass)','v (velocity)'],ids:['f_m','f_v'],calc:v=>0.5*parseFloat(v[0])*Math.pow(parseFloat(v[1]),2),result:'E'},
+};
+function updateFormula(){
+  const sel=document.getElementById('formula-sel').value;
+  const f=formulas[sel];
+  let html='<div class="inp-row">';
+  f.inputs.forEach((lbl,i)=>{html+=`<label>${lbl}: <input id="${f.ids[i]}" type="number" step="any" value="1" style="width:90px"></label>`;});
+  html+='</div>';
+  document.getElementById('formula-inputs').innerHTML=html;
+}
+updateFormula();
+function evalFormula(){
+  const sel=document.getElementById('formula-sel').value;
+  const f=formulas[sel];
+  const vals=f.ids.map(id=>document.getElementById(id).value);
+  const res=f.calc(vals);
+  document.getElementById('formula-result').innerHTML=`<strong>${f.result}</strong> = ${res.toFixed(6)}`;
+}
+function calcVar(){
+  const type=document.getElementById('var-type').value;
+  const x1=parseFloat(document.getElementById('vx1').value)||1;
+  const y1=parseFloat(document.getElementById('vy1').value)||1;
+  const x2=parseFloat(document.getElementById('vx2').value)||1;
+  let k,y2,eq;
+  if(type==='direct'){k=y1/x1;y2=k*x2;eq=`y = ${k}x`;}
+  else if(type==='direct2'){k=y1/(x1*x1);y2=k*x2*x2;eq=`y = ${k}x²`;}
+  else if(type==='inverse'){k=y1*x1;y2=k/x2;eq=`y = ${k}/x`;}
+  else{k=y1*x1*x1;y2=k/(x2*x2);eq=`y = ${k}/x²`;}
+  document.getElementById('var-result').innerHTML=`k = ${k.toFixed(4)}<br>Equation: ${eq}<br>When x = ${x2}: y = <strong>${y2.toFixed(4)}</strong>`;
+}
+
+function submitQuiz(){
+  const ans={f1:'kx',f2:'24',f3:'√(V/πh)',f4:'3',f5:'origin',f6:'+'};
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const given=inp.value.trim().toLowerCase().replace(/\s/g,'');
+    const exp=(ans[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(given===exp){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  const sa=[
+    {id:'sa1',fb:'fb1',marks:2,keys:['k=3','y=3x','27','3x²'],model:'k=75/25=3; y=3x²; when x=3: y=3×9=27'},
+    {id:'sa2',fb:'fb2',marks:2,keys:['k=24','v=2','p=12','24'],model:'k=6×4=24; V=24/12=2; P=24/2=12'},
+    {id:'sa3',fb:'fb3',marks:2,keys:['x=(y+2)','3y−1','5−3y','y+2'],model:'y(3x−1)=5x+2→3xy−y=5x+2→x(3y−5)=y+2→x=(y+2)/(3y−5)'},
+  ];
+  let ptB=0;
+  sa.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase().replace(/\s/g,'');
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase().replace(/\s/g,'')))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,max=12,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review needed'}</div>
+  <div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th><th>Descriptor</th></tr><tr><td>EE</td><td>11–12</td><td>Exceeds</td></tr><tr><td>ME</td><td>8–10</td><td>Meets</td></tr><tr><td>AE</td><td>6–7</td><td>Approaches</td></tr><tr><td>BE</td><td>0–5</td><td>Below</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+</script>
+</body>
+</html>

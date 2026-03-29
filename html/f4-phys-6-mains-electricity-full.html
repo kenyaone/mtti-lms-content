@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Mains Electricity</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar"><h2>⚡ F4 Physics — Ch.6: Mains Electricity</h2><span class="meta">MTTI LMS | Form 4</span></div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<div class="slide active" id="s1"><span class="slide-label">SLIDE 1 OF 10</span><h1>📚 Learning Outcomes</h1><div class="card"><ol><li>Describe sources and transmission of mains electricity</li><li>Explain the national grid system</li><li>State dangers of high voltage transmission</li><li>Calculate electrical power and energy</li><li>Calculate cost of electricity in kWh</li><li>Describe domestic wiring system</li></ol></div><div class="highlight">🔑 P=VI=I²R=V²/R | Energy=Pt | Cost = kWh × rate</div></div>
+
+<div class="slide" id="s2"><span class="slide-label">SLIDE 2 OF 10</span><h1>⚡ Sources & Transmission</h1><div class="card"><p>Mains electricity: alternating current (AC) from power stations. AC produced by electromagnetic induction. In East Africa, most electricity generated from <strong>water (hydroelectric power)</strong>.</p><h2>Power Transmission (National Grid)</h2><ul><li>Generated at ~25 kV at power station</li><li>Stepped up to 400 kV for long-distance transmission (reduces current → less power loss I²R)</li><li>Overhead aluminium cables (lighter than copper)</li><li>Stepped down at sub-stations: 132 kV → 33 kV → 11 kV → 240 V (domestic)</li></ul></div></div>
+
+<div class="slide" id="s3"><span class="slide-label">SLIDE 3 OF 10</span><h1>⚠️ Dangers & Electrical Power</h1><div class="card"><h2>Dangers of High Voltage Transmission</h2><ul><li>Death by electrocution</li><li>Fires during upsurge</li><li>EM radiation from power lines — cancer risk</li></ul><h2>Electrical Power & Energy</h2><div class="formula">P = VI = I²R = V²/R &nbsp;&nbsp; (watts)</div><div class="formula">Energy = P × t &nbsp;&nbsp; (joules or kWh)</div><p><strong>1 kWh</strong> = 1 kW × 3600 s = 3,600,000 J (kilowatt-hour)</p></div></div>
+
+<div class="slide" id="s4"><span class="slide-label">SLIDE 4 OF 10</span><h1>✏️ Worked Examples</h1><div class="card"><h2>Example 1</h2><p>Electric heater: 240 V, 2.5 A. (a) Power rating? (b) Resistance?</p><p>(a) P = VI = 240×2.5 = <strong>600 W</strong></p><p>(b) R = V/I = 240/2.5 = <strong>96 Ω</strong></p></div><div class="card"><h2>Example 2 — Cost</h2><p>Kettle: 2500 W, 240 V, 6 hours. Cost at Ksh 1.10/kWh?</p><p>Energy = 2.5 kW × 6 h = 15 kWh</p><p>Cost = 15 × 1.10 = <strong>Ksh 16.50</strong></p></div><div class="card"><h2>Example 3 — Heater</h2><p>R=100Ω, 240V mains. Find power rating and current.</p><p>P = V²/R = 240²/100 = <strong>576 W</strong> | I = P/V = 576/240 = <strong>2.4 A</strong></p></div></div>
+
+<div class="slide" id="s5"><span class="slide-label">SLIDE 5 OF 10</span><h1>🏠 Domestic Wiring System</h1><div class="card"><ul><li>Two cables: <strong>Live (L)</strong> = 240 V and <strong>Neutral (N)</strong> = 0 V (earthed)</li><li>Frequency: 50 Hz</li><li>Main fuse on live wire</li><li>Joule meter measures energy consumed (kWh)</li><li>Consumer box (fuse box) with circuit breakers</li><li>Ring main for sockets (starts and ends at consumer unit)</li><li>Three-pin plugs: Live, Neutral, Earth</li></ul></div><div class="warn">⚠️ A fuse is a short wire that melts when current exceeds its rating — protecting the circuit.</div></div>
+
+<div class="slide" id="s6"><span class="slide-label">SLIDE 6 OF 10</span><h1>💡 More Examples</h1><div class="card"><h2>Five 60W Bulbs</h2><p>On from 7pm to 10:30pm. Cost at 90 cents/unit.</p><p>Total power = 5×60 = 300 W = 0.3 kW | Time = 3.5 h</p><p>Energy/day = 0.3×3.5 = 1.05 kWh</p><p>Weekly = 1.05×7 = 7.35 kWh | Cost = 7.35×0.9 = <strong>Ksh 6.62</strong></p></div></div>
+
+<div class="slide" id="s7"><span class="slide-label">SLIDE 7 OF 10</span><h1>📊 Power Formula Summary</h1><div class="card"><table><tr><th>Formula</th><th>When to use</th></tr><tr><td>P = VI</td><td>Know voltage and current</td></tr><tr><td>P = I²R</td><td>Know current and resistance</td></tr><tr><td>P = V²/R</td><td>Know voltage and resistance</td></tr><tr><td>Energy = Pt</td><td>Joules (t in seconds)</td></tr><tr><td>kWh = (P/1000) × t</td><td>t in hours</td></tr><tr><td>Cost = kWh × rate</td><td>Rate in Ksh/unit</td></tr></table></div></div>
+
+<div class="slide" id="s8"><span class="slide-label">SLIDE 8 OF 10</span><h1>🔍 Why Transmit at High Voltage?</h1><div class="card"><p>Power loss in cables: P<sub>loss</sub> = I²R</p><p>High voltage → low current (P = VI, same power). Lower current → much less heat loss in cables.</p><div class="formula">P<sub>loss</sub> = I²R — reduce I to dramatically reduce loss</div><div class="highlight">Transmitting at 400 kV instead of 25 kV reduces current by 16× and power loss by 256×!</div></div></div>
+
+<div class="slide" id="s9"><span class="slide-label">SLIDE 9 OF 10</span><h1>🧪 Practice Problems</h1><div class="card"><h3>P1. An iron rated 1000W, 240V. Find: (a) current, (b) resistance, (c) cost for 30 min at Ksh 5/kWh.</h3><div class="highlight">(a) I=P/V=1000/240=4.17A | (b) R=V/I=57.6Ω | (c) Energy=1kW×0.5h=0.5kWh; Cost=0.5×5=Ksh 2.50</div></div><div class="card"><h3>P2. Why is electricity transmitted at high voltage rather than low voltage?</h3><div class="highlight">High voltage means low current (P=VI). Low current means less power lost as heat in cables (P=I²R).</div></div></div>
+
+<div class="slide" id="s10"><span class="slide-label">SLIDE 10 OF 10</span><h1>📝 Quiz — Mains Electricity</h1><div class="quiz-wrap"><h2>Fill in the Blanks (8 marks)</h2>
+<div class="q-block"><div class="q-text"><span>Q1.</span> Power formula using voltage and current: P = __________. (1 mk)</div><input type="text" id="q1" placeholder="formula"><div class="q-fb" id="q1f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q2.</span> 1 kWh = __________ J. (1 mk)</div><input type="text" id="q2" placeholder="number"><div class="q-fb" id="q2f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q3.</span> Domestic supply in Kenya is __________ V at 50 Hz. (1 mk)</div><input type="text" id="q3" placeholder="number"><div class="q-fb" id="q3f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q4.</span> The main fuse is fitted on the __________ wire. (1 mk)</div><input type="text" id="q4" placeholder="type"><div class="q-fb" id="q4f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q5.</span> Power is transmitted at high voltage to reduce __________ losses. (1 mk)</div><input type="text" id="q5" placeholder="type of loss"><div class="q-fb" id="q5f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q6.</span> A heater (R=60Ω, V=240V). Power = __________ W. (1 mk)</div><input type="text" id="q6" placeholder="number"><div class="q-fb" id="q6f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q7.</span> Overhead transmission cables are made of __________ (metal). (1 mk)</div><input type="text" id="q7" placeholder="metal"><div class="q-fb" id="q7f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q8.</span> The electricity meter in a home measures energy in __________. (1 mk)</div><input type="text" id="q8" placeholder="unit"><div class="q-fb" id="q8f"></div></div>
+<h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+<div class="q-block q-sa"><div class="q-text"><span>Q9.</span> A 3 kW electric water heater is used for 2 hours daily for 20 days. Electricity costs Ksh 12 per kWh. Calculate the total cost. (3 mks)</div><textarea id="q9" placeholder="Show working..."></textarea><div class="q-fb" id="q9f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q10.</span> State THREE components of a domestic wiring system and the function of each. (3 mks)</div><textarea id="q10" placeholder="1... 2... 3..."></textarea><div class="q-fb" id="q10f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q11.</span> Explain ONE danger of high voltage transmission lines. (1 mk)</div><textarea id="q11" placeholder="Your answer..."></textarea><div class="q-fb" id="q11f"></div></div>
+<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+<div class="score-box" id="scorebox"><h3 id="score-txt"></h3><p id="score-msg"></p></div></div></div>
+
+<div id="nav"><button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button><span id="slide-counter">1 / 10</span><button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button></div>
+<script>
+
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+
+const ans={q1:{kw:["vi","v×i","v*i"],pts:1},q2:{kw:["3600000","3.6×10","3.6e6"],pts:1},q3:{kw:["240"],pts:1},q4:{kw:["live"],pts:1},q5:{kw:["power","current","heat","i²r"],pts:1},q6:{kw:["960"],pts:1},q7:{kw:["aluminium","aluminum"],pts:1},q8:{kw:["kwh","kilowatt","unit"],pts:1}};
+
+function submitQuiz(){
+  let score=0;
+  Object.keys(ans).forEach(id=>{const el=document.getElementById(id);if(!el||el.tagName==='TEXTAREA')return;const val=el.value.trim().toLowerCase();const correct=ans[id].kw.some(k=>val.includes(k));const fb=document.getElementById(id+'f');if(fb){if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}}});
+  document.querySelectorAll('.q-sa textarea').forEach(el=>{if(el.value.trim().length>30)score+=Math.min(3,Math.ceil(el.value.trim().length/60));});
+  score=Math.min(score,15);
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');if(sb)sb.style.display='block';
+  const st=document.getElementById('score-txt');if(st)st.textContent='Score: '+score+' / 15 ('+pct+'%)';
+  const sm=document.getElementById('score-msg');if(sm)sm.textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+
+</script>
+</body>
+</html>

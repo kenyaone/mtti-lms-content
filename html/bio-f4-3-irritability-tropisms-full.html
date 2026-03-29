@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Biology | Irritability &amp; Plant Responses</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a2e1a;--sub:#4a6a4a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{position:sticky;top:0;z-index:100;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;box-shadow:0 2px 8px #0005;}
+#topbar .meta{font-size:.75rem;opacity:.8;}
+#topbar .title{font-weight:700;font-size:.95rem;text-align:center;flex:1;}
+#slide-counter{font-size:.78rem;background:#ffffff28;padding:3px 10px;border-radius:20px;}
+#dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px;flex-wrap:wrap;}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+#slides-wrap{max-width:820px;margin:0 auto;padding:12px 14px 80px;}
+.slide{display:none;animation:fadeIn .35s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;padding:14px 18px;border-radius:12px 12px 0 0;font-size:1.1rem;font-weight:700;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:18px;box-shadow:0 2px 12px #0001;}
+.info-card{background:#f0f7f0;border-left:4px solid var(--pri);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.warn-card{background:#fff8e1;border-left:4px solid var(--acc);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.def-box{background:var(--pri);color:#fff;border-radius:10px;padding:13px 16px;margin:12px 0;font-size:.95rem;}
+h3{color:var(--pri);margin:14px 0 7px;font-size:1rem;}
+h4{color:var(--sub);margin:10px 0 5px;font-size:.93rem;}
+p,li{font-size:.93rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:20px;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.86rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e8e0;}
+tr:nth-child(even) td{background:#f5faf5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:13px;}
+.col-card h4{color:var(--pri);margin-top:0;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e0e8e0;display:flex;justify-content:center;align-items:center;gap:14px;padding:10px 16px;z-index:99;}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}
+.btn-pri:hover{background:#0d7a36;}
+.btn-sec{background:#e8f0e8;color:var(--pri);}
+.btn-sec:hover{background:#d0e4d0;}
+.btn-acc{background:var(--acc);color:#fff;}
+.q-block{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:15px;margin:14px 0;}
+.q-block p{font-weight:600;margin-bottom:8px;}
+.fill-input{width:100%;padding:9px 12px;border:2px solid #cde;border-radius:7px;font-size:.92rem;margin-top:5px;}
+.fill-input:focus{outline:none;border-color:var(--pri);}
+textarea.fill-input{resize:vertical;min-height:70px;}
+.feedback{margin-top:8px;padding:8px 12px;border-radius:7px;font-size:.87rem;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--ok);display:block;}
+.feedback.wrong{background:#fce8e8;border:1px solid #ef9a9a;color:var(--no);display:block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;margin:2px;}
+.tag.found{background:#c8e6c9;color:#1b5e20;}
+.tag.missed{background:#ffcdd2;color:#b71c1c;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric strong{color:#e65100;}
+#score-board{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:14px;}
+#score-board .big{font-size:2.5rem;font-weight:800;}
+.practice-q{background:#f0f7ff;border:1px solid #bbdefb;border-radius:9px;padding:14px;margin:12px 0;}
+.practice-q p{font-weight:600;color:#1565c0;}
+.reveal-btn{margin-top:8px;background:#1565c0;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;}
+.answer-reveal{display:none;margin-top:10px;background:#e3f2fd;border-radius:7px;padding:10px;font-size:.87rem;}
+.outcome-list li{margin:6px 0;padding:6px 10px;background:#f0f7f0;border-radius:6px;border-left:3px solid var(--acc);}
+/* TROPISM CARDS */
+.trop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:14px 0;}
+.trop-card{border-radius:10px;padding:14px;border:2px solid;}
+.tc-photo{background:#fff9c4;border-color:#f9a825;}
+.tc-geo{background:#e8f5e9;border-color:#43a047;}
+.tc-hydro{background:#e3f2fd;border-color:#1e88e5;}
+.tc-thigmo{background:#fce4ec;border-color:#e91e63;}
+.tc-chemo{background:#f3e5f5;border-color:#8e24aa;}
+.trop-card h4{margin:0 0 8px;}
+/* STIMULUS TABLE */
+.stim-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78rem;background:#e8f5e9;color:#1b5e20;font-weight:600;}
+/* SEEDLING DIAGRAM */
+.seedling-row{display:flex;gap:14px;margin:12px 0;flex-wrap:wrap;justify-content:center;}
+.seedling{background:#f0f7f0;border:2px solid #a5d6a7;border-radius:10px;padding:14px;text-align:center;min-width:140px;flex:1;}
+.seedling .label{font-weight:700;color:var(--pri);font-size:.85rem;margin-bottom:6px;}
+.seedling .result{font-size:.8rem;color:#555;margin-top:6px;}
+/* TAXIS vs TROPISM */
+.vs-table td{vertical-align:top;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="meta">F4 Biology</div>
+  <div class="title">🌱 Irritability &amp; Plant Responses</div>
+  <div id="slide-counter">1 / 10</div>
+</div>
+<div id="dots"></div>
+<div id="slides-wrap">
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <div class="slide-title">🎯 Learning Outcomes</div>
+  <div class="slide-body">
+    <div class="info-card">By the end of this lesson, you should be able to:</div>
+    <ul class="outcome-list">
+      <li>Define irritability, stimulus and response</li>
+      <li>List external stimuli and name the type of response each causes</li>
+      <li>Define tactic responses and state their importance</li>
+      <li>Define tropism and explain 5 types of tropism in plants</li>
+      <li>Explain the role of auxins (IAA) in phototropism and geotropism</li>
+      <li>Compare tactic and tropic responses</li>
+      <li>Explain the results of seedling experiments involving light and gravity</li>
+      <li>Define etiolation and explain its significance</li>
+    </ul>
+    <div class="warn-card">📚 <strong>Source:</strong> Form IV Biology Notes — Topic 3: Irritability &amp; Plant Responses</div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="s2">
+  <div class="slide-title">⚡ Irritability, Stimulus &amp; Response</div>
+  <div class="slide-body">
+    <div class="def-box">⚡ <strong>Irritability (Sensitivity):</strong> The ability (responsiveness) of a living organism to detect and respond to changes in the environment.</div>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Stimulus</h4>
+        <p>A change in the environment of an organism that causes a change in the organism's activity.</p>
+      </div>
+      <div class="col-card">
+        <h4>Response</h4>
+        <p>A change in the activity of an organism caused by a stimulus.</p>
+      </div>
+    </div>
+    <h3>Importance of Irritability</h3>
+    <ul><li>Allows organisms to adjust to environmental conditions</li><li>Helps organisms detect and respond to stimuli for survival</li></ul>
+
+    <h3>Types of External Stimuli</h3>
+    <table>
+      <tr><th>Stimulus</th><th>Name (prefix)</th><th>Example response</th></tr>
+      <tr><td>Light</td><td>Photo-</td><td>Phototropism / phototaxis</td></tr>
+      <tr><td>Gravity/soil</td><td>Geo-</td><td>Geotropism</td></tr>
+      <tr><td>Water/moisture</td><td>Hydro-</td><td>Hydrotropism</td></tr>
+      <tr><td>Touch/contact</td><td>Hapto-/Thigmo-</td><td>Thigmotropism</td></tr>
+      <tr><td>Chemical</td><td>Chemo-</td><td>Chemotaxis / chemotropism</td></tr>
+      <tr><td>Air/oxygen</td><td>Aero-</td><td>Aerotaxis</td></tr>
+      <tr><td>Osmotic pressure</td><td>Osmo-</td><td>Osmotaxis</td></tr>
+      <tr><td>Temperature</td><td>Thermo-</td><td>Thermotaxis</td></tr>
+      <tr><td>Current</td><td>Rheo-</td><td>Rheotaxis</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="slide" id="s3">
+  <div class="slide-title">🔬 Tactic Responses (Taxes)</div>
+  <div class="slide-body">
+    <div class="def-box">🔬 <strong>Tactic Response (Taxis):</strong> A response in which the whole organism (or its motile parts e.g. gametes) moves in response to a unidirectional stimulus. Named after the source of stimulus.</div>
+
+    <h3>Characteristics of Tactic Responses</h3>
+    <ul>
+      <li>Caused by a <strong>unidirectional</strong> stimulus</li>
+      <li>Usually does <strong>NOT involve growth</strong></li>
+      <li>Response is either <strong>positive</strong> (towards stimulus) or <strong>negative</strong> (away from stimulus)</li>
+      <li>Named according to the source of stimulus (e.g. phototaxis, chemotaxis, aerotaxis)</li>
+    </ul>
+
+    <h3>Examples of Tactic Responses</h3>
+    <table>
+      <tr><th>Organism</th><th>Stimulus</th><th>Response</th><th>Type</th></tr>
+      <tr><td>Euglena</td><td>Light</td><td>Swims towards light source</td><td>Positive phototaxis</td></tr>
+      <tr><td>Sperms</td><td>Chemicals from ovum</td><td>Swim towards the ovum</td><td>Positive chemotaxis</td></tr>
+      <tr><td>Bacteria</td><td>Oxygen</td><td>Move towards O₂</td><td>Positive aerotaxis</td></tr>
+      <tr><td>Cockroaches</td><td>Light</td><td>Move away from light</td><td>Negative phototaxis</td></tr>
+    </table>
+
+    <h3>Importance of Tactic Responses</h3>
+    <div class="two-col">
+      <div class="col-card"><h4>Protista (e.g. Euglena)</h4><ul><li>Move towards favourable environment</li><li>Move away from unfavourable conditions</li><li>Move towards food/prey</li></ul></div>
+      <div class="col-card"><h4>Microscopic plants</h4><ul><li>Escape injurious stimuli</li><li>Seek favourable habitats</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="slide" id="s4">
+  <div class="slide-title">🌿 Tropisms — Types &amp; Mechanisms</div>
+  <div class="slide-body">
+    <div class="def-box">🌿 <strong>Tropism:</strong> A growth movement of plants in response to an external unilateral (unidirectional) stimulus. Shoots/roots grow TOWARDS (+) or AWAY (–) from the stimulus.</div>
+
+    <div class="trop-grid">
+      <div class="trop-card tc-photo">
+        <h4>☀️ Phototropism</h4>
+        <p>Response to <strong>unilateral light</strong>. Light causes auxins to migrate to the darker side → more growth on dark side → shoot bends TOWARDS light.</p>
+        <p><strong>Shoot:</strong> positively phototrophic<br><strong>Root:</strong> negatively phototrophic</p>
+      </div>
+      <div class="trop-card tc-geo">
+        <h4>⬇️ Geotropism</h4>
+        <p>Response to <strong>gravity</strong>. Auxins accumulate on lower side.</p>
+        <p><strong>Root:</strong> positively geotropic (grows DOWN)<br><strong>Shoot:</strong> negatively geotropic (grows UP)</p>
+      </div>
+      <div class="trop-card tc-hydro">
+        <h4>💧 Hydrotropism</h4>
+        <p>Response to <strong>water/moisture</strong>.</p>
+        <p><strong>Root:</strong> positively hydrotropic (grows TOWARDS water)<br><strong>Leaves:</strong> negatively hydrotropic</p>
+      </div>
+      <div class="trop-card tc-thigmo">
+        <h4>🌀 Thigmotropism</h4>
+        <p>Response to <strong>touch/contact</strong>. Auxins migrate to outer side → faster growth away from contact → tendrils/stem twine around support.</p>
+      </div>
+      <div class="trop-card tc-chemo">
+        <h4>⚗️ Chemotropism</h4>
+        <p>Response to <strong>chemical gradient</strong>. e.g. Pollen tube grows towards the ovary through the style following a chemical gradient.</p>
+      </div>
+    </div>
+
+    <h3>Importance of Tropisms to Plants</h3>
+    <ul>
+      <li>Phototropism → exposes leaves/shoots for maximum sunlight absorption (photosynthesis)</li>
+      <li>Hydrotropism → enables roots to seek water</li>
+      <li>Thigmotropism → enables stems/tendrils to obtain mechanical support</li>
+      <li>Geotropism → roots grow deep for anchorage; shoots grow upward</li>
+      <li>Chemotropism → enables pollen tube to grow to embryo sac for fertilization</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="s5">
+  <div class="slide-title">🌱 Auxins &amp; Seedling Experiments</div>
+  <div class="slide-body">
+    <div class="def-box">🧪 <strong>Auxin (IAA — Indole Acetic Acid):</strong> A plant growth hormone produced at the shoot tip. It moves downward and causes cell elongation. Light and gravity affect its distribution, causing bending.</div>
+
+    <h3>How Auxins Cause Phototropism</h3>
+    <ol>
+      <li>Auxins produced at the <strong>shoot tip</strong></li>
+      <li>Light causes auxins to <strong>migrate to the darker (shaded) side</strong></li>
+      <li>Higher concentration of auxins on dark side → <strong>more cell elongation</strong></li>
+      <li>Shoot bends/curves <strong>towards the light source</strong></li>
+    </ol>
+
+    <h3>Seedling Experiment — Unilateral Light</h3>
+    <div class="seedling-row">
+      <div class="seedling">
+        <div class="label">P — Normal tip</div>
+        <div style="font-size:1.8rem;">🌱</div>
+        <div class="result">Bends/grows TOWARDS light ✅</div>
+      </div>
+      <div class="seedling">
+        <div class="label">Q — Tip removed</div>
+        <div style="font-size:1.8rem;">🪴</div>
+        <div class="result">Remains straight / little growth (no auxin source) ⛔</div>
+      </div>
+      <div class="seedling">
+        <div class="label">R — Tip covered (foil)</div>
+        <div style="font-size:1.8rem;">🎍</div>
+        <div class="result">Grows STRAIGHT (auxins not affected by light) ➡️</div>
+      </div>
+    </div>
+    <div class="info-card">If the foil is removed from R → it will then bend towards light. If the box (light shield) is removed → all seedlings grow straight/upward.</div>
+
+    <h3>Horizontal Seedling — Geotropism</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Shoot (placed horizontal)</h4>
+        <p>Auxins accumulate on <strong>lower side</strong> due to gravity. High concentration of auxins in shoot <strong>stimulates growth</strong> → more elongation on lower side → shoot curves <strong>upward</strong>.</p>
+      </div>
+      <div class="col-card">
+        <h4>Root (placed horizontal)</h4>
+        <p>Auxins accumulate on <strong>lower side</strong>. But high concentration of auxins in root <strong>inhibits growth</strong> → upper side (less auxin) grows faster → root curves <strong>downward</strong>.</p>
+      </div>
+    </div>
+    <div class="warn-card">⚠️ Key difference: In shoots, high auxin = MORE growth. In roots, high auxin = LESS growth (roots are more sensitive to auxin).</div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="s6">
+  <div class="slide-title">🌿 Etiolation &amp; Taxis vs Tropism</div>
+  <div class="slide-body">
+    <div class="def-box">🌙 <strong>Etiolation:</strong> A phenomenon exhibited by plants when grown in darkness or very dim light.</div>
+    <h3>Characteristics of Etiolated Plants</h3>
+    <ul>
+      <li>Pale yellow colour (absence of chlorophyll)</li>
+      <li>Small, underdeveloped leaves</li>
+      <li>Long, slender, weak stems</li>
+      <li>Extended internodes (hypocotyl)</li>
+    </ul>
+    <div class="info-card">🔑 Plants exhibit etiolation to <strong>reach light</strong> — it is a survival response. Once light is available, chlorophyll synthesis begins and normal growth resumes.</div>
+
+    <h3>Comparison: Tactic vs Tropic Responses</h3>
+    <table class="vs-table">
+      <tr><th>Feature</th><th>Tropism (Tropic Response)</th><th>Taxis (Tactic Response)</th></tr>
+      <tr><td>Type of movement</td><td>Growth curvature (bending)</td><td>Locomotory (whole organism moves)</td></tr>
+      <tr><td>Speed</td><td>Slow</td><td>Fast</td></tr>
+      <tr><td>Organisms</td><td>Plants (rooted)</td><td>Motile organisms (Euglena, sperms)</td></tr>
+      <tr><td>Growth involved?</td><td>Yes — involves growth</td><td>No — usually no growth</td></tr>
+      <tr><td>Control mechanism</td><td>Hormones (auxins)</td><td>External stimulus directly</td></tr>
+      <tr><td>Example</td><td>Phototropism in shoots</td><td>Phototaxis in Euglena</td></tr>
+    </table>
+
+    <h3>Summary: Positive & Negative Responses</h3>
+    <table>
+      <tr><th>Plant Part</th><th>Light (photo)</th><th>Gravity (geo)</th><th>Water (hydro)</th></tr>
+      <tr><td>Shoot</td><td>+ (towards)</td><td>– (away from)</td><td>–</td></tr>
+      <tr><td>Root</td><td>– (away from)</td><td>+ (towards)</td><td>+ (towards)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="s7">
+  <div class="slide-title">📋 Quick Review — All Key Concepts</div>
+  <div class="slide-body">
+    <h3>Key Definitions Summary</h3>
+    <table>
+      <tr><th>Term</th><th>Definition</th></tr>
+      <tr><td>Irritability</td><td>Responsiveness/sensitivity to changes in environment</td></tr>
+      <tr><td>Stimulus</td><td>A change in environment causing change in organism's activity</td></tr>
+      <tr><td>Response</td><td>Change in activity of organism caused by a stimulus</td></tr>
+      <tr><td>Taxis</td><td>Whole organism moves towards/away from unidirectional stimulus</td></tr>
+      <tr><td>Tropism</td><td>Growth movement of plant in response to unilateral stimulus</td></tr>
+      <tr><td>Auxin (IAA)</td><td>Plant growth hormone produced at shoot tip; causes cell elongation</td></tr>
+      <tr><td>Phototropism</td><td>Growth response to unilateral light</td></tr>
+      <tr><td>Geotropism</td><td>Growth response to gravity</td></tr>
+      <tr><td>Hydrotropism</td><td>Growth response to water/moisture</td></tr>
+      <tr><td>Thigmotropism</td><td>Growth response to touch/contact</td></tr>
+      <tr><td>Chemotropism</td><td>Growth response to chemical gradient</td></tr>
+      <tr><td>Etiolation</td><td>Pale, elongated growth of plants in darkness</td></tr>
+    </table>
+
+    <div class="warn-card">🔑 Remember: In phototropism, auxins move to the <strong>dark side</strong> → the dark side grows faster → shoot bends <strong>towards light</strong>. The TIP is the source of auxins — remove the tip and no bending occurs.</div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="s8">
+  <div class="slide-title">🧪 Practical Applications &amp; Real Examples</div>
+  <div class="slide-body">
+    <h3>Real-World Examples of Tropisms</h3>
+    <table>
+      <tr><th>Observation</th><th>Type of Tropism</th><th>Explanation</th></tr>
+      <tr><td>Sunflower faces the sun</td><td>Positive phototropism</td><td>Auxins redistribute to shaded side; stem bends toward light</td></tr>
+      <tr><td>Roots grow downward into soil</td><td>Positive geotropism</td><td>Auxins inhibit root growth on lower side; upper side grows faster → curves down</td></tr>
+      <tr><td>Pea tendrils coil around a stick</td><td>Positive thigmotropism</td><td>Contact causes unequal auxin distribution → tendril wraps around support</td></tr>
+      <tr><td>Pollen tube grows through style</td><td>Positive chemotropism</td><td>Chemical gradient from ovary guides pollen tube growth</td></tr>
+      <tr><td>Roots grow toward water pipe</td><td>Positive hydrotropism</td><td>Root grows toward moisture gradient</td></tr>
+    </table>
+
+    <h3>Practical Importance of Plant Responses in Agriculture</h3>
+    <ul>
+      <li><strong>Understanding phototropism</strong> helps in crop spacing to maximise light absorption</li>
+      <li><strong>Auxin-based herbicides</strong> (e.g. 2,4-D) disrupt plant hormone balance to kill weeds</li>
+      <li><strong>Rooting powder</strong> contains synthetic auxins to stimulate root growth in cuttings</li>
+      <li><strong>Fruit ripening</strong> can be controlled using ethylene (a plant hormone)</li>
+      <li>Understanding <strong>geotropism</strong> helps explain how seeds orient correctly when planted</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <p>1. Distinguish between a tactic response and a tropic response. Give ONE example of each.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Tactic:</strong> Whole organism moves toward/away from stimulus (locomotory, fast, no growth). e.g. Euglena swimming toward light (positive phototaxis).<br><strong>Tropic:</strong> Plant grows (bends) toward/away from stimulus (growth movement, slow, involves growth). e.g. Shoot bending toward light (positive phototropism).</div>
+    </div>
+    <div class="practice-q">
+      <p>2. Explain why a shoot bends toward a unilateral source of light.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Auxins (IAA) are produced at the shoot tip and move downward. Unilateral light causes auxins to migrate to the <strong>darker (shaded) side</strong>. The higher concentration of auxins on the dark side causes greater cell elongation on that side. This unequal growth causes the shoot to <strong>bend/curve toward the light source</strong>.</div>
+    </div>
+    <div class="practice-q">
+      <p>3. A seedling was placed horizontally. After 7 days the shoot grew upward and the root grew downward. Explain these results.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Shoot curves upward:</strong> Gravity causes auxins to accumulate on the lower side. High auxin concentration stimulates cell elongation on the lower side → lower side grows longer → shoot bends upward (negative geotropism).<br><br><strong>Root curves downward:</strong> Same auxin accumulation on lower side, but roots are more sensitive to auxin. High auxin concentration <em>inhibits</em> root growth on lower side → upper side (less auxin) grows faster → root bends downward (positive geotropism).</div>
+    </div>
+    <div class="practice-q">
+      <p>4. What is etiolation? Explain why plants exhibit etiolation.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Etiolation is a phenomenon where plants grown in darkness become pale yellow (no chlorophyll), develop long weak stems, and have small underdeveloped leaves. Plants exhibit etiolation as a <strong>survival response</strong> — the elongated stems help them reach light as quickly as possible. Once light is reached, normal photosynthesis and development can resume.</div>
+    </div>
+    <div class="practice-q">
+      <p>5. State FOUR ways in which tropisms are important to plants.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">1. <strong>Phototropism</strong> — exposes leaves/shoots to maximum sunlight for photosynthesis<br>2. <strong>Hydrotropism</strong> — enables roots to seek and absorb water<br>3. <strong>Thigmotropism</strong> — enables stems/tendrils to obtain mechanical support<br>4. <strong>Geotropism</strong> — roots grow deep for anchorage; shoots grow upward toward light<br>5. <strong>Chemotropism</strong> — enables pollen tube to grow to embryo sac for fertilization</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Irritability &amp; Plant Responses</div>
+  <div class="slide-body">
+    <div class="q-block">
+      <p>Q1. The growth movement of a plant root toward water is called ____________.</p>
+      <input class="fill-input" id="q1" placeholder="Type your answer..."/>
+      <div class="feedback" id="f1"></div>
+    </div>
+    <div class="q-block">
+      <p>Q2. A plant shoot is said to be ____________ phototrophic (it grows toward light) and ____________ geotropic (it grows away from gravity).</p>
+      <input class="fill-input" id="q2" placeholder="Type both answers..."/>
+      <div class="feedback" id="f2"></div>
+    </div>
+    <div class="q-block">
+      <p>Q3. The plant growth hormone produced at the shoot tip that causes cell elongation is called ____________ (abbreviation: IAA).</p>
+      <input class="fill-input" id="q3" placeholder="Type your answer..."/>
+      <div class="feedback" id="f3"></div>
+    </div>
+    <div class="q-block">
+      <p>Q4. Name the type of tactic response shown by sperms swimming toward the ovum.</p>
+      <input class="fill-input" id="q4" placeholder="Type your answer..."/>
+      <div class="feedback" id="f4"></div>
+    </div>
+    <div class="q-block">
+      <p>Q5. State TWO characteristics of plants showing etiolation.</p>
+      <input class="fill-input" id="q5" placeholder="Type your answer..."/>
+      <div class="feedback" id="f5"></div>
+    </div>
+    <div class="q-block">
+      <p>Q6 (Short Answer): In an experiment with a seedling, the tip was covered with tin foil and the seedling was exposed to unilateral light. Explain what would happen to the seedling and why. What would happen if the foil were removed after 2 days?</p>
+      <textarea class="fill-input" id="q6" placeholder="Write your explanation..."></textarea>
+      <div class="feedback" id="f6"></div>
+    </div>
+    <div class="q-block">
+      <p>Q7 (Short Answer): Explain the role of auxins in causing a shoot to bend toward a light source. In your answer, describe how auxins are distributed and what effect this has on growth.</p>
+      <textarea class="fill-input" id="q7" placeholder="Write your answer..."></textarea>
+      <div class="feedback" id="f7"></div>
+    </div>
+    <button class="btn btn-acc" onclick="submitExam()" style="width:100%;margin-top:10px;padding:13px;font-size:1rem;">✅ Submit Quiz</button>
+    <div id="score-area"></div>
+  </div>
+</div>
+
+</div>
+<div id="nav">
+  <button class="btn btn-sec" id="prevBtn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <button class="btn btn-pri" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+<script>
+const TOTAL=10;let current=1;
+function buildDots(){const c=document.getElementById('dots');for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');d.onclick=()=>goTo(i);d.id='dot'+i;c.appendChild(d);}}
+function goTo(n){document.querySelector('.slide.active').classList.remove('active');document.getElementById('s'+n).classList.add('active');document.getElementById('dot'+current).classList.remove('active');if(current<n)document.getElementById('dot'+current).classList.add('done');current=n;document.getElementById('dot'+current).classList.add('active');document.getElementById('slide-counter').textContent=current+' / '+TOTAL;document.getElementById('prevBtn').disabled=current===1;document.getElementById('nextBtn').disabled=current===TOTAL;window.scrollTo(0,0);}
+function changeSlide(d){goTo(Math.min(Math.max(1,current+d),TOTAL));}
+function reveal(btn){const ans=btn.nextElementSibling;ans.style.display=ans.style.display==='block'?'none':'block';btn.textContent=ans.style.display==='block'?'Hide Answer':'Show Answer';}
+const ANSWERS={q1:{kw:['hydrotropism','positive hydrotropism'],pts:2},q2:{kw:['positive','negative'],pts:2,need:2},q3:{kw:['auxin','indole acetic acid','iaa'],pts:2},q4:{kw:['chemotaxis','positive chemotaxis'],pts:2},q5:{kw:['pale yellow','long stem','small leaves','no chlorophyll','slender','etiolated'],pts:2,need:2}};
+function checkFill(id,fb,data){const val=document.getElementById(id).value.trim().toLowerCase();if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).textContent='Please write an answer.';return 0;}const found=data.kw.filter(k=>val.includes(k.toLowerCase()));const need=data.need||1;const got=Math.min(found.length>=need?data.pts:Math.floor((found.length/need)*data.pts),data.pts);const tags=data.kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');document.getElementById(fb).innerHTML=`Keywords: ${tags}`;document.getElementById(fb).className='feedback '+(found.length>=need?'correct':'wrong');return got;}
+function scoreShort(id,fb,kw,pts,rubric){const val=document.getElementById(id).value.trim().toLowerCase();if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).innerHTML='Please write an answer.';return 0;}const found=kw.filter(k=>val.includes(k.toLowerCase()));const tags=kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');const score=Math.min(Math.round((found.length/kw.length)*pts),pts);document.getElementById(fb).innerHTML=`Keywords found: ${tags}<div class="rubric"><strong>Model Answer:</strong> ${rubric}</div>`;document.getElementById(fb).className='feedback '+(score>=Math.ceil(pts/2)?'correct':'wrong');return score;}
+function submitExam(){let total=0,max=0;
+total+=checkFill('q1','f1',ANSWERS.q1);max+=ANSWERS.q1.pts;
+total+=checkFill('q2','f2',ANSWERS.q2);max+=ANSWERS.q2.pts;
+total+=checkFill('q3','f3',ANSWERS.q3);max+=ANSWERS.q3.pts;
+total+=checkFill('q4','f4',ANSWERS.q4);max+=ANSWERS.q4.pts;
+total+=checkFill('q5','f5',ANSWERS.q5);max+=ANSWERS.q5.pts;
+total+=scoreShort('q6','f6',['straight','tip covered','auxin','not affected','light','foil removed','bend','towards light'],3,'With the tip covered: auxins cannot be redistributed by light → auxins remain evenly distributed → equal growth on both sides → seedling grows STRAIGHT upward. If the foil is removed after 2 days: auxins can now be affected by unilateral light → migrate to dark side → unequal growth → seedling bends/curves toward light.');max+=3;
+total+=scoreShort('q7','f7',['auxin','tip','dark side','shaded','migrate','elongation','more growth','bend','towards light','unequal'],4,'Auxins (IAA) are produced at the shoot tip and move downward. Unilateral light causes auxins to migrate (move) to the darker/shaded side. The darker side now has a higher concentration of auxins. Auxins stimulate cell elongation — so cells on the dark side elongate more than those on the light side. This unequal growth causes the shoot to bend and grow toward the light source (positive phototropism).');max+=4;
+const pct=Math.round((total/max)*100);const grade=pct>=80?'Excellent! 🏆':pct>=60?'Good Work! 👍':pct>=40?'Keep Practising 📚':'Review the lesson 🔄';
+document.getElementById('score-area').innerHTML=`<div id="score-board"><div class="big">${total}/${max}</div><div style="font-size:1.3rem;font-weight:700;margin:6px 0">${pct}%</div><div style="font-size:1rem;opacity:.9">${grade}</div><div style="font-size:.8rem;opacity:.75;margin-top:8px">CBC Rubric: 80–100% = Exceeding | 60–79% = Meeting | 40–59% = Approaching | Below 40% = Below</div></div>`;
+if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);}
+buildDots();
+</script>
+</body>
+</html>

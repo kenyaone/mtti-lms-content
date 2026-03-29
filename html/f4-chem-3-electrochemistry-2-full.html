@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chemistry Form 4 | Electrochemistry II</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--txt:#1a1a1a;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#topbar .sub{font-size:.7rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+#topbar .ttl{font-size:.95rem;font-weight:700;flex:1}
+#slide-badge{background:var(--acc);color:#000;font-weight:700;font-size:.78rem;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.slide{display:none;flex:1;padding:16px 16px 80px;animation:fi .3s ease}
+.slide.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-title{font-size:1.2rem;font-weight:800;color:var(--pri);margin-bottom:14px;padding-bottom:8px;border-bottom:3px solid var(--acc)}
+.lo-box{background:#e8f5e9;border-left:5px solid var(--pri);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.lo-box h3{color:var(--pri);font-size:.95rem;margin-bottom:8px}
+.lo-box ol{padding-left:18px;font-size:.9rem;line-height:1.8}
+.inquiry{background:#fff8e1;border:1.5px solid var(--acc);border-radius:8px;padding:10px 14px;font-size:.88rem;color:#5d4037;margin-top:10px}
+.inquiry strong{color:#e65100}
+.tb{margin-bottom:18px}
+.tb h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--acc);display:inline-block}
+.tb p,.tb li{font-size:.9rem;line-height:1.7}
+.tb ul,.tb ol{padding-left:18px;margin-top:6px}
+.kt{background:#fff8e1;border-left:4px solid var(--acc);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem}
+.kt strong{color:#e65100}
+.it{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+.it th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.it td{padding:7px 10px;border-bottom:1px solid #e0e0e0}
+.it tr:nth-child(even) td{background:#f1f8e9}
+.eg{background:#f1f8e9;border:1.5px solid var(--ok);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.88rem}
+.eg strong{color:var(--ok);display:block;margin-bottom:4px}
+.warn{background:#fff3e0;border-left:4px solid #e65100;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem;color:#5d4037}
+.rxn{background:#f8f9fa;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.9rem;text-align:center}
+.qs h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:12px}
+.qi{background:#fff;border:1.5px solid #c8e6c9;border-radius:10px;padding:14px;margin-bottom:12px}
+.qi p{font-size:.9rem;font-weight:600;margin-bottom:10px}
+.fb{border:none;border-bottom:2.5px dashed var(--pri);background:transparent;font-size:.9rem;padding:2px 6px;width:130px;outline:none;text-align:center}
+.fb:focus{border-bottom-color:var(--acc)}
+.fbr{font-size:.82rem;font-weight:600;margin-top:6px;padding:4px 8px;border-radius:4px;display:none}
+.fbr.ok{background:#e8f5e9;color:var(--ok)}
+.fbr.no{background:#ffebee;color:var(--no)}
+.sa{width:100%;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px;font-size:.88rem;font-family:inherit;resize:vertical;min-height:80px;outline:none}
+.sa:focus{border-color:var(--pri)}
+.gb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:8px}
+.gb:hover{background:var(--pri-l)}
+.saf{font-size:.82rem;margin-top:8px;padding:10px;border-radius:8px;line-height:1.6;display:none}
+.saf.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+.saf.partial{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.saf.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c}
+.kwf{color:var(--ok);font-weight:700}
+.kwm{color:var(--no);font-weight:700}
+.ma{margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-style:italic}
+#sr{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:16px;display:none}
+#sr .big{font-size:2rem;font-weight:900;margin:8px 0}
+.sub-btn{background:var(--acc);color:#000;border:none;border-radius:10px;padding:12px 32px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:16px;width:100%}
+.sub-btn:hover{background:#e8961a}
+#navbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.nb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer}
+.nb:hover{background:var(--pri-l)}
+.nb:disabled{background:#ccc;cursor:not-allowed}
+#dn{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:#c8e6c9;cursor:pointer;transition:background .2s,transform .2s}
+.dot.active{background:var(--pri);transform:scale(1.3)}
+.dot.done{background:var(--acc)}
+@media(max-width:600px){.nb{padding:8px 14px;font-size:.8rem}#topbar .ttl{font-size:.85rem}}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div><div class="sub">Chemistry - Form 4</div><div class="ttl">Electrochemistry II</div></div>
+  <div id="slide-badge">Slide 1 / 10</div>
+</div>
+<div class="slide active" id="s1">
+  <div class="slide-title">Learning Outcomes</div>
+  <div class="lo-box"><h3>By the end of this lesson, you should be able to:</h3><ol>
+    <li>Explain the principles of electrolysis</li>
+    <li>Describe the products at each electrode during electrolysis of various electrolytes</li>
+    <li>Apply Faraday's Laws of electrolysis to calculations</li>
+    <li>Explain the industrial applications of electrolysis</li>
+    <li>Describe the construction and working of a simple electrochemical cell</li>
+    <li>Explain the electrochemical series and predict cell reactions</li>
+  </ol></div>
+  <div class="inquiry"><strong>Key Inquiry:</strong> How can we use electrical energy to drive chemical reactions, and how can chemical reactions generate electrical energy?</div>
+</div>
+<div class="slide" id="s2">
+  <div class="slide-title">Electrolysis - Principles</div>
+  <div class="tb"><h3>Key Definitions</h3>
+    <ul>
+      <li><strong>Electrolysis:</strong> Decomposition of an electrolyte using electrical energy</li>
+      <li><strong>Electrolyte:</strong> A substance that conducts electricity when molten or in aqueous solution (e.g. ionic compounds)</li>
+      <li><strong>Anode:</strong> Positive electrode - where oxidation occurs (anions discharge)</li>
+      <li><strong>Cathode:</strong> Negative electrode - where reduction occurs (cations discharge)</li>
+    </ul>
+    <div class="kt"><strong>Memory Aid:</strong> An Ox (Anode = Oxidation), Red Cat (Reduction = Cathode). OILRIG: Oxidation Is Loss, Reduction Is Gain (of electrons)</div>
+  </div>
+  <div class="tb"><h3>Discharge of Ions</h3>
+    <p>In a mixture of ions, the order of discharge depends on position in the electrochemical series and concentration.</p>
+    <ul>
+      <li>At cathode: metal ions or H+ discharged first (metal lower in reactivity series discharged preferentially)</li>
+      <li>At anode: Cl-, Br-, I- discharged preferentially over OH-; if only OH- present, O2 is produced</li>
+    </ul>
+  </div>
+</div>
+<div class="slide" id="s3">
+  <div class="slide-title">Products of Electrolysis</div>
+  <div class="tb"><h3>Electrolysis of Common Electrolytes</h3>
+    <table class="it">
+      <tr><th>Electrolyte</th><th>Cathode Product</th><th>Anode Product</th></tr>
+      <tr><td>Molten NaCl</td><td>Sodium (Na)</td><td>Chlorine gas (Cl2)</td></tr>
+      <tr><td>Dilute HCl (aq)</td><td>Hydrogen (H2)</td><td>Chlorine gas (Cl2)</td></tr>
+      <tr><td>Conc. HCl (aq)</td><td>Hydrogen (H2)</td><td>Chlorine gas (Cl2)</td></tr>
+      <tr><td>Dilute H2SO4 (aq)</td><td>Hydrogen (H2)</td><td>Oxygen (O2)</td></tr>
+      <tr><td>CuSO4 (aq) inert electrodes</td><td>Copper (Cu)</td><td>Oxygen (O2)</td></tr>
+      <tr><td>CuSO4 (aq) copper electrodes</td><td>Copper deposited</td><td>Copper dissolved</td></tr>
+    </table>
+  </div>
+  <div class="tb"><h3>Electrode Equations</h3>
+    <div class="eg"><strong>Electrolysis of dilute H2SO4:</strong><br>
+    Cathode: 2H+ + 2e- rarr H2 (reduction)<br>
+    Anode: 4OH- rarr 2H2O + O2 + 4e- (oxidation)<br>
+    Volume of H2 : O2 = 2 : 1</div>
+    <div class="eg"><strong>Electrolysis of CuSO4 (inert electrodes):</strong><br>
+    Cathode: Cu2+ + 2e- rarr Cu (copper deposited)<br>
+    Anode: 2H2O rarr O2 + 4H+ + 4e- (oxygen produced)</div>
+  </div>
+</div>
+<div class="slide" id="s4">
+  <div class="slide-title">Faraday's Laws of Electrolysis</div>
+  <div class="tb"><h3>First Law</h3>
+    <p>The mass of substance deposited at an electrode is directly proportional to the quantity of electricity (charge) passed.</p>
+    <div class="rxn">m = proportional to Q, where Q = It (charge = current x time)</div>
+  </div>
+  <div class="tb"><h3>Second Law</h3>
+    <p>The mass of different substances deposited by the same quantity of electricity is proportional to their relative atomic mass divided by valency (equivalent mass).</p>
+    <div class="rxn">m = (A x I x t) / (n x F), where A = relative atomic mass, n = valency, F = 96500 C/mol (Faraday constant)</div>
+  </div>
+  <div class="tb"><h3>Worked Examples</h3>
+    <div class="eg"><strong>Example 1:</strong> What mass of copper is deposited when 2A flows for 965 seconds? (A of Cu = 64, n = 2)<br>
+    Q = 2 x 965 = 1930 C<br>
+    m = (64 x 1930)/(2 x 96500) = 0.64g</div>
+    <div class="eg"><strong>Example 2:</strong> How long to deposit 1.08g of silver (A = 108, n = 1) using 0.5A?<br>
+    t = (m x n x F)/(A x I) = (1.08 x 1 x 96500)/(108 x 0.5) = 1930 seconds</div>
+  </div>
+</div>
+<div class="slide" id="s5">
+  <div class="slide-title">Industrial Applications of Electrolysis</div>
+  <div class="tb"><h3>1. Electroplating</h3>
+    <p>Depositing a thin layer of metal onto an object using electrolysis. The object to be plated is the cathode; the plating metal is the anode.</p>
+    <div class="eg"><strong>Example:</strong> Silver-plating a spoon: spoon = cathode, silver = anode, silver nitrate solution = electrolyte. Silver dissolves from anode and deposits on spoon (cathode).</div>
+    <ul>
+      <li>Uses: Jewellery (gold/silver plating), cutlery, car parts (chromium plating for corrosion resistance), tin cans</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>2. Extraction of Metals (Electrolytic Reduction)</h3>
+    <ul>
+      <li><strong>Aluminium:</strong> Extracted from molten bauxite (Al2O3) dissolved in molten cryolite. Al deposited at cathode; O2 at anode (burns carbon electrodes).</li>
+      <li><strong>Sodium:</strong> Extracted from molten NaCl (Downs Cell). Na at cathode; Cl2 at anode.</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>3. Purification of Metals</h3>
+    <p>Impure copper (anode) dissolves and pure copper deposits on cathode in CuSO4 solution. Impurities fall as anode sludge.</p>
+  </div>
+  <div class="tb"><h3>4. Manufacture of Chemicals</h3>
+    <ul>
+      <li>Chlorine and NaOH from brine (Chlor-alkali industry)</li>
+      <li>Hydrogen gas production</li>
+    </ul>
+  </div>
+</div>
+<div class="slide" id="s6">
+  <div class="slide-title">Electrochemical Cells</div>
+  <div class="tb"><h3>Simple Cell (Voltaic/Galvanic Cell)</h3>
+    <p>A device that converts chemical energy into electrical energy through a spontaneous redox reaction.</p>
+    <ul>
+      <li><strong>Anode (negative):</strong> More reactive metal - oxidation (loses electrons)</li>
+      <li><strong>Cathode (positive):</strong> Less reactive metal - reduction (gains electrons)</li>
+      <li><strong>Electrolyte:</strong> Solution allowing ion flow</li>
+      <li><strong>Salt bridge:</strong> Allows ion flow between half-cells to complete the circuit</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>The Daniell Cell</h3>
+    <div class="eg"><strong>Zinc-Copper Cell:</strong><br>
+    Anode (Zn): Zn rarr Zn2+ + 2e- (oxidation)<br>
+    Cathode (Cu): Cu2+ + 2e- rarr Cu (reduction)<br>
+    Overall: Zn + Cu2+ rarr Zn2+ + Cu<br>
+    EMF ≈ 1.1V</div>
+  </div>
+  <div class="tb"><h3>Electrochemical Series</h3>
+    <p>Metals arranged in order of their tendency to lose electrons (reactivity). The greater the difference in position, the higher the cell voltage.</p>
+    <div class="rxn">K > Na > Ca > Mg > Al > Zn > Fe > Ni > Sn > Pb > H > Cu > Ag > Au (most to least reactive)</div>
+  </div>
+</div>
+<div class="slide" id="s7">
+  <div class="slide-title">Corrosion and Its Prevention</div>
+  <div class="tb"><h3>Rusting of Iron</h3>
+    <p>Rusting is the corrosion of iron in the presence of both oxygen and water to form hydrated iron(III) oxide (rust).</p>
+    <div class="rxn">4Fe + 3O2 + 6H2O rarr 2Fe2O3.3H2O (rust)</div>
+    <p style="margin-top:8px">Rust is an electrochemical process: iron acts as anode, impurities as cathode, water as electrolyte.</p>
+  </div>
+  <div class="tb"><h3>Factors That Speed Up Rusting</h3>
+    <ul>
+      <li>Presence of salt (electrolyte) in water</li>
+      <li>Acid conditions (lower pH)</li>
+      <li>Contact with a less reactive metal (increases galvanic cell action)</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Methods of Preventing Corrosion</h3>
+    <table class="it">
+      <tr><th>Method</th><th>How it Works</th><th>Example Use</th></tr>
+      <tr><td>Painting</td><td>Physical barrier to O2 and H2O</td><td>Cars, bridges, buildings</td></tr>
+      <tr><td>Oiling/greasing</td><td>Barrier coating</td><td>Machine parts</td></tr>
+      <tr><td>Galvanising</td><td>Zinc coating - sacrificial protection</td><td>Iron roofing sheets, buckets</td></tr>
+      <tr><td>Tin plating</td><td>Physical barrier</td><td>Food cans</td></tr>
+      <tr><td>Stainless steel</td><td>Alloy with chromium (12%+)</td><td>Cutlery, surgical instruments</td></tr>
+      <tr><td>Cathodic protection</td><td>Attach Mg/Zn block - sacrificial anode</td><td>Ships, pipelines</td></tr>
+      <tr><td>Electroplating</td><td>Chrome/nickel coating</td><td>Car bumpers, taps</td></tr>
+    </table>
+  </div>
+</div>
+<div class="slide" id="s8">
+  <div class="slide-title">Summary - Electrochemistry II</div>
+  <div class="tb"><h3>Key Concepts</h3>
+    <table class="it">
+      <tr><th>Concept</th><th>Key Point</th></tr>
+      <tr><td>Electrolysis</td><td>Electrical energy drives non-spontaneous reactions. Cathode = reduction; Anode = oxidation.</td></tr>
+      <tr><td>Faraday's Law</td><td>m = AIt/nF. Charge Q = It (coulombs = amps x seconds)</td></tr>
+      <tr><td>Electroplating</td><td>Object to be plated = cathode; plating metal = anode</td></tr>
+      <tr><td>Electrochemical cell</td><td>Chemical energy rarr electrical energy. More reactive metal = anode.</td></tr>
+      <tr><td>Corrosion prevention</td><td>Galvanising, sacrificial anode, painting, electroplating</td></tr>
+    </table>
+  </div>
+  <div class="eg"><strong>Electrolysis vs Electrochemical Cell:</strong><br>
+  Electrolysis: requires external electricity supply, non-spontaneous reaction.<br>
+  Electrochemical cell: spontaneous reaction generates electricity.</div>
+</div>
+<div class="slide" id="s9">
+  <div class="slide-title">Practice Questions</div>
+  <div class="tb"><h3>Work Through These</h3>
+    <ol style="font-size:.9rem;line-height:2.2">
+      <li>Define electrolysis and state what happens at the anode and cathode during electrolysis of dilute sulphuric acid.</li>
+      <li>Write electrode equations for the electrolysis of molten sodium chloride.</li>
+      <li>Calculate the mass of aluminium deposited when 3A flows for 1h 4min 20s. (A of Al = 27, n = 3, F = 96500 C/mol)</li>
+      <li>Explain why copper is used as the anode when electroplating an object with copper.</li>
+      <li>Describe the Daniell cell: state the anode and cathode materials, the electrolyte, and write the electrode equations.</li>
+      <li>Explain galvanising as a method of corrosion prevention and state why it protects iron even when the zinc coating is scratched.</li>
+    </ol>
+  </div>
+  <div class="eg"><strong>Worked Example - Faraday Calculation:</strong><br>
+  Mass of zinc deposited: I = 5A, t = 1930s, A = 65, n = 2<br>
+  m = (65 x 5 x 1930)/(2 x 96500) = 3.25g</div>
+</div>
+<div class="slide" id="s10">
+  <div class="slide-title">Quiz - Electrochemistry II</div>
+  <div class="qs">
+    <h3>Section A: Fill in the Blanks (5 marks)</h3>
+    <div class="qi"><p>1. The electrode at which reduction occurs during electrolysis is the <input class="fb" id="f1" placeholder="...">.</p><div class="fbr" id="f1r"></div></div>
+    <div class="qi"><p>2. The quantity of charge is calculated as Q = I x <input class="fb" id="f2" placeholder="symbol">.</p><div class="fbr" id="f2r"></div></div>
+    <div class="qi"><p>3. During electroplating, the object to be plated is connected as the <input class="fb" id="f3" placeholder="...">.</p><div class="fbr" id="f3r"></div></div>
+    <div class="qi"><p>4. Coating iron with zinc to prevent rusting is called <input class="fb" id="f4" placeholder="...">.</p><div class="fbr" id="f4r"></div></div>
+    <div class="qi"><p>5. In an electrochemical cell, the more reactive metal acts as the <input class="fb" id="f5" placeholder="..."> (negative electrode).</p><div class="fbr" id="f5r"></div></div>
+  </div>
+  <div class="qs">
+    <h3>Section B: Short Answer (10 marks)</h3>
+    <div class="qi"><p>6. Write the electrode equations for the electrolysis of dilute sulphuric acid. State which gas is produced at each electrode and the volume ratio. (3 marks)</p>
+      <textarea class="sa" id="sa1"></textarea>
+      <button class="gb" onclick="grSA('sa1','sf1',['cathode','anode','hydrogen','oxygen','h2','o2','reduction','oxidation','2:1','2 :1'],4,3,'Cathode: 2H+ + 2e- rarr H2 (reduction). Anode: 4OH- rarr 2H2O + O2 + 4e- (oxidation). H2 at cathode, O2 at anode. Volume ratio H2:O2 = 2:1.')">Check</button>
+      <div class="saf" id="sf1"></div></div>
+    <div class="qi"><p>7. Calculate the mass of copper deposited when 2A flows for 48.25 minutes. (A of Cu = 64, n = 2, F = 96500 C/mol). Show all working. (3 marks)</p>
+      <textarea class="sa" id="sa2"></textarea>
+      <button class="gb" onclick="grSA('sa2','sf2',['2895','2','96500','64','0.96','0.96g'],2,3,'Q = 2 x (48.25 x 60) = 2 x 2895 = 5790 C. m = (64 x 5790)/(2 x 96500) = 1.92g. [Or if using 2895s: m = (64 x 2895)/(2 x 96500) = 0.96g]')">Check</button>
+      <div class="saf" id="sf2"></div></div>
+    <div class="qi"><p>8. Explain why galvanising with zinc protects iron from rusting even after the zinc coating is scratched. (2 marks)</p>
+      <textarea class="sa" id="sa3"></textarea>
+      <button class="gb" onclick="grSA('sa3','sf3',['more reactive','zinc','sacrificial','anode','corrodes','iron','protected','electrochemical'],3,2,'Zinc is more reactive than iron, so it acts as a sacrificial anode. When the coating is scratched, zinc corrodes preferentially (is oxidised first) and protects the iron underneath from rusting.')">Check</button>
+      <div class="saf" id="sf3"></div></div>
+    <div class="qi"><p>9. Describe the differences between electrolysis and an electrochemical cell in terms of energy conversion and electrode reactions. (2 marks)</p>
+      <textarea class="sa" id="sa4"></textarea>
+      <button class="gb" onclick="grSA('sa4','sf4',['electrical','chemical','spontaneous','non-spontaneous','external','supply','oxidation','reduction','anode','cathode'],4,2,'Electrolysis: electrical energy drives a non-spontaneous chemical reaction; requires external electricity supply. Electrochemical cell: a spontaneous chemical reaction generates electrical energy; no external supply needed. In both, oxidation occurs at anode and reduction at cathode.')">Check</button>
+      <div class="saf" id="sf4"></div></div>
+  </div>
+  <button class="sub-btn" onclick="submitQuiz()">Submit and See Score</button>
+  <div id="sr"><div class="big" id="sv"></div><div id="sm"></div></div>
+</div>
+<div id="navbar">
+  <button class="nb" id="prev-btn" onclick="changeSlide(-1)" disabled>Prev</button>
+  <div id="dn"></div>
+  <button class="nb" id="next-btn" onclick="changeSlide(1)">Next</button>
+</div>
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const d=document.getElementById('dn');d.innerHTML='';for(let i=1;i<=TOTAL;i++){const dot=document.createElement('div');dot.className='dot'+(i===cur?' active':visited.has(i)&&i!==cur?' done':'');dot.onclick=(()=>{const n=i;return()=>goTo(n)})();d.appendChild(dot);}}
+function goTo(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-badge').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=(n===1);document.getElementById('next-btn').disabled=(n===TOTAL);buildDots();window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=1&&cur+d<=TOTAL)goTo(cur+d);}
+buildDots();
+const FA={f1:['cathode'],f2:['t','time'],f3:['cathode'],f4:['galvanising','galvanizing'],f5:['anode']};
+function checkFills(){let s=0;Object.keys(FA).forEach(id=>{const v=(document.getElementById(id).value||'').toLowerCase().trim();const ok=FA[id].some(a=>v.includes(a));const r=document.getElementById(id+'r');r.style.display='inline-block';if(ok){r.className='fbr ok';r.textContent='Correct (1 mark)';s++;}else{r.className='fbr no';r.textContent='Ans: '+FA[id][0];}});return s;}
+function grSA(saId,fbId,kw,req,marks,model){const txt=document.getElementById(saId).value.toLowerCase().trim();if(!txt){alert('Please write your answer first.');return;}const found=kw.filter(k=>txt.includes(k));const missed=kw.filter(k=>!txt.includes(k)).slice(0,5);const rate=Math.min(1,found.length/req);const sc=Math.round(rate*marks);const fb=document.getElementById(fbId);fb.style.display='block';const cls=sc>=marks?'ok':sc>0?'partial':'no';fb.className='saf '+cls;fb.innerHTML='<strong>Score: '+sc+' / '+marks+'</strong><br>Found: <span class="kwf">'+(found.length?found.join(', '):'none')+'</span><br>Missed: <span class="kwm">'+(missed.length?missed.join(', '):'none')+'</span><div class="ma">Model: '+model+'</div>';}
+function getScore(id){const el=document.getElementById(id);if(!el||el.style.display==='none')return 0;const m=el.innerHTML.match(/Score:\s*(\d+)\s*\//);return m?parseInt(m[1]):0;}
+function submitQuiz(){const fill=checkFills();const sa=getScore('sf1')+getScore('sf2')+getScore('sf3')+getScore('sf4');const tot=fill+sa;const pct=Math.round((tot/15)*100);const grade=pct>=80?'Excellent':pct>=60?'Good':pct>=50?'Average':'Keep Revising';const r=document.getElementById('sr');r.style.display='block';document.getElementById('sv').textContent=tot+'/15 ('+pct+'%)';document.getElementById('sm').innerHTML='<strong>'+grade+'</strong><br><small>Fill-in: '+fill+'/5 | Short Answer: '+sa+'/10</small>';submitExamToMTTI(tot,15,pct);r.scrollIntoView({behavior:'smooth'});}
+function submitExamToMTTI(score,total,percent){try{fetch('/wp-json/mtti/v1/exam-result',{method:'POST',headers:{'Content-Type':'application/json','X-WP-Nonce':window.mtti_nonce||''},body:JSON.stringify({lesson_id:'f4-chem-3-electrochemistry-2',score,total,percent,timestamp:new Date().toISOString()})}).then(r=>r.json()).then(d=>{if(d&&d.success)console.log('[MTTI] Saved');}).catch(e=>console.log('[MTTI] Offline',e));}catch(e){console.log('[MTTI]',e);}}
+</script>
+</body>
+</html>

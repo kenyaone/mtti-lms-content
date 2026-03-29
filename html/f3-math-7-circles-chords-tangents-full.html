@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Circles: Chords and Tangents</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+canvas{border-radius:8px;border:1px solid #ddd;background:#fff;display:block;margin:0 auto}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input{padding:8px 12px;border:2px solid #ccc;border-radius:6px;font-size:1rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 12px;width:100px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>⭕ F3 Mathematics · Circles: Chords and Tangents</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Calculate length of an arc using arc = (θ/360) × 2πr</li>
+    <li>Find length of a chord using perpendicular from centre</li>
+    <li>Apply chord properties: perpendicular bisector, chord distance</li>
+    <li>Identify and apply tangent properties</li>
+    <li>Apply properties of tangents from external point</li>
+    <li>Apply alternate segment theorem and circle-triangle relations</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Arc</span><span class="key-term">Chord</span><span class="key-term">Tangent</span>
+    <span class="key-term">Secant</span><span class="key-term">Subtended Angle</span>
+    <span class="key-term">Alternate Segment</span><span class="key-term">Cyclic Quadrilateral</span>
+    <span class="key-term">Contact of Circles</span>
+  </div>
+</div>
+
+<!-- S2 Arc Length -->
+<div class="slide" id="s2">
+  <h2>Length of an Arc</h2>
+  <p>An arc is a portion of the circumference. Its length depends on the central angle θ and radius r.</p>
+  <div class="formula-box">
+    <div class="math">Arc length = (θ/360) × 2πr</div>
+    <div style="margin-top:6px">Area of sector = (θ/360) × πr²</div>
+  </div>
+  <div class="worked">
+    <strong>Example 1:</strong> Arc for θ = 250°, r = 14 cm (π = 22/7)<br>
+    <div class="step">Arc = (250/360) × 2 × (22/7) × 14 = (250/360) × 88 = <strong>61.11 cm</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Example 2:</strong> Arc = 11 cm, θ = 90°. Find r.<br>
+    <div class="step">11 = (90/360) × 2πr = (1/4) × 2πr = πr/2</div>
+    <div class="step">r = 22/π = 22/(22/7) = <strong>7 cm</strong></div>
+  </div>
+  <canvas id="arc-canvas" width="320" height="320" style="max-width:320px"></canvas>
+  <div style="text-align:center;margin-top:8px">
+    <label>θ: <input type="range" id="arc-theta" min="10" max="350" value="120" oninput="drawArc()"> <span id="arc-tv">120</span>°</label>
+    &nbsp;
+    <label>r: <input type="range" id="arc-r" min="40" max="120" value="90" oninput="drawArc()"> <span id="arc-rv">90</span></label>
+  </div>
+  <div id="arc-info" style="text-align:center;margin-top:8px;color:var(--pri);font-weight:600"></div>
+</div>
+
+<!-- S3 Chords -->
+<div class="slide" id="s3">
+  <h2>Chords</h2>
+  <p>A chord is a line segment joining two points on a circle. Key properties:</p>
+  <div class="card">
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>The <strong>perpendicular from the centre bisects the chord</strong></li>
+      <li>Equal chords are equidistant from the centre</li>
+      <li>A chord closer to the centre is longer</li>
+    </ol>
+  </div>
+  <div class="formula-box">
+    <div>If d = perpendicular distance from centre, half-chord = √(r² − d²)</div>
+    <div class="math">Chord length = 2√(r² − d²)</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Circle radius 13 cm, chord 10 cm from centre. Find chord length.<br>
+    <div class="step">Half-chord = √(13² − 10²) = √(169 − 100) = √69 ≈ 8.307 cm</div>
+    <div class="step">Full chord = 2 × 8.307 = <strong>16.61 cm</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Chord = 24 cm, radius = 13 cm. Find distance from centre.<br>
+    <div class="step">Half-chord = 12; d = √(13² − 12²) = √(169 − 144) = √25 = <strong>5 cm</strong></div>
+  </div>
+</div>
+
+<!-- S4 Tangent properties -->
+<div class="slide" id="s4">
+  <h2>Tangent of a Circle</h2>
+  <p>A tangent touches the circle at exactly <strong>one point</strong>. Key properties:</p>
+  <div class="card">
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>A tangent is <strong>perpendicular to the radius</strong> at the point of contact</li>
+      <li>From an external point, two equal tangents can be drawn</li>
+      <li>Tangent-chord angle = angle in alternate segment</li>
+    </ol>
+  </div>
+  <div class="formula-box">
+    <div>Tangent from external point P: PT² = PA × PB (where A, B are intersection of secant)</div>
+    <div class="math">PT² = PO² − r² &nbsp;&nbsp;(PT = tangent length)</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> O is centre, r = 5 cm, OP = 13 cm. Find tangent length PT.<br>
+    <div class="step">PT² = OP² − r² = 169 − 25 = 144</div>
+    <div class="step">PT = <strong>12 cm</strong></div>
+  </div>
+</div>
+
+<!-- S5 Tangents to Two Circles -->
+<div class="slide" id="s5">
+  <h2>Tangents to Two Circles & Contacts</h2>
+  <div class="card">
+    <strong>Common External Tangent:</strong> does not cross between the circles<br>
+    <strong>Common Internal Tangent:</strong> crosses between the circles<br><br>
+    <table>
+      <tr><th>Circles</th><th>External Tangents</th><th>Internal Tangents</th></tr>
+      <tr><td>Apart (d &gt; r₁+r₂)</td><td>2</td><td>2</td></tr>
+      <tr><td>Ext. contact (d = r₁+r₂)</td><td>2</td><td>1</td></tr>
+      <tr><td>Overlapping</td><td>2</td><td>0</td></tr>
+      <tr><td>Int. contact (d = |r₁−r₂|)</td><td>1</td><td>0</td></tr>
+      <tr><td>One inside other</td><td>0</td><td>0</td></tr>
+    </table>
+  </div>
+  <div class="worked">
+    <strong>External contact:</strong> r₁=3, r₂=5, centres distance = 8 = r₁+r₂ → circles touch externally.<br>
+    Point of contact divides line of centres in ratio 3:5 from centre of smaller circle.
+  </div>
+</div>
+
+<!-- S6 Alternate Segment Theorem -->
+<div class="slide" id="s6">
+  <h2>Alternate Segment Theorem</h2>
+  <p>The angle between a tangent to a circle and a chord drawn from the point of contact equals the inscribed angle on the opposite side of the chord.</p>
+  <div class="formula-box">
+    <div class="math">∠(tangent, chord) = ∠ in alternate segment</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Tangent PT at A. Chord AB. ∠TAB = 55°. Find ∠ACB (C in alternate segment).<br>
+    <div class="step">By alternate segment theorem: ∠ACB = ∠TAB = <strong>55°</strong></div>
+  </div>
+  <h3>Cyclic Quadrilateral Properties</h3>
+  <div class="card">
+    <ul style="line-height:2;padding-left:18px">
+      <li>Opposite angles of a cyclic quadrilateral are supplementary (add to 180°)</li>
+      <li>Exterior angle = opposite interior angle</li>
+    </ul>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> ABCD is cyclic. ∠A = 75°. Find ∠C.<br>
+    <div class="step">∠A + ∠C = 180° → ∠C = 180° − 75° = <strong>105°</strong></div>
+  </div>
+</div>
+
+<!-- S7 Circle Calculator -->
+<div class="slide" id="s7">
+  <h2>Circle Calculations Tool</h2>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Arc Length & Sector Area</h3>
+    <div class="inp-row">
+      <label>r (cm):<input id="cr" type="number" value="14" style="width:80px"></label>
+      <label>θ (°):<input id="ctheta" type="number" value="120" style="width:80px"></label>
+      <button class="go-btn" onclick="calcArc()">Calculate</button>
+    </div>
+    <div id="arc-result" class="result-box">Enter values above.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Chord Length from Distance</h3>
+    <div class="inp-row">
+      <label>Radius r:<input id="chord-r" type="number" value="13" style="width:80px"></label>
+      <label>Distance d:<input id="chord-d" type="number" value="5" style="width:80px"></label>
+      <button class="go-btn" onclick="calcChord()">Calculate</button>
+    </div>
+    <div id="chord-result" class="result-box">Enter values above.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Tangent Length from External Point</h3>
+    <div class="inp-row">
+      <label>Radius r:<input id="tan-r" type="number" value="5" style="width:80px"></label>
+      <label>Distance OP:<input id="tan-op" type="number" value="13" style="width:80px"></label>
+      <button class="go-btn" onclick="calcTan()">Calculate</button>
+    </div>
+    <div id="tan-result" class="result-box">Enter values above.</div>
+  </div>
+</div>
+
+<!-- S8 Summary -->
+<div class="slide" id="s8">
+  <h2>Summary — Key Theorems</h2>
+  <table>
+    <tr><th>Theorem</th><th>Statement</th></tr>
+    <tr><td>Arc length</td><td>(θ/360) × 2πr</td></tr>
+    <tr><td>Chord & perp.</td><td>Perpendicular from centre bisects chord</td></tr>
+    <tr><td>Chord length</td><td>2√(r² − d²)</td></tr>
+    <tr><td>Tangent-radius</td><td>Tangent ⊥ radius at contact point</td></tr>
+    <tr><td>Tangent length</td><td>PT = √(OP² − r²)</td></tr>
+    <tr><td>Equal tangents</td><td>From external point, two tangents are equal</td></tr>
+    <tr><td>Alternate segment</td><td>∠(tangent,chord) = angle in alt. segment</td></tr>
+    <tr><td>Cyclic quad.</td><td>Opposite angles sum to 180°</td></tr>
+  </table>
+</div>
+
+<!-- S9 Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><h3>Section A: Arc & Chord</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>Find the arc length for θ = 72°, r = 10 cm. (Use π = 3.142)</li>
+      <li>A chord is 8 cm from centre of a circle with r = 17 cm. Find chord length.</li>
+      <li>A chord of length 30 cm is in a circle of radius 17 cm. Find distance from centre.</li>
+    </ol>
+  </div>
+  <div class="card"><h3>Section B: Tangents & Theorems</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>PT is tangent from P. r = 8 cm, OP = 10 cm. Find PT.</li>
+      <li>PQRS is a cyclic quadrilateral. ∠P = 110°. Find ∠R.</li>
+      <li>A tangent-chord angle is 38°. Find the inscribed angle in the alternate segment.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- S10 Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz — Circles: Chords and Tangents</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. Arc length = (θ/360) × <input class="fib" data-ans="2πr" id="f1" type="text"> (write as 2πr)</div></div>
+    <div class="fib-q"><div class="qtext">2. A tangent meets the radius at the point of contact at <input class="fib" data-ans="90" id="f2" type="text">°</div></div>
+    <div class="fib-q"><div class="qtext">3. Chord length = 2√(r² − <input class="fib" data-ans="d2" id="f3" type="text" style="width:60px">) (write as d2 meaning d²)</div></div>
+    <div class="fib-q"><div class="qtext">4. Opposite angles of a cyclic quadrilateral sum to <input class="fib" data-ans="180" id="f4" type="text">°</div></div>
+    <div class="fib-q"><div class="qtext">5. Tangent length PT = √(OP² − <input class="fib" data-ans="r2" id="f5" type="text" style="width:60px">) (write as r2)</div></div>
+    <div class="fib-q"><div class="qtext">6. The tangent-chord angle equals the angle in the <input class="fib" data-ans="alternate" id="f6" type="text" style="width:130px"> segment</div></div>
+
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. Find the arc length for θ = 72°, r = 10 cm. (π = 3.142)</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. A chord is 8 cm from the centre of a circle with radius 17 cm. Find the chord length.</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. From an external point P, a tangent PT and secant PAB are drawn to a circle. PA = 4 cm, PB = 9 cm. Find PT.</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+
+    <button id="quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();if(n===2)setTimeout(drawArc,100);}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+function drawArc(){
+  const theta=parseFloat(document.getElementById('arc-theta').value)||120;
+  const r=parseFloat(document.getElementById('arc-r').value)||90;
+  document.getElementById('arc-tv').textContent=theta;
+  document.getElementById('arc-rv').textContent=r;
+  const cv=document.getElementById('arc-canvas');
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W/2,cy=H/2;
+  ctx.clearRect(0,0,W,H);
+  // full circle (dashed)
+  ctx.setLineDash([4,4]);ctx.strokeStyle='#ccc';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.stroke();ctx.setLineDash([]);
+  // arc
+  const startRad=-Math.PI/2;
+  const endRad=startRad+(theta*Math.PI/180);
+  ctx.strokeStyle='#0a5e2a';ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(cx,cy,r,startRad,endRad);ctx.stroke();
+  // radii
+  ctx.strokeStyle='#f5a623';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(startRad),cy+r*Math.sin(startRad));ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+r*Math.cos(endRad),cy+r*Math.sin(endRad));ctx.stroke();
+  // centre
+  ctx.fillStyle='#333';ctx.beginPath();ctx.arc(cx,cy,4,0,2*Math.PI);ctx.fill();
+  ctx.font='13px sans-serif';ctx.fillText('O',cx+6,cy+4);
+  // arc label
+  const midA=startRad+theta*Math.PI/360;
+  ctx.fillStyle='#0a5e2a';ctx.font='bold 12px sans-serif';
+  ctx.fillText('arc',(cx+r*Math.cos(midA))*1.06-cx*0.06,cy+r*Math.sin(midA)+4);
+  const arcLen=(theta/360)*2*Math.PI*(r/10);
+  document.getElementById('arc-info').textContent=`θ=${theta}°  r=${r/10}cm  Arc ≈ ${arcLen.toFixed(2)} cm  Sector Area ≈ ${((theta/360)*Math.PI*Math.pow(r/10,2)).toFixed(2)} cm²`;
+}
+setTimeout(()=>{if(cur===2)drawArc();},200);
+
+function calcArc(){
+  const r=parseFloat(document.getElementById('cr').value)||0;
+  const theta=parseFloat(document.getElementById('ctheta').value)||0;
+  const arc=(theta/360)*2*Math.PI*r;
+  const area=(theta/360)*Math.PI*r*r;
+  document.getElementById('arc-result').innerHTML=`Arc = (${theta}/360) × 2π × ${r} = <strong>${arc.toFixed(4)} cm</strong><br>Sector Area = (${theta}/360) × π × ${r}² = <strong>${area.toFixed(4)} cm²</strong>`;
+}
+function calcChord(){
+  const r=parseFloat(document.getElementById('chord-r').value)||0;
+  const d=parseFloat(document.getElementById('chord-d').value)||0;
+  if(d>=r){document.getElementById('chord-result').textContent='Distance must be less than radius.';return;}
+  const half=Math.sqrt(r*r-d*d);
+  document.getElementById('chord-result').innerHTML=`Half-chord = √(${r}²−${d}²) = √${r*r-d*d} = ${half.toFixed(4)}<br>Full chord = <strong>${(2*half).toFixed(4)} cm</strong>`;
+}
+function calcTan(){
+  const r=parseFloat(document.getElementById('tan-r').value)||0;
+  const op=parseFloat(document.getElementById('tan-op').value)||0;
+  if(op<=r){document.getElementById('tan-result').textContent='OP must be greater than radius.';return;}
+  const pt=Math.sqrt(op*op-r*r);
+  document.getElementById('tan-result').innerHTML=`PT = √(OP²−r²) = √(${op}²−${r}²) = √${op*op-r*r} = <strong>${pt.toFixed(4)} cm</strong>`;
+}
+
+function submitQuiz(){
+  const ans={f1:'2πr',f2:'90',f3:'d2',f4:'180',f5:'r2',f6:'alternate'};
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const given=inp.value.trim().toLowerCase().replace(/\s/g,'');
+    const exp=(ans[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(given===exp){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  const sa=[
+    {id:'sa1',fb:'fb1',marks:2,keys:['12.57','12.566','72','360','6.284','10'],model:'Arc=(72/360)×2×3.142×10=(0.2)×62.84=12.57 cm'},
+    {id:'sa2',fb:'fb2',marks:2,keys:['30.27','30.3','285','√285','half','15.13'],model:'Half=√(17²−8²)=√(289−64)=√225=15; Chord=2×15=30 cm'},
+    {id:'sa3',fb:'fb3',marks:2,keys:['6','36','pt2','pa×pb','4×9'],model:'PT²=PA×PB=4×9=36; PT=√36=6 cm'},
+  ];
+  let ptB=0;
+  sa.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase().replace(/\s/g,'');
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase().replace(/\s/g,'')))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,max=12,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review needed'}</div>
+  <div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th><th>Descriptor</th></tr><tr><td>EE</td><td>11–12</td><td>Exceeds</td></tr><tr><td>ME</td><td>8–10</td><td>Meets</td></tr><tr><td>AE</td><td>6–7</td><td>Approaches</td></tr><tr><td>BE</td><td>0–5</td><td>Below</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+</script>
+</body>
+</html>

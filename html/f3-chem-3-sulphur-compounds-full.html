@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Chemistry – Sulphur and Its Compounds</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--sub:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3);}
+#topbar .title{font-weight:700;font-size:1rem;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-wrap{height:5px;background:rgba(255,255,255,.25);margin-top:6px;}
+#progress-bar{height:5px;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 100px;max-width:820px;margin:0 auto;animation:fadeIn .35s;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+h2{color:var(--pri);font-size:1.25rem;margin-bottom:14px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{color:var(--pri);font-size:1rem;margin:14px 0 6px;}
+p,li{font-size:.93rem;line-height:1.65;color:var(--sub);margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.eq{background:#e8f5e9;border-left:3px solid var(--ok);padding:8px 12px;border-radius:6px;font-family:monospace;font-size:.88rem;margin:8px 0;color:#1b5e20;}
+.warn{background:#fff8e1;border-left:3px solid var(--acc);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:8px 0;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;margin:8px 0;}
+th{background:var(--pri);color:#fff;padding:7px 9px;text-align:left;}
+td{padding:6px 9px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9f9f9;}
+.outcomes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.outcome{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:20px;padding:5px 12px;font-size:.82rem;color:var(--ok);}
+.q-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.q-block .q{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.q-block input[type=text]{width:100%;padding:8px 10px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;}
+.q-block input.correct{border-color:var(--ok);background:#e8f5e9;}
+.q-block input.wrong{border-color:var(--no);background:#ffebee;}
+.feedback{font-size:.82rem;margin-top:5px;display:none;}
+.feedback.show{display:block;}
+.quiz-block{background:var(--card);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 5px rgba(0,0,0,.08);}
+.quiz-block .qn{font-weight:600;margin-bottom:8px;font-size:.93rem;}
+.quiz-block textarea{width:100%;padding:8px;border:1.5px solid #ccc;border-radius:6px;font-size:.9rem;resize:vertical;min-height:70px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;font-weight:700;margin:2px;}
+.tag.found{background:#e8f5e9;color:var(--ok);border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:var(--no);border:1px solid #ef9a9a;}
+.model-ans{background:#f3e5f5;border-left:3px solid #7b1fa2;padding:8px 12px;border-radius:6px;font-size:.85rem;margin-top:8px;display:none;}
+.model-ans.show{display:block;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:16px;font-size:.83rem;}
+.rubric h4{color:#e65100;margin-bottom:6px;}
+.rubric table th{background:#e65100;}
+#score-box{background:var(--card);border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12);}
+#score-circle{width:110px;height:110px;border-radius:50%;background:var(--pri);color:#fff;font-size:1.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;z-index:99;}
+#nav button{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.9rem;cursor:pointer;font-weight:600;}
+#nav button:disabled{background:#bbb;}
+#nav .dots{display:flex;gap:5px;}
+#nav .dots span{width:9px;height:9px;border-radius:50%;background:#ccc;cursor:pointer;}
+#nav .dots span.active{background:var(--pri);}
+.btn-submit{background:var(--acc);color:#fff;border:none;border-radius:8px;padding:10px 26px;font-size:.93rem;cursor:pointer;font-weight:700;margin-top:12px;}
+.btn-check{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.88rem;cursor:pointer;font-weight:600;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">F3 Chemistry – Sulphur and Its Compounds</div>
+    <div class="meta">Form 3 | MTTI LMS</div>
+  </div>
+  <div class="meta" id="slide-indicator">1 / 10</div>
+</div>
+<div id="progress-wrap"><div id="progress-bar" style="width:10%"></div></div>
+
+<!-- SLIDE 1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="outcomes">
+    <div class="outcome">Describe occurrence and extraction of sulphur (Frasch process)</div>
+    <div class="outcome">Explain physical and chemical properties of sulphur</div>
+    <div class="outcome">Compare allotropes of sulphur</div>
+    <div class="outcome">Describe preparation and properties of SO₂</div>
+    <div class="outcome">Explain the Contact process for H₂SO₄ manufacture</div>
+    <div class="outcome">Describe properties of conc. and dilute H₂SO₄</div>
+    <div class="outcome">Describe H₂S preparation and properties</div>
+    <div class="outcome">Explain sulphur compound pollution and tests</div>
+  </div>
+  <div class="card">
+    <h3>Occurrence of Sulphur</h3>
+    <p>Sulphur occurs naturally as a free element underground in Texas and Louisiana (USA) and Sicily (Italy). Also as sulphide and sulphate ores:</p>
+    <ul>
+      <li><strong>Metallic sulphides:</strong> Iron pyrites (FeS₂), Zinc blende (ZnS), Copper pyrites (CuFeS₂)</li>
+      <li><strong>Metallic sulphates:</strong> Gypsum (CaSO₄)</li>
+      <li><strong>Hydrogen sulphide (H₂S)</strong> in natural gas</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 2: Frasch Process & Properties of Sulphur -->
+<div class="slide" id="s2">
+  <h2>Frasch Process & Properties of Sulphur</h2>
+  <div class="card">
+    <h3>Extraction: The Frasch Process</h3>
+    <p>Three concentric pipes (Frasch pump) drill to underground deposits:</p>
+    <table>
+      <tr><th>Pipe</th><th>Function</th></tr>
+      <tr><td>Outermost</td><td>Pumps superheated water (170°C, 10 atm) down to melt sulphur (MP = 114°C)</td></tr>
+      <tr><td>Innermost</td><td>Forces hot compressed air down to create froth</td></tr>
+      <tr><td>Middle</td><td>Brings froth of molten sulphur up to surface</td></tr>
+    </table>
+    <p>Froth settles in tanks: upper layer = molten sulphur (density), lower = water. Solidifies to give <strong>99% pure sulphur</strong>.</p>
+    <p><em>Why not conventional mining?</em> Deposits lie deep under quicksand; associated poisonous SO₂ gases.</p>
+  </div>
+  <div class="card">
+    <h3>Physical Properties of Sulphur</h3>
+    <ul>
+      <li>Yellow solid; molecule is a puckered ring of 8 sulphur atoms (S₈)</li>
+      <li>Insoluble in water; soluble in organic solvents (CS₂, xylene)</li>
+      <li>Poor conductor of heat and electricity (covalent structure)</li>
+    </ul>
+    <p><strong>Effect of heat:</strong></p>
+    <ul>
+      <li>~113°C: melts to amber mobile liquid (S₈ rings open to chains)</li>
+      <li>~160°C: dark, viscous liquid (very long chains: S₁₀₀₀₀₀)</li>
+      <li>~195°C: maximum viscosity</li>
+      <li>~444°C (BP): red-brown vapour (S₈, S₆, S₄, S₂)</li>
+      <li>Vapour on cold surface → yellow <strong>flowers of sulphur</strong></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Chemical Properties of Sulphur</h3>
+    <p><strong>Burning in air:</strong></p>
+    <div class="eq">S(s) + O₂(g) → SO₂(g) [blue flame]</div>
+    <p><strong>With conc. H₂SO₄:</strong></p>
+    <div class="eq">S(s) + 2H₂SO₄(l) → 3SO₂(g) + 2H₂O(l)</div>
+    <p><strong>With conc. HNO₃:</strong></p>
+    <div class="eq">S(s) + 6HNO₃(l) → H₂SO₄(aq) + 6NO₂(g) + 2H₂O(l)</div>
+    <p><strong>With metals:</strong></p>
+    <div class="eq">Fe(s) + S(s) → FeS(s) [heat; grey+yellow → black]</div>
+    <div class="eq">H₂(g) + S(s) → H₂S(g)</div>
+    <p>Note: Sulphur does NOT react with inert gases, nitrogen, or iodine.</p>
+  </div>
+</div>
+
+<!-- SLIDE 3: Allotropes of Sulphur -->
+<div class="slide" id="s3">
+  <h2>Allotropes of Sulphur</h2>
+  <div class="card">
+    <p><strong>Allotropy</strong> = existence of an element in more than one form without change of state. Sulphur has two crystalline allotropes:</p>
+    <table>
+      <tr><th>Property</th><th>Rhombic Sulphur (α)</th><th>Monoclinic Sulphur (β)</th></tr>
+      <tr><td>Stability</td><td>Stable below 96°C</td><td>Stable above 96°C</td></tr>
+      <tr><td>Colour</td><td>Bright yellow</td><td>Pale yellow</td></tr>
+      <tr><td>Melting point</td><td>113°C</td><td>119°C</td></tr>
+      <tr><td>Density</td><td>~2.06 g/cm³ (heavier)</td><td>~1.98 g/cm³ (lighter)</td></tr>
+      <tr><td>Shape</td><td>Octahedral crystals</td><td>Needle-like (prismatic)</td></tr>
+      <tr><td>Occurrence</td><td>Occurs naturally</td><td>Only above 96°C</td></tr>
+    </table>
+    <div class="warn">💡 96°C is the <strong>transition temperature</strong> — both allotropes are stable at this point. Both have the same molecular formula S₈.</div>
+  </div>
+  <div class="card">
+    <h3>Uses of Sulphur</h3>
+    <ul>
+      <li>Industrial manufacture of H₂SO₄ (Contact process)</li>
+      <li>Fungicide for skin diseases</li>
+      <li>Vulcanisation (hardening) of rubber</li>
+      <li>Manufacture of Ca(HSO₃)₂ (bleaching agent)</li>
+      <li>Matches and fireworks</li>
+      <li>Dyes, drugs (sulphur ointments), hair oils</li>
+      <li>Crop fungicides (e.g., ridomil, dithane)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 4: Sulphur Dioxide (SO₂) -->
+<div class="slide" id="s4">
+  <h2>Sulphur(IV) Oxide – SO₂</h2>
+  <div class="card">
+    <h3>Laboratory Preparation</h3>
+    <p>Dilute HCl (or H₂SO₄) + sodium sulphite:</p>
+    <div class="eq">Na₂SO₃(aq) + 2HCl(aq) → 2NaCl(aq) + H₂O(l) + SO₂(g)</div>
+    <p>Gas dried with conc. H₂SO₄; collected by <strong>downward delivery</strong> (denser than air).</p>
+    <p><em>Note:</em> HNO₃ cannot be used — it oxidises SO₂ to H₂SO₄.</p>
+  </div>
+  <div class="card">
+    <h3>Properties of SO₂</h3>
+    <ul>
+      <li>Colourless gas; pungent, irritating smell</li>
+      <li>Does not burn and does not support combustion</li>
+      <li>Acidic (low pH); dissolves in water: SO₂ + H₂O → H₂SO₃ (sulphurous acid)</li>
+    </ul>
+    <p><strong>SO₂ as reducing agent:</strong> Reduces KMnO₄ (purple → colourless) and K₂Cr₂O₇ (orange → green)</p>
+    <div class="eq">5SO₂(g) + 2KMnO₄(aq) + 2H₂O → K₂SO₄ + 2MnSO₄ + H₂SO₄</div>
+    <div class="eq">K₂Cr₂O₇(aq) + 3SO₂(g) + H₂SO₄(aq) → K₂SO₄ + Cr₂(SO₄)₃ + H₂O</div>
+    <p>Orange → green is the <strong>usual chemical test for SO₂</strong>.</p>
+    <p><strong>SO₂ as oxidising agent:</strong> Reacts with H₂S (stronger reducing agent):</p>
+    <div class="eq">2H₂S(g) + SO₂(g) → 2H₂O(l) + 3S(s) [yellow deposits]</div>
+    <p><strong>SO₂ as bleaching agent:</strong> Bleaches by reduction (not permanent — colour can be restored by oxidation or air exposure):</p>
+    <div class="eq">SO₂(g) + H₂O(l) + [Dye+O] → Dye + H₂SO₄(aq) [colourless]</div>
+    <p><strong>SO₂ with alkali (NaOH):</strong></p>
+    <div class="eq">2NaOH(aq) + SO₂(g) → Na₂SO₃(aq) + H₂O(l) [limited SO₂]</div>
+    <div class="eq">NaOH(aq) + SO₂(g) → NaHSO₃(aq) [excess SO₂]</div>
+  </div>
+  <div class="card">
+    <h3>Tests for SO₂</h3>
+    <ul>
+      <li>Characteristic pungent smell</li>
+      <li>Bleaches moist flower petals</li>
+      <li>Decolourises purple KMnO₄</li>
+      <li><strong>Turns acidified orange K₂Cr₂O₇ filter paper to green</strong> (most reliable test)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 5: Contact Process – H₂SO₄ -->
+<div class="slide" id="s5">
+  <h2>The Contact Process – Industrial Manufacture of H₂SO₄</h2>
+  <div class="card">
+    <h3>Raw Materials</h3>
+    <ul>
+      <li>Sulphur or sulphide ores (cheaper from pyrites)</li>
+      <li>Oxygen (from air)</li>
+      <li>Water</li>
+      <li>Concentrated H₂SO₄ (for absorption)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Process Steps</h3>
+    <table>
+      <tr><th>Step</th><th>Process</th><th>Equation</th></tr>
+      <tr><td>1</td><td>Burn sulphur/pyrites to get SO₂</td><td>S + O₂ → SO₂</td></tr>
+      <tr><td>2</td><td>Purification + drying (electrostatic precipitation; conc. H₂SO₄)</td><td>—</td></tr>
+      <tr><td>3</td><td>Heat exchanger (cool incoming gases)</td><td>—</td></tr>
+      <tr><td>4</td><td>Catalytic chamber: SO₂ + O₂ → SO₃</td><td>2SO₂ + O₂ ⇌ 2SO₃ + Heat [V₂O₅, 450°C]</td></tr>
+      <tr><td>5</td><td>Heat exchanger (cool hot SO₃)</td><td>—</td></tr>
+      <tr><td>6</td><td>Absorption: SO₃ + conc. H₂SO₄ → Oleum</td><td>SO₃ + H₂SO₄ → H₂S₂O₇</td></tr>
+      <tr><td>7</td><td>Dilution: Oleum + H₂O → conc. H₂SO₄</td><td>H₂S₂O₇ + H₂O → 2H₂SO₄</td></tr>
+    </table>
+    <div class="warn">⚠️ SO₃ is NOT dissolved directly in water — it produces corrosive acid mist with a hissing sound. It's dissolved in conc. H₂SO₄ to form oleum (pyrosulphuric acid) first.</div>
+  </div>
+  <div class="card">
+    <h3>Conditions and Reasons for Catalytic Chamber</h3>
+    <table>
+      <tr><th>Condition</th><th>Value</th><th>Reason</th></tr>
+      <tr><td>Temperature</td><td>450°C (compromise)</td><td>Low T → higher yield (exothermic) but slow rate; high T → fast but low yield. 450°C balances both</td></tr>
+      <tr><td>Pressure</td><td>Slightly above atmospheric (~2-3 atm)</td><td>High pressure would liquefy SO₃ and is expensive; slight above atm gives 98% conversion</td></tr>
+      <tr><td>Catalyst</td><td>Vanadium(V) oxide (V₂O₅)</td><td>Speeds up reaction; preferred over platinised asbestos — cheaper, not easily poisoned</td></tr>
+    </table>
+    <p><strong>Pollution control:</strong> Unreacted SO₂ neutralised with Ca(OH)₂:</p>
+    <div class="eq">Ca(OH)₂(aq) + SO₂(g) → CaSO₃(aq) + H₂O(l)</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Properties of H₂SO₄ -->
+<div class="slide" id="s6">
+  <h2>Properties of Sulphuric(VI) Acid</h2>
+  <div class="card">
+    <h3>Physical Properties (Conc. H₂SO₄)</h3>
+    <ul>
+      <li>Colourless, odourless, oily liquid; density 1.84 g/cm³</li>
+      <li>Very soluble in water — gives out heat (exothermic)</li>
+      <li><strong>Hygroscopic</strong> — absorbs atmospheric moisture (used as drying agent)</li>
+    </ul>
+    <div class="warn">⚠️ Always add acid to water — never water to acid (violent exothermic reaction).</div>
+  </div>
+  <div class="card">
+    <h3>Conc. H₂SO₄ as Dehydrating Agent</h3>
+    <p><strong>Blue CuSO₄·5H₂O → White anhydrous CuSO₄:</strong></p>
+    <div class="eq">CuSO₄·5H₂O(s) → CuSO₄(s) + 5H₂O(l) [conc. H₂SO₄]</div>
+    <p><strong>Sugar (charring):</strong></p>
+    <div class="eq">C₁₂H₂₂O₁₁(s) → 12C(s) + 11H₂O(l) [conc. H₂SO₄; spongy black mass]</div>
+    <p><strong>Dehydration of ethanol → ethene:</strong></p>
+    <div class="eq">C₂H₅OH(l) → C₂H₄(g) + H₂O(l) [conc. H₂SO₄, 160–180°C]</div>
+  </div>
+  <div class="card">
+    <h3>Conc. H₂SO₄ as Oxidising Agent (hot)</h3>
+    <p>Reduced to SO₂ and water:</p>
+    <div class="eq">Cu(s) + 2H₂SO₄(l) → CuSO₄(aq) + SO₂(g) + 2H₂O(l)</div>
+    <div class="eq">C(s) + 2H₂SO₄(l) → CO₂(g) + 2SO₂(g) + 2H₂O(l)</div>
+  </div>
+  <div class="card">
+    <h3>Dilute H₂SO₄ – Typical Acid Reactions</h3>
+    <p><strong>With metals above H in reactivity:</strong></p>
+    <div class="eq">Mg(s) + H₂SO₄(aq) → MgSO₄(aq) + H₂(g)</div>
+    <p><strong>With carbonates:</strong></p>
+    <div class="eq">Na₂CO₃(s) + H₂SO₄(aq) → Na₂SO₄(aq) + CO₂(g) + H₂O(l)</div>
+    <p><strong>With oxides/hydroxides:</strong></p>
+    <div class="eq">CuO(s) + H₂SO₄(aq) → CuSO₄(aq) + H₂O(l) [black → blue solution]</div>
+    <p>Note: Dilute H₂SO₄ does not react with copper (below H in reactivity series).</p>
+  </div>
+  <div class="card">
+    <h3>Uses of H₂SO₄</h3>
+    <p>Manufacture of: fertilisers, detergents, plastics, dyes, paints, lead accumulators, polymers, petroleum refining. Also used as a drying agent.</p>
+  </div>
+</div>
+
+<!-- SLIDE 7: Hydrogen Sulphide (H₂S) -->
+<div class="slide" id="s7">
+  <h2>Hydrogen Sulphide – H₂S</h2>
+  <div class="card">
+    <h3>Laboratory Preparation</h3>
+    <p>Dilute HCl + iron(II) sulphide:</p>
+    <div class="eq">FeS(s) + 2HCl(aq) → FeCl₂(aq) + H₂S(g)</div>
+    <p>Dried with anhydrous CaCl₂. Collected by <strong>downward delivery</strong> (denser than air) or over warm water.</p>
+    <p><strong>Test for H₂S:</strong> Filter paper soaked in lead(II) ethanoate turns black (PbS).</p>
+  </div>
+  <div class="card">
+    <h3>Properties of H₂S</h3>
+    <ul>
+      <li>Colourless, very poisonous gas; repulsive "rotten eggs" smell</li>
+      <li>Slightly soluble in water → weak acid (H₂S ⇌ H⁺ + HS⁻)</li>
+    </ul>
+    <p><strong>Combustion:</strong></p>
+    <div class="eq">2H₂S(g) + 3O₂(g) → 2SO₂(g) + 2H₂O(g) [excess O₂]</div>
+    <div class="eq">2H₂S(g) + O₂(g) → 2S(s) + 2H₂O(g) [limited O₂; yellow S deposits]</div>
+  </div>
+  <div class="card">
+    <h3>H₂S as Reducing Agent</h3>
+    <p>H₂S is oxidised to S; the oxidising agent is reduced:</p>
+    <table>
+      <tr><th>Reaction</th><th>Observation</th></tr>
+      <tr><td>K₂Cr₂O₇(acidified) + H₂S</td><td>Orange → green; yellow S deposits</td></tr>
+      <tr><td>KMnO₄ + H₂S</td><td>Purple → colourless; yellow S deposits</td></tr>
+      <tr><td>FeCl₃ + H₂S</td><td>Brown → pale green (Fe³⁺ → Fe²⁺)</td></tr>
+      <tr><td>Br₂(aq) + H₂S</td><td>Red-brown → colourless; yellow S deposits</td></tr>
+    </table>
+    <p><strong>With conc. HNO₃:</strong></p>
+    <div class="eq">2HNO₃(aq) + H₂S(g) → 2H₂O + 2NO₂(g) + S(s)</div>
+    <p><strong>Metal sulphides (mostly black):</strong></p>
+    <div class="eq">Pb²⁺(aq) + S²⁻(aq) → PbS(s) [black]</div>
+    <div class="eq">Cu²⁺(aq) + S²⁻(aq) → CuS(s) [black]</div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Tests for Sulphates/Sulphites & Pollution -->
+<div class="slide" id="s8">
+  <h2>Tests for Sulphate/Sulphite Ions & Pollution</h2>
+  <div class="card">
+    <h3>Test for Sulphates (SO₄²⁻)</h3>
+    <p>Add Ba²⁺ (from BaCl₂ or Ba(NO₃)₂), then acidify with dil HCl or HNO₃:</p>
+    <p>→ <strong>White precipitate insoluble in dilute acid</strong> = SO₄²⁻ confirmed (BaSO₄)</p>
+    <div class="eq">Ba²⁺(aq) + SO₄²⁻(aq) → BaSO₄(s) [white ppt; insoluble in acid]</div>
+    <p><em>Note:</em> BaSO₃ and BaCO₃ also form white ppts, but <strong>dissolve</strong> in dilute acid (so BaSO₄ is the only one that persists).</p>
+  </div>
+  <div class="card">
+    <h3>Test for Sulphites (SO₃²⁻)</h3>
+    <p>Add Ba²⁺ → white precipitate (BaSO₃). Then add dilute HCl:</p>
+    <p>→ White precipitate dissolves + colourless gas that turns orange K₂Cr₂O₇ paper to green = SO₂ confirmed</p>
+    <div class="eq">BaSO₃(s) + 2HCl(aq) → BaCl₂(aq) + SO₂(g) + H₂O(l)</div>
+  </div>
+  <div class="card">
+    <h3>Environmental Pollution by Sulphur Compounds</h3>
+    <p><strong>Sulphur(IV) oxide (SO₂):</strong></p>
+    <ul>
+      <li>Emitted when sulphur-containing fuels burn; during metal extraction; in H₂SO₄ manufacture</li>
+      <li>SO₂ → SO₃ → H₂SO₄ (acid rain/fog)</li>
+    </ul>
+    <p><strong>Effects of acid rain:</strong></p>
+    <ul>
+      <li>Leaching of minerals from soil</li>
+      <li>Erosion of stone buildings</li>
+      <li>Corrosion of metallic structures</li>
+      <li>Respiratory irritation</li>
+      <li>Death of plants (defoliation)</li>
+      <li>Destruction of aquatic life</li>
+      <li>Stunted plant growth (chlorosis)</li>
+    </ul>
+    <p><strong>H₂S:</strong> Very poisonous; even small concentrations are dangerous.</p>
+  </div>
+</div>
+
+<!-- SLIDE 9: Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="q-block">
+    <div class="q">1. Name the catalyst used in the Contact process for making H₂SO₄.</div>
+    <input type="text" id="q1" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q1','Vanadium(V) oxide (V₂O₅)',['vanadium','v2o5'])">Check</button>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">2. Why is SO₃ NOT dissolved directly in water during the Contact process?</div>
+    <input type="text" id="q2" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q2','It produces a corrosive acid mist',['mist','corrosive','hissing','violent','spray'])">Check</button>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">3. What observation confirms SO₂ is present when tested with K₂Cr₂O₇?</div>
+    <input type="text" id="q3" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q3','Orange turns green',['orange','green'])">Check</button>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">4. Write the equation for the reaction of concentrated H₂SO₄ with sugar (C₁₂H₂₂O₁₁).</div>
+    <input type="text" id="q4" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q4','C₁₂H₂₂O₁₁ → 12C + 11H₂O',['12c','carbon','11h2o','c12h22o11'])">Check</button>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+  <div class="q-block">
+    <div class="q">5. State the transition temperature for sulphur allotropes and what happens at this temperature.</div>
+    <input type="text" id="q5" placeholder="Your answer...">
+    <button class="btn-check" onclick="checkFill('q5','96°C — both allotropes are stable',['96','transition','both','stable'])">Check</button>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz – Sulphur and Its Compounds</h2>
+  <p style="font-size:.85rem;color:var(--sub);margin-bottom:14px;">Answer all questions carefully.</p>
+
+  <div class="quiz-block">
+    <div class="qn">Q1. The product formed when oleum is diluted with water is ___.</div>
+    <input type="text" id="fib1" placeholder="chemical name/formula..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q2. Sulphur bleaches by ___ (oxidation/reduction), while chlorine bleaches by ___.</div>
+    <input type="text" id="fib2" placeholder="fill both..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q3. The sulphur allotrope stable below 96°C is called ___ sulphur.</div>
+    <input type="text" id="fib3" placeholder="one word..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q4. The test for H₂S uses filter paper soaked in lead(II) ethanoate. A positive result turns the paper ___.</div>
+    <input type="text" id="fib4" placeholder="colour..." style="padding:8px;border:1.5px solid #ccc;border-radius:6px;width:100%;font-size:.9rem;">
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q5. Explain with equations and observations what happens when concentrated sulphuric acid is added to copper turnings and heated.</div>
+    <textarea id="sa1" placeholder="Write your answer here..."></textarea>
+    <div id="sa1-tags"></div>
+    <div class="model-ans" id="sa1-model">No reaction with cold dilute H₂SO₄ (copper is below hydrogen in the reactivity series). However, hot concentrated H₂SO₄ acts as an oxidising agent. Brown/colourless fumes of sulphur(IV) oxide (SO₂) are given off and the blue copper(II) sulphate solution forms:
+Equation: Cu(s) + 2H₂SO₄(l) → CuSO₄(aq) + SO₂(g) + 2H₂O(l)
+Observation: Evolution of SO₂ (pungent smell), blue solution of CuSO₄ forms.</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q6. Describe the steps and equations for the Contact Process, explaining why SO₃ is absorbed in concentrated H₂SO₄ rather than water.</div>
+    <textarea id="sa2" placeholder="Write your answer here..."></textarea>
+    <div id="sa2-tags"></div>
+    <div class="model-ans" id="sa2-model">The Contact process: (1) Burn sulphur or pyrites to produce SO₂ (S + O₂ → SO₂). (2) Purify and dry SO₂ (remove dust with electrostatic precipitation; dry with conc. H₂SO₄). (3) Pass through heat exchanger. (4) React SO₂ with O₂ over V₂O₅ catalyst at 450°C to form SO₃: 2SO₂ + O₂ ⇌ 2SO₃. (5) Cool in heat exchanger. (6) Absorb SO₃ in concentrated H₂SO₄ — NOT water, because dissolving SO₃ directly in water produces corrosive acid mist/spray which is hazardous: SO₃ + H₂SO₄ → H₂S₂O₇ (oleum). (7) Dilute oleum: H₂S₂O₇ + H₂O → 2H₂SO₄.</div>
+  </div>
+  <div class="quiz-block">
+    <div class="qn">Q7. How would you test a solution to determine whether it contains SO₃²⁻ or SO₄²⁻ ions? State observations for each.</div>
+    <textarea id="sa3" placeholder="Write your answer here..." rows="3"></textarea>
+    <div id="sa3-tags"></div>
+    <div class="model-ans" id="sa3-model">Add barium chloride solution — both SO₃²⁻ and SO₄²⁻ form white precipitates (BaSO₃ and BaSO₄ respectively). Then acidify with dilute HCl. If the precipitate dissolves and a gas is produced that turns acidified K₂Cr₂O₇ paper from orange to green, the ion is SO₃²⁻ (produces SO₂ gas). If the precipitate remains insoluble in dilute acid, the ion is SO₄²⁻ (BaSO₄ is insoluble in acids).</div>
+  </div>
+
+  <button class="btn-submit" onclick="submitExam()">Submit Quiz</button>
+  <div id="score-box" style="display:none;margin-top:18px;">
+    <div id="score-circle"></div>
+    <div id="score-msg" style="font-size:1rem;font-weight:600;margin-bottom:8px;"></div>
+    <div id="score-detail" style="font-size:.87rem;color:var(--sub);"></div>
+    <div class="rubric">
+      <h4>CBC Assessment Rubric</h4>
+      <table>
+        <tr><th>Score</th><th>Performance Level</th><th>Descriptor</th></tr>
+        <tr><td>85–100%</td><td>Exceeding Expectation</td><td>Thorough understanding of sulphur chemistry</td></tr>
+        <tr><td>70–84%</td><td>Meeting Expectation</td><td>Good grasp of Frasch, Contact process, and reactions</td></tr>
+        <tr><td>50–69%</td><td>Approaching Expectation</td><td>Basic understanding; revise industrial processes</td></tr>
+        <tr><td>0–49%</td><td>Below Expectation</td><td>Review sulphur and its compounds thoroughly</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+const TOTAL=10;let current=0;
+const slides=document.querySelectorAll('.slide');
+function buildDots(){const dc=document.getElementById('dots');for(let i=0;i<TOTAL;i++){const s=document.createElement('span');s.onclick=()=>goTo(i);dc.appendChild(s);}updateDots();}
+function updateDots(){document.querySelectorAll('#dots span').forEach((s,i)=>s.classList.toggle('active',i===current));document.getElementById('slide-indicator').textContent=(current+1)+' / '+TOTAL;document.getElementById('progress-bar').style.width=((current+1)/TOTAL*100)+'%';document.getElementById('prevBtn').disabled=current===0;document.getElementById('nextBtn').disabled=current===TOTAL-1;}
+function goTo(n){slides[current].classList.remove('active');current=n;slides[current].classList.add('active');updateDots();window.scrollTo(0,0);}
+function changeSlide(d){goTo(current+d);}
+function checkFill(id,correct,keywords){const inp=document.getElementById(id);const val=inp.value.trim().toLowerCase();const fb=document.getElementById(id+'-fb');const hit=keywords.some(k=>val.includes(k.toLowerCase()));inp.className=hit?'correct':'wrong';fb.className='feedback show';fb.style.color=hit?'var(--ok)':'var(--no)';fb.textContent=hit?'✓ Correct!':'✗ Expected: '+correct;}
+const FIB_ANSWERS=[
+  {id:'fib1',answer:'Concentrated sulphuric acid (H₂SO₄)',keys:['h2so4','sulphuric','sulfuric']},
+  {id:'fib2',answer:'reduction; oxidation',keys:['reduction','oxidation']},
+  {id:'fib3',answer:'rhombic',keys:['rhombic']},
+  {id:'fib4',answer:'black',keys:['black','dark','dark brown']},
+];
+const SA_QUESTIONS=[
+  {id:'sa1',keys:['copper','concentrated','so2','cuso4','oxidising','heat','brown','blue','equation'],required:3,modelId:'sa1-model'},
+  {id:'sa2',keys:['so2','so3','v2o5','450','oleum','h2s2o7','mist','water','absorption','contact'],required:3,modelId:'sa2-model'},
+  {id:'sa3',keys:['barium','white precipitate','dissolve','so2','green','insoluble','k2cr2o7','baso4','baso3','acid'],required:3,modelId:'sa3-model'},
+];
+function submitExam(){let score=0,total=0;
+  FIB_ANSWERS.forEach(q=>{total+=2;const val=(document.getElementById(q.id).value||'').trim().toLowerCase();const hit=q.keys.some(k=>val.includes(k));if(hit)score+=2;document.getElementById(q.id).style.borderColor=hit?'var(--ok)':'var(--no)';document.getElementById(q.id).style.background=hit?'#e8f5e9':'#ffebee';});
+  SA_QUESTIONS.forEach(q=>{total+=4;const val=(document.getElementById(q.id).value||'').trim().toLowerCase();const found=q.keys.filter(k=>val.includes(k.toLowerCase()));const missed=q.keys.filter(k=>!val.includes(k.toLowerCase()));const pts=Math.min(4,Math.round((found.length/q.required)*4));score+=pts;document.getElementById(q.id+'-tags').innerHTML=found.map(k=>`<span class="tag found">✓ ${k}</span>`).join('')+missed.slice(0,4).map(k=>`<span class="tag missed">✗ ${k}</span>`).join('');document.getElementById(q.modelId).classList.add('show');});
+  const pct=Math.round(score/total*100);
+  document.getElementById('score-box').style.display='block';
+  document.getElementById('score-circle').textContent=pct+'%';
+  document.getElementById('score-msg').textContent=pct>=85?'🏆 Excellent! Exceeding Expectation':pct>=70?'✅ Well done! Meeting Expectation':pct>=50?'📘 Approaching Expectation — keep revising':'📝 Below Expectation — review sulphur topics';
+  document.getElementById('score-detail').textContent=`Score: ${score} / ${total} marks`;
+  document.getElementById('score-box').scrollIntoView({behavior:'smooth'});
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,total,pct);
+}
+buildDots();
+</script>
+</body>
+</html>

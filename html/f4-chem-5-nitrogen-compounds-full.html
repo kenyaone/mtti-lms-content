@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Chemistry | Nitrogen & Its Compounds</title>
+<style>
+:root {
+  --pri: #0a5e2a;
+  --pri-light: #e8f5e9;
+  --acc: #f5a623;
+  --ok: #2e7d32;
+  --no: #c62828;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --muted: #555;
+  --border: #ddd;
+  --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* TOP BAR */
+#topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--pri); color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#topbar .brand { font-size: 0.75rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; }
+#topbar .lesson-title { font-size: 0.95rem; font-weight: 700; text-align: center; flex: 1; padding: 0 10px; }
+#topbar .slide-counter { font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+
+/* NAV DOTS */
+#dotnav {
+  display: flex; justify-content: center; gap: 6px;
+  padding: 10px; background: #fff; border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #ddd; border: none; cursor: pointer;
+  font-size: 0.7rem; font-weight: 700; color: #555;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+}
+.dot.active { background: var(--pri); color: #fff; transform: scale(1.15); }
+.dot.visited { background: var(--pri-light); color: var(--pri); }
+.dot.done { background: var(--ok); color: #fff; }
+
+/* SLIDES */
+#slides-wrap { max-width: 860px; margin: 0 auto; padding: 16px; }
+.slide { display: none; animation: fadeIn 0.3s ease; }
+.slide.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-header {
+  background: linear-gradient(135deg, var(--pri), #1a7a40);
+  color: #fff; border-radius: var(--radius) var(--radius) 0 0;
+  padding: 20px 24px;
+}
+.slide-header .slide-num { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+.slide-header h2 { font-size: 1.4rem; margin-top: 4px; }
+.slide-body { background: var(--card); border-radius: 0 0 var(--radius) var(--radius); padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+
+/* CARDS & LAYOUT */
+.card { background: var(--pri-light); border-left: 4px solid var(--pri); border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+.card.acc { background: #fff8e1; border-left-color: var(--acc); }
+.card.info { background: #e3f2fd; border-left-color: #1565c0; }
+.card.warn { background: #fff3e0; border-left-color: #e65100; }
+.card.danger { background: #fbe9e7; border-left-color: var(--no); }
+.card h4 { color: var(--pri); margin-bottom: 6px; font-size: 1rem; }
+.card.acc h4 { color: #b06a00; }
+.card.info h4 { color: #1565c0; }
+.card.warn h4 { color: #e65100; }
+.card.danger h4 { color: var(--no); }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+@media(max-width:600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+/* OUTCOMES */
+.outcome-list { list-style: none; padding: 0; }
+.outcome-list li { padding: 10px 14px; border-radius: 8px; background: var(--pri-light); margin-bottom: 8px; border-left: 4px solid var(--pri); display: flex; align-items: flex-start; gap: 10px; }
+.outcome-list li::before { content: "✓"; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.9rem; }
+th { background: var(--pri); color: #fff; padding: 10px 12px; text-align: left; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+tr:nth-child(even) td { background: #f5f5f5; }
+
+/* SVG DIAGRAMS */
+.diagram-wrap { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin: 16px 0; overflow-x: auto; text-align: center; }
+.diagram-wrap svg { max-width: 100%; height: auto; }
+.diagram-caption { font-size: 0.8rem; color: var(--muted); margin-top: 6px; text-align: center; }
+
+/* HABER PROCESS DIAGRAM */
+.haber-box { background: #fff; border: 2px solid var(--pri); border-radius: 10px; padding: 16px; margin: 14px 0; }
+.haber-flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; margin: 10px 0; }
+.haber-step { background: var(--pri); color: #fff; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-align: center; }
+.haber-arrow { font-size: 1.4rem; color: var(--acc); font-weight: 700; }
+.haber-conditions { background: #fff8e1; border: 1px solid var(--acc); border-radius: 8px; padding: 10px 14px; margin: 8px 0; text-align: center; font-size: 0.9rem; }
+
+/* EQUATION BOXES */
+.eq-box { background: #1a1a2e; color: #e0e0ff; border-radius: 8px; padding: 12px 18px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 0.95rem; text-align: center; }
+.eq-box .eq-label { font-size: 0.7rem; color: #aaa; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* PRACTICE */
+.practice-q { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 14px 0; }
+.practice-q .q-num { font-size: 0.75rem; color: var(--pri); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.practice-q p { margin-bottom: 10px; }
+.practice-q textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; resize: vertical; min-height: 70px; }
+.check-btn { background: var(--pri); color: #fff; border: none; border-radius: 6px; padding: 7px 18px; cursor: pointer; font-size: 0.85rem; font-weight: 600; margin-top: 6px; }
+.check-btn:hover { background: #0d7a36; }
+.feedback { margin-top: 8px; padding: 8px 12px; border-radius: 6px; font-size: 0.88rem; display: none; }
+.feedback.correct { background: #e8f5e9; color: var(--ok); border-left: 3px solid var(--ok); display: block; }
+.feedback.partial { background: #fff8e1; color: #b06a00; border-left: 3px solid var(--acc); display: block; }
+.feedback.incorrect { background: #fbe9e7; color: var(--no); border-left: 3px solid var(--no); display: block; }
+
+/* QUIZ */
+.quiz-q { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 14px 0; }
+.quiz-q .qn { font-size: 0.75rem; color: var(--pri); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+.quiz-q p { font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+.fill-wrap { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; line-height: 2; }
+.fill-blank { border: none; border-bottom: 2px solid var(--pri); background: transparent; font-size: 1rem; font-family: inherit; padding: 2px 6px; min-width: 100px; outline: none; color: var(--text); }
+.fill-blank:focus { border-bottom-color: var(--acc); }
+.fill-blank.correct-ans { border-bottom-color: var(--ok); background: #e8f5e9; }
+.fill-blank.wrong-ans { border-bottom-color: var(--no); background: #fbe9e7; }
+.short-ans { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; resize: vertical; min-height: 60px; margin-top: 6px; }
+.rubric-tag { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; margin: 2px; }
+.rubric-tag.found { background: #e8f5e9; color: var(--ok); }
+.rubric-tag.missed { background: #fbe9e7; color: var(--no); }
+.model-answer { background: var(--pri-light); border-left: 3px solid var(--pri); padding: 10px 14px; border-radius: 0 8px 8px 0; margin-top: 8px; font-size: 0.88rem; display: none; }
+.model-answer strong { color: var(--pri); }
+
+/* SCORE */
+#score-card { background: linear-gradient(135deg, var(--pri), #1a7a40); color: #fff; border-radius: var(--radius); padding: 28px; text-align: center; margin: 16px 0; }
+#score-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
+#score-circle { width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 16px auto; border: 4px solid rgba(255,255,255,0.5); }
+#score-circle .big { font-size: 2rem; font-weight: 900; }
+#score-circle .lbl { font-size: 0.7rem; opacity: 0.8; }
+.rubric-table { width: 100%; border-collapse: collapse; margin: 14px 0; background: rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; }
+.rubric-table th, .rubric-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 0.85rem; }
+.rubric-table th { background: rgba(0,0,0,0.2); }
+
+/* NAV BUTTONS */
+.nav-row { display: flex; justify-content: space-between; margin-top: 24px; }
+.nav-btn { background: var(--pri); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; cursor: pointer; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
+.nav-btn:hover { background: #0d7a36; }
+.nav-btn:disabled { background: #ccc; cursor: not-allowed; }
+.nav-btn.acc-btn { background: var(--acc); color: #1a1a1a; }
+.nav-btn.acc-btn:hover { background: #e09a1a; }
+
+.badge { display: inline-block; background: var(--acc); color: #1a1a1a; padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700; margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="brand">MTTI | F4 Chemistry</div>
+  <div class="lesson-title">Nitrogen &amp; Its Compounds</div>
+  <div class="slide-counter" id="slide-counter">1 / 10</div>
+</div>
+
+<!-- DOT NAV -->
+<div id="dotnav">
+  <button class="dot active" onclick="goSlide(1)" id="dot1" title="Learning Outcomes">1</button>
+  <button class="dot" onclick="goSlide(2)" id="dot2" title="Nitrogen Gas">2</button>
+  <button class="dot" onclick="goSlide(3)" id="dot3" title="Haber Process">3</button>
+  <button class="dot" onclick="goSlide(4)" id="dot4" title="Ammonia">4</button>
+  <button class="dot" onclick="goSlide(5)" id="dot5" title="Nitric Acid">5</button>
+  <button class="dot" onclick="goSlide(6)" id="dot6" title="Nitrogen Oxides">6</button>
+  <button class="dot" onclick="goSlide(7)" id="dot7" title="Fertilisers">7</button>
+  <button class="dot" onclick="goSlide(8)" id="dot8" title="Nitrogen Cycle">8</button>
+  <button class="dot" onclick="goSlide(9)" id="dot9" title="Practice">9</button>
+  <button class="dot" onclick="goSlide(10)" id="dot10" title="Quiz">10</button>
+</div>
+
+<div id="slides-wrap">
+
+<!-- ═══════════════════ SLIDE 1: LEARNING OUTCOMES ═══════════════════ -->
+<div class="slide active" id="slide-1">
+  <div class="slide-header">
+    <div class="slide-num">Slide 1 of 10</div>
+    <h2>🎯 Learning Outcomes</h2>
+  </div>
+  <div class="slide-body">
+    <p style="color:var(--muted);margin-bottom:14px;">By the end of this lesson, you should be able to:</p>
+    <ul class="outcome-list">
+      <li>Describe the properties and occurrence of nitrogen gas in the atmosphere</li>
+      <li>Explain the industrial manufacture of ammonia by the Haber Process</li>
+      <li>Describe the physical and chemical properties of ammonia (NH₃)</li>
+      <li>Explain the manufacture of nitric acid by the Ostwald Process</li>
+      <li>Describe the properties and uses of nitrogen oxides (NO, NO₂, N₂O₄)</li>
+      <li>Identify and compare nitrogen-based fertilisers and their effects on soil</li>
+      <li>Explain the nitrogen cycle and the role of microorganisms</li>
+    </ul>
+    <div class="card acc" style="margin-top:18px;">
+      <h4>📚 Key Concepts</h4>
+      <p>Haber Process · Ostwald Process · Ammonia · Nitric Acid · Nitrogen Oxides · Nitrogen Cycle · Nitrogenous Fertilisers</p>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn" onclick="goSlide(2)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 2: NITROGEN GAS ═══════════════════ -->
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="slide-num">Slide 2 of 10</div>
+    <h2>🌬️ Nitrogen Gas (N₂)</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card">
+      <h4>Occurrence in Nature</h4>
+      <p>Nitrogen makes up approximately <strong>78% of the atmosphere</strong> by volume. It also occurs in proteins, nucleic acids (DNA/RNA), and in many minerals such as saltpetre (KNO₃) and Chile saltpetre (NaNO₃).</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Physical Properties of N₂</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>State &amp; Appearance</h4>
+        <p>Colourless, odourless gas at room temperature. Slightly less dense than air.</p>
+      </div>
+      <div class="card">
+        <h4>Solubility &amp; Boiling Point</h4>
+        <p>Slightly soluble in water. Boiling point: <strong>−196°C</strong> (liquid nitrogen used in cryogenics).</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Chemical Properties</h3>
+    <table>
+      <tr><th>Property</th><th>Detail</th></tr>
+      <tr><td>Reactivity</td><td>Generally <strong>unreactive</strong> due to very strong N≡N triple bond (bond energy = 945 kJ/mol)</td></tr>
+      <tr><td>With oxygen</td><td>Reacts only at very high temperatures / lightning: N₂ + O₂ → 2NO</td></tr>
+      <tr><td>With hydrogen</td><td>Reacts under industrial conditions (Haber Process): N₂ + 3H₂ ⇌ 2NH₃</td></tr>
+      <tr><td>Supporter of combustion</td><td>Does NOT support combustion — extinguishes flames</td></tr>
+    </table>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Laboratory Preparation</h3>
+    <div class="eq-box">
+      <span class="eq-label">Heating ammonium nitrite (or ammonium dichromate)</span>
+      NH₄NO₂  →  N₂  +  2H₂O
+    </div>
+    <div class="card warn">
+      <h4>⚠️ Note</h4>
+      <p>The gas is collected over water. Impurities (O₂, CO₂) are removed using alkaline pyrogallol and KOH solution respectively.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Industrial Extraction</h3>
+    <p>Nitrogen is obtained industrially by <strong>fractional distillation of liquefied air</strong>. Air is compressed, cooled, and allowed to evaporate. Nitrogen (bp −196°C) evaporates before oxygen (bp −183°C) and argon (bp −186°C).</p>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(1)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(3)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 3: HABER PROCESS ═══════════════════ -->
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="slide-num">Slide 3 of 10</div>
+    <h2>🏭 The Haber Process</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card info">
+      <h4>What is the Haber Process?</h4>
+      <p>An industrial process developed by Fritz Haber (1909) for the <strong>synthesis of ammonia</strong> from nitrogen and hydrogen. It is the foundation of modern agriculture through fertiliser production.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Raw Materials</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>Nitrogen (N₂)</h4>
+        <p>Obtained from fractional distillation of liquid air</p>
+      </div>
+      <div class="card">
+        <h4>Hydrogen (H₂)</h4>
+        <p>Obtained from steam reforming of natural gas (methane + steam over nickel catalyst)</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">The Reaction</h3>
+    <div class="eq-box">
+      <span class="eq-label">Reversible Reaction (Equilibrium)</span>
+      N₂(g) + 3H₂(g)  ⇌  2NH₃(g)   ΔH = −92 kJ/mol
+    </div>
+
+    <div class="haber-box">
+      <h4 style="color:var(--pri);margin-bottom:10px;">Process Flow</h4>
+      <div class="haber-flow">
+        <div class="haber-step">N₂ + H₂<br><small>Feed gases</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">Compression<br><small>200 atm</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">Reactor<br><small>450°C, Fe catalyst</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">Cooling<br><small>NH₃ liquefies</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">NH₃<br><small>Collected</small></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--muted);text-align:center;margin-top:6px;">Unreacted N₂ and H₂ are recycled back into the reactor</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Optimum Conditions &amp; Le Chatelier's Principle</h3>
+    <table>
+      <tr><th>Factor</th><th>Chosen Condition</th><th>Reason (Le Chatelier)</th></tr>
+      <tr><td>Temperature</td><td><strong>450°C</strong> (compromise)</td><td>Low T favours forward reaction but rate too slow; 450°C balances rate and yield (~15%)</td></tr>
+      <tr><td>Pressure</td><td><strong>200 atm</strong></td><td>High P favours side with fewer moles of gas (products: 2 mol vs reactants: 4 mol); higher P gives more NH₃</td></tr>
+      <tr><td>Catalyst</td><td><strong>Iron (Fe)</strong> with promoters Al₂O₃, K₂O</td><td>Increases rate without affecting equilibrium position</td></tr>
+      <tr><td>N₂:H₂ ratio</td><td><strong>1:3</strong></td><td>Stoichiometric ratio for maximum efficiency</td></tr>
+    </table>
+
+    <div class="card">
+      <h4>Why Not Higher Temperature?</h4>
+      <p>The reaction is <strong>exothermic</strong> (ΔH = −92 kJ/mol). By Le Chatelier's Principle, increasing temperature shifts equilibrium LEFT (toward reactants), reducing NH₃ yield. 450°C is a compromise between rate and yield.</p>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(2)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(4)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 4: AMMONIA ═══════════════════ -->
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="slide-num">Slide 4 of 10</div>
+    <h2>🧪 Properties of Ammonia (NH₃)</h2>
+  </div>
+  <div class="slide-body">
+
+    <h3 style="color:var(--pri);margin-bottom:10px;">Physical Properties</h3>
+    <div class="grid3">
+      <div class="card">
+        <h4>Appearance</h4>
+        <p>Colourless gas with a pungent, choking smell</p>
+      </div>
+      <div class="card">
+        <h4>Density</h4>
+        <p>Less dense than air (lighter than air). Collected by downward delivery.</p>
+      </div>
+      <div class="card">
+        <h4>Solubility</h4>
+        <p>Very soluble in water — demonstrated by the <strong>fountain experiment</strong></p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Chemical Properties</h3>
+
+    <div class="card">
+      <h4>1. Basic Nature — Reaction with Water</h4>
+      <div class="eq-box" style="margin-top:8px;">NH₃(g) + H₂O(l)  ⇌  NH₄⁺(aq) + OH⁻(aq)</div>
+      <p style="margin-top:6px;font-size:0.9rem;">NH₃ is a <strong>weak base</strong>. It turns red litmus blue and has pH ~11.</p>
+    </div>
+
+    <div class="card">
+      <h4>2. Reaction with Acids (Salt Formation)</h4>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="eq-box">NH₃ + HCl → NH₄Cl<br><small style="color:#aaa;">(dense white fumes)</small></div>
+        <div class="eq-box">NH₃ + HNO₃ → NH₄NO₃<br><small style="color:#aaa;">(ammonium nitrate — fertiliser)</small></div>
+      </div>
+      <div class="eq-box">2NH₃ + H₂SO₄ → (NH₄)₂SO₄<br><small style="color:#aaa;">(ammonium sulphate — fertiliser)</small></div>
+    </div>
+
+    <div class="card">
+      <h4>3. Combustion</h4>
+      <div class="eq-box" style="margin-top:8px;">4NH₃ + 3O₂ → 2N₂ + 6H₂O<br><small style="color:#aaa;">(burns with a pale yellow flame)</small></div>
+    </div>
+
+    <div class="card">
+      <h4>4. Catalytic Oxidation (industrial — Ostwald)</h4>
+      <div class="eq-box" style="margin-top:8px;">4NH₃ + 5O₂  →  4NO + 6H₂O  (Pt catalyst, 900°C)</div>
+    </div>
+
+    <div class="card">
+      <h4>5. Reaction with Copper(II) Oxide</h4>
+      <div class="eq-box" style="margin-top:8px;">2NH₃ + 3CuO → 3Cu + N₂ + 3H₂O<br><small style="color:#aaa;">(NH₃ acts as a reducing agent; black CuO → red Cu)</small></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Uses of Ammonia</h3>
+    <div class="grid2">
+      <div class="card acc">
+        <h4>Industrial Uses</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;">
+          <li>Making nitrogenous fertilisers (urea, ammonium nitrate)</li>
+          <li>Manufacturing nitric acid (Ostwald Process)</li>
+          <li>Making nylon and other polymers</li>
+          <li>Refrigerant in industrial cooling</li>
+        </ul>
+      </div>
+      <div class="card acc">
+        <h4>Domestic Uses</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;">
+          <li>Cleaning agents and household cleaners</li>
+          <li>Smelling salts (ammonium carbonate)</li>
+          <li>Manufacture of explosives (TNT)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(3)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(5)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 5: NITRIC ACID / OSTWALD ═══════════════════ -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <div class="slide-num">Slide 5 of 10</div>
+    <h2>⚗️ Nitric Acid &amp; The Ostwald Process</h2>
+  </div>
+  <div class="slide-body">
+
+    <div class="card info">
+      <h4>The Ostwald Process</h4>
+      <p>Industrial manufacture of nitric acid (HNO₃) from ammonia, developed by Wilhelm Ostwald (1902). It has three main stages.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Stage 1: Catalytic Oxidation of Ammonia</h3>
+    <div class="eq-box">
+      4NH₃(g) + 5O₂(g)  →  4NO(g) + 6H₂O(g)<br>
+      <small style="color:#aaa;">Platinum-Rhodium gauze catalyst, 900°C, 4–10 atm</small>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Stage 2: Oxidation of NO to NO₂</h3>
+    <div class="eq-box">
+      2NO(g) + O₂(g)  →  2NO₂(g)<br>
+      <small style="color:#aaa;">(Cooled gases; no catalyst needed — exothermic)</small>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Stage 3: Absorption of NO₂ in Water</h3>
+    <div class="eq-box">
+      4NO₂(g) + O₂(g) + 2H₂O(l)  →  4HNO₃(aq)<br>
+      <small style="color:#aaa;">(Gives ~60% nitric acid; concentration by distillation)</small>
+    </div>
+
+    <div class="haber-box">
+      <h4 style="color:var(--pri);margin-bottom:10px;">Ostwald Process Flow</h4>
+      <div class="haber-flow">
+        <div class="haber-step">NH₃ + Air<br><small>Feed</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">Oxidation<br><small>Pt, 900°C → NO</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">Cooling<br><small>NO + O₂ → NO₂</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">Absorption<br><small>NO₂+H₂O → HNO₃</small></div>
+        <div class="haber-arrow">→</div>
+        <div class="haber-step">HNO₃<br><small>~60–68%</small></div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Properties of Nitric Acid</h3>
+    <table>
+      <tr><th>Property</th><th>Detail</th></tr>
+      <tr><td>Physical state</td><td>Colourless fuming liquid (pure); turns yellow on standing (NO₂ dissolved)</td></tr>
+      <tr><td>Strong acid</td><td>Fully ionises: HNO₃ → H⁺ + NO₃⁻</td></tr>
+      <tr><td>Oxidising agent</td><td>Dissolves most metals; reacts with Cu, S, C (non-metals)</td></tr>
+      <tr><td>With Cu (dilute)</td><td>3Cu + 8HNO₃(dilute) → 3Cu(NO₃)₂ + 2NO + 4H₂O</td></tr>
+      <tr><td>With Cu (conc.)</td><td>Cu + 4HNO₃(conc.) → Cu(NO₃)₂ + 2NO₂ + 2H₂O</td></tr>
+    </table>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Uses of Nitric Acid</h3>
+    <div class="grid3">
+      <div class="card acc"><h4>Fertilisers</h4><p>Making NH₄NO₃ (ammonium nitrate)</p></div>
+      <div class="card acc"><h4>Explosives</h4><p>TNT, dynamite, nitroglycerine</p></div>
+      <div class="card acc"><h4>Dyes &amp; Drugs</h4><p>Nitration of organic compounds for dyes, pharmaceuticals</p></div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(4)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(6)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 6: NITROGEN OXIDES ═══════════════════ -->
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <div class="slide-num">Slide 6 of 10</div>
+    <h2>🟤 Nitrogen Oxides</h2>
+  </div>
+  <div class="slide-body">
+    <p style="margin-bottom:14px;color:var(--muted);">Nitrogen forms several oxides with different oxidation states and properties.</p>
+
+    <table>
+      <tr><th>Formula</th><th>Name</th><th>Oxidation State of N</th><th>Appearance</th><th>Key Property</th></tr>
+      <tr><td><strong>N₂O</strong></td><td>Dinitrogen oxide (Laughing gas)</td><td>+1</td><td>Colourless gas</td><td>Anaesthetic; supports combustion</td></tr>
+      <tr><td><strong>NO</strong></td><td>Nitrogen monoxide (Nitric oxide)</td><td>+2</td><td>Colourless gas</td><td>Turns brown in air (→ NO₂); intermediate in Ostwald</td></tr>
+      <tr><td><strong>N₂O₃</strong></td><td>Dinitrogen trioxide</td><td>+3</td><td>Blue solid/liquid</td><td>Anhydride of nitrous acid (HNO₂)</td></tr>
+      <tr><td><strong>NO₂</strong></td><td>Nitrogen dioxide</td><td>+4</td><td>Brown/reddish gas</td><td>Toxic; causes acid rain; used in Ostwald</td></tr>
+      <tr><td><strong>N₂O₄</strong></td><td>Dinitrogen tetroxide</td><td>+4</td><td>Colourless gas</td><td>Dimer of NO₂: 2NO₂ ⇌ N₂O₄</td></tr>
+      <tr><td><strong>N₂O₅</strong></td><td>Dinitrogen pentoxide</td><td>+5</td><td>White solid</td><td>Anhydride of nitric acid</td></tr>
+    </table>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Key Reactions of NO₂</h3>
+    <div class="card">
+      <h4>Reaction with water</h4>
+      <div class="eq-box" style="margin-top:8px;">3NO₂ + H₂O → 2HNO₃ + NO</div>
+    </div>
+    <div class="card">
+      <h4>Dimerisation equilibrium</h4>
+      <div class="eq-box" style="margin-top:8px;">2NO₂(g)  ⇌  N₂O₄(g)    ΔH = −57 kJ/mol<br><small style="color:#aaa;">(cooling favours N₂O₄; heating favours NO₂)</small></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Environmental Impact of Nitrogen Oxides</h3>
+    <div class="grid2">
+      <div class="card danger">
+        <h4>Acid Rain</h4>
+        <p>NO₂ + water vapour in the atmosphere forms nitric acid, contributing to acid rain that damages ecosystems and buildings.</p>
+        <div class="eq-box" style="margin-top:8px;font-size:0.8rem;">4NO₂ + O₂ + 2H₂O → 4HNO₃</div>
+      </div>
+      <div class="card danger">
+        <h4>Photochemical Smog</h4>
+        <p>NOₓ from vehicle exhaust reacts with hydrocarbons in sunlight to produce ground-level ozone and toxic brown haze.</p>
+      </div>
+    </div>
+
+    <div class="card warn">
+      <h4>Test for NO₂</h4>
+      <p>NO₂ turns <strong>moist starch-iodide paper blue</strong> (oxidises I⁻ to I₂ which reacts with starch). It also turns moist blue litmus paper red.</p>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(5)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(7)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 7: FERTILISERS ═══════════════════ -->
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <div class="slide-num">Slide 7 of 10</div>
+    <h2>🌿 Nitrogenous Fertilisers</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card info">
+      <h4>Why Nitrogen Fertilisers?</h4>
+      <p>Nitrogen is essential for plant growth (proteins, chlorophyll, nucleic acids). Natural soil nitrogen is often insufficient for high-yield agriculture. Synthetic fertilisers supplement it.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Common Nitrogen Fertilisers</h3>
+    <table>
+      <tr><th>Fertiliser</th><th>Formula</th><th>% N by mass</th><th>Notes</th></tr>
+      <tr><td>Urea</td><td>CO(NH₂)₂</td><td><strong>46%</strong></td><td>Highest N content; breaks down to NH₃ + CO₂ in soil</td></tr>
+      <tr><td>Ammonium nitrate</td><td>NH₄NO₃</td><td><strong>35%</strong></td><td>Fast-acting; can be explosive if impure</td></tr>
+      <tr><td>Ammonium sulphate</td><td>(NH₄)₂SO₄</td><td><strong>21%</strong></td><td>Acidifies soil; used in acidic-loving crops</td></tr>
+      <tr><td>Calcium ammonium nitrate</td><td>NH₄NO₃·CaCO₃</td><td><strong>26%</strong></td><td>Common in Kenya; neutral pH effect</td></tr>
+      <tr><td>Diammonium phosphate</td><td>(NH₄)₂HPO₄</td><td><strong>21%</strong></td><td>Also provides phosphorus</td></tr>
+    </table>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Manufacture of Key Fertilisers</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>Ammonium Nitrate</h4>
+        <div class="eq-box" style="margin-top:8px;font-size:0.85rem;">NH₃(g) + HNO₃(aq) → NH₄NO₃(aq)</div>
+        <p style="font-size:0.85rem;margin-top:6px;">Ammonia (Haber) + Nitric acid (Ostwald) are neutralised. Solution concentrated by evaporation.</p>
+      </div>
+      <div class="card">
+        <h4>Ammonium Sulphate</h4>
+        <div class="eq-box" style="margin-top:8px;font-size:0.85rem;">2NH₃ + H₂SO₄ → (NH₄)₂SO₄</div>
+        <p style="font-size:0.85rem;margin-top:6px;">Used on tea and coffee plantations which prefer slightly acidic soil.</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Disadvantages of Excessive Fertiliser Use</h3>
+    <div class="grid2">
+      <div class="card danger">
+        <h4>Eutrophication</h4>
+        <p>Nitrates leach into lakes/rivers → algal bloom → oxygen depletion → death of aquatic life (dead zones).</p>
+      </div>
+      <div class="card danger">
+        <h4>Soil Acidification</h4>
+        <p>Ammonium-based fertilisers release H⁺ in soil, lowering pH and reducing crop yields over time.</p>
+      </div>
+      <div class="card danger">
+        <h4>Water Pollution</h4>
+        <p>Nitrates in drinking water cause methaemoglobinaemia (blue baby syndrome) in infants. WHO limit: 50 mg/L NO₃⁻.</p>
+      </div>
+      <div class="card danger">
+        <h4>Greenhouse Gases</h4>
+        <p>Denitrification produces N₂O — a potent greenhouse gas (300× more warming than CO₂ over 100 years).</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(6)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(8)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 8: NITROGEN CYCLE ═══════════════════ -->
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <div class="slide-num">Slide 8 of 10</div>
+    <h2>♻️ The Nitrogen Cycle</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card info">
+      <h4>What is the Nitrogen Cycle?</h4>
+      <p>The nitrogen cycle is the biogeochemical cycle that describes how nitrogen is converted between its various chemical forms as it circulates through the atmosphere, terrestrial, and aquatic ecosystems.</p>
+    </div>
+
+    <!-- SVG Nitrogen Cycle Diagram -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <!-- Background -->
+        <rect width="700" height="420" fill="#f0f9f0" rx="12"/>
+        <!-- Sky -->
+        <rect width="700" height="100" fill="#e3f2fd" rx="12"/>
+        <text x="350" y="35" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">ATMOSPHERE: N₂ (78%)</text>
+
+        <!-- Soil band -->
+        <rect y="320" width="700" height="100" fill="#d7ccc8" rx="0 0 12 12"/>
+        <text x="350" y="355" text-anchor="middle" font-size="12" font-weight="700" fill="#4e342e">SOIL / WATER</text>
+        <text x="350" y="372" text-anchor="middle" font-size="11" fill="#6d4c41">NH₄⁺ (ammonium)  ←→  NO₃⁻ (nitrate)</text>
+
+        <!-- Plant box -->
+        <rect x="270" y="170" width="160" height="60" rx="10" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2"/>
+        <text x="350" y="196" text-anchor="middle" font-size="12" font-weight="700" fill="#1b5e20">PLANTS</text>
+        <text x="350" y="214" text-anchor="middle" font-size="10" fill="#2e7d32">Absorb NO₃⁻, NH₄⁺</text>
+
+        <!-- Arrows: N₂ fixation (lightning) -->
+        <line x1="120" y1="90" x2="120" y2="330" stroke="#f5a623" stroke-width="2" stroke-dasharray="6,3"/>
+        <polygon points="115,325 120,340 125,325" fill="#f5a623"/>
+        <text x="55" y="210" font-size="10" fill="#b06a00" font-weight="600">Lightning</text>
+        <text x="45" y="225" font-size="10" fill="#b06a00">N₂ → NO → HNO₃</text>
+
+        <!-- N₂ fixation by bacteria -->
+        <line x1="200" y1="95" x2="200" y2="330" stroke="#0a5e2a" stroke-width="2"/>
+        <polygon points="195,325 200,340 205,325" fill="#0a5e2a"/>
+        <text x="142" y="180" font-size="10" fill="#0a5e2a" font-weight="600">N₂ Fixation</text>
+        <text x="138" y="195" font-size="10" fill="#0a5e2a">Rhizobium</text>
+        <text x="148" y="210" font-size="10" fill="#0a5e2a">(legumes)</text>
+
+        <!-- Nitrification arrow (soil left to right) -->
+        <path d="M 200 360 Q 350 345 500 360" stroke="#1565c0" stroke-width="2" fill="none" marker-end="url(#arrowBlue)"/>
+        <text x="320" y="342" font-size="10" fill="#1565c0" font-weight="600">Nitrification</text>
+        <text x="310" y="354" font-size="9" fill="#1565c0">Nitrosomonas: NH₄⁺→NO₂⁻</text>
+        <text x="310" y="366" font-size="9" fill="#1565c0">Nitrobacter: NO₂⁻→NO₃⁻</text>
+
+        <!-- Plant absorption -->
+        <line x1="350" y1="330" x2="350" y2="232" stroke="#2e7d32" stroke-width="2"/>
+        <polygon points="345,238 350,228 355,238" fill="#2e7d32"/>
+        <text x="358" y="290" font-size="9" fill="#2e7d32">Plant uptake</text>
+
+        <!-- Denitrification -->
+        <line x1="580" y1="330" x2="580" y2="90" stroke="#c62828" stroke-width="2"/>
+        <polygon points="575,96 580,82 585,96" fill="#c62828"/>
+        <text x="590" y="210" font-size="10" fill="#c62828" font-weight="600">Denitrification</text>
+        <text x="585" y="225" font-size="10" fill="#c62828">NO₃⁻ → N₂</text>
+        <text x="578" y="240" font-size="9" fill="#c62828">Pseudomonas</text>
+
+        <!-- Death/decomposition -->
+        <line x1="350" y1="170" x2="350" y2="112" stroke="#795548" stroke-width="2" stroke-dasharray="4,3"/>
+        <polygon points="345,118 350,108 355,118" fill="#795548"/>
+        <text x="230" y="135" font-size="10" fill="#795548">Death &amp; Decomposition</text>
+        <text x="250" y="148" font-size="10" fill="#795548">→ Ammonification</text>
+
+        <!-- Fertiliser arrow -->
+        <path d="M 480 90 Q 520 170 500 330" stroke="#9c27b0" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+        <polygon points="495,324 500,338 505,326" fill="#9c27b0"/>
+        <text x="510" y="160" font-size="10" fill="#9c27b0" font-weight="600">Synthetic</text>
+        <text x="510" y="174" font-size="10" fill="#9c27b0">Fertilisers</text>
+
+        <!-- Arrow defs -->
+        <defs>
+          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L0,8 L8,4 z" fill="#1565c0"/>
+          </marker>
+        </defs>
+        <text x="350" y="410" text-anchor="middle" font-size="9" fill="#777">The Nitrogen Cycle — showing key biological and chemical transformations</text>
+      </svg>
+      <div class="diagram-caption">Figure: The Nitrogen Cycle showing fixation, nitrification, denitrification, and assimilation pathways</div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:14px 0 8px;">Key Processes in the Nitrogen Cycle</h3>
+    <table>
+      <tr><th>Process</th><th>Transformation</th><th>Organisms / Agent</th></tr>
+      <tr><td><strong>N₂ Fixation</strong></td><td>N₂ → NH₃ / NH₄⁺</td><td>Rhizobium (legumes), Azotobacter (free-living), lightning</td></tr>
+      <tr><td><strong>Ammonification</strong></td><td>Organic N → NH₄⁺</td><td>Decomposer bacteria &amp; fungi on dead matter</td></tr>
+      <tr><td><strong>Nitrification</strong></td><td>NH₄⁺ → NO₂⁻ → NO₃⁻</td><td>Nitrosomonas (NH₄⁺→NO₂⁻), Nitrobacter (NO₂⁻→NO₃⁻)</td></tr>
+      <tr><td><strong>Assimilation</strong></td><td>NO₃⁻/NH₄⁺ → proteins</td><td>Plants absorb from soil via roots</td></tr>
+      <tr><td><strong>Denitrification</strong></td><td>NO₃⁻ → N₂ (+ N₂O)</td><td>Pseudomonas, Thiobacillus (anaerobic conditions)</td></tr>
+    </table>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(7)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(9)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 9: PRACTICE ═══════════════════ -->
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <div class="slide-num">Slide 9 of 10</div>
+    <h2>✏️ Practice Questions</h2>
+  </div>
+  <div class="slide-body">
+
+    <div class="practice-q">
+      <div class="q-num">Question 1</div>
+      <p>State <strong>three conditions</strong> used in the Haber Process and explain why each is chosen using Le Chatelier's Principle.</p>
+      <textarea id="pq1" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(1)">Check Answer</button>
+      <div class="feedback" id="pfb1"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 2</div>
+      <p>Write the three equations for the <strong>Ostwald Process</strong> and name all reagents and conditions for each stage.</p>
+      <textarea id="pq2" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(2)">Check Answer</button>
+      <div class="feedback" id="pfb2"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 3</div>
+      <p>Explain what happens when ammonia gas is bubbled through dilute hydrochloric acid. Write the equation and name the product.</p>
+      <textarea id="pq3" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(3)">Check Answer</button>
+      <div class="feedback" id="pfb3"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 4</div>
+      <p>Describe the <strong>environmental effects</strong> of excess nitrogenous fertilisers on aquatic ecosystems.</p>
+      <textarea id="pq4" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(4)">Check Answer</button>
+      <div class="feedback" id="pfb4"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 5</div>
+      <p>Name the bacterium responsible for converting nitrite (NO₂⁻) to nitrate (NO₃⁻) in the soil during nitrification.</p>
+      <textarea id="pq5" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(5)">Check Answer</button>
+      <div class="feedback" id="pfb5"></div>
+    </div>
+
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(8)">← Back</button>
+    <button class="nav-btn acc-btn" onclick="goSlide(10)">Take Quiz →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SLIDE 10: QUIZ ═══════════════════ -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <div class="slide-num">Slide 10 of 10</div>
+    <h2>🧠 Assessment Quiz</h2>
+  </div>
+  <div class="slide-body" id="quiz-body">
+
+    <!-- Q1 Fill-blank -->
+    <div class="quiz-q">
+      <div class="qn">Question 1 — Fill in the Blank [1 mark]</div>
+      <p>The Haber Process produces ammonia from nitrogen and hydrogen at a temperature of <span id="fb1wrap" class="fill-wrap"><input type="text" class="fill-blank" id="q1a" placeholder="temp"> °C using an iron catalyst at a pressure of <input type="text" class="fill-blank" id="q1b" placeholder="pressure"> atm.</span></p>
+    </div>
+
+    <!-- Q2 Fill-blank -->
+    <div class="quiz-q">
+      <div class="qn">Question 2 — Fill in the Blank [1 mark]</div>
+      <p>Nitrogen makes up approximately <span class="fill-wrap"><input type="text" class="fill-blank" id="q2a" placeholder="%" style="width:60px"> % of the atmosphere by volume and has a very strong <input type="text" class="fill-blank" id="q2b" placeholder="bond type"> bond.</span></p>
+    </div>
+
+    <!-- Q3 Fill-blank -->
+    <div class="quiz-q">
+      <div class="qn">Question 3 — Fill in the Blank [1 mark]</div>
+      <p>In the nitrogen cycle, bacteria of the genus <span class="fill-wrap"><input type="text" class="fill-blank" id="q3a" placeholder="genus"> convert NO₂⁻ to NO₃⁻ during a process called <input type="text" class="fill-blank" id="q3b" placeholder="process name">.</span></p>
+    </div>
+
+    <!-- Q4 Fill-blank -->
+    <div class="quiz-q">
+      <div class="qn">Question 4 — Fill in the Blank [1 mark]</div>
+      <p>The reaction between ammonia and hydrochloric acid produces <span class="fill-wrap"><input type="text" class="fill-blank" id="q4a" placeholder="product name">, which appears as dense <input type="text" class="fill-blank" id="q4b" placeholder="colour"> fumes.</span></p>
+    </div>
+
+    <!-- Q5 Fill-blank -->
+    <div class="quiz-q">
+      <div class="qn">Question 5 — Fill in the Blank [1 mark]</div>
+      <p>The nitrogen fertiliser with the highest percentage of nitrogen by mass is <span class="fill-wrap"><input type="text" class="fill-blank" id="q5a" placeholder="fertiliser name"> at approximately <input type="text" class="fill-blank" id="q5b" placeholder="%"> % N.</span></p>
+    </div>
+
+    <!-- Q6 Short answer -->
+    <div class="quiz-q">
+      <div class="qn">Question 6 — Short Answer [3 marks]</div>
+      <p>Explain why a temperature of 450°C is used in the Haber Process rather than a very low or very high temperature. Reference both rate and equilibrium in your answer.</p>
+      <textarea class="short-ans" id="q6" placeholder="Write your answer here..."></textarea>
+      <div class="model-answer" id="ma6">
+        <strong>Model Answer:</strong> The reaction N₂ + 3H₂ ⇌ 2NH₃ is exothermic. A very low temperature would shift equilibrium to the right (favouring products) giving high yield, but the rate of reaction would be very slow. A very high temperature gives a fast rate but shifts equilibrium left, reducing NH₃ yield. 450°C is a compromise — it provides adequate reaction rate while maintaining a reasonable yield (~15%). The iron catalyst further improves the rate without affecting equilibrium.
+        <div style="margin-top:8px;" id="tags6"></div>
+      </div>
+    </div>
+
+    <!-- Q7 Short answer -->
+    <div class="quiz-q">
+      <div class="qn">Question 7 — Short Answer [3 marks]</div>
+      <p>Write balanced equations for all three stages of the Ostwald Process and state the conditions for Stage 1.</p>
+      <textarea class="short-ans" id="q7" placeholder="Write your answer here..."></textarea>
+      <div class="model-answer" id="ma7">
+        <strong>Model Answer:</strong><br>
+        Stage 1: 4NH₃ + 5O₂ → 4NO + 6H₂O (Pt/Rh catalyst, 900°C, 4–10 atm)<br>
+        Stage 2: 2NO + O₂ → 2NO₂ (cooling, no catalyst)<br>
+        Stage 3: 4NO₂ + O₂ + 2H₂O → 4HNO₃ (absorption tower)
+        <div style="margin-top:8px;" id="tags7"></div>
+      </div>
+    </div>
+
+    <!-- Q8 Short answer -->
+    <div class="quiz-q">
+      <div class="qn">Question 8 — Short Answer [2 marks]</div>
+      <p>What is eutrophication? Describe how nitrogenous fertilisers cause it and state one consequence for aquatic life.</p>
+      <textarea class="short-ans" id="q8" placeholder="Write your answer here..."></textarea>
+      <div class="model-answer" id="ma8">
+        <strong>Model Answer:</strong> Eutrophication is the process whereby excessive nutrients (especially nitrates and phosphates) enrich a water body. Nitrogenous fertilisers leach NO₃⁻ from agricultural land into rivers and lakes. This causes rapid algal bloom on the water surface. The algae block sunlight for submerged plants and, when the algae die, decomposers multiply using up dissolved oxygen. This leads to deoxygenation of the water and the death of fish and other aquatic organisms.
+        <div style="margin-top:8px;" id="tags8"></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <button class="nav-btn acc-btn" style="font-size:1rem;padding:12px 36px;" onclick="submitExam()">Submit &amp; Get Results</button>
+    </div>
+
+    <div id="score-card" style="display:none;">
+      <h3>🎉 Quiz Complete!</h3>
+      <div id="score-circle">
+        <span class="big" id="score-pct">0%</span>
+        <span class="lbl" id="score-frac">0/11</span>
+      </div>
+      <p id="score-msg" style="margin-bottom:14px;"></p>
+      <table class="rubric-table">
+        <tr><th>Level</th><th>Score %</th><th>Description</th></tr>
+        <tr><td>Exceeds (4)</td><td>80–100%</td><td>Excellent mastery of nitrogen chemistry</td></tr>
+        <tr><td>Meets (3)</td><td>60–79%</td><td>Good understanding; minor gaps</td></tr>
+        <tr><td>Approaches (2)</td><td>40–59%</td><td>Partial understanding; revisit key concepts</td></tr>
+        <tr><td>Below (1)</td><td>0–39%</td><td>Needs significant review</td></tr>
+      </table>
+    </div>
+
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(9)">← Back</button>
+    <button class="nav-btn" disabled>End of Lesson</button>
+  </div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<script>
+let currentSlide = 1;
+const totalSlides = 10;
+const visited = new Set([1]);
+
+function goSlide(n) {
+  document.getElementById('slide-' + currentSlide).classList.remove('active');
+  document.getElementById('dot' + currentSlide).classList.remove('active');
+  if (!document.getElementById('dot' + currentSlide).classList.contains('done')) {
+    document.getElementById('dot' + currentSlide).classList.add('visited');
+  }
+  currentSlide = n;
+  visited.add(n);
+  document.getElementById('slide-' + n).classList.add('active');
+  document.getElementById('dot' + n).classList.add('active');
+  document.getElementById('dot' + n).classList.remove('visited');
+  document.getElementById('slide-counter').textContent = n + ' / ' + totalSlides;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Practice questions
+const pqAnswers = {
+  1: { keywords: ['450','200 atm','iron','fe catalyst','le chatelier','exothermic','rate','equilibrium','high pressure','fewer moles'], threshold: 4 },
+  2: { keywords: ['4nh3','5o2','4no','6h2o','2no','no2','4no2','4hno3','platinum','900','absorption'], threshold: 5 },
+  3: { keywords: ['nh4cl','ammonium chloride','white fumes','nh3 + hcl','salt'], threshold: 2 },
+  4: { keywords: ['eutrophication','algal bloom','nitrate','leach','oxygen','deoxygenation','fish','aquatic'], threshold: 3 },
+  5: { keywords: ['nitrobacter'], threshold: 1 }
+};
+const pqModel = {
+  1: '450°C (compromise — low enough for reasonable yield, high enough for adequate rate); 200 atm (high pressure favours product side — fewer moles); Iron catalyst (increases rate without shifting equilibrium). The reaction is exothermic — by Le Chatelier, high temperature shifts equilibrium left, so 450°C balances rate and yield.',
+  2: 'Stage 1: 4NH₃ + 5O₂ → 4NO + 6H₂O (Pt/Rh gauze, 900°C, 4–10 atm)\nStage 2: 2NO + O₂ → 2NO₂ (cooling)\nStage 3: 4NO₂ + O₂ + 2H₂O → 4HNO₃ (absorption tower)',
+  3: 'NH₃(g) + HCl(g) → NH₄Cl(s). Dense white fumes of ammonium chloride are produced. This is a neutralisation reaction between ammonia (base) and HCl (acid).',
+  4: 'Excess nitrates leach into water bodies → eutrophication → rapid algal bloom → algae block sunlight → decomposers break down dead algae consuming oxygen → deoxygenation → death of fish and other aquatic organisms.',
+  5: 'Nitrobacter'
+};
+
+function checkPQ(n) {
+  const ans = document.getElementById('pq' + n).value.toLowerCase();
+  const config = pqAnswers[n];
+  const found = config.keywords.filter(k => ans.includes(k));
+  const fb = document.getElementById('pfb' + n);
+  if (found.length >= config.threshold) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Good answer! Key points covered.<br><small><strong>Model:</strong> ' + pqModel[n] + '</small>';
+  } else if (found.length > 0) {
+    fb.className = 'feedback partial';
+    fb.innerHTML = '⚠️ Partially correct. Missing: ' + config.keywords.filter(k=>!ans.includes(k)).slice(0,3).join(', ') + '<br><small><strong>Model:</strong> ' + pqModel[n] + '</small>';
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '❌ Needs more detail.<br><small><strong>Model:</strong> ' + pqModel[n] + '</small>';
+  }
+}
+
+// Quiz
+const fillAnswers = {
+  q1a: ['450'], q1b: ['200'],
+  q2a: ['78'], q2b: ['triple','triple bond','n≡n'],
+  q3a: ['nitrobacter'], q3b: ['nitrification'],
+  q4a: ['ammonium chloride','nh4cl'], q4b: ['white'],
+  q5a: ['urea','co(nh2)2'], q5b: ['46']
+};
+
+const shortKeywords = {
+  q6: { keys: ['rate','equilibrium','exothermic','yield','compromise','le chatelier','slow','high temperature','shifts left'], min: 4 },
+  q7: { keys: ['4nh3','5o2','4no','6h2o','2no','no2','4no2','4hno3','platinum','900','absorption','stage'], min: 6 },
+  q8: { keys: ['eutrophication','nitrate','algal bloom','oxygen','deoxygenation','fish','leach','fertiliser','decomposer'], min: 4 }
+};
+
+function submitExam() {
+  let score = 0; let total = 11;
+
+  // Fill-in-blanks (5 questions × 1 mark each = 5)
+  const fillIds = ['q1a','q1b','q2a','q2b','q3a','q3b','q4a','q4b','q5a','q5b'];
+  // count pairs: each pair = 1 mark
+  const pairs = [['q1a','q1b'],['q2a','q2b'],['q3a','q3b'],['q4a','q4b'],['q5a','q5b']];
+  pairs.forEach(([a,b]) => {
+    const va = document.getElementById(a).value.trim().toLowerCase();
+    const vb = document.getElementById(b).value.trim().toLowerCase();
+    const okA = fillAnswers[a].some(x => va.includes(x));
+    const okB = fillAnswers[b].some(x => vb.includes(x));
+    document.getElementById(a).className = 'fill-blank ' + (okA ? 'correct-ans' : 'wrong-ans');
+    document.getElementById(b).className = 'fill-blank ' + (okB ? 'correct-ans' : 'wrong-ans');
+    if (okA && okB) score++;
+  });
+
+  // Short answers (q6=3, q7=3, q8=2 → total 8 but we scale to 6 marks)
+  ['q6','q7','q8'].forEach(id => {
+    const ans = document.getElementById(id).value.toLowerCase();
+    const cfg = shortKeywords[id];
+    const found = cfg.keys.filter(k => ans.includes(k));
+    const missed = cfg.keys.filter(k => !ans.includes(k));
+    const maxMark = id === 'q8' ? 2 : 3;
+    const earned = Math.round((found.length / cfg.min) * maxMark);
+    const mark = Math.min(earned, maxMark);
+    score += mark;
+    document.getElementById('ma' + id.slice(1)).style.display = 'block';
+    const tagDiv = document.getElementById('tags' + id.slice(1));
+    tagDiv.innerHTML = found.map(k => `<span class="rubric-tag found">✓ ${k}</span>`).join('') +
+                       missed.slice(0,4).map(k => `<span class="rubric-tag missed">✗ ${k}</span>`).join('');
+  });
+
+  // Show score
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-frac').textContent = score + ' / ' + total;
+  const msgs = [[80,'🌟 Excellent! You have mastered Nitrogen & Its Compounds.'],[60,'👍 Good work! Review the areas marked and you\'ll excel.'],[40,'⚠️ Developing — revisit the Haber Process, Ostwald Process, and nitrogen cycle.'],[0,'📖 Keep studying. Start from Slide 2 and work through carefully.']];
+  document.getElementById('score-msg').textContent = msgs.find(([t]) => pct >= t)[1];
+  document.getElementById('score-card').style.display = 'block';
+  document.getElementById('dot10').classList.add('done');
+  document.getElementById('score-card').scrollIntoView({ behavior: 'smooth' });
+
+  if (typeof submitExamToMTTI === 'function') {
+    submitExamToMTTI(score, total, pct);
+  }
+}
+</script>
+</body>
+</html>

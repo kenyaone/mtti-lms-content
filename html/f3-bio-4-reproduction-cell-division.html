@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Biology | Reproduction, Mitosis &amp; Meiosis</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f9fafb;--card:#fff;--txt:#1a1a1a;--muted:#666;--border:#e0e0e0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
+#topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar .title{font-size:14px;font-weight:700;}
+#progress-bar{height:4px;background:rgba(255,255,255,.3);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;width:10%;}
+#slide-wrap{flex:1;max-width:860px;width:100%;margin:0 auto;padding:20px 16px 100px;}
+.slide{display:none;animation:fadeIn .4s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide-header{background:var(--pri);color:#fff;border-radius:12px 12px 0 0;padding:18px 24px;}
+.slide-header .slide-num{font-size:11px;opacity:.75;text-transform:uppercase;letter-spacing:1px;}
+.slide-header h2{font-size:20px;font-weight:700;margin-top:4px;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.outcome-list{list-style:none;padding:0;}
+.outcome-list li{padding:10px 14px;margin:8px 0;background:#e8f5e9;border-left:4px solid var(--pri);border-radius:6px;font-size:14px;line-height:1.5;}
+.outcome-list li::before{content:"✓ ";color:var(--pri);font-weight:700;}
+.info-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:16px 20px;margin:12px 0;}
+.info-box h3{color:var(--pri);font-size:15px;margin-bottom:8px;}
+.info-box p,.info-box li{font-size:13.5px;line-height:1.6;color:#333;}
+.info-box ul{padding-left:18px;margin-top:6px;}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.compare-table th{background:var(--pri);color:#fff;padding:10px 12px;text-align:left;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table tr:nth-child(even) td{background:#f5f5f5;}
+/* Phase cards */
+.phase-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.phase-tab{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;}
+.phase-tab.active,.phase-tab:hover{background:var(--pri);color:#fff;border-color:var(--pri);}
+.phase-content{display:none;animation:fadeIn .3s;}
+.phase-content.active{display:block;}
+/* Cell diagram */
+.cell-vis{background:#f0f7f0;border-radius:12px;padding:16px;margin:12px 0;text-align:center;}
+.cell-svg-wrap{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:10px 0;}
+/* Drag and drop */
+.drag-zone{min-height:60px;border:2px dashed var(--border);border-radius:10px;padding:10px;margin:8px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;}
+.drag-zone.over{border-color:var(--pri);background:#e8f5e9;}
+.drag-item{padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600;cursor:grab;user-select:none;transition:all .2s;}
+.drag-item:hover{opacity:.8;}
+.match-result{font-size:13px;margin-top:10px;padding:10px;border-radius:8px;}
+.match-result.ok{background:#e8f5e9;color:#1b5e20;}
+.match-result.fail{background:#ffebee;color:#c62828;}
+.practice-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;}
+.practice-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.practice-q textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:80px;font-family:inherit;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:10px;}
+.feedback{margin-top:10px;padding:12px;border-radius:8px;font-size:13.5px;display:none;line-height:1.6;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;}
+.quiz-q .qnum{font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+.quiz-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.fib-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;line-height:2.2;}
+.fib-wrap input{border:none;border-bottom:2px solid var(--pri);background:transparent;font-size:14px;padding:2px 6px;width:160px;outline:none;color:var(--pri);font-weight:600;}
+.fib-wrap input.correct{border-color:var(--ok);color:var(--ok);}
+.fib-wrap input.wrong{border-color:var(--no);color:var(--no);}
+.sa-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:70px;font-family:inherit;margin-top:8px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;margin:2px;font-weight:600;}
+.tag.found{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.model-answer{margin-top:8px;padding:10px;background:#f5f5f5;border-radius:6px;font-size:13px;color:#444;border-left:3px solid var(--acc);}
+#submit-quiz{display:block;width:100%;padding:14px;background:var(--pri);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;}
+#submit-quiz:hover{background:#085220;}
+#quiz-result{display:none;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-top:20px;}
+#quiz-result .score-big{font-size:52px;font-weight:900;color:var(--pri);}
+.cbc-rubric{background:#e8f5e9;border-radius:8px;padding:14px;margin-top:16px;font-size:13px;text-align:left;line-height:1.7;}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+#nav-bar button{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+#nav-bar button:hover{background:#085220;}
+#nav-bar button:disabled{background:#ccc;cursor:not-allowed;}
+#slide-dots{display:flex;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">🧬 Biology Form 3 | Reproduction, Mitosis &amp; Meiosis</div>
+    <div class="meta">MTTI LMS &nbsp;|&nbsp; Lesson 4 of 6</div>
+  </div>
+  <div id="slide-counter">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="slide-wrap">
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <div class="slide-header"><div class="slide-num">Slide 1</div><h2>📚 Learning Outcomes</h2></div>
+  <div class="slide-body">
+    <ul class="outcome-list">
+      <li>Define <strong>reproduction</strong> and state its importance</li>
+      <li>Distinguish between <strong>sexual and asexual reproduction</strong></li>
+      <li>Describe the <strong>five stages of mitosis</strong> and state its significance</li>
+      <li>Describe the stages of <strong>meiosis</strong> (first and second divisions)</li>
+      <li>Compare and contrast mitosis and meiosis</li>
+      <li>Explain methods of asexual reproduction: <strong>sporulation, budding, binary fission</strong></li>
+      <li>Distinguish between advantages and disadvantages of sexual vs asexual reproduction</li>
+    </ul>
+    <div class="info-box" style="margin-top:16px;"><h3>🔑 Key Vocabulary</h3><p><strong>Reproduction · Gametes · Fertilisation · Mitosis · Meiosis · Chromosome · Diploid · Haploid · Interphase · Prophase · Metaphase · Anaphase · Telophase · Chromatid · Centromere · Synapsis · Chiasma · Sporulation · Budding · Binary fission</strong></p></div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="s2">
+  <div class="slide-header"><div class="slide-num">Slide 2</div><h2>🌱 Introduction to Reproduction</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>What is Reproduction?</h3><p>The process by which living organisms give rise to <strong>new members of their own species</strong> which resemble the parents.</p></div>
+    <div class="info-box" style="margin-top:12px;"><h3>Importance of Reproduction</h3><ul><li>Ensures <strong>continuity of the species</strong></li><li>Maintains life of species</li><li>Replaces dead individuals</li></ul></div>
+    <table class="compare-table" style="margin-top:14px;">
+      <tr><th>Feature</th><th>Sexual Reproduction</th><th>Asexual Reproduction</th></tr>
+      <tr><td>Gametes</td><td>Fusion of male &amp; female gametes</td><td>No gametes involved</td></tr>
+      <tr><td>Parents</td><td>Two parents (usually)</td><td>One parent only</td></tr>
+      <tr><td>Variation</td><td>Genetic variation (crossing over)</td><td>No genetic variation</td></tr>
+      <tr><td>Offspring</td><td>4 haploid cells produced (meiosis)</td><td>2 identical cells (mitosis)</td></tr>
+      <tr><td>Advantages</td><td>Variation; stronger offspring; greater adaptability</td><td>Faster; retains useful traits; shorter lifecycle</td></tr>
+      <tr><td>Disadvantages</td><td>Less certain; sex-linked diseases transmitted</td><td>No variation; lowered disease resistance</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>Methods of Asexual Reproduction</h3>
+      <ul>
+        <li><strong>Sporulation:</strong> Formation of spores (small haploid cells). Occurs in moulds, ferns, bryophytes, pteridophytes.</li>
+        <li><strong>Budding:</strong> Outgrowth from parent drops off and develops into new organism. Occurs in Hydra, jellyfish, yeast, some fungi.</li>
+        <li><strong>Binary fission:</strong> Cell splits into 2 equal cells. Occurs in Amoeba, Euglena, Paramecium, bacteria.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="slide" id="s3">
+  <div class="slide-header"><div class="slide-num">Slide 3</div><h2>🔬 Mitosis — Cell Division for Growth</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>What is Mitosis?</h3><p>A type of cell division that occurs during <strong>growth</strong>, leading to an increase in cell number. All cells maintain the same chromosome number — the <strong>diploid (2n)</strong> state.</p><p style="margin-top:8px;"><strong>Significance:</strong> Ensures each daughter cell has the same number and types of chromosomes as the parent cell; responsible for growth and tissue repair.</p></div>
+    <p style="font-size:13.5px;font-weight:700;color:var(--pri);margin:14px 0 10px;">Click each phase to learn what happens:</p>
+    <div class="phase-tabs">
+      <div class="phase-tab active" onclick="showPhase(event,'interphase')">Interphase</div>
+      <div class="phase-tab" onclick="showPhase(event,'prophase')">Prophase</div>
+      <div class="phase-tab" onclick="showPhase(event,'metaphase')">Metaphase</div>
+      <div class="phase-tab" onclick="showPhase(event,'anaphase')">Anaphase</div>
+      <div class="phase-tab" onclick="showPhase(event,'telophase')">Telophase</div>
+    </div>
+    <div id="phase-interphase" class="phase-content active info-box">
+      <h3>Interphase (Resting phase)</h3>
+      <ul><li>Replication of organelles</li><li>Duplication of DNA</li><li>Production of energy (ATP) for cell division</li><li>Cell is preparing for division but appears normal</li></ul>
+    </div>
+    <div id="phase-prophase" class="phase-content info-box">
+      <h3>Prophase</h3>
+      <ul><li>Stage of dehydration (chromatin condenses)</li><li>Chromosomes shorten and thicken (become visible)</li><li>Each chromosome replicates into two <strong>chromatids</strong></li><li>Chromatids joined at the <strong>centromere</strong></li><li>Formation of spindle fibres</li><li>Nuclear membrane disintegrates</li></ul>
+    </div>
+    <div id="phase-metaphase" class="phase-content info-box">
+      <h3>Metaphase</h3>
+      <ul><li>Chromosomes move to the <strong>equator</strong> (early metaphase)</li><li>Chromosomes line up at the equatorial plate</li><li>Homologous chromosomes do NOT associate</li><li>Spindle fibres attach to centromeres</li></ul>
+    </div>
+    <div id="phase-anaphase" class="phase-content info-box">
+      <h3>Anaphase</h3>
+      <ul><li>Centromeres split</li><li>Chromatids separate</li><li>Sister chromatids move to <strong>opposite poles</strong> of the cell</li><li>Pulled by spindle fibres</li></ul>
+    </div>
+    <div id="phase-telophase" class="phase-content info-box">
+      <h3>Telophase</h3>
+      <ul><li>Chromatids reach the poles</li><li>Nuclear membrane reforms around each set of chromosomes</li><li><strong>Cytokinesis</strong> — cytoplasm divides</li><li>Two <strong>identical diploid daughter cells</strong> are formed</li></ul>
+    </div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="slide" id="s4">
+  <div class="slide-header"><div class="slide-num">Slide 4</div><h2>🧬 Meiosis — Reduction Division</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>What is Meiosis?</h3><p>Division of <strong>diploid cells</strong> (2n) to form <strong>gametes</strong> which are haploid (n). It involves TWO successive divisions producing 4 haploid daughter cells.</p><p style="margin-top:6px;"><strong>Significance:</strong> Gives rise to gametes; source of genetic variation through crossing over.</p></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+      <div class="info-box">
+        <h3>First Meiotic Division</h3>
+        <ul>
+          <li><strong>Interphase I:</strong> Cell in non-dividing state; chromosomes thread-like</li>
+          <li><strong>Prophase I:</strong> Chromosomes shorten &amp; thicken; homologous chromosomes pair (synapsis); point of contact = <em>chiasma</em> (crossing over occurs here → variation)</li>
+          <li><strong>Metaphase I:</strong> Paired homologous chromosomes line up at equator</li>
+          <li><strong>Anaphase I:</strong> Homologous pairs separate and move to poles</li>
+          <li><strong>Telophase I:</strong> Two new haploid nuclei form</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h3>Second Meiotic Division</h3>
+        <ul>
+          <li><strong>Prophase II:</strong> Chromosomes shorten and thicken again (stage of dehydration)</li>
+          <li><strong>Metaphase II:</strong> Chromosomes move to equator</li>
+          <li><strong>Anaphase II:</strong> Chromatids of each chromosome separate to poles</li>
+          <li><strong>Telophase II:</strong> Four haploid daughter cells formed</li>
+        </ul>
+        <p style="font-size:12.5px;margin-top:8px;color:var(--muted);">End result: 4 haploid cells (gametes)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="s5">
+  <div class="slide-header"><div class="slide-num">Slide 5</div><h2>⚖️ Mitosis vs Meiosis</h2></div>
+  <div class="slide-body">
+    <table class="compare-table">
+      <tr><th>Feature</th><th>Mitosis</th><th>Meiosis</th></tr>
+      <tr><td>Where it occurs</td><td>Somatic (body) cells</td><td>Reproductive cells/gonads</td></tr>
+      <tr><td>Chromosome number</td><td>Maintained — diploid (2n)</td><td>Halved — haploid (n)</td></tr>
+      <tr><td>Number of divisions</td><td>One division (4 stages)</td><td>Two divisions (4 stages each)</td></tr>
+      <tr><td>Daughter cells</td><td>2 identical daughter cells</td><td>4 haploid daughter cells</td></tr>
+      <tr><td>Crossing over</td><td>No crossing over; no variation</td><td>Crossing over at chiasma → variation</td></tr>
+      <tr><td>Synapsis/Bivalent</td><td>No pairing of homologous chromosomes</td><td>Pairing (synapsis) occurs; bivalents form</td></tr>
+      <tr><td>Purpose</td><td>Growth; tissue repair; asexual reproduction</td><td>Production of gametes; sexual reproduction</td></tr>
+      <tr><td>Similarities</td><td colspan="2">Both occur in cells; both involve cell division; both start with interphase; spindle fibres form in both</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="s6">
+  <div class="slide-header"><div class="slide-num">Slide 6</div><h2>🎮 Interactive: Match the Phase</h2></div>
+  <div class="slide-body">
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px;">Drag or click each description to match it with the correct phase of mitosis.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-weight:700;font-size:13px;color:var(--pri);margin-bottom:10px;">Descriptions (click to select):</p>
+        <div id="items-pool" style="display:flex;flex-direction:column;gap:8px;">
+          <div class="drag-item" style="background:#e8f5e9;border:2px solid #a5d6a7;" onclick="selectItem(this)" data-val="prophase">Chromosomes shorten and thicken; chromatids form</div>
+          <div class="drag-item" style="background:#e3f2fd;border:2px solid #90caf9;" onclick="selectItem(this)" data-val="metaphase">Chromosomes line up at the equator</div>
+          <div class="drag-item" style="background:#fff3e0;border:2px solid #ffe082;" onclick="selectItem(this)" data-val="anaphase">Chromatids separate and move to opposite poles</div>
+          <div class="drag-item" style="background:#fce4ec;border:2px solid #f48fb1;" onclick="selectItem(this)" data-val="interphase">DNA duplication; ATP production; organelle replication</div>
+          <div class="drag-item" style="background:#f3e5f5;border:2px solid #ce93d8;" onclick="selectItem(this)" data-val="telophase">Two daughter cells form; nuclear membrane reforms</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-weight:700;font-size:13px;color:var(--pri);margin-bottom:10px;">Phases (click to assign):</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="phase-drop" onclick="assignPhase(this,'interphase')" data-phase="interphase" style="border:2px dashed var(--border);border-radius:8px;padding:10px;cursor:pointer;min-height:44px;display:flex;align-items:center;"><span style="color:var(--muted);font-size:13px;">Interphase →</span><span class="assigned" style="margin-left:8px;font-size:12px;"></span></div>
+          <div class="phase-drop" onclick="assignPhase(this,'prophase')" data-phase="prophase" style="border:2px dashed var(--border);border-radius:8px;padding:10px;cursor:pointer;min-height:44px;display:flex;align-items:center;"><span style="color:var(--muted);font-size:13px;">Prophase →</span><span class="assigned" style="margin-left:8px;font-size:12px;"></span></div>
+          <div class="phase-drop" onclick="assignPhase(this,'metaphase')" data-phase="metaphase" style="border:2px dashed var(--border);border-radius:8px;padding:10px;cursor:pointer;min-height:44px;display:flex;align-items:center;"><span style="color:var(--muted);font-size:13px;">Metaphase →</span><span class="assigned" style="margin-left:8px;font-size:12px;"></span></div>
+          <div class="phase-drop" onclick="assignPhase(this,'anaphase')" data-phase="anaphase" style="border:2px dashed var(--border);border-radius:8px;padding:10px;cursor:pointer;min-height:44px;display:flex;align-items:center;"><span style="color:var(--muted);font-size:13px;">Anaphase →</span><span class="assigned" style="margin-left:8px;font-size:12px;"></span></div>
+          <div class="phase-drop" onclick="assignPhase(this,'telophase')" data-phase="telophase" style="border:2px dashed var(--border);border-radius:8px;padding:10px;cursor:pointer;min-height:44px;display:flex;align-items:center;"><span style="color:var(--muted);font-size:13px;">Telophase →</span><span class="assigned" style="margin-left:8px;font-size:12px;"></span></div>
+        </div>
+      </div>
+    </div>
+    <button onclick="checkMatch()" style="background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;margin-top:14px;">Check Answers</button>
+    <div id="match-result" style="display:none;margin-top:12px;padding:14px;border-radius:10px;font-size:13.5px;"></div>
+    <button onclick="resetMatch()" style="background:#aaa;color:#fff;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;margin-top:8px;">Reset</button>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="s7">
+  <div class="slide-header"><div class="slide-num">Slide 7</div><h2>🎯 Apply Your Knowledge</h2></div>
+  <div class="slide-body">
+    <div class="info-box" style="background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">📋 Scenario: Cancer and Cell Division</h3>
+      <p>Cancer is characterised by uncontrolled cell division. Cells divide rapidly without following the normal cell cycle, invading surrounding tissues.</p>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q1: Cancer cells divide by mitosis. Explain why cancer cells can form tumours (large masses of cells) if left untreated.</div>
+      <textarea placeholder="Cancer cells divide by mitosis..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model:</strong> In normal mitosis, cell division is controlled — cells divide only when needed (for growth or repair) and stop dividing when they reach a normal population size (contact inhibition). Cancer cells have lost this control mechanism and undergo uncontrolled mitosis continuously. Each cancer cell divides into 2, then 4, 8, 16... exponentially, forming a growing mass called a tumour. Because mitosis produces genetically identical cells, all tumour cells carry the same abnormal genetic information, and the tumour grows rapidly.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">Q2: During meiosis, crossing over can produce new combinations of genes. Explain the biological significance of this for a species' survival.</div>
+      <textarea placeholder="Crossing over during meiosis..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Model:</strong> Crossing over (at the chiasma during Prophase I of meiosis) causes exchange of segments between homologous chromosomes, producing new combinations of alleles in gametes. This creates genetic variation in offspring. Variation is important for survival because: (1) In a changing environment, some variants may be better adapted to survive; (2) Natural selection acts on this variation — well-adapted individuals survive and reproduce; (3) A genetically diverse population is less likely to be wiped out by a single disease or environmental change (greater resilience); (4) It drives evolution over time.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="s8">
+  <div class="slide-header"><div class="slide-num">Slide 8</div><h2>🔬 Sexual Reproduction in Plants & Flowers</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>What is a Flower?</h3><p>The <strong>reproductive structure</strong> of a plant that bears male and female parts. It produces seeds and fruits.</p></div>
+    <table class="compare-table" style="margin-top:12px;">
+      <tr><th>Part</th><th>Function</th></tr>
+      <tr><td><strong>Receptacle</strong></td><td>Expanded end of stalk bearing all floral parts</td></tr>
+      <tr><td><strong>Calyx (Sepals)</strong></td><td>Usually green; protect flower in bud</td></tr>
+      <tr><td><strong>Corolla (Petals)</strong></td><td>Often coloured/scented to attract insects</td></tr>
+      <tr><td><strong>Androecium</strong> (stamens)</td><td>Male part; anther produces pollen grains (male gametes)</td></tr>
+      <tr><td><strong>Gynaecium</strong> (pistil)</td><td>Female part; ovary → ovules (female gametes); style; stigma</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>Types of Flowers</h3>
+      <ul>
+        <li><strong>Hermaphrodite/Bisexual:</strong> Has both stamen and carpel</li>
+        <li><strong>Unisexual:</strong> Either male (staminate) or female (carpelate/pistilate)</li>
+        <li><strong>Monoecious:</strong> Male and female flowers on the same plant (e.g. maize)</li>
+        <li><strong>Dioecious:</strong> Male and female flowers on different plants (e.g. pawpaw)</li>
+        <li><strong>Complete flower:</strong> Has all four parts (calyx, corolla, androecium, gynoecium)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="slide" id="s9">
+  <div class="slide-header"><div class="slide-num">Slide 9</div><h2>✏️ Practice Questions</h2></div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <div class="qtext">1. Describe in detail what happens during Prophase I of meiosis that does NOT happen during Prophase of mitosis.</div>
+      <textarea placeholder="During Prophase I of meiosis..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ During Prophase I of meiosis (but NOT in mitosis): (1) Homologous chromosomes pair up (<strong>synapsis</strong>) forming bivalents; (2) Each bivalent consists of 4 chromatids; (3) Non-sister chromatids of homologous chromosomes may exchange segments at points called <strong>chiasmata</strong> — this is <strong>crossing over</strong>, the source of genetic variation; (4) Bivalents (paired chromosomes) are visible, not just single chromosomes as in mitosis.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">2. A cell has 46 chromosomes (2n=46). How many chromosomes will be in each daughter cell after: (a) mitosis, and (b) meiosis II?</div>
+      <textarea placeholder="(a) After mitosis...&#10;(b) After meiosis II..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ (a) After mitosis: <strong>46 chromosomes</strong> in each daughter cell (diploid; mitosis maintains chromosome number). (b) After meiosis II: <strong>23 chromosomes</strong> in each cell (haploid; meiosis halves the chromosome number). Meiosis produces 4 cells each with 23 chromosomes from 1 cell with 46 chromosomes.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">3. State THREE differences between sexual and asexual reproduction.</div>
+      <textarea placeholder="Difference 1...&#10;Difference 2...&#10;Difference 3..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ Sexual vs Asexual: (1) Sexual involves fusion of gametes (fertilisation); asexual does not use gametes — parts of organism develop into new individuals. (2) Sexual produces genetic variation (crossing over during meiosis); asexual produces genetically identical offspring (clones). (3) Sexual requires two parents (usually); asexual requires only one parent. (4) Sexual produces fewer offspring; asexual can produce many offspring rapidly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-header"><div class="slide-num">Slide 10 • Assessment</div><h2>📝 Quiz: Reproduction, Mitosis &amp; Meiosis</h2></div>
+  <div class="slide-body">
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 1</div>
+      <div class="fib-wrap">
+        Mitosis produces <input type="text" id="f1" placeholder="..."> identical daughter cells each with a <input type="text" id="f2" placeholder="..."> chromosome number.
+        Meiosis produces <input type="text" id="f3" placeholder="..."> daughter cells each with a <input type="text" id="f4" placeholder="..."> chromosome number.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 2</div>
+      <div class="fib-wrap">
+        The point of contact between homologous chromosomes during Prophase I is called <input type="text" id="f5" placeholder="...">.
+        The exchange of genetic material at this point is called <input type="text" id="f6" placeholder="...">.
+        In asexual reproduction, Amoeba divides by <input type="text" id="f7" placeholder="...">.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 1</div>
+      <div class="qtext">State FOUR events that occur during Prophase of mitosis.</div>
+      <textarea class="sa-input" id="sa1" placeholder="1.&#10;2.&#10;3.&#10;4."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 2</div>
+      <div class="qtext">Explain why meiosis is described as a "reduction division". What would happen to chromosome numbers in gametes if meiosis did not occur during gamete formation?</div>
+      <textarea class="sa-input" id="sa2" placeholder="Meiosis is called reduction division because..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 3</div>
+      <div class="qtext">State THREE advantages and TWO disadvantages of asexual reproduction.</div>
+      <textarea class="sa-input" id="sa3" placeholder="Advantages:&#10;1.&#10;2.&#10;3.&#10;Disadvantages:&#10;1.&#10;2."></textarea>
+    </div>
+    <button id="submit-quiz" onclick="submitQuiz()">Submit Quiz ✓</button>
+    <div id="quiz-result">
+      <div class="score-big" id="score-display">0%</div>
+      <div class="grade" id="grade-display"></div>
+      <div id="fib-feedback"></div>
+      <div id="sa-feedback"></div>
+      <div class="cbc-rubric"><strong>CBC Assessment Rubric:</strong><br><strong>Exceeds Expectations (80–100%):</strong> Demonstrates detailed understanding of mitosis and meiosis stages; clearly distinguishes between the two processes and types of reproduction.<br><strong>Meets Expectations (50–79%):</strong> Adequately describes the main stages and significance of cell division.<br><strong>Approaching Expectations (30–49%):</strong> Partial understanding of mitosis or meiosis.<br><strong>Below Expectations (&lt;30%):</strong> Needs additional support in understanding cell division.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="nav-bar">
+  <button id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Previous</button>
+  <div id="slide-dots"></div>
+  <button id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+<script>
+let current=0;const total=10;
+function buildDots(){const d=document.getElementById('slide-dots');d.innerHTML='';for(let i=0;i<total;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot);}}
+function goTo(n){document.querySelectorAll('.slide')[current].classList.remove('active');document.querySelectorAll('.dot')[current].classList.remove('active');current=n;document.querySelectorAll('.slide')[current].classList.add('active');document.querySelectorAll('.dot')[current].classList.add('active');document.getElementById('slide-counter').textContent='Slide '+(current+1)+' / '+total;document.getElementById('progress-fill').style.width=((current+1)/total*100)+'%';document.getElementById('prev-btn').disabled=current===0;document.getElementById('next-btn').disabled=current===total-1;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSlide(dir){goTo(current+dir);}
+buildDots();
+function showPhase(e,name){document.querySelectorAll('.phase-tab').forEach(t=>t.classList.remove('active'));e.target.classList.add('active');document.querySelectorAll('.phase-content').forEach(c=>c.classList.remove('active'));document.getElementById('phase-'+name).classList.add('active');}
+function showFeedback(btn){btn.parentElement.querySelectorAll('.feedback').forEach(f=>f.style.display='block');}
+// Match game
+let selectedItem=null;const assignments={};
+function selectItem(el){document.querySelectorAll('.drag-item').forEach(d=>d.style.outline='');el.style.outline='3px solid var(--pri)';selectedItem=el;}
+function assignPhase(dropEl,phase){if(!selectedItem)return;const val=selectedItem.getAttribute('data-val');assignments[phase]=val;dropEl.querySelector('.assigned').textContent='← '+selectedItem.textContent.slice(0,40)+'...';dropEl.style.borderColor=val===phase?'var(--ok)':'var(--border)';selectedItem.style.outline='';selectedItem=null;}
+function checkMatch(){let correct=0;let total=5;document.querySelectorAll('.phase-drop').forEach(d=>{const phase=d.getAttribute('data-phase');const assigned=assignments[phase];if(assigned===phase){d.style.background='#e8f5e9';d.style.borderColor='var(--ok)';correct++;}else{d.style.background='#ffebee';d.style.borderColor='var(--no)';}});const res=document.getElementById('match-result');res.style.display='block';res.className='match-result '+(correct===total?'ok':'fail');res.innerHTML=`<strong>${correct}/${total} correct!</strong> ${correct===total?'🎉 All phases matched correctly!':'Review the phases and try again.`}</`;res.innerHTML=correct===total?`<strong>5/5 correct! 🎉</strong> Excellent! You correctly matched all phases of mitosis.`:`<strong>${correct}/5 correct.</strong> Review phases and try again. Correct: Interphase=DNA replication; Prophase=chromosomes thicken; Metaphase=line up at equator; Anaphase=chromatids separate; Telophase=daughter cells form.`;}
+function resetMatch(){Object.keys(assignments).forEach(k=>delete assignments[k]);document.querySelectorAll('.phase-drop').forEach(d=>{d.querySelector('.assigned').textContent='';d.style.background='';d.style.borderColor='var(--border)';});document.getElementById('match-result').style.display='none';document.querySelectorAll('.drag-item').forEach(d=>d.style.outline='');selectedItem=null;}
+function submitQuiz(){
+  const fibs=[{id:'f1',ans:['two','2']},{id:'f2',ans:['diploid','same']},{id:'f3',ans:['four','4']},{id:'f4',ans:['haploid','half']},{id:'f5',ans:['chiasma','chiasmata']},{id:'f6',ans:['crossing over','cross over']},{id:'f7',ans:['binary fission']}];
+  let fibScore=0;
+  fibs.forEach(f=>{const inp=document.getElementById(f.id);const val=inp.value.trim().toLowerCase();const ok=f.ans.some(a=>val.includes(a));inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok);if(ok)fibScore++;});
+  const saData=[
+    {id:'sa1',keys:['shorten','thicken','chromatids','centromere','spindle','nuclear membrane','dehydration','replicates'],model:'(1) Chromosomes shorten and thicken (become visible); (2) Each chromosome replicates into two chromatids joined at the centromere; (3) Spindle fibres form; (4) Nuclear membrane disintegrates; (5) Stage of dehydration of the cell.'},
+    {id:'sa2',keys:['halved','diploid','haploid','double','gametes','fertilisation','chromosome number'],model:'Meiosis is called "reduction division" because it reduces the chromosome number from diploid (2n) to haploid (n). Without meiosis, gametes would still carry the full diploid number (2n). When two diploid gametes fused at fertilisation, the offspring would have 4n (double the normal number). With meiosis, haploid gametes (n) fuse to restore the normal diploid number (2n) in the offspring, maintaining chromosomal stability across generations.'},
+    {id:'sa3',keys:['retention','traits','faster','survival','variation','disease','competition'],model:'Advantages: (1) Retention of useful characteristics/genes/traits; (2) Offspring establish faster — shorter life cycle; (3) Better chances of survival in a stable environment. Disadvantages: (1) Lack of genetic variation — all offspring are genetically identical (clones); (2) Lowered resistance to disease — a single pathogen can wipe out the entire population.'}
+  ];
+  let saScore=0;let saFeedbackHTML='';
+  saData.forEach(sa=>{const val=document.getElementById(sa.id).value.toLowerCase();const found=sa.keys.filter(k=>val.includes(k));const missed=sa.keys.filter(k=>!val.includes(k));const pts=Math.min(2,Math.round(found.length/sa.keys.length*2));saScore+=pts;saFeedbackHTML+=`<div style="margin:10px 0;"><strong>${sa.id.toUpperCase()}:</strong> `;found.forEach(k=>{saFeedbackHTML+=`<span class="tag found">✓ ${k}</span>`;});missed.slice(0,4).forEach(k=>{saFeedbackHTML+=`<span class="tag missed">✗ ${k}</span>`;});saFeedbackHTML+=`<div class="model-answer"><strong>Model Answer:</strong> ${sa.model}</div></div>`;});
+  const tot=fibs.length+6;const pct=Math.round((fibScore+saScore)/tot*100);
+  document.getElementById('score-display').textContent=pct+'%';
+  const grades=[[80,'Exceeds Expectations 🌟'],[50,'Meets Expectations ✅'],[30,'Approaching Expectations 📈'],[0,'Below Expectations — Revise & Retry 📚']];
+  document.getElementById('grade-display').textContent=grades.find(g=>pct>=g[0])[1];
+  document.getElementById('fib-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Fill-in-Blank: '+fibScore+'/'+fibs.length+'</h4>';
+  document.getElementById('sa-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Short Answer: '+saScore+'/6</h4>'+saFeedbackHTML;
+  document.getElementById('quiz-result').style.display='block';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(fibScore+saScore,tot,pct);
+  document.getElementById('quiz-result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

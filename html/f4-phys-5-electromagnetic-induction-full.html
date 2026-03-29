@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Electromagnetic Induction</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;line-height:1.3;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar"><h2>⚡ F4 Physics — Ch.5: Electromagnetic Induction</h2><span class="meta">MTTI LMS | Form 4</span></div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<div class="slide active" id="s1"><span class="slide-label">SLIDE 1 OF 10</span><h1>📚 Learning Outcomes</h1><div class="card"><ol><li>Define electromagnetism and explain how e.m.f is induced</li><li>State Faraday's and Lenz's laws of electromagnetic induction</li><li>State and apply Fleming's Right Hand Rule</li><li>Describe factors affecting magnitude of induced e.m.f</li><li>Describe a.c. and d.c. generators</li><li>Explain mutual induction and transformers</li><li>Solve transformer problems (Np/Ns = Vp/Vs)</li></ol></div><div class="highlight">🔑 Np/Ns = Vp/Vs | Efficiency = Ps/Pp × 100%</div></div>
+
+<div class="slide" id="s2"><span class="slide-label">SLIDE 2 OF 10</span><h1>🔌 Electromagnetic Induction — Basics</h1><div class="card"><p><strong>Electromagnetism</strong> — interaction between electric current and magnetic field, producing induced e.m.f and induced current.</p><h2>Key Experiment</h2><ul><li>Move wire upward in magnetic field → galvanometer deflects one way</li><li>Move wire downward → deflects opposite direction</li><li>Hold still or move horizontally → no deflection</li></ul><p>E.m.f is induced due to <strong>relative motion</strong> between conductor and magnetic field.</p></div></div>
+
+<div class="slide" id="s3"><span class="slide-label">SLIDE 3 OF 10</span><h1>📜 Laws of Electromagnetic Induction</h1><div class="card"><h2>Faraday's Law</h2><p><em>"The induced e.m.f in a conductor is proportional to the <strong>rate of change of magnetic flux</strong> linking the conductor."</em></p><h2>Lenz's Law</h2><p><em>"An induced current flows in such a direction that its magnetic effect <strong>opposes the change</strong> producing it."</em></p><h2>Fleming's Right Hand Rule (Generator Rule)</h2><p>First finger = direction of <strong>field</strong><br>Thumb = direction of <strong>motion</strong><br>Second finger = direction of <strong>induced current</strong></p></div><div class="card"><h2>Factors Affecting Magnitude of Induced E.M.F</h2><ul><li>Rate of relative motion (faster → larger e.m.f)</li><li>Strength of magnetic field (stronger → larger)</li><li>Length of conductor in the field (longer → larger)</li></ul></div></div>
+
+<div class="slide" id="s4"><span class="slide-label">SLIDE 4 OF 10</span><h1>⚙️ AC & DC Generators</h1><div class="card"><h2>AC Generator / Alternator</h2><p>Armature (coil) rotates in magnetic field. Two <strong>slip rings</strong> + carbon brushes. Current max at 90°, min at 270°. Used in car alternators and hydroelectric plants.</p><h2>DC Generator</h2><p>Same as AC but uses <strong>commutator</strong> (split ring) instead of slip rings. After each 180° rotation, connections reverse so current flows in one direction.</p></div><div class="card"><h2>Eddy Currents</h2><p>Loops of current in metal conductors opposing their producing force. Reduced by <strong>laminating</strong> metal cores. Useful in moving-coil meter damping.</p></div></div>
+
+<div class="slide" id="s5"><span class="slide-label">SLIDE 5 OF 10</span><h1>🔄 Mutual Induction & Transformers</h1><div class="card"><p><strong>Mutual induction</strong> — changing magnetic flux in one coil induces e.m.f in a nearby coil.</p><h2>Transformer</h2><p>Converts alternating voltage. Core of laminated soft iron. Primary coil (Np turns, Vp) and secondary coil (Ns turns, Vs).</p><div class="formula">Np / Ns = Vp / Vs = Is / Ip</div><div class="formula">Efficiency = (Ps / Pp) × 100% = (Is × Vs)/(Ip × Vp) × 100%</div></div><div class="card"><h2>Energy Losses in Transformers</h2><table><tr><th>Loss</th><th>Cause</th><th>Reduction</th></tr><tr><td>Flux leakage</td><td>Poor design</td><td>Better core design</td></tr><tr><td>Resistance in windings</td><td>Copper wire resistance</td><td>Thick copper wire</td></tr><tr><td>Hysteresis</td><td>Domain reversal</td><td>Soft iron core</td></tr><tr><td>Eddy currents</td><td>Induced currents in core</td><td>Laminated core</td></tr></table></div></div>
+
+<div class="slide" id="s6"><span class="slide-label">SLIDE 6 OF 10</span><h1>✏️ Worked Examples</h1><div class="card"><h2>Example 1 — Step-up Transformer</h2><p>Primary: 200 turns, 240 V, 0.6 A. Secondary current: 0.1 A. Find Ns and Vs.</p><p>Ns = (Ip/Is) × Np = (0.6/0.1) × 200 = <strong>1200 turns</strong></p><p>Vs = (Ns/Np) × Vp = (1200/200) × 240 = <strong>1440 V</strong></p></div><div class="card"><h2>Example 2 — Efficiency</h2><p>Step-up transformer: Np=100, Ns=10000, Vp=12V, Ip=0.5A, efficiency=90%. Find Is.</p><p>Pp = Ip×Vp = 0.5×12 = 6 W</p><p>Ps = efficiency × Pp = 0.9×6 = 5.4 W</p><p>Vs = (Ns/Np)×Vp = 1200 V</p><p>Is = Ps/Vs = 5.4/1200 = <strong>0.0045 A</strong></p></div></div>
+
+<div class="slide" id="s7"><span class="slide-label">SLIDE 7 OF 10</span><h1>🔧 Applications of Mutual Induction</h1><div class="card"><table><tr><th>Application</th><th>Function</th></tr><tr><td>Transformer</td><td>Step up/down AC voltage for transmission</td></tr><tr><td>Induction coil</td><td>Produces high voltage sparks</td></tr><tr><td>Car ignition</td><td>Spark plug ignites petrol-air mixture</td></tr><tr><td>Moving coil microphone</td><td>Sound vibrates diaphragm → coil moves → induces current</td></tr></table></div><div class="card"><h2>Uses of Transformers</h2><ul><li>Power stations — step up to 400 kV for transmission, step down for homes (240 V)</li><li>School laboratories — low voltage supply</li><li>Electronic goods — radios, TVs</li><li>CRO — high voltage supply</li></ul></div></div>
+
+<div class="slide" id="s8"><span class="slide-label">SLIDE 8 OF 10</span><h1>📊 Summary: Key Formulae</h1><div class="card"><table><tr><th>Formula</th><th>Meaning</th></tr><tr><td>Np/Ns = Vp/Vs</td><td>Turn ratio = voltage ratio</td></tr><tr><td>Np/Ns = Is/Ip</td><td>Turn ratio = inverse current ratio</td></tr><tr><td>Efficiency = Ps/Pp × 100%</td><td>Power out / Power in</td></tr><tr><td>P = IV</td><td>Electrical power</td></tr></table></div><div class="highlight">📌 Step-up: Ns&gt;Np → Vs&gt;Vp → Is&lt;Ip | Step-down: Ns&lt;Np → Vs&lt;Vp → Is&gt;Ip</div></div>
+
+<div class="slide" id="s9"><span class="slide-label">SLIDE 9 OF 10</span><h1>🧪 Practice Problems</h1><div class="card"><h3>P1. A transformer has Np=500, Ns=50. If Vp=240V, find Vs and state type.</h3><div class="highlight">Vs = (50/500)×240 = <strong>24 V</strong> — Step-down transformer</div></div><div class="card"><h3>P2. Same transformer (Ip=0.1A). Find Is assuming 100% efficiency.</h3><div class="highlight">Np/Ns = Is/Ip → Is = Ip×Np/Ns = 0.1×500/50 = <strong>1 A</strong></div></div><div class="card"><h3>P3. Why are transformer cores made of laminated soft iron?</h3><div class="highlight">Laminations reduce eddy currents. Soft iron magnetizes/demagnetizes easily, reducing hysteresis losses.</div></div></div>
+
+<div class="slide" id="s10"><span class="slide-label">SLIDE 10 OF 10</span><h1>📝 Quiz — Electromagnetic Induction</h1><div class="quiz-wrap"><h2>Fill in the Blanks (8 marks)</h2>
+<div class="q-block"><div class="q-text"><span>Q1.</span> The law that states induced e.m.f opposes the change producing it is __________'s Law. (1 mk)</div><input type="text" id="q1" placeholder="scientist's name"><div class="q-fb" id="q1f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q2.</span> In a transformer: Np/Ns = Vp/__________. (1 mk)</div><input type="text" id="q2" placeholder="symbol"><div class="q-fb" id="q2f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q3.</span> An AC generator uses __________ rings connected to carbon brushes. (1 mk)</div><input type="text" id="q3" placeholder="type"><div class="q-fb" id="q3f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q4.</span> Eddy currents in transformer cores are reduced by __________ the core. (1 mk)</div><input type="text" id="q4" placeholder="process"><div class="q-fb" id="q4f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q5.</span> Fleming's Right Hand Rule is also called the __________ rule. (1 mk)</div><input type="text" id="q5" placeholder="one word"><div class="q-fb" id="q5f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q6.</span> A transformer with Np=100, Ns=500 is a step-__________ transformer. (1 mk)</div><input type="text" id="q6" placeholder="up or down"><div class="q-fb" id="q6f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q7.</span> Transformer: Np=200, Ns=40, Vp=120V. Vs = __________ V. (1 mk)</div><input type="text" id="q7" placeholder="numerical"><div class="q-fb" id="q7f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q8.</span> In mutual induction, the changing magnetic flux in one coil induces e.m.f in a __________ coil. (1 mk)</div><input type="text" id="q8" placeholder="word"><div class="q-fb" id="q8f"></div></div>
+<h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+<div class="q-block q-sa"><div class="q-text"><span>Q9.</span> State THREE factors that affect the magnitude of the induced e.m.f in a conductor. (3 mks)</div><textarea id="q9" placeholder="1... 2... 3..."></textarea><div class="q-fb" id="q9f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q10.</span> A transformer has 400 primary turns and 2000 secondary turns. The primary voltage is 240 V and primary current is 5 A. Calculate: (a) secondary voltage, (b) secondary current if efficiency = 80%. (3 mks)</div><textarea id="q10" placeholder="Show working..."></textarea><div class="q-fb" id="q10f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q11.</span> Distinguish between an AC generator and a DC generator. (1 mk)</div><textarea id="q11" placeholder="Your answer..."></textarea><div class="q-fb" id="q11f"></div></div>
+<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+<div class="score-box" id="scorebox"><h3 id="score-txt"></h3><p id="score-msg"></p></div></div></div>
+
+<div id="nav"><button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button><span id="slide-counter">1 / 10</span><button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button></div>
+<script>
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+const ans={q1:{kw:['lenz'],pts:1},q2:{kw:['vs','v'],pts:1},q3:{kw:['slip'],pts:1},q4:{kw:['laminat'],pts:1},q5:{kw:['generator'],pts:1},q6:{kw:['up'],pts:1},q7:{kw:['24'],pts:1},q8:{kw:['second','nearby'],pts:1}};
+let score=0;
+function submitQuiz(){
+  score=0;
+  Object.keys(ans).forEach(id=>{const val=document.getElementById(id).value.trim().toLowerCase();const correct=ans[id].kw.some(k=>val.includes(k));const fb=document.getElementById(id+'f');if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}});
+  const sas=document.querySelectorAll('.q-sa textarea');
+  sas.forEach(el=>{if(el.value.trim().length>30)score+=Math.min(3,Math.ceil(el.value.trim().length/60));});
+  score=Math.min(score,15);
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');sb.style.display='block';
+  document.getElementById('score-txt').textContent='Score: '+score+' / 15 ('+pct+'%)';
+  document.getElementById('score-msg').textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+</script>
+</body>
+</html>

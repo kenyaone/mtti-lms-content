@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Chemistry – Radioactivity</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f0f4f0;--card:#fff;--border:#d0e4d8;--text:#1a2e1a;--muted:#6b8c6b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.topbar .brand{font-weight:700;font-size:.95rem}.topbar .brand span{color:var(--acc)}
+.slide-info{font-size:.8rem;opacity:.8}
+.nav-dots{display:flex;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .2s}
+.dot.active{background:var(--acc)}
+.slide{display:none;flex:1;padding:24px 20px;max-width:860px;margin:0 auto;width:100%}
+.slide.active{display:block}
+h1{font-size:1.4rem;color:var(--pri);margin-bottom:6px}
+h2{font-size:1.15rem;color:var(--pri);margin-bottom:10px}
+h3{font-size:1rem;color:var(--ok);margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 6px rgba(10,94,42,.06)}
+.card.highlight{border-left:4px solid var(--acc)}
+.card.green{border-left:4px solid var(--ok)}
+.card.red{border-left:4px solid var(--no)}
+.outcome-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.outcome-list li{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:.9rem}
+.outcome-list li::before{content:'✓';color:var(--ok);font-weight:700;flex-shrink:0;margin-top:1px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px}
+.tbl th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.tbl tr:nth-child(even) td{background:#f5faf5}
+.fact{background:linear-gradient(135deg,rgba(10,94,42,.06),rgba(245,166,35,.06));border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0;font-size:.88rem}
+.fact strong{color:var(--pri)}
+.nav-btns{display:flex;justify-content:space-between;padding:16px 20px;max-width:860px;margin:0 auto;width:100%;gap:10px}
+.btn{padding:10px 24px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;transition:all .2s}
+.btn-prev{background:#fff;color:var(--pri);border:2px solid var(--pri)}.btn-prev:hover{background:var(--pri);color:#fff}
+.btn-next{background:var(--pri);color:#fff}.btn-next:hover{background:#0d7a37}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.quiz-q{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:14px}
+.quiz-q p{font-weight:600;margin-bottom:10px;font-size:.92rem}
+.fib input{border:none;border-bottom:2px solid var(--pri);background:transparent;width:140px;font-size:.92rem;padding:2px 6px;outline:none;color:var(--text)}
+.sa-input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.88rem;resize:vertical;min-height:60px;font-family:inherit}
+.sa-input:focus{outline:none;border-color:var(--pri)}
+.check-btn{background:var(--ok);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-weight:700;cursor:pointer;margin-top:10px;font-size:.85rem}
+.result-tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:700;margin-left:8px}
+.found{background:#e8f5e9;color:var(--ok)}.missed{background:#ffebee;color:var(--no)}
+.model-ans{background:#f5faf5;border-left:3px solid var(--ok);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px;font-size:.85rem;display:none}
+.score-box{background:var(--pri);color:#fff;border-radius:12px;padding:24px;text-align:center;margin-top:16px}
+.score-box h2{color:#fff;font-size:1.5rem}
+.rubric{background:#fff;border-radius:8px;padding:12px;margin-top:12px;font-size:.82rem;color:var(--text)}
+.rubric-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border)}
+.radiation-card{border-radius:10px;padding:16px;margin-bottom:10px;font-size:.87rem}
+.alpha{background:#fff3e0;border:2px solid #f5a623}
+.beta{background:#e3f2fd;border:2px solid #1976d2}
+.gamma{background:#fce4ec;border:2px solid #c62828}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">M.T.T.I <span>LMS</span> — F3 Chemistry</div>
+  <div class="nav-dots" id="dots"></div>
+  <div class="slide-info" id="slideInfo">1 / 10</div>
+</div>
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="s1">
+  <h1>Radioactivity</h1>
+  <p class="subtitle">Form Three Chemistry — KLB Book 3</p>
+  <div class="card highlight">
+    <h3>🎯 Learning Outcomes</h3>
+    <ul class="outcome-list">
+      <li>Define radioactivity and identify radioactive elements</li>
+      <li>Describe the properties of alpha, beta and gamma radiation</li>
+      <li>Write and balance nuclear equations for radioactive decay</li>
+      <li>Explain half-life and solve half-life problems</li>
+      <li>Describe the uses and dangers of radioactivity</li>
+      <li>Explain nuclear fission and fusion</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide" id="s2">
+  <h2>What is Radioactivity?</h2>
+  <div class="card highlight">
+    <h3>Definition</h3>
+    <p style="font-size:.88rem"><strong>Radioactivity</strong> is the spontaneous disintegration of unstable atomic nuclei with the emission of radiation (alpha, beta or gamma) and release of energy.</p>
+  </div>
+  <div class="card">
+    <h3>Key Points</h3>
+    <ul style="font-size:.87rem;padding-left:16px;line-height:2">
+      <li>Process is <strong>spontaneous</strong> — cannot be controlled by temperature, pressure or chemical state</li>
+      <li>Radioactive elements have <strong>unstable nuclei</strong> (too many/few neutrons)</li>
+      <li>Discovered by <strong>Henri Becquerel</strong> (1896) using uranium</li>
+      <li>Further studied by <strong>Marie & Pierre Curie</strong> (discovered radium and polonium)</li>
+    </ul>
+  </div>
+  <div class="grid2">
+    <div class="card green">
+      <h3>Natural Radioactivity</h3>
+      <p style="font-size:.87rem">Occurs naturally in heavy elements: Uranium (U), Radium (Ra), Thorium (Th), Polonium (Po), Radon (Rn)</p>
+    </div>
+    <div class="card">
+      <h3>Artificial Radioactivity</h3>
+      <p style="font-size:.87rem">Induced by bombarding stable nuclei with particles (neutrons, protons) in nuclear reactors or accelerators.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide" id="s3">
+  <h2>Types of Radiation</h2>
+  <div class="radiation-card alpha">
+    <h3 style="color:#e65100">⚛ Alpha (α) Radiation</h3>
+    <ul style="padding-left:16px;line-height:1.9;margin-top:6px">
+      <li><strong>Nature:</strong> Helium nucleus (²₄He) — 2 protons + 2 neutrons</li>
+      <li><strong>Charge:</strong> +2</li>
+      <li><strong>Mass:</strong> 4 atomic mass units</li>
+      <li><strong>Penetration:</strong> Least — stopped by paper or few cm of air</li>
+      <li><strong>Ionisation:</strong> Strongest ioniser</li>
+      <li><strong>Deflection:</strong> Deflected by electric & magnetic fields</li>
+    </ul>
+  </div>
+  <div class="radiation-card beta">
+    <h3 style="color:#1976d2">⚡ Beta (β) Radiation</h3>
+    <ul style="padding-left:16px;line-height:1.9;margin-top:6px">
+      <li><strong>Nature:</strong> Fast-moving electron (⁰₋₁e)</li>
+      <li><strong>Charge:</strong> −1</li>
+      <li><strong>Mass:</strong> Negligible (1/1836 of proton)</li>
+      <li><strong>Penetration:</strong> Medium — stopped by 3mm aluminium</li>
+      <li><strong>Ionisation:</strong> Moderate</li>
+      <li><strong>Deflection:</strong> Deflected (opposite to alpha)</li>
+    </ul>
+  </div>
+  <div class="radiation-card gamma">
+    <h3 style="color:#c62828">☢ Gamma (γ) Radiation</h3>
+    <ul style="padding-left:16px;line-height:1.9;margin-top:6px">
+      <li><strong>Nature:</strong> Electromagnetic wave (high energy photons)</li>
+      <li><strong>Charge:</strong> 0 (neutral)</li>
+      <li><strong>Mass:</strong> 0</li>
+      <li><strong>Penetration:</strong> Most — requires several cm of lead or concrete</li>
+      <li><strong>Ionisation:</strong> Weakest ioniser</li>
+      <li><strong>Deflection:</strong> NOT deflected by fields</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide" id="s4">
+  <h2>Nuclear Equations</h2>
+  <div class="card highlight">
+    <h3>Rules for Balancing Nuclear Equations</h3>
+    <ul style="font-size:.87rem;padding-left:16px;line-height:1.9">
+      <li>Sum of <strong>mass numbers</strong> must be equal on both sides</li>
+      <li>Sum of <strong>atomic numbers</strong> must be equal on both sides</li>
+    </ul>
+  </div>
+  <div class="card green">
+    <h3>Alpha Decay — loses ²₄He</h3>
+    <p style="font-size:.87rem;margin-bottom:8px">Mass number decreases by 4, atomic number decreases by 2:</p>
+    <div style="background:#f0f8f0;padding:10px;border-radius:8px;text-align:center;font-size:1rem;font-weight:700">
+      ²³⁸₉₂U → ²³⁴₉₀Th + ⁴₂He
+    </div>
+    <p style="font-size:.82rem;margin-top:6px;color:var(--muted)">Uranium-238 decays to Thorium-234 + alpha particle</p>
+  </div>
+  <div class="card">
+    <h3>Beta Decay — emits ⁰₋₁e</h3>
+    <p style="font-size:.87rem;margin-bottom:8px">Mass number unchanged, atomic number increases by 1:</p>
+    <div style="background:#f5faf5;padding:10px;border-radius:8px;text-align:center;font-size:1rem;font-weight:700">
+      ²³⁴₉₀Th → ²³⁴₉₁Pa + ⁰₋₁e
+    </div>
+    <p style="font-size:.82rem;margin-top:6px;color:var(--muted)">Thorium-234 decays to Protactinium-234 + beta particle</p>
+  </div>
+  <div class="card">
+    <h3>Gamma Emission</h3>
+    <p style="font-size:.87rem">No change in mass or atomic number. Gamma rays accompany alpha or beta decay as excess energy is released.</p>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide" id="s5">
+  <h2>Half-Life</h2>
+  <div class="card highlight">
+    <h3>Definition</h3>
+    <p style="font-size:.88rem"><strong>Half-life (t½)</strong> is the time taken for half the atoms in a radioactive sample to decay.</p>
+  </div>
+  <div class="card green">
+    <h3>Half-Life Formula</h3>
+    <div style="background:#f0f8f0;padding:12px;border-radius:8px;text-align:center;font-size:1rem;font-weight:700;margin:8px 0">
+      N = N₀ × (½)ⁿ &nbsp;&nbsp; where n = t / t½
+    </div>
+    <table class="tbl">
+      <tr><th>Symbol</th><th>Meaning</th></tr>
+      <tr><td>N</td><td>Remaining amount</td></tr>
+      <tr><td>N₀</td><td>Initial amount</td></tr>
+      <tr><td>n</td><td>Number of half-lives</td></tr>
+      <tr><td>t</td><td>Total time elapsed</td></tr>
+      <tr><td>t½</td><td>Half-life period</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>📊 Worked Example</h3>
+    <p style="font-size:.87rem">A 80g sample has a half-life of 20 years. How much remains after 60 years?</p>
+    <div style="background:#f5faf5;padding:10px;border-radius:8px;font-size:.87rem;margin-top:8px">
+      <p>n = 60 ÷ 20 = <strong>3 half-lives</strong></p>
+      <p>N = 80 × (½)³ = 80 × ⅛ = <strong>10g</strong></p>
+    </div>
+  </div>
+  <div class="fact"><strong>Note:</strong> Half-life is constant for a given isotope — it cannot be changed by any physical or chemical means.</div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide" id="s6">
+  <h2>Uses of Radioactivity</h2>
+  <div class="grid2">
+    <div class="card green">
+      <h3>🏥 Medicine</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:1.9">
+        <li>Cancer treatment (radiotherapy)</li>
+        <li>Medical imaging (X-rays, PET scans)</li>
+        <li>Sterilising medical equipment</li>
+        <li>Iodine-131 for thyroid treatment</li>
+        <li>Cobalt-60 for tumour treatment</li>
+      </ul>
+    </div>
+    <div class="card highlight">
+      <h3>⚡ Energy</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:1.9">
+        <li>Nuclear power stations</li>
+        <li>Nuclear submarines</li>
+        <li>Radioisotope thermoelectric generators</li>
+        <li>Space probes (e.g. Voyager)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🔬 Research & Industry</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:1.9">
+        <li>Radiocarbon dating (Carbon-14)</li>
+        <li>Thickness measurement in industry</li>
+        <li>Food preservation (irradiation)</li>
+        <li>Leak detection in pipes</li>
+        <li>Smoke detectors (Americium-241)</li>
+      </ul>
+    </div>
+    <div class="card red">
+      <h3>⚠ Dangers</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:1.9">
+        <li>Causes cancer and mutations</li>
+        <li>Burns and radiation sickness</li>
+        <li>Damage to DNA</li>
+        <li>Long-term environmental contamination</li>
+        <li>Nuclear weapons</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide" id="s7">
+  <h2>Nuclear Fission & Fusion</h2>
+  <div class="card highlight">
+    <h3>Nuclear Fission</h3>
+    <p style="font-size:.88rem;margin-bottom:8px">The splitting of a heavy nucleus into two lighter nuclei with release of large amounts of energy and neutrons.</p>
+    <div style="background:#fffbf0;padding:10px;border-radius:8px;text-align:center;font-size:.92rem;font-weight:700">
+      ²³⁵₉₂U + ¹₀n → ¹⁴¹₅₆Ba + ⁹²₃₆Kr + 3¹₀n + energy
+    </div>
+    <p style="font-size:.83rem;margin-top:8px;color:var(--muted)">Used in nuclear reactors and atomic bombs. Neutrons released cause a chain reaction.</p>
+  </div>
+  <div class="card green">
+    <h3>Nuclear Fusion</h3>
+    <p style="font-size:.88rem;margin-bottom:8px">The joining of light nuclei to form a heavier nucleus, releasing enormous amounts of energy.</p>
+    <div style="background:#f0f8f0;padding:10px;border-radius:8px;text-align:center;font-size:.92rem;font-weight:700">
+      ²₁H + ³₁H → ⁴₂He + ¹₀n + energy
+    </div>
+    <p style="font-size:.83rem;margin-top:8px;color:var(--muted)">Source of energy in the sun and stars. Used in hydrogen bombs. Research ongoing for clean energy.</p>
+  </div>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Fission</th><th>Fusion</th></tr>
+    <tr><td>Process</td><td>Splitting</td><td>Joining</td></tr>
+    <tr><td>Nuclei</td><td>Heavy (U, Pu)</td><td>Light (H, He)</td></tr>
+    <tr><td>Energy</td><td>Large</td><td>Much larger</td></tr>
+    <tr><td>Waste</td><td>Radioactive</td><td>Minimal</td></tr>
+    <tr><td>Temperature</td><td>Room temp (with neutron)</td><td>Millions °C</td></tr>
+  </table>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide" id="s8">
+  <h2>Safety Precautions & Detecting Radiation</h2>
+  <div class="grid2">
+    <div class="card red">
+      <h3>⚠ Safety Precautions</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:1.9">
+        <li>Use lead-lined containers for storage</li>
+        <li>Wear lead aprons and gloves</li>
+        <li>Use remote-handling tongs</li>
+        <li>Minimise exposure time</li>
+        <li>Maximise distance from source</li>
+        <li>Regular monitoring with dosimeters</li>
+        <li>Dispose of waste in designated sites</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h3>🔍 Detecting Radiation</h3>
+      <ul style="font-size:.86rem;padding-left:14px;line-height:1.9">
+        <li><strong>Geiger-Müller tube</strong> — most common detector</li>
+        <li><strong>Photographic film</strong> — worn as badge dosimeter</li>
+        <li><strong>Cloud chamber</strong> — shows tracks of radiation</li>
+        <li><strong>Scintillation counter</strong> — flashes of light</li>
+        <li><strong>Electroscope</strong> — measures ionisation</li>
+      </ul>
+    </div>
+  </div>
+  <div class="fact"><strong>Background radiation</strong> is low-level radiation that exists naturally in the environment from rocks, soil, cosmic rays and radon gas. It must be subtracted when measuring radioactive sources.</div>
+</div>
+
+<!-- SLIDE 9 -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="quiz-q">
+    <p>1. Radioactivity is the spontaneous disintegration of unstable <span class="fib"><input type="text" id="q1" placeholder="answer"></span>.</p>
+    <button class="check-btn" onclick="checkFIB('q1',['nuclei','nucleus','atomic nuclei'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>2. Alpha particles are identical to the nucleus of a <span class="fib"><input type="text" id="q2" placeholder="answer"></span> atom.</p>
+    <button class="check-btn" onclick="checkFIB('q2',['helium','he'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>3. The half-life of Carbon-14 is 5730 years. After 11460 years, what fraction of the original sample remains? <span class="fib"><input type="text" id="q3" placeholder="fraction"></span></p>
+    <button class="check-btn" onclick="checkFIB('q3',['1/4','quarter','0.25','one quarter'],this)">Check</button>
+  </div>
+  <div class="quiz-q">
+    <p>4. Which type of radiation has the greatest penetrating power?</p>
+    <textarea class="sa-input" id="q4" placeholder="Type your answer..."></textarea>
+    <button class="check-btn" onclick="checkSA('q4',['gamma','γ'],this)">Check</button>
+    <div class="model-ans" id="q4-model">
+      <strong>Model Answer:</strong> Gamma (γ) radiation has the greatest penetrating power. It can pass through several centimetres of lead or concrete. It is electromagnetic radiation with no mass or charge, so it interacts least with matter.
+    </div>
+  </div>
+  <div class="quiz-q">
+    <p>5. State two uses of radioactivity in medicine.</p>
+    <textarea class="sa-input" id="q5" placeholder="Type your answer..."></textarea>
+    <button class="check-btn" onclick="checkSA('q5',['cancer','radiotherapy','sterilise','iodine','imaging','cobalt'],this)">Check</button>
+    <div class="model-ans" id="q5-model">
+      <strong>Model Answer:</strong> (i) Radiotherapy — using cobalt-60 or other radioactive isotopes to treat cancer by killing tumour cells. (ii) Medical imaging — using radioactive tracers or X-rays to diagnose diseases. (iii) Sterilising medical equipment using gamma radiation.
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="slide" id="s10">
+  <h2>Quiz — Radioactivity</h2>
+  <div id="quizArea">
+    <div class="quiz-q">
+      <p>1. Alpha radiation consists of <span class="fib"><input type="text" id="fq1" placeholder="..."></span> particles.</p>
+    </div>
+    <div class="quiz-q">
+      <p>2. During beta decay, the atomic number <span class="fib"><input type="text" id="fq2" placeholder="increases/decreases"></span> by <span class="fib"><input type="text" id="fq3" placeholder="number"></span>.</p>
+    </div>
+    <div class="quiz-q">
+      <p>3. A 160g radioactive sample has a half-life of 8 days. How much remains after 24 days? <span class="fib"><input type="text" id="fq4" placeholder="...g"></span></p>
+    </div>
+    <div class="quiz-q">
+      <p>4. The type of radiation NOT deflected by electric or magnetic fields is <span class="fib"><input type="text" id="fq5" placeholder="..."></span>.</p>
+    </div>
+    <div class="quiz-q">
+      <p>5. Explain the difference between nuclear fission and nuclear fusion:</p>
+      <textarea class="sa-input" id="fq6" placeholder="Explain both processes..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <p>6. Write a balanced nuclear equation for the alpha decay of Radium-226 (⁸⁸Ra):</p>
+      <textarea class="sa-input" id="fq7" placeholder="Write the equation..."></textarea>
+    </div>
+    <button class="check-btn" style="width:100%;padding:12px;font-size:1rem" onclick="submitQuiz()">Submit Quiz</button>
+  </div>
+  <div id="scoreBox" style="display:none"></div>
+</div>
+
+<div class="nav-btns">
+  <button class="btn btn-prev" id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
+  <button class="btn btn-next" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let current=0;const total=10;
+const dots=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dots.appendChild(d);}
+function updateUI(){
+  document.querySelectorAll('.slide').forEach((s,i)=>s.classList.toggle('active',i===current));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  document.getElementById('slideInfo').textContent=(current+1)+' / '+total;
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').textContent=current===total-1?'Finish':'Next →';
+}
+function changeSlide(d){if(current+d>=0&&current+d<total){current+=d;updateUI();window.scrollTo(0,0);}}
+function goTo(i){current=i;updateUI();window.scrollTo(0,0);}
+function checkFIB(id,answers,btn){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  const ok=answers.some(a=>val.includes(a.toLowerCase()));
+  btn.style.background=ok?'var(--ok)':'var(--no)';
+  btn.textContent=ok?'✓ Correct':'✗ Try Again';
+}
+function checkSA(id,keywords,btn){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  const found=keywords.filter(k=>val.includes(k.toLowerCase()));
+  const model=document.getElementById(id+'-model');
+  if(model)model.style.display='block';
+  const pct=Math.round(found.length/keywords.length*100);
+  btn.style.background=pct>=40?'var(--ok)':'var(--no)';
+  btn.textContent=pct>=40?'✓ Good Answer':'✗ Review Model Answer';
+}
+function submitQuiz(){
+  const ans={
+    fq1:{v:document.getElementById('fq1').value.trim().toLowerCase(),k:['helium','he','2 proton','two proton'],p:1},
+    fq2:{v:document.getElementById('fq2').value.trim().toLowerCase(),k:['increases','increase'],p:1},
+    fq3:{v:document.getElementById('fq3').value.trim().toLowerCase(),k:['1','one'],p:1},
+    fq4:{v:document.getElementById('fq4').value.trim().toLowerCase(),k:['20','20g','twenty'],p:2},
+    fq5:{v:document.getElementById('fq5').value.trim().toLowerCase(),k:['gamma','γ'],p:1},
+    fq6:{v:document.getElementById('fq6').value.trim().toLowerCase(),k:['fission','fusion','splitting','joining'],p:2},
+    fq7:{v:document.getElementById('fq7').value.trim().toLowerCase(),k:['222','86','radon','rn','4','he'],p:2},
+  };
+  let score=0,total=0;
+  for(const k in ans){total+=ans[k].p;if(ans[k].k.some(kw=>ans[k].v.includes(kw)))score+=ans[k].p;}
+  const pct=Math.round(score/total*100);
+  const grade=pct>=80?'Excellent!':pct>=60?'Good Work!':pct>=40?'Keep Practising':'Review the Notes';
+  document.getElementById('quizArea').style.display='none';
+  document.getElementById('scoreBox').style.display='block';
+  document.getElementById('scoreBox').innerHTML=`<div class="score-box"><h2>${score} / ${total}</h2><p style="font-size:1.1rem;margin:8px 0">${grade} (${pct}%)</p><div class="rubric"><div class="rubric-row"><span>Exceeding (80–100%)</span><span>🌟</span></div><div class="rubric-row"><span>Meeting (60–79%)</span><span>✅</span></div><div class="rubric-row"><span>Approaching (40–59%)</span><span>📖</span></div><div class="rubric-row"><span>Below (0–39%)</span><span>🔄</span></div></div></div>`;
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,total,pct);
+}
+updateUI();
+</script>
+</body>
+</html>

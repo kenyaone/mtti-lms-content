@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Biology | Support &amp; Locomotion</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a2e1a;--sub:#4a6a4a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{position:sticky;top:0;z-index:100;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;box-shadow:0 2px 8px #0005;}
+#topbar .meta{font-size:.75rem;opacity:.8;}
+#topbar .title{font-weight:700;font-size:.95rem;text-align:center;flex:1;}
+#slide-counter{font-size:.78rem;background:#ffffff28;padding:3px 10px;border-radius:20px;}
+#dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px;flex-wrap:wrap;}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+#slides-wrap{max-width:820px;margin:0 auto;padding:12px 14px 80px;}
+.slide{display:none;animation:fadeIn .35s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;padding:14px 18px;border-radius:12px 12px 0 0;font-size:1.1rem;font-weight:700;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:18px;box-shadow:0 2px 12px #0001;}
+.info-card{background:#f0f7f0;border-left:4px solid var(--pri);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.warn-card{background:#fff8e1;border-left:4px solid var(--acc);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.def-box{background:var(--pri);color:#fff;border-radius:10px;padding:13px 16px;margin:12px 0;font-size:.95rem;}
+h3{color:var(--pri);margin:14px 0 7px;font-size:1rem;}
+h4{color:var(--sub);margin:10px 0 5px;font-size:.93rem;}
+p,li{font-size:.93rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:20px;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.84rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e8e0;}
+tr:nth-child(even) td{background:#f5faf5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:13px;}
+.col-card h4{color:var(--pri);margin-top:0;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e0e8e0;display:flex;justify-content:center;align-items:center;gap:14px;padding:10px 16px;z-index:99;}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}
+.btn-sec{background:#e8f0e8;color:var(--pri);}
+.btn-acc{background:var(--acc);color:#fff;}
+.q-block{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:15px;margin:14px 0;}
+.q-block p{font-weight:600;margin-bottom:8px;}
+.fill-input{width:100%;padding:9px 12px;border:2px solid #cde;border-radius:7px;font-size:.92rem;margin-top:5px;}
+.fill-input:focus{outline:none;border-color:var(--pri);}
+textarea.fill-input{resize:vertical;min-height:70px;}
+.feedback{margin-top:8px;padding:8px 12px;border-radius:7px;font-size:.87rem;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--ok);display:block;}
+.feedback.wrong{background:#fce8e8;border:1px solid #ef9a9a;color:var(--no);display:block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;margin:2px;}
+.tag.found{background:#c8e6c9;color:#1b5e20;}
+.tag.missed{background:#ffcdd2;color:#b71c1c;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric strong{color:#e65100;}
+#score-board{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:14px;}
+#score-board .big{font-size:2.5rem;font-weight:800;}
+.practice-q{background:#f0f7ff;border:1px solid #bbdefb;border-radius:9px;padding:14px;margin:12px 0;}
+.practice-q p{font-weight:600;color:#1565c0;}
+.reveal-btn{margin-top:8px;background:#1565c0;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;}
+.answer-reveal{display:none;margin-top:10px;background:#e3f2fd;border-radius:7px;padding:10px;font-size:.87rem;}
+.outcome-list li{margin:6px 0;padding:6px 10px;background:#f0f7f0;border-radius:6px;border-left:3px solid var(--acc);}
+/* BONE CARDS */
+.bone-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0;}
+.bone-card{background:#fff8e1;border:1px solid #ffc107;border-radius:8px;padding:12px;}
+.bone-card .bname{font-weight:700;color:#e65100;font-size:.88rem;}
+.bone-card .bfn{font-size:.8rem;color:#555;margin-top:4px;}
+/* MUSCLE TYPE CARDS */
+.muscle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0;}
+@media(max-width:560px){.muscle-grid{grid-template-columns:1fr;}}
+.mc-vol{background:#e8f5e9;border:2px solid #43a047;}
+.mc-inv{background:#e3f2fd;border:2px solid #1e88e5;}
+.mc-card{background:#fce4ec;border:2px solid #e91e63;}
+.muscle-card{border-radius:10px;padding:13px;}
+.muscle-card h4{margin:0 0 6px;}
+/* JOINT DIAGRAM */
+.joint-row{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0;}
+.joint-box{flex:1;min-width:140px;border-radius:10px;padding:12px;text-align:center;border:2px solid;}
+.j-ball{background:#e8f5e9;border-color:#43a047;}
+.j-hinge{background:#e3f2fd;border-color:#1e88e5;}
+.j-pivot{background:#fff3e0;border-color:#f9a825;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="meta">F4 Biology</div>
+  <div class="title">🦴 Support &amp; Locomotion</div>
+  <div id="slide-counter">1 / 10</div>
+</div>
+<div id="dots"></div>
+<div id="slides-wrap">
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <div class="slide-title">🎯 Learning Outcomes</div>
+  <div class="slide-body">
+    <div class="info-card">By the end of this lesson, you should be able to:</div>
+    <ul class="outcome-list">
+      <li>Define support and locomotion and state their importance</li>
+      <li>Describe how support is achieved in plants (tissues, turgidity)</li>
+      <li>Name the types of skeletons and compare exoskeleton vs endoskeleton</li>
+      <li>Describe the axial and appendicular skeleton</li>
+      <li>State functions of the vertebral column and general features of vertebrae</li>
+      <li>Describe types of joints and features of synovial joints</li>
+      <li>Explain how muscles cause movement (biceps/triceps antagonism)</li>
+      <li>Compare skeletal, smooth and cardiac muscles</li>
+    </ul>
+    <div class="warn-card">📚 <strong>Source:</strong> Form IV Biology Notes — Topics 5, 6 &amp; 7: Support, Locomotion, Joints &amp; Muscles</div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="s2">
+  <div class="slide-title">🌿 Support in Plants</div>
+  <div class="slide-body">
+    <div class="def-box">🌿 <strong>Support:</strong> To carry part of the weight/mass of an organism. <strong>Locomotion:</strong> Progressive change in the position of an organism.</div>
+
+    <h3>Importance of Support in Plants</h3>
+    <ul>
+      <li>Exposes leaf surface to sunlight for photosynthesis</li>
+      <li>Ensures flowers are exposed to pollination agents</li>
+      <li>Exposes fruits and seeds to agents of dispersal</li>
+      <li>Resists breakage due to own weight and other organisms</li>
+      <li>Allows proper transport and translocation of materials</li>
+    </ul>
+
+    <h3>Tissues Providing Mechanical Support in Plants</h3>
+    <table>
+      <tr><th>Tissue</th><th>Properties</th><th>Role</th></tr>
+      <tr><td>Collenchyma</td><td>Not lignified; flexible</td><td>Support in young/herbaceous stems</td></tr>
+      <tr><td>Sclerenchyma</td><td>Lignified; rigid</td><td>Mechanical support in stems and roots</td></tr>
+      <tr><td>Xylem (vessels/tracheids)</td><td>Lignified; hollow</td><td>Support + water transport</td></tr>
+    </table>
+
+    <h3>How Support is Achieved in Plants</h3>
+    <ul>
+      <li><strong>Turgidity</strong> — cells absorb water, become turgid → firm → holds herbaceous plants upright</li>
+      <li><strong>Collenchyma and sclerenchyma</strong> — closely packed cells in stem and roots</li>
+      <li><strong>Lignified xylem</strong> — provides rigid support to stems, roots and leaves</li>
+      <li><strong>Inelastic cuticle</strong> — waxy layer on epidermis helps maintain shape</li>
+      <li><strong>Tendrils</strong> — climbing plants obtain support from other plants/objects</li>
+    </ul>
+
+    <div class="info-card">🌱 Young herbaceous plants stay upright through <strong>turgidity</strong> and presence of <strong>collenchyma</strong>. In older woody plants, <strong>lignified xylem</strong> provides the main support.</div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="slide" id="s3">
+  <div class="slide-title">🦴 Types of Skeletons</div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Exoskeleton</h4>
+        <p>Rigid framework found on the <strong>OUTSIDE/surface</strong> of an animal's body.</p>
+        <p><strong>Examples:</strong> Arthropods — crabs, insects</p>
+        <p><strong>Advantages:</strong></p>
+        <ul><li>Supports/protects delicate inner parts</li><li>Waterproof (prevents drying out)</li><li>Surface for muscle attachment</li></ul>
+      </div>
+      <div class="col-card">
+        <h4>Endoskeleton</h4>
+        <p>Rigid framework covered by body tissues; found <strong>INSIDE</strong> the animal's body.</p>
+        <p><strong>Examples:</strong> Chordates — cat, fish, humans</p>
+        <p><strong>Importance:</strong></p>
+        <ul><li>Supports body; gives shape</li><li>Protects delicate organs (skull→brain, ribs→heart/lungs)</li><li>Enables locomotion (bones = levers)</li><li>Red blood cells formed in bone marrow</li><li>Stores minerals (calcium, phosphorus)</li></ul>
+      </div>
+    </div>
+
+    <h3>The Human Skeleton — Two Parts</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Axial Skeleton</h4>
+        <p>Forms the main axis of the body.</p>
+        <ul><li>Skull</li><li>Vertebral column</li><li>Sternum (breastbone)</li><li>Ribs</li></ul>
+      </div>
+      <div class="col-card">
+        <h4>Appendicular Skeleton</h4>
+        <p>Limbs and girdles attached to axial skeleton.</p>
+        <ul><li>Pectoral girdle (shoulder) + forelimbs</li><li>Pelvic girdle (hip) + hindlimbs</li><li>Bones: humerus, ulna, radius, femur, tibia, fibula, carpals, tarsals, phalanges</li></ul>
+      </div>
+    </div>
+
+    <h3>Fish Adaptation for Locomotion in Water</h3>
+    <ul>
+      <li>Streamlined body → reduces water resistance/friction</li>
+      <li>Flexible vertebral column → allows sideways movement</li>
+      <li>Myotomes (muscles) → produce swimming movements</li>
+      <li>Paired fins (pectoral, pelvic) → balance, pitch control</li>
+      <li>Unpaired fins (dorsal, anal, caudal) → steering, propulsion</li>
+      <li>Swim bladder → buoyancy (controls depth)</li>
+      <li>Scales → smooth surface; mucus reduces friction</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="slide" id="s4">
+  <div class="slide-title">🔩 The Vertebral Column</div>
+  <div class="slide-body">
+    <h3>Functions of the Vertebral Column</h3>
+    <ul>
+      <li>Gives <strong>flexibility</strong> and supports body weight</li>
+      <li>Protects the <strong>spinal cord</strong></li>
+      <li>Absorbs <strong>shock</strong> (via intervertebral discs)</li>
+      <li>Provides surface for <strong>muscle attachment</strong></li>
+    </ul>
+
+    <h3>General Features of a Vertebra</h3>
+    <table>
+      <tr><th>Feature</th><th>Function</th></tr>
+      <tr><td>Centrum (solid body)</td><td>Supports weight of body</td></tr>
+      <tr><td>Neural canal</td><td>Passage and protection for spinal cord</td></tr>
+      <tr><td>Neural arch</td><td>Encloses neural canal</td></tr>
+      <tr><td>Neural spine</td><td>Muscle attachment</td></tr>
+      <tr><td>Transverse process</td><td>Lateral; muscle attachment</td></tr>
+      <tr><td>Facets</td><td>Articulation with adjacent vertebrae</td></tr>
+    </table>
+
+    <h3>Bones of the Vertebral Column</h3>
+    <div class="bone-grid">
+      <div class="bone-card"><div class="bname">Cervical (7)</div><div class="bfn">Neck region. Atlas (1st) — allows nodding. Axis (2nd) — allows rotation. Others support weight of head.</div></div>
+      <div class="bone-card"><div class="bname">Thoracic (12)</div><div class="bfn">Chest region. Long backward neural spine; articulates with ribs to form rib cage; protects heart/lungs.</div></div>
+      <div class="bone-card"><div class="bname">Lumbar (5)</div><div class="bfn">Lower back. Large centrum; supports upper body weight; protects abdominal organs.</div></div>
+      <div class="bone-card"><div class="bname">Sacral (5 fused)</div><div class="bfn">Fused to form sacrum; attaches hip girdles; protects alimentary canal.</div></div>
+      <div class="bone-card"><div class="bname">Caudal/Coccyx (4 fused)</div><div class="bfn">Tail bone; vestigial structure in humans.</div></div>
+    </div>
+
+    <div class="warn-card">🔑 <strong>Intervertebral discs</strong> between vertebrae act as cushions — absorb shock, reduce friction, allow flexibility of the vertebral column.</div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="s5">
+  <div class="slide-title">🦴 Appendicular Skeleton — Key Bones</div>
+  <div class="slide-body">
+    <h3>Pectoral Girdle (Shoulder)</h3>
+    <table>
+      <tr><th>Bone</th><th>Key Features</th><th>Function</th></tr>
+      <tr><td>Scapula (shoulder blade)</td><td>Broad, flat; glenoid cavity; acromion process</td><td>Articulates with humerus; muscle attachment</td></tr>
+      <tr><td>Humerus</td><td>Long shaft; round head; trochlea; olecranon fossa</td><td>Movement; muscle attachment; articulates with ulna</td></tr>
+      <tr><td>Ulna &amp; Radius</td><td>Ulna longer (little finger side); sigmoid notch; radius (thumb side)</td><td>Movement; wrist articulation</td></tr>
+    </table>
+
+    <h3>Pelvic Girdle (Hip)</h3>
+    <table>
+      <tr><th>Bone</th><th>Key Features</th><th>Function</th></tr>
+      <tr><td>Pelvic girdle</td><td>3 fused bones: ilium, ischium, pubis; acetabulum; obturator foramen</td><td>Movement; muscle attachment; supports upper body; absorbs ground pressure</td></tr>
+      <tr><td>Femur</td><td>Round head; trochanter; condyles; patella (kneecap)</td><td>Largest bone; movement; muscle attachment</td></tr>
+      <tr><td>Tibia &amp; Fibula</td><td>Tibia = longer, medial (big toe side); fibula = lateral</td><td>Leg movement; muscle attachment</td></tr>
+    </table>
+
+    <h3>Joints</h3>
+    <div class="def-box">🔩 <strong>Joint:</strong> The point where two or more bones meet to allow movement.</div>
+    <div class="joint-row">
+      <div class="joint-box j-ball">
+        <h4>Ball &amp; Socket</h4>
+        <p>360° movement in all planes</p>
+        <p><em>e.g. shoulder, hip</em></p>
+      </div>
+      <div class="joint-box j-hinge">
+        <h4>Hinge Joint</h4>
+        <p>180° — movement in ONE plane only</p>
+        <p><em>e.g. elbow, knee</em></p>
+      </div>
+      <div class="joint-box j-pivot">
+        <h4>Pivot Joint</h4>
+        <p>Rotation only</p>
+        <p><em>e.g. atlas on axis (head rotation)</em></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="s6">
+  <div class="slide-title">⚙️ Synovial Joints &amp; Muscles</div>
+  <div class="slide-body">
+    <h3>Features of Synovial (Freely Movable) Joints</h3>
+    <ul>
+      <li>Bone ends covered with <strong>articular cartilage</strong> — reduces friction</li>
+      <li>Enclosed by a <strong>capsule of ligaments</strong> — holds bones together</li>
+      <li><strong>Synovial membrane</strong> — secretes synovial fluid</li>
+      <li><strong>Synovial fluid</strong> — lubricates joint, absorbs shock, nourishes cartilage</li>
+    </ul>
+
+    <h3>Key Connective Tissues</h3>
+    <table>
+      <tr><th>Structure</th><th>Definition</th><th>Function</th></tr>
+      <tr><td>Ligament</td><td>Connective tissue joining BONE to BONE</td><td>Holds bones together at joints; limits excessive movement</td></tr>
+      <tr><td>Tendon</td><td>Connective tissue joining MUSCLE to BONE</td><td>Transmits muscle force to bone for movement</td></tr>
+      <tr><td>Cartilage</td><td>Soft supporting tissue at joints</td><td>Cushions bones; absorbs shock; reduces friction</td></tr>
+      <tr><td>Intervertebral disc</td><td>Cartilage between vertebrae</td><td>Absorbs shock; reduces friction; allows flexibility</td></tr>
+    </table>
+
+    <h3>Three Types of Muscles</h3>
+    <div class="muscle-grid">
+      <div class="muscle-card mc-vol">
+        <h4>Skeletal (Voluntary)</h4>
+        <ul style="font-size:.83rem;">
+          <li>Striated/stripped</li>
+          <li>Multinucleated</li>
+          <li>Long, cylindrical fibres</li>
+          <li>Under voluntary control</li>
+          <li>e.g. biceps, triceps</li>
+        </ul>
+      </div>
+      <div class="muscle-card mc-inv">
+        <h4>Smooth (Involuntary)</h4>
+        <ul style="font-size:.83rem;">
+          <li>Unstriated</li>
+          <li>Uninucleated</li>
+          <li>Short, spindle-shaped fibres</li>
+          <li>Involuntary control</li>
+          <li>e.g. gut, blood vessels, iris</li>
+        </ul>
+      </div>
+      <div class="muscle-card mc-card">
+        <h4>Cardiac (Heart)</h4>
+        <ul style="font-size:.83rem;">
+          <li>Striated (lightly)</li>
+          <li>Myogenic (self-stimulating)</li>
+          <li>Never fatigued</li>
+          <li>Involuntary</li>
+          <li>Pumps blood continuously</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="s7">
+  <div class="slide-title">💪 Muscles &amp; Movement — Biceps &amp; Triceps</div>
+  <div class="slide-body">
+    <div class="def-box">💪 <strong>Antagonistic Muscles:</strong> Muscles that work in PAIRS — when one contracts the other relaxes. They pull in opposite directions to create movement.</div>
+
+    <h3>Biceps &amp; Triceps — Arm Movement</h3>
+    <table>
+      <tr><th>Muscle</th><th>Attachment</th><th>Action when contracted</th><th>Role</th></tr>
+      <tr><td>Biceps</td><td>Scapula → Radius</td><td>Pulls radius → arm BENDS (flexes)</td><td>Flexor</td></tr>
+      <tr><td>Triceps</td><td>Scapula + Humerus → Ulna</td><td>Pulls ulna → arm STRETCHES (extends)</td><td>Extensor</td></tr>
+    </table>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Bending the arm (flexion)</h4>
+        <ul>
+          <li>Biceps <strong>contracts</strong> (shortens)</li>
+          <li>Pulls radius upward</li>
+          <li>Triceps <strong>relaxes</strong> (extends)</li>
+          <li>Forearm moves up</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>Straightening the arm (extension)</h4>
+        <ul>
+          <li>Triceps <strong>contracts</strong> (shortens)</li>
+          <li>Pulls ulna downward</li>
+          <li>Biceps <strong>relaxes</strong></li>
+          <li>Arm straightens</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-card">🔑 Bones act as <strong>levers</strong>, muscles provide the <strong>force</strong>, and joints are the <strong>fulcrum</strong>. Tendons attach muscles to bones and transmit the pulling force.</div>
+
+    <h3>Importance of Locomotion in Animals</h3>
+    <ul>
+      <li>Search for food and water</li>
+      <li>Search for mates and breeding sites</li>
+      <li>Escape from predators and harmful conditions</li>
+      <li>Find shelter</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="s8">
+  <div class="slide-title">📋 Summary — Support &amp; Locomotion</div>
+  <div class="slide-body">
+    <h3>Key Definitions</h3>
+    <table>
+      <tr><th>Term</th><th>Definition</th></tr>
+      <tr><td>Support</td><td>Carrying part of the weight/mass of an organism</td></tr>
+      <tr><td>Locomotion</td><td>Progressive change in position of an organism</td></tr>
+      <tr><td>Exoskeleton</td><td>Rigid framework on the outside of an animal (e.g. crabs)</td></tr>
+      <tr><td>Endoskeleton</td><td>Rigid framework inside, covered by body tissues (e.g. humans)</td></tr>
+      <tr><td>Ligament</td><td>Connective tissue joining bone to bone</td></tr>
+      <tr><td>Tendon</td><td>Connective tissue joining muscle to bone</td></tr>
+      <tr><td>Cartilage</td><td>Soft tissue at joints — cushions, reduces friction</td></tr>
+      <tr><td>Synovial fluid</td><td>Lubricating fluid in freely movable joints</td></tr>
+      <tr><td>Flexor</td><td>Muscle that bends a joint (e.g. biceps)</td></tr>
+      <tr><td>Extensor</td><td>Muscle that straightens a joint (e.g. triceps)</td></tr>
+      <tr><td>Antagonistic muscles</td><td>Pair of muscles working in opposition (one contracts, other relaxes)</td></tr>
+    </table>
+
+    <h3>Comparison: Skeletal vs Smooth Muscles</h3>
+    <table>
+      <tr><th>Feature</th><th>Skeletal (Biceps)</th><th>Smooth (Gut)</th></tr>
+      <tr><td>Nuclei</td><td>Multinucleated</td><td>Uninucleated</td></tr>
+      <tr><td>Striation</td><td>Striated/stripped</td><td>Unstriated</td></tr>
+      <tr><td>Fibre shape</td><td>Long, cylindrical</td><td>Short, spindle-shaped</td></tr>
+      <tr><td>Control</td><td>Voluntary</td><td>Involuntary</td></tr>
+      <tr><td>Fatigue</td><td>Can fatigue</td><td>Slow to fatigue</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <p>1. State FOUR functions of the vertebral column.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">1. Gives flexibility to the body<br>2. Supports the weight of the body<br>3. Protects the spinal cord<br>4. Absorbs shock (via intervertebral discs)<br>5. Provides surface for muscle attachment</div>
+    </div>
+    <div class="practice-q">
+      <p>2. Explain the antagonistic action of the biceps and triceps during bending and straightening of the arm.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Bending:</strong> Biceps contracts (pulls radius up) → arm bends. Triceps relaxes simultaneously.<br><strong>Straightening:</strong> Triceps contracts (pulls ulna down) → arm straightens. Biceps relaxes simultaneously.<br>They are antagonistic — they work in opposition, always doing opposite actions.</div>
+    </div>
+    <div class="practice-q">
+      <p>3. Distinguish between a ligament, tendon and cartilage.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Ligament:</strong> Connective tissue joining BONE to BONE — holds joints together.<br><strong>Tendon:</strong> Connective tissue joining MUSCLE to BONE — transmits muscle force for movement.<br><strong>Cartilage:</strong> Soft supportive tissue found at joints — cushions bones, absorbs shock, reduces friction.</div>
+    </div>
+    <div class="practice-q">
+      <p>4. State THREE advantages of an exoskeleton to arthropods.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">1. <strong>Protection</strong> — supports and protects delicate inner organs from damage<br>2. <strong>Waterproof</strong> — prevents desiccation (drying out) of body<br>3. <strong>Muscle attachment</strong> — provides surface for muscle attachment to enable movement</div>
+    </div>
+    <div class="practice-q">
+      <p>5. Explain how the Atlas and Axis vertebrae are adapted to their functions.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Atlas (1st cervical):</strong> Ring-shaped with no centrum; broad flat transverse processes; has facets for articulation with skull condyles → allows NODDING of the head (yes movement).<br><br><strong>Axis (2nd cervical):</strong> Has an odontoid peg (dens) projecting from centrum → atlas pivots on this peg → allows ROTATION of the head (no movement). Also has large flattened neural spine for muscle attachment.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Support &amp; Locomotion</div>
+  <div class="slide-body">
+    <div class="q-block">
+      <p>Q1. The connective tissue that joins a muscle to a bone is called a ____________.</p>
+      <input class="fill-input" id="q1" placeholder="Type your answer..."/>
+      <div class="feedback" id="f1"></div>
+    </div>
+    <div class="q-block">
+      <p>Q2. The lubricating fluid found in freely movable (synovial) joints is called ____________.</p>
+      <input class="fill-input" id="q2" placeholder="Type your answer..."/>
+      <div class="feedback" id="f2"></div>
+    </div>
+    <div class="q-block">
+      <p>Q3. Name the THREE types of muscles found in the human body.</p>
+      <input class="fill-input" id="q3" placeholder="List all three..."/>
+      <div class="feedback" id="f3"></div>
+    </div>
+    <div class="q-block">
+      <p>Q4. A ball and socket joint allows movement in ____________ directions (e.g. ____________ joint).</p>
+      <input class="fill-input" id="q4" placeholder="Type your answers..."/>
+      <div class="feedback" id="f4"></div>
+    </div>
+    <div class="q-block">
+      <p>Q5. State TWO tissues in higher plants that are strengthened with lignin.</p>
+      <input class="fill-input" id="q5" placeholder="Type your answer..."/>
+      <div class="feedback" id="f5"></div>
+    </div>
+    <div class="q-block">
+      <p>Q6 (Short Answer): Describe how support is achieved in a young herbaceous plant. Include the role of turgidity and the tissues involved.</p>
+      <textarea class="fill-input" id="q6" placeholder="Write your explanation..."></textarea>
+      <div class="feedback" id="f6"></div>
+    </div>
+    <div class="q-block">
+      <p>Q7 (Short Answer): Explain how a finned fish is adapted for locomotion in water. Include the role of the fins, vertebral column, swim bladder and body shape.</p>
+      <textarea class="fill-input" id="q7" placeholder="Write your answer..."></textarea>
+      <div class="feedback" id="f7"></div>
+    </div>
+    <button class="btn btn-acc" onclick="submitExam()" style="width:100%;margin-top:10px;padding:13px;font-size:1rem;">✅ Submit Quiz</button>
+    <div id="score-area"></div>
+  </div>
+</div>
+</div>
+<div id="nav">
+  <button class="btn btn-sec" id="prevBtn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <button class="btn btn-pri" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+<script>
+const TOTAL=10;let current=1;
+function buildDots(){const c=document.getElementById('dots');for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');d.onclick=()=>goTo(i);d.id='dot'+i;c.appendChild(d);}}
+function goTo(n){document.querySelector('.slide.active').classList.remove('active');document.getElementById('s'+n).classList.add('active');document.getElementById('dot'+current).classList.remove('active');if(current<n)document.getElementById('dot'+current).classList.add('done');current=n;document.getElementById('dot'+current).classList.add('active');document.getElementById('slide-counter').textContent=current+' / '+TOTAL;document.getElementById('prevBtn').disabled=current===1;document.getElementById('nextBtn').disabled=current===TOTAL;window.scrollTo(0,0);}
+function changeSlide(d){goTo(Math.min(Math.max(1,current+d),TOTAL));}
+function reveal(btn){const ans=btn.nextElementSibling;ans.style.display=ans.style.display==='block'?'none':'block';btn.textContent=ans.style.display==='block'?'Hide Answer':'Show Answer';}
+const ANSWERS={q1:{kw:['tendon'],pts:2},q2:{kw:['synovial fluid'],pts:2},q3:{kw:['skeletal','smooth','cardiac'],pts:3,need:3},q4:{kw:['all','360','shoulder','hip'],pts:2,need:2},q5:{kw:['sclerenchyma','xylem'],pts:2,need:2}};
+function checkFill(id,fb,data){const val=document.getElementById(id).value.trim().toLowerCase();if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).textContent='Please write an answer.';return 0;}const found=data.kw.filter(k=>val.includes(k.toLowerCase()));const need=data.need||1;const got=Math.min(found.length>=need?data.pts:Math.floor((found.length/need)*data.pts),data.pts);const tags=data.kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');document.getElementById(fb).innerHTML=`Keywords: ${tags}`;document.getElementById(fb).className='feedback '+(found.length>=need?'correct':'wrong');return got;}
+function scoreShort(id,fb,kw,pts,rubric){const val=document.getElementById(id).value.trim().toLowerCase();if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).innerHTML='Please write an answer.';return 0;}const found=kw.filter(k=>val.includes(k.toLowerCase()));const tags=kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');const score=Math.min(Math.round((found.length/kw.length)*pts),pts);document.getElementById(fb).innerHTML=`Keywords found: ${tags}<div class="rubric"><strong>Model Answer:</strong> ${rubric}</div>`;document.getElementById(fb).className='feedback '+(score>=Math.ceil(pts/2)?'correct':'wrong');return score;}
+function submitExam(){let total=0,max=0;
+total+=checkFill('q1','f1',ANSWERS.q1);max+=ANSWERS.q1.pts;
+total+=checkFill('q2','f2',ANSWERS.q2);max+=ANSWERS.q2.pts;
+total+=checkFill('q3','f3',ANSWERS.q3);max+=ANSWERS.q3.pts;
+total+=checkFill('q4','f4',ANSWERS.q4);max+=ANSWERS.q4.pts;
+total+=checkFill('q5','f5',ANSWERS.q5);max+=ANSWERS.q5.pts;
+total+=scoreShort('q6','f6',['turgidity','turgid','water','collenchyma','sclerenchyma','xylem','lignin','cuticle','upright','firm','support'],4,'Young herbaceous plants maintain upright posture through: (1) TURGIDITY — cells absorb water by osmosis, become turgid/firm, creating turgor pressure that holds the plant upright; (2) COLLENCHYMA — flexible living cells closely packed in stem and roots provide support; (3) SCLERENCHYMA — lignified cells provide rigid support; (4) INELASTIC CUTICLE — waxy layer on epidermis helps maintain shape and sets inward pressure. In older plants, lignified XYLEM provides the main structural support.');max+=4;
+total+=scoreShort('q7','f7',['streamlined','vertebral column','flexible','myotomes','fins','pectoral','pelvic','dorsal','caudal','swim bladder','buoyant','mucus','friction','scales'],4,'A finned fish is adapted for locomotion through: (1) STREAMLINED body — reduces water resistance/friction; (2) FLEXIBLE vertebral column — series of loosely connected vertebrae allows sideways movement; (3) MYOTOMES (muscles) — contract to produce swimming movements; (4) PAIRED FINS (pectoral, pelvic) — control pitch and slow movement; UNPAIRED FINS (dorsal, anal) — prevent rolling/yawing; CAUDAL FIN — propulsion and steering; (5) SWIM BLADDER — provides buoyancy/controls depth without effort; (6) MUCUS and backward-pointing SCALES — reduce friction with water.');max+=4;
+const pct=Math.round((total/max)*100);const grade=pct>=80?'Excellent! 🏆':pct>=60?'Good Work! 👍':pct>=40?'Keep Practising 📚':'Review the lesson 🔄';
+document.getElementById('score-area').innerHTML=`<div id="score-board"><div class="big">${total}/${max}</div><div style="font-size:1.3rem;font-weight:700;margin:6px 0">${pct}%</div><div style="font-size:1rem;opacity:.9">${grade}</div><div style="font-size:.8rem;opacity:.75;margin-top:8px">CBC Rubric: 80–100% = Exceeding | 60–79% = Meeting | 40–59% = Approaching | Below 40% = Below</div></div>`;
+if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);}
+buildDots();
+</script>
+</body>
+</html>

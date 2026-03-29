@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Uniform Circular Motion</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;line-height:1.3;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.diagram{background:#fff;border:1px solid #ddd;border-radius:8px;padding:10px;margin:12px 0;text-align:center;overflow-x:auto;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-hint{font-size:.78rem;color:var(--muted);margin-top:4px;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h2>⚡ F4 Physics &mdash; Ch.2: Uniform Circular Motion</h2>
+  <span class="meta">MTTI LMS | Form 4</span>
+</div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <span class="slide-label">SLIDE 1 OF 10</span>
+  <h1>📚 Learning Outcomes</h1>
+  <div class="card">
+    <ol>
+      <li>Define uniform circular motion and centripetal force/acceleration</li>
+      <li>Define the radian and convert between degrees and radians</li>
+      <li>Define angular velocity (ω) and relate it to linear velocity (v)</li>
+      <li>Apply Fc = mv²/r = mRω² to solve problems</li>
+      <li>Analyse motion in a vertical circle (tension at top/bottom)</li>
+      <li>Describe the conical pendulum and banked tracks</li>
+      <li>State applications of uniform circular motion</li>
+    </ol>
+  </div>
+  <div class="highlight">🔑 Key formulae: <strong>v = rω</strong> | <strong>Fc = mv²/r = mRω²</strong> | <strong>a = Rω²</strong></div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="s2">
+  <span class="slide-label">SLIDE 2 OF 10</span>
+  <h1>🔄 Introduction to Circular Motion</h1>
+  <div class="card">
+    <p><strong>Circular motion</strong> — motion of bodies travelling in circular paths.</p>
+    <p><strong>Uniform circular motion</strong> — constant speed along a curved path of constant radius. Even though speed is constant, velocity changes (direction changes), so acceleration exists.</p>
+    <h2>Centripetal Acceleration & Force</h2>
+    <p>Acceleration directed <strong>towards the centre</strong> of the circular path = <strong>centripetal acceleration</strong>.</p>
+    <p>The force producing this acceleration = <strong>centripetal force</strong> (also directed towards the centre).</p>
+  </div>
+  <div class="diagram">
+    <svg viewBox="0 0 300 220" width="280" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150" cy="110" r="80" fill="none" stroke="#0a5e2a" stroke-width="2" stroke-dasharray="5,4"/>
+      <circle cx="150" cy="110" r="4" fill="#333"/>
+      <text x="154" y="108" font-size="11" fill="#333">O</text>
+      <!-- object at top -->
+      <circle cx="150" cy="30" r="8" fill="#f5a623"/>
+      <line x1="150" y1="30" x2="150" y2="106" stroke="#666" stroke-width="1.5"/>
+      <text x="155" y="70" font-size="10" fill="#666">r</text>
+      <!-- velocity arrow -->
+      <line x1="150" y1="30" x2="200" y2="30" stroke="#c62828" stroke-width="2" marker-end="url(#va)"/>
+      <text x="202" y="34" font-size="10" fill="#c62828">v</text>
+      <!-- object right -->
+      <circle cx="230" cy="110" r="8" fill="#f5a623"/>
+      <!-- velocity arrow down -->
+      <line x1="230" y1="110" x2="230" y2="160" stroke="#c62828" stroke-width="2" marker-end="url(#va)"/>
+      <text x="235" y="170" font-size="10" fill="#c62828">v</text>
+      <defs>
+        <marker id="va" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#c62828"/>
+        </marker>
+      </defs>
+      <text x="150" y="205" text-anchor="middle" font-size="11" fill="#333">Uniform Circular Motion</text>
+    </svg>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="slide" id="s3">
+  <span class="slide-label">SLIDE 3 OF 10</span>
+  <h1>📐 The Radian & Angular Velocity</h1>
+  <div class="card">
+    <h2>The Radian</h2>
+    <p>One radian = angle subtended at the centre by an arc <strong>equal to the radius</strong>.</p>
+    <div class="formula">360° = 2π radians &nbsp;→&nbsp; 1 radian ≈ 57.3°</div>
+    <h2>Angular Velocity (ω)</h2>
+    <p>Rate of change of angle with time:</p>
+    <div class="formula">ω = θ/t &nbsp;&nbsp; (unit: rad s⁻¹)</div>
+    <h2>Relating ω to Linear Velocity v</h2>
+    <div class="formula">v = rω &nbsp;&nbsp; (r = radius)</div>
+    <h2>Angular Acceleration (α)</h2>
+    <div class="formula">α = (ω₂ − ω₁)/t &nbsp;&nbsp; a = rα</div>
+    <div class="warn">📌 In <strong>uniform</strong> circular motion, α = 0 (ω is constant).</div>
+  </div>
+  <div class="card">
+    <h3>Example</h3>
+    <p>A wheel (r = 50 cm) rotates through a quarter turn. Find: (i) angle in radians, (ii) arc length.</p>
+    <p><strong>(i)</strong> 90° = π/2 = <strong>1.57 rad</strong></p>
+    <p><strong>(ii)</strong> arc = r × θ = 0.5 × 1.57 = <strong>0.785 m</strong></p>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="slide" id="s4">
+  <span class="slide-label">SLIDE 4 OF 10</span>
+  <h1>💪 Centripetal Force</h1>
+  <div class="card">
+    <p>A force acting towards the centre directing the body in circular motion:</p>
+    <div class="formula">Fc = mv²/r = mRω²</div>
+    <div class="formula">centripetal acceleration: a = v²/r = Rω²</div>
+  </div>
+  <div class="card">
+    <h2>Motion in a Vertical Circle</h2>
+    <p>A mass m on a string of length r in a vertical circle:</p>
+    <table>
+      <tr><th>Position</th><th>Tension equation</th><th>Notes</th></tr>
+      <tr><td>Top (position 1)</td><td>T₁ + mg = mv²/r → T₁ = mv²/r − mg</td><td>Minimum speed: v = √(rg) when T₁ = 0</td></tr>
+      <tr><td>Side (position 2)</td><td>T₂ = mv²/r</td><td>mg has no centripetal component</td></tr>
+      <tr><td>Bottom (position 3)</td><td>T₃ − mg = mv²/r → T₃ = mv²/r + mg</td><td>Greatest tension</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Example 1</h3>
+    <p>Ball (m = 0.025 kg) in horizontal circle, v = 5 m/s, r = 2 m. Find Fc.</p>
+    <p>Fc = mv²/r = 0.025 × 25 / 2 = <strong>0.31 N</strong></p>
+    <h3>Example 2</h3>
+    <p>Stone on 80 cm string in vertical circle. Find minimum speed at top.</p>
+    <p>v = √(rg) = √(0.8 × 10) = <strong>2.83 m/s</strong></p>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="s5">
+  <span class="slide-label">SLIDE 5 OF 10</span>
+  <h1>🔺 Conical Pendulum & Banked Tracks</h1>
+  <div class="card">
+    <h2>Conical Pendulum</h2>
+    <p>Object on a string whirled in a horizontal circle. The string makes angle θ with the vertical.</p>
+    <p>When speed increases → θ increases → radius r increases → object rises.</p>
+    <p><strong>T cos θ = mg</strong> (vertical equilibrium)</p>
+    <p><strong>T sin θ = mv²/r</strong> (centripetal force)</p>
+  </div>
+  <div class="card">
+    <h2>Banked Tracks</h2>
+    <p>Road raised on outer edge (saucer shape) — this is <strong>banking</strong>. Part of the centripetal force is provided by the vehicle's weight component, allowing cars to negotiate bends at higher speeds without skidding.</p>
+    <div class="formula">Centripetal force = mv²/r = frictional force (unbanked)</div>
+  </div>
+  <div class="card">
+    <h2>The Centrifuge</h2>
+    <p>Rotating tubes separate particles by density — heavier particles need greater centripetal force → move to outer radius (bottom of tube). Used to separate cream from milk, plasma from blood.</p>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="s6">
+  <span class="slide-label">SLIDE 6 OF 10</span>
+  <h1>⚙️ Applications of Uniform Circular Motion</h1>
+  <div class="card">
+    <table>
+      <tr><th>Application</th><th>Principle</th></tr>
+      <tr><td>Centrifuges</td><td>Separate liquids of different densities (cream/milk, blood)</td></tr>
+      <tr><td>Spin dryer</td><td>Perforated drum rotates fast; water expelled through holes</td></tr>
+      <tr><td>Road banking</td><td>Allows vehicles to negotiate bends at high speed safely</td></tr>
+      <tr><td>Speed governor</td><td>Conical pendulum principle regulates engine speed via fuel intake control</td></tr>
+      <tr><td>Satellites</td><td>Gravitational force provides centripetal force for orbital motion</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="s7">
+  <span class="slide-label">SLIDE 7 OF 10</span>
+  <h1>✏️ More Worked Examples</h1>
+  <div class="card">
+    <h2>Example 1</h2>
+    <p>A car (m = 6000 kg) on a 250 m radius curve. Friction = 21,000 N. Find max speed.</p>
+    <p>Fc = mv²/r → 21000 = 6000 × v²/250</p>
+    <p>v² = 21000 × 250/6000 = 875 → v = <strong>29.6 m/s</strong></p>
+  </div>
+  <div class="card">
+    <h2>Example 2</h2>
+    <p>An object moves in a circle of radius 0.5 m at ω = 4 rad/s. Find (a) v (b) Fc if m = 2 kg.</p>
+    <p>(a) v = rω = 0.5 × 4 = <strong>2 m/s</strong></p>
+    <p>(b) Fc = mRω² = 2 × 0.5 × 16 = <strong>16 N</strong></p>
+  </div>
+  <div class="card">
+    <h2>Example 3</h2>
+    <p>A wheel rotates at 300 rpm. Find (a) angular velocity (b) linear velocity of a point 0.3 m from centre.</p>
+    <p>(a) ω = 2π × 300/60 = <strong>10π ≈ 31.4 rad/s</strong></p>
+    <p>(b) v = rω = 0.3 × 31.4 = <strong>9.42 m/s</strong></p>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="s8">
+  <span class="slide-label">SLIDE 8 OF 10</span>
+  <h1>🔬 Key Formulae Summary</h1>
+  <div class="card">
+    <table>
+      <tr><th>Quantity</th><th>Formula</th><th>Units</th></tr>
+      <tr><td>Angular velocity</td><td>ω = θ/t = 2πf</td><td>rad/s</td></tr>
+      <tr><td>Linear velocity</td><td>v = rω</td><td>m/s</td></tr>
+      <tr><td>Angular acceleration</td><td>α = (ω₂−ω₁)/t</td><td>rad/s²</td></tr>
+      <tr><td>Linear acceleration</td><td>a = rα = v²/r = rω²</td><td>m/s²</td></tr>
+      <tr><td>Centripetal force</td><td>Fc = mv²/r = mRω²</td><td>N</td></tr>
+      <tr><td>Period</td><td>T = 2π/ω = 2πr/v</td><td>s</td></tr>
+      <tr><td>Frequency</td><td>f = 1/T = ω/2π</td><td>Hz</td></tr>
+    </table>
+  </div>
+  <div class="highlight">📌 Remember: velocity is always <strong>tangential</strong> (perpendicular to radius), centripetal force is always towards the <strong>centre</strong>.</div>
+</div>
+
+<!-- S9 Practice -->
+<div class="slide" id="s9">
+  <span class="slide-label">SLIDE 9 OF 10</span>
+  <h1>🧪 Practice Problems</h1>
+  <div class="card">
+    <h3>Problem 1</h3>
+    <p>A satellite orbits Earth at 400 km altitude with speed 7.67 km/s. The radius of Earth = 6400 km. Find the orbital period in minutes.</p>
+    <div class="highlight">r = 6400 + 400 = 6800 km = 6.8×10⁶ m<br>T = 2πr/v = 2π×6.8×10⁶/(7670) = <strong>5566 s ≈ 92.8 min</strong></div>
+  </div>
+  <div class="card">
+    <h3>Problem 2</h3>
+    <p>A stone of mass 0.2 kg is whirled in a vertical circle of radius 1.5 m at minimum speed at the top. Find: (a) minimum speed, (b) tension at the bottom if speed is maintained.</p>
+    <div class="highlight">
+      (a) v_min = √(rg) = √(1.5×10) = <strong>3.87 m/s</strong><br>
+      (b) At bottom: T₃ = mv²/r + mg = 0.2×15/1.5 + 0.2×10 = 2+2 = <strong>4 N</strong>
+    </div>
+  </div>
+</div>
+
+<!-- S10 Quiz -->
+<div class="slide" id="s10">
+  <span class="slide-label">SLIDE 10 OF 10</span>
+  <h1>📝 Quiz — Uniform Circular Motion</h1>
+  <div class="quiz-wrap">
+    <h2>Fill in the Blanks (8 marks)</h2>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q1.</span> The force directing a body towards the centre of a circular path is called __________ force. (1 mk)</div>
+      <input type="text" id="q1" placeholder="your answer">
+      <div class="q-fb" id="q1f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q2.</span> 1 radian = __________ degrees (to 1 decimal place). (1 mk)</div>
+      <input type="text" id="q2" placeholder="your answer">
+      <div class="q-fb" id="q2f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q3.</span> The relationship between linear velocity v and angular velocity ω is: v = __________. (1 mk)</div>
+      <input type="text" id="q3" placeholder="formula">
+      <div class="q-fb" id="q3f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q4.</span> The centripetal force formula is Fc = mv²/__________ or mRω². (1 mk)</div>
+      <input type="text" id="q4" placeholder="one letter">
+      <div class="q-fb" id="q4f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q5.</span> In uniform circular motion, the angular acceleration α = __________. (1 mk)</div>
+      <input type="text" id="q5" placeholder="value">
+      <div class="q-fb" id="q5f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q6.</span> The greatest tension in a vertical circular path occurs at the __________ of the circle. (1 mk)</div>
+      <input type="text" id="q6" placeholder="position">
+      <div class="q-fb" id="q6f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q7.</span> A body moves at ω = 5 rad/s in a circle of r = 2 m. Its linear speed v = __________ m/s. (1 mk)</div>
+      <input type="text" id="q7" placeholder="numerical">
+      <div class="q-fb" id="q7f"></div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-text"><span>Q8.</span> Road __________ allows vehicles to negotiate bends at high speed by raising the outer edge. (1 mk)</div>
+      <input type="text" id="q8" placeholder="one word">
+      <div class="q-fb" id="q8f"></div>
+    </div>
+
+    <h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+
+    <div class="q-block q-sa">
+      <div class="q-text"><span>Q9.</span> A ball of mass 0.5 kg moves in a horizontal circle of radius 0.8 m at 6 m/s. Calculate (a) centripetal force, (b) angular velocity. (3 mks)</div>
+      <textarea id="q9" placeholder="Show working..."></textarea>
+      <div class="q-fb" id="q9f"></div>
+    </div>
+
+    <div class="q-block q-sa">
+      <div class="q-text"><span>Q10.</span> Explain why a body moving in uniform circular motion is said to be accelerating even though its speed is constant. (2 mks)</div>
+      <textarea id="q10" placeholder="Your explanation..."></textarea>
+      <div class="q-fb" id="q10f"></div>
+    </div>
+
+    <div class="q-block q-sa">
+      <div class="q-text"><span>Q11.</span> State TWO applications of uniform circular motion in everyday life. (2 mks)</div>
+      <textarea id="q11" placeholder="1. ... 2. ..."></textarea>
+      <div class="q-fb" id="q11f"></div>
+    </div>
+
+    <button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div class="score-box" id="scorebox">
+      <h3 id="score-txt"></h3>
+      <p id="score-msg"></p>
+    </div>
+  </div>
+</div>
+
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button>
+  <span id="slide-counter">1 / 10</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+const ans={
+  q1:{kw:['centripetal'],pts:1},
+  q2:{kw:['57.3','57'],pts:1},
+  q3:{kw:['rω','r×ω','rw','r omega'],pts:1},
+  q4:{kw:['r'],pts:1},
+  q5:{kw:['0','zero'],pts:1},
+  q6:{kw:['bottom','lowest'],pts:1},
+  q7:{kw:['10'],pts:1},
+  q8:{kw:['banking','banked'],pts:1},
+};
+let score=0;
+function submitQuiz(){
+  score=0;
+  ['q1','q2','q3','q4','q5','q6','q7','q8'].forEach(id=>{
+    const val=document.getElementById(id).value.trim().toLowerCase();
+    const correct=ans[id].kw.some(k=>val.includes(k));
+    const fb=document.getElementById(id+'f');
+    if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}
+    else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}
+  });
+  const q9v=document.getElementById('q9').value.toLowerCase();
+  const q9fb=document.getElementById('q9f');
+  const q9ok=q9v.includes('22.5')||q9v.includes('22')&&q9v.includes('7.5');
+  if(q9ok){score+=3;q9fb.className='q-fb ok';q9fb.textContent='✓ Fc=22.5N, ω=7.5 rad/s';}
+  else{q9fb.className='q-fb no';q9fb.textContent='Model: Fc=mv²/r=0.5×36/0.8=22.5 N; ω=v/r=6/0.8=7.5 rad/s';}
+  const q10v=document.getElementById('q10').value.toLowerCase();
+  const q10fb=document.getElementById('q10f');
+  if(q10v.includes('direction')||q10v.includes('velocity')){score+=2;q10fb.className='q-fb ok';q10fb.textContent='✓ Good!';}
+  else{q10fb.className='q-fb no';q10fb.textContent='Model: Velocity is a vector — it changes direction continuously even at constant speed, hence acceleration exists.';}
+  const q11v=document.getElementById('q11').value.toLowerCase();
+  const q11fb=document.getElementById('q11f');
+  if(q11v.length>20){score+=2;q11fb.className='q-fb ok';q11fb.textContent='✓ Answered!';}
+  else{q11fb.className='q-fb no';q11fb.textContent='Model: Centrifuge, spin dryer, road banking, speed governor.';}
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');sb.style.display='block';
+  document.getElementById('score-txt').textContent='Score: '+score+' / 15 ('+pct+'%)';
+  document.getElementById('score-msg').textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+</script>
+</body>
+</html>

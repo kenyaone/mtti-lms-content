@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Biology | Flowering Plants, Pollination &amp; Fertilisation</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f9fafb;--card:#fff;--txt:#1a1a1a;--muted:#666;--border:#e0e0e0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column;}
+#topbar{background:var(--pri);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar .title{font-size:14px;font-weight:700;}
+#topbar .meta{font-size:12px;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.3);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;width:10%;}
+#slide-wrap{flex:1;max-width:860px;width:100%;margin:0 auto;padding:20px 16px 100px;}
+.slide{display:none;animation:fadeIn .4s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide-header{background:var(--pri);color:#fff;border-radius:12px 12px 0 0;padding:18px 24px;}
+.slide-header .slide-num{font-size:11px;opacity:.75;text-transform:uppercase;letter-spacing:1px;}
+.slide-header h2{font-size:20px;font-weight:700;margin-top:4px;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.outcome-list{list-style:none;padding:0;}
+.outcome-list li{padding:10px 14px;margin:8px 0;background:#e8f5e9;border-left:4px solid var(--pri);border-radius:6px;font-size:14px;line-height:1.5;}
+.outcome-list li::before{content:"✓ ";color:var(--pri);font-weight:700;}
+.info-box{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;padding:16px 20px;margin:12px 0;}
+.info-box h3{color:var(--pri);font-size:15px;margin-bottom:8px;}
+.info-box p,.info-box li{font-size:13.5px;line-height:1.6;color:#333;}
+.info-box ul{padding-left:18px;margin-top:6px;}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;}
+.compare-table th{background:var(--pri);color:#fff;padding:10px 12px;text-align:left;}
+.compare-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.compare-table tr:nth-child(even) td{background:#f5f5f5;}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.tab{padding:8px 16px;border-radius:20px;border:2px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;}
+.tab.active,.tab:hover{background:var(--pri);color:#fff;border-color:var(--pri);}
+.tab-content{display:none;animation:fadeIn .3s;}
+.tab-content.active{display:block;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:12px 0;}
+.card{background:#fff;border:2px solid var(--border);border-radius:10px;padding:14px;transition:all .2s;cursor:default;}
+.card:hover{border-color:var(--pri);transform:translateY(-2px);box-shadow:0 4px 12px rgba(10,94,42,.12);}
+.card .cname{font-weight:700;color:var(--pri);font-size:13.5px;margin-bottom:6px;}
+.card .cdet{font-size:12.5px;color:#555;line-height:1.5;}
+.practice-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;}
+.practice-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.practice-q textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:80px;font-family:inherit;}
+.check-btn{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:10px;}
+.check-btn:hover{background:#085220;}
+.feedback{margin-top:10px;padding:12px;border-radius:8px;font-size:13.5px;display:none;line-height:1.6;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;}
+/* Quiz */
+.quiz-q{background:#fff;border:2px solid var(--border);border-radius:10px;padding:18px;margin:14px 0;}
+.quiz-q .qnum{font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+.quiz-q .qtext{font-weight:600;font-size:14px;margin-bottom:12px;}
+.fib-wrap{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;line-height:2.2;}
+.fib-wrap input{border:none;border-bottom:2px solid var(--pri);background:transparent;font-size:14px;padding:2px 6px;width:160px;outline:none;color:var(--pri);font-weight:600;}
+.fib-wrap input.correct{border-color:var(--ok);color:var(--ok);}
+.fib-wrap input.wrong{border-color:var(--no);color:var(--no);}
+.sa-input{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px;font-size:13.5px;resize:vertical;min-height:70px;font-family:inherit;margin-top:8px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;margin:2px;font-weight:600;}
+.tag.found{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;}
+.tag.missed{background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a;}
+.model-answer{margin-top:8px;padding:10px;background:#f5f5f5;border-radius:6px;font-size:13px;color:#444;border-left:3px solid var(--acc);}
+#submit-quiz{display:block;width:100%;padding:14px;background:var(--pri);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;}
+#submit-quiz:hover{background:#085220;}
+#quiz-result{display:none;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-top:20px;}
+#quiz-result .score-big{font-size:52px;font-weight:900;color:var(--pri);}
+.cbc-rubric{background:#e8f5e9;border-radius:8px;padding:14px;margin-top:16px;font-size:13px;text-align:left;line-height:1.7;}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.08);}
+#nav-bar button{background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+#nav-bar button:hover{background:#085220;}
+#nav-bar button:disabled{background:#ccc;cursor:not-allowed;}
+#slide-dots{display:flex;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;}
+.dot.active{background:var(--pri);transform:scale(1.3);}
+/* Sorting game */
+.sort-pool{display:flex;flex-wrap:wrap;gap:8px;min-height:50px;border:2px dashed var(--border);border-radius:10px;padding:10px;margin-bottom:10px;}
+.sort-item{padding:8px 14px;border-radius:20px;font-size:12.5px;font-weight:600;cursor:pointer;user-select:none;border:2px solid transparent;transition:all .2s;}
+.sort-item:hover{opacity:.8;transform:scale(1.03);}
+.sort-item.selected{outline:3px solid var(--acc);}
+.sort-col{flex:1;min-width:180px;border:2px dashed var(--border);border-radius:10px;padding:12px;min-height:100px;}
+.sort-col h4{font-size:12px;color:var(--pri);margin-bottom:8px;text-transform:uppercase;}
+.sort-col-items{display:flex;flex-direction:column;gap:6px;min-height:60px;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div>
+    <div class="title">🌸 Biology Form 3 | Flowering Plants, Pollination &amp; Fertilisation</div>
+    <div class="meta">MTTI LMS &nbsp;|&nbsp; Lesson 5 of 6</div>
+  </div>
+  <div id="slide-counter">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="slide-wrap">
+
+<!-- S1: OUTCOMES -->
+<div class="slide active" id="s1">
+  <div class="slide-header"><div class="slide-num">Slide 1</div><h2>📚 Learning Outcomes</h2></div>
+  <div class="slide-body">
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">By the end of this lesson, you should be able to:</p>
+    <ul class="outcome-list">
+      <li>Describe the structure and functions of parts of a flower</li>
+      <li>Distinguish between <strong>insect-pollinated</strong> and <strong>wind-pollinated</strong> flowers</li>
+      <li>Explain <strong>self-pollination</strong> and <strong>cross-pollination</strong> and their advantages/disadvantages</li>
+      <li>Describe the process of <strong>double fertilisation</strong> in flowering plants</li>
+      <li>Distinguish between <strong>seeds</strong> and <strong>fruits</strong>, and describe their structures</li>
+      <li>Describe and explain mechanisms of <strong>seed and fruit dispersal</strong></li>
+      <li>Describe reproduction in animals — internal vs external fertilisation</li>
+    </ul>
+    <div class="info-box" style="margin-top:16px;"><h3>🔑 Key Vocabulary</h3>
+    <p><strong>Pollination · Fertilisation · Double fertilisation · Pollen tube · Ovule · Testa · Endosperm · Cotyledon · Epicotyl · Hypocotyl · Radicle · Plumule · Dispersal · Dehiscent · Indehiscent</strong></p></div>
+  </div>
+</div>
+
+<!-- S2: FLOWER STRUCTURE -->
+<div class="slide" id="s2">
+  <div class="slide-header"><div class="slide-num">Slide 2</div><h2>🌷 Structure of a Flower</h2></div>
+  <div class="slide-body">
+    <div class="card-grid">
+      <div class="card"><div class="cname">🌿 Receptacle</div><div class="cdet">Expanded end of flower stalk bearing all floral organs</div></div>
+      <div class="card"><div class="cname">🟢 Calyx (Sepals)</div><div class="cdet">Outermost green leaf-like parts; protect bud</div></div>
+      <div class="card"><div class="cname">🌸 Corolla (Petals)</div><div class="cdet">Often brightly coloured and scented; attract pollinators</div></div>
+      <div class="card"><div class="cname">♂ Androecium</div><div class="cdet">Stamens = male organ. Anther (pollen grains) + Filament</div></div>
+      <div class="card"><div class="cname">♀ Gynaecium / Pistil</div><div class="cdet">Female organ. Stigma + Style + Ovary (contains ovules)</div></div>
+      <div class="card"><div class="cname">🍯 Nectary</div><div class="cdet">Secretes nectar at base of petals to attract insects</div></div>
+    </div>
+    <div class="info-box" style="margin-top:10px;">
+      <h3>Flower Terminology</h3>
+      <table class="compare-table">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Hermaphrodite (bisexual)</td><td>Has both stamens and carpel</td></tr>
+        <tr><td>Unisexual</td><td>Either staminate (male) or pistilate (female)</td></tr>
+        <tr><td>Monoecious</td><td>Male &amp; female flowers on same plant (e.g. maize)</td></tr>
+        <tr><td>Dioecious</td><td>Male &amp; female flowers on different plants (e.g. pawpaw)</td></tr>
+        <tr><td>Complete flower</td><td>Has calyx, corolla, androecium AND gynoecium</td></tr>
+        <tr><td>Epigynous</td><td>Other parts above the ovary (inferior ovary)</td></tr>
+        <tr><td>Hypogynous</td><td>Other parts below the ovary (superior ovary)</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S3: POLLINATION -->
+<div class="slide" id="s3">
+  <div class="slide-header"><div class="slide-num">Slide 3</div><h2>🐝 Pollination</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>Definition</h3><p><strong>Pollination:</strong> Transfer of pollen grains from the anther to a receptive stigma.</p></div>
+    <div class="tabs" style="margin-top:12px;">
+      <div class="tab active" onclick="showTab(event,'insect')">🐝 Insect Pollination</div>
+      <div class="tab" onclick="showTab(event,'wind')">💨 Wind Pollination</div>
+      <div class="tab" onclick="showTab(event,'self')">🔄 Self vs Cross</div>
+    </div>
+    <div id="tab-insect" class="tab-content active">
+      <table class="compare-table">
+        <tr><th>Feature</th><th>Insect-pollinated Flower</th></tr>
+        <tr><td>Petals</td><td>Large, brightly coloured, scented</td></tr>
+        <tr><td>Nectar</td><td>Present (to attract insects)</td></tr>
+        <tr><td>Pollen grains</td><td>Large, rough/spiky surface (stick to insect body)</td></tr>
+        <tr><td>Anthers</td><td>Firmly attached inside petals; not exposed to wind</td></tr>
+        <tr><td>Stigma</td><td>Sticky surface; inside the flower</td></tr>
+        <tr><td>Examples</td><td>Hibiscus, Bougainvillea, roses, sunflower</td></tr>
+      </table>
+    </div>
+    <div id="tab-wind" class="tab-content">
+      <table class="compare-table">
+        <tr><th>Feature</th><th>Wind-pollinated Flower</th></tr>
+        <tr><td>Petals</td><td>Small, dull-coloured, no scent, often absent</td></tr>
+        <tr><td>Nectar</td><td>Absent</td></tr>
+        <tr><td>Pollen grains</td><td>Light, smooth, dry — easily blown by wind; produced in huge quantities</td></tr>
+        <tr><td>Anthers</td><td>Long, loosely attached filaments dangling outside flower; exposed to wind</td></tr>
+        <tr><td>Stigma</td><td>Feathery, branched, large surface area; hangs outside flower to trap pollen</td></tr>
+        <tr><td>Examples</td><td>Maize (Zea mays), grasses, wheat, oats</td></tr>
+      </table>
+    </div>
+    <div id="tab-self" class="tab-content">
+      <table class="compare-table">
+        <tr><th>Feature</th><th>Self-Pollination</th><th>Cross-Pollination</th></tr>
+        <tr><td>Definition</td><td>Pollen from anther to stigma of same flower or plant</td><td>Pollen from anther of one flower to stigma of different plant</td></tr>
+        <tr><td>Advantages</td><td>Certain; doesn't depend on external agents; useful if plants are isolated</td><td>Greater genetic variation; stronger offspring (hybrid vigour)</td></tr>
+        <tr><td>Disadvantages</td><td>No variation; breeds weaknesses; lowered disease resistance</td><td>Requires external agents; less certain; may fail if no pollinators</td></tr>
+      </table>
+      <div class="info-box" style="margin-top:12px;"><h3>Mechanisms Promoting Cross-Pollination</h3><ul><li><strong>Dioecism:</strong> Male &amp; female flowers on different plants</li><li><strong>Protandry:</strong> Anthers mature before stigma (e.g. sweet corn)</li><li><strong>Protogyny:</strong> Stigma matures before anthers (e.g. plantain)</li><li><strong>Self-incompatibility:</strong> Pollen of a plant cannot germinate on stigma of same plant</li><li><strong>Heterostyly:</strong> Style and filament differ in length between flowers</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- S4: FERTILISATION -->
+<div class="slide" id="s4">
+  <div class="slide-header"><div class="slide-num">Slide 4</div><h2>🧬 Fertilisation in Flowering Plants</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>Definition</h3><p><strong>Fertilisation:</strong> Fusion of male and female gametes to form a zygote.</p></div>
+    <div class="info-box" style="margin-top:12px;background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">Double Fertilisation (unique to Angiosperms)</h3>
+      <ol style="padding-left:18px;line-height:2;font-size:13.5px;">
+        <li>Pollen grain lands on stigma → <strong>pollen tube</strong> grows down the style</li>
+        <li>Pollen tube penetrates ovule through <strong>micropyle</strong></li>
+        <li>Two male nuclei released from pollen tube into embryo sac</li>
+        <li><strong>First fertilisation:</strong> One male nucleus + egg cell → <strong>zygote</strong> (2n) → develops into embryo</li>
+        <li><strong>Second fertilisation:</strong> Other male nucleus + two polar nuclei → <strong>primary endosperm nucleus</strong> (3n) → develops into endosperm (food store)</li>
+      </ol>
+    </div>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>After Fertilisation</h3>
+      <table class="compare-table">
+        <tr><th>Structure before</th><th>Becomes after fertilisation</th></tr>
+        <tr><td>Zygote</td><td>Embryo</td></tr>
+        <tr><td>Primary endosperm nucleus</td><td>Endosperm (food store)</td></tr>
+        <tr><td>Ovule</td><td>Seed</td></tr>
+        <tr><td>Ovary</td><td>Fruit</td></tr>
+        <tr><td>Ovary wall</td><td>Pericarp (fruit wall)</td></tr>
+        <tr><td>Integuments</td><td>Testa (seed coat)</td></tr>
+        <tr><td>Petals, sepals, stamens</td><td>Usually wither and fall</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S5: SEEDS & FRUITS -->
+<div class="slide" id="s5">
+  <div class="slide-header"><div class="slide-num">Slide 5</div><h2>🌰 Seeds and Fruits</h2></div>
+  <div class="slide-body">
+    <div class="tabs">
+      <div class="tab active" onclick="showTab(event,'seeds')">🌱 Seeds</div>
+      <div class="tab" onclick="showTab(event,'fruits')">🍎 Fruits</div>
+    </div>
+    <div id="tab-seeds" class="tab-content active">
+      <div class="info-box"><h3>Seed Structure</h3>
+        <table class="compare-table">
+          <tr><th>Part</th><th>Function</th></tr>
+          <tr><td><strong>Testa</strong></td><td>Seed coat; protects embryo from mechanical injury, desiccation, and disease</td></tr>
+          <tr><td><strong>Hilum</strong></td><td>Scar where seed was attached to the funicle (ovary wall)</td></tr>
+          <tr><td><strong>Micropyle</strong></td><td>Tiny pore for water absorption during germination</td></tr>
+          <tr><td><strong>Cotyledon(s)</strong></td><td>Seed leaf/leaves — store food (monocot = 1, dicot = 2)</td></tr>
+          <tr><td><strong>Plumule</strong></td><td>Embryonic shoot — develops into stem and leaves</td></tr>
+          <tr><td><strong>Radicle</strong></td><td>Embryonic root — first part to emerge during germination</td></tr>
+          <tr><td><strong>Epicotyl</strong></td><td>Region of embryo axis above cotyledon attachment → becomes shoot</td></tr>
+          <tr><td><strong>Hypocotyl</strong></td><td>Region below cotyledon attachment → stem-root junction</td></tr>
+          <tr><td><strong>Endosperm</strong></td><td>Food reserve for developing embryo (rich in starch/protein)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div id="tab-fruits" class="tab-content">
+      <div class="info-box"><h3>What is a Fruit?</h3><p>A fruit is the <strong>mature ovary</strong> containing seeds. Formed from the ovary after fertilisation.</p></div>
+      <table class="compare-table" style="margin-top:10px;">
+        <tr><th>Type</th><th>Description</th><th>Examples</th></tr>
+        <tr><td><strong>True fruit</strong></td><td>Develops from ovary only</td><td>Mango, avocado, bean pods</td></tr>
+        <tr><td><strong>False fruit (pseudocarp)</strong></td><td>Develops from ovary + other floral parts (receptacle)</td><td>Apple, strawberry, pineapple</td></tr>
+        <tr><td><strong>Simple fruit</strong></td><td>Develops from a single pistil</td><td>Bean, mango</td></tr>
+        <tr><td><strong>Aggregate fruit</strong></td><td>Develops from multiple pistils of one flower</td><td>Blackberry, raspberry</td></tr>
+        <tr><td><strong>Dehiscent</strong></td><td>Splits open to release seeds</td><td>Bean pods, peas</td></tr>
+        <tr><td><strong>Indehiscent</strong></td><td>Does NOT split open</td><td>Acorn, sunflower achene</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S6: DISPERSAL -->
+<div class="slide" id="s6">
+  <div class="slide-header"><div class="slide-num">Slide 6</div><h2>🍃 Seed &amp; Fruit Dispersal</h2></div>
+  <div class="slide-body">
+    <div class="info-box"><h3>Why Dispersal?</h3><ul><li>Reduces competition between parent and offspring</li><li>Reduces competition between offspring for space, water, light</li><li>Colonises new areas</li></ul></div>
+    <table class="compare-table" style="margin-top:12px;">
+      <tr><th>Agent</th><th>Adaptations of Seed/Fruit</th><th>Examples</th></tr>
+      <tr><td><strong>Wind</strong></td><td>Light; wings/parachutes/feathery pappus; inflated structures</td><td>Dandelion (pappus), Jacaranda (wings), Tridax, Cotton</td></tr>
+      <tr><td><strong>Water</strong></td><td>Light; waterproof coat; airspaces for buoyancy; spongy pericarp</td><td>Coconut, Water lily, Mangrove</td></tr>
+      <tr><td><strong>Animals (outside)</strong></td><td>Hooks, spines, burs — catch on fur/clothing</td><td>Acacia, Bidens (black jack), Xanthium</td></tr>
+      <tr><td><strong>Animals (eating)</strong></td><td>Fleshy/sweet fruits; brightly coloured; sweet smell — eaten by animals, seeds pass undigested</td><td>Tomato, mango, passion fruit, fig</td></tr>
+      <tr><td><strong>Explosive/Self</strong></td><td>Builds up tension; fruit walls dry unevenly → sudden splitting</td><td>Squirting cucumber, Touch-me-not (Impatiens), Witch hazel</td></tr>
+      <tr><td><strong>Gravity</strong></td><td>Heavy fruits fall and roll</td><td>Coconut (gravity + water), acorns</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;background:#fff3e0;border-color:#ffe082;">
+      <h3 style="color:#e65100;">💡 Significance of Dispersal</h3>
+      <ul>
+        <li>Reduces <strong>intraspecific competition</strong> between seedlings</li>
+        <li>Ensures seeds land in suitable germination conditions</li>
+        <li>Allows colonisation of new areas → <strong>species spread</strong></li>
+        <li>Reduces chance of destruction by localised pests/diseases</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- S7: ANIMAL REPRODUCTION -->
+<div class="slide" id="s7">
+  <div class="slide-header"><div class="slide-num">Slide 7</div><h2>🐾 Reproduction in Animals</h2></div>
+  <div class="slide-body">
+    <table class="compare-table">
+      <tr><th>Feature</th><th>Internal Fertilisation</th><th>External Fertilisation</th></tr>
+      <tr><td>Where</td><td>Inside female body</td><td>Outside body (usually in water)</td></tr>
+      <tr><td>Gametes</td><td>Few gametes produced</td><td>Many gametes produced (wastage)</td></tr>
+      <tr><td>Offspring survival</td><td>Higher — protected inside</td><td>Lower — exposed to predators</td></tr>
+      <tr><td>Parental care</td><td>Often provided</td><td>Usually absent</td></tr>
+      <tr><td>Examples</td><td>Mammals, reptiles, birds, most insects</td><td>Fish, frogs, most aquatic invertebrates</td></tr>
+    </table>
+    <div class="info-box" style="margin-top:12px;">
+      <h3>Oviparous vs Viviparous</h3>
+      <table class="compare-table">
+        <tr><th></th><th>Oviparous</th><th>Viviparous</th></tr>
+        <tr><td>Definition</td><td>Lays eggs; embryo develops outside mother</td><td>Bears live young; embryo develops inside mother</td></tr>
+        <tr><td>Food source</td><td>Yolk in egg</td><td>Placenta from mother</td></tr>
+        <tr><td>Protection</td><td>Shell protects egg</td><td>Protected inside uterus</td></tr>
+        <tr><td>Examples</td><td>Birds, reptiles, fish, insects</td><td>Most mammals</td></tr>
+      </table>
+    </div>
+    <div class="info-box" style="margin-top:12px;"><h3>Sexual vs Asexual in Animals</h3><ul><li><strong>Budding:</strong> Hydra — outgrowth detaches to form new individual</li><li><strong>Binary fission:</strong> Amoeba, Paramecium — splits into 2 equal cells</li><li><strong>Regeneration:</strong> Starfish — lost parts regrow; detached parts form new organisms</li></ul></div>
+  </div>
+</div>
+
+<!-- S8: SCENARIO -->
+<div class="slide" id="s8">
+  <div class="slide-header"><div class="slide-num">Slide 8</div><h2>🎯 Interactive Sorting: Dispersal Agents</h2></div>
+  <div class="slide-body">
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:12px;">Click each fruit/seed below, then click the correct dispersal agent column to sort it.</p>
+    <div id="sort-pool" class="sort-pool">
+      <div class="sort-item" style="background:#e8f5e9;border-color:#a5d6a7;" onclick="selectSort(this)" data-agent="wind">Dandelion (pappus)</div>
+      <div class="sort-item" style="background:#e3f2fd;border-color:#90caf9;" onclick="selectSort(this)" data-agent="water">Coconut (buoyant husk)</div>
+      <div class="sort-item" style="background:#fff3e0;border-color:#ffe082;" onclick="selectSort(this)" data-agent="animal-eat">Mango (fleshy)</div>
+      <div class="sort-item" style="background:#fce4ec;border-color:#f48fb1;" onclick="selectSort(this)" data-agent="animal-hook">Bidens / Black jack (hooks)</div>
+      <div class="sort-item" style="background:#f3e5f5;border-color:#ce93d8;" onclick="selectSort(this)" data-agent="explosive">Impatiens (Touch-me-not)</div>
+      <div class="sort-item" style="background:#e8f5e9;border-color:#a5d6a7;" onclick="selectSort(this)" data-agent="wind">Jacaranda (winged)</div>
+      <div class="sort-item" style="background:#e3f2fd;border-color:#90caf9;" onclick="selectSort(this)" data-agent="water">Water lily</div>
+      <div class="sort-item" style="background:#fff3e0;border-color:#ffe082;" onclick="selectSort(this)" data-agent="animal-eat">Passion fruit (sweet)</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:10px;">
+      <div class="sort-col" onclick="assignSort(this,'wind')"><h4>💨 Wind</h4><div class="sort-col-items" id="col-wind"></div></div>
+      <div class="sort-col" onclick="assignSort(this,'water')"><h4>💧 Water</h4><div class="sort-col-items" id="col-water"></div></div>
+      <div class="sort-col" onclick="assignSort(this,'animal-eat')"><h4>🐾 Animal (eating)</h4><div class="sort-col-items" id="col-animal-eat"></div></div>
+      <div class="sort-col" onclick="assignSort(this,'animal-hook')"><h4>🪝 Animal (hooks)</h4><div class="sort-col-items" id="col-animal-hook"></div></div>
+      <div class="sort-col" onclick="assignSort(this,'explosive')"><h4>💥 Explosive</h4><div class="sort-col-items" id="col-explosive"></div></div>
+    </div>
+    <button onclick="checkSort()" style="background:var(--pri);color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;margin-top:14px;">Check Sorting ✓</button>
+    <div id="sort-result" style="display:none;margin-top:12px;padding:14px;border-radius:10px;font-size:13.5px;"></div>
+    <button onclick="resetSort()" style="background:#aaa;color:#fff;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:13px;margin-top:8px;">Reset</button>
+  </div>
+</div>
+
+<!-- S9: PRACTICE -->
+<div class="slide" id="s9">
+  <div class="slide-header"><div class="slide-num">Slide 9</div><h2>✏️ Practice Questions</h2></div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <div class="qtext">1. Distinguish between pollination and fertilisation in flowering plants.</div>
+      <textarea placeholder="Pollination is...&#10;Fertilisation is...&#10;Difference:..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ <strong>Pollination:</strong> Transfer of pollen grains from the anther to a receptive stigma of a flower (same or different plant). It is a physical process requiring external agents (insects, wind, etc.).<br><br><strong>Fertilisation:</strong> The actual fusion of the male gamete nucleus (from pollen) with the female gamete (egg cell in ovule) to form a diploid zygote. It is a biological/chemical process that occurs inside the ovule after pollination.<br><br><strong>Key difference:</strong> Pollination precedes fertilisation; pollination is transfer of pollen, fertilisation is fusion of gametes.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">2. Explain the significance of double fertilisation and state what each product develops into.</div>
+      <textarea placeholder="Double fertilisation..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ Double fertilisation is unique to angiosperms (flowering plants). Two male nuclei from the pollen tube fuse with different structures in the embryo sac:<br><br>(1) First male nucleus + <strong>egg cell</strong> → <strong>zygote (2n)</strong> → develops into the <strong>embryo</strong> (the new plant)<br>(2) Second male nucleus + <strong>two polar nuclei</strong> → <strong>primary endosperm nucleus (3n)</strong> → develops into the <strong>endosperm</strong> (food store for the developing seed)<br><br><strong>Significance:</strong> Ensures both embryo and food supply are formed simultaneously — the embryo does not begin growing until its food store is ready.</div>
+    </div>
+    <div class="practice-q">
+      <div class="qtext">3. State FOUR features that distinguish a wind-pollinated flower from an insect-pollinated flower.</div>
+      <textarea placeholder="Wind-pollinated vs Insect-pollinated..."></textarea>
+      <button class="check-btn" onclick="showFeedback(this)">Check Answer</button>
+      <div class="feedback correct">✅ Wind-pollinated vs Insect-pollinated:<br>(1) Petals: Wind = small, dull, absent; Insect = large, brightly coloured<br>(2) Nectar: Wind = absent; Insect = present<br>(3) Pollen: Wind = light, smooth, dry, produced in huge quantities; Insect = heavy, sticky/spiky surface, less pollen<br>(4) Stigma: Wind = feathery, branched, hangs outside flower; Insect = sticky, enclosed inside flower<br>(5) Anthers: Wind = long filaments dangling loosely outside; Insect = firmly attached inside</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10: QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-header"><div class="slide-num">Slide 10 • Assessment</div><h2>📝 Quiz: Flowering Plants</h2></div>
+  <div class="slide-body">
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 1</div>
+      <div class="fib-wrap">
+        Transfer of pollen from anther to stigma is called <input type="text" id="f1" placeholder="...">.
+        The fusion of male and female gametes is called <input type="text" id="f2" placeholder="...">.
+        Flowering plants show <input type="text" id="f3" placeholder="..."> fertilisation — unique to angiosperms.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Fill in the Blank 2</div>
+      <div class="fib-wrap">
+        The embryonic root of a seed is called the <input type="text" id="f4" placeholder="...">.
+        A fruit that does not split open to release seeds is called <input type="text" id="f5" placeholder="...">.
+        Dandelion uses <input type="text" id="f6" placeholder="..."> for seed dispersal.
+      </div>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 1</div>
+      <div class="qtext">State THREE structural adaptations of a wind-dispersed seed/fruit and explain how each aids dispersal.</div>
+      <textarea class="sa-input" id="sa1" placeholder="1. Adaptation... — because...&#10;2.&#10;3."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 2</div>
+      <div class="qtext">Describe what happens to the ovule and ovary after fertilisation in a flowering plant.</div>
+      <textarea class="sa-input" id="sa2" placeholder="After fertilisation, the ovule becomes..."></textarea>
+    </div>
+    <div class="quiz-q">
+      <div class="qnum">Short Answer 3</div>
+      <div class="qtext">Give THREE reasons why cross-pollination is considered more advantageous than self-pollination.</div>
+      <textarea class="sa-input" id="sa3" placeholder="1.&#10;2.&#10;3."></textarea>
+    </div>
+    <button id="submit-quiz" onclick="submitQuiz()">Submit Quiz ✓</button>
+    <div id="quiz-result">
+      <div class="score-big" id="score-display">0%</div>
+      <div class="grade" id="grade-display"></div>
+      <div id="fib-feedback"></div>
+      <div id="sa-feedback"></div>
+      <div class="cbc-rubric"><strong>CBC Assessment Rubric:</strong><br><strong>Exceeds Expectations (80–100%):</strong> Demonstrates comprehensive understanding of pollination, fertilisation, seed/fruit structure and dispersal mechanisms.<br><strong>Meets Expectations (50–79%):</strong> Adequately describes pollination, double fertilisation, and seed dispersal.<br><strong>Approaching Expectations (30–49%):</strong> Shows partial understanding of the reproductive structures and processes.<br><strong>Below Expectations (&lt;30%):</strong> Needs additional support; review all sections.</div>
+    </div>
+  </div>
+</div>
+</div><!-- end slide-wrap -->
+
+<div id="nav-bar">
+  <button id="prev-btn" onclick="changeSlide(-1)" disabled>◀ Previous</button>
+  <div id="slide-dots"></div>
+  <button id="next-btn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+let current=0;const total=10;
+function buildDots(){const d=document.getElementById('slide-dots');d.innerHTML='';for(let i=0;i<total;i++){const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>goTo(i);d.appendChild(dot);}}
+function goTo(n){document.querySelectorAll('.slide')[current].classList.remove('active');document.querySelectorAll('.dot')[current].classList.remove('active');current=n;document.querySelectorAll('.slide')[current].classList.add('active');document.querySelectorAll('.dot')[current].classList.add('active');document.getElementById('slide-counter').textContent='Slide '+(current+1)+' / '+total;document.getElementById('progress-fill').style.width=((current+1)/total*100)+'%';document.getElementById('prev-btn').disabled=current===0;document.getElementById('next-btn').disabled=current===total-1;window.scrollTo({top:0,behavior:'smooth'});}
+function changeSlide(dir){goTo(current+dir);}
+buildDots();
+
+function showTab(e,name){
+  const parent=e.target.closest('.slide-body');
+  parent.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  parent.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  parent.querySelector('#tab-'+name).classList.add('active');
+}
+
+function showFeedback(btn){btn.parentElement.querySelectorAll('.feedback').forEach(f=>f.style.display='block');}
+
+// Sorting game
+let selectedSort=null;
+const sortAssignments={};
+function selectSort(el){
+  document.querySelectorAll('.sort-item').forEach(d=>d.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSort=el;
+}
+function assignSort(colEl,agent){
+  if(!selectedSort)return;
+  const itemAgent=selectedSort.getAttribute('data-agent');
+  sortAssignments[selectedSort.textContent.trim()]=agent;
+  const clone=selectedSort.cloneNode(true);
+  clone.onclick=null;
+  clone.style.cursor='default';
+  clone.classList.remove('selected');
+  document.getElementById('col-'+agent).appendChild(clone);
+  selectedSort.style.opacity='0.4';
+  selectedSort.onclick=null;
+  selectedSort=null;
+}
+function checkSort(){
+  const items=document.querySelectorAll('#sort-pool .sort-item');
+  let correct=0,total=0;
+  items.forEach(item=>{
+    const name=item.textContent.trim();
+    if(sortAssignments[name]){
+      total++;
+      if(sortAssignments[name]===item.getAttribute('data-agent'))correct++;
+    }
+  });
+  const res=document.getElementById('sort-result');
+  res.style.display='block';
+  res.style.background=correct===Object.keys(sortAssignments).length&&correct>0?'#e8f5e9':'#fff3e0';
+  res.innerHTML=`<strong>${correct}/${total} correct.</strong> ${correct===total&&total>0?'🎉 All sorted correctly!':'Some are incorrect. Correct order: Dandelion→Wind, Jacaranda→Wind, Coconut→Water, Water lily→Water, Mango→Animal(eating), Passion fruit→Animal(eating), Bidens→Animal(hooks), Impatiens→Explosive.'}`;
+}
+function resetSort(){
+  Object.keys(sortAssignments).forEach(k=>delete sortAssignments[k]);
+  document.querySelectorAll('.sort-col-items').forEach(c=>c.innerHTML='');
+  document.querySelectorAll('.sort-item').forEach(d=>{d.style.opacity='1';d.onclick=function(){selectSort(this);};d.classList.remove('selected');});
+  document.getElementById('sort-result').style.display='none';
+  selectedSort=null;
+}
+
+function submitQuiz(){
+  const fibs=[
+    {id:'f1',ans:['pollination']},
+    {id:'f2',ans:['fertilisation','fertilization']},
+    {id:'f3',ans:['double']},
+    {id:'f4',ans:['radicle']},
+    {id:'f5',ans:['indehiscent']},
+    {id:'f6',ans:['wind']}
+  ];
+  let fibScore=0;
+  fibs.forEach(f=>{const inp=document.getElementById(f.id);const val=inp.value.trim().toLowerCase();const ok=f.ans.some(a=>val.includes(a));inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok);if(ok)fibScore++;});
+
+  const saData=[
+    {id:'sa1',keys:['light','wings','parachute','pappus','feathery','smooth','dry','airspaces'],
+     model:'(1) Feathery/parachute-like pappus (e.g. dandelion) — large surface area catches wind, enabling flight; (2) Wings (e.g. jacaranda, maple) — act like helicopter rotors, slowing fall and allowing wind to carry seed sideways; (3) Light/dry — low mass means wind can carry easily over long distances; (4) Inflated/bladder-like structures (e.g. bladder senna) — trapped air aids buoyancy in wind.'},
+    {id:'sa2',keys:['ovule','seed','ovary','fruit','testa','integuments','endosperm','zygote','embryo'],
+     model:'After fertilisation: (1) The ovule develops into a seed — integuments become testa (seed coat), zygote develops into embryo, primary endosperm nucleus develops into endosperm; (2) The ovary develops into the fruit — the ovary wall becomes the pericarp (fruit wall); (3) Petals, sepals, and stamens usually wither and fall off.'},
+    {id:'sa3',keys:['variation','vigour','resistance','hybrid','disease','adapt','stronger','new'],
+     model:'(1) Genetic variation: cross-pollination introduces new gene combinations → offspring vary and some may be better adapted to environmental changes; (2) Hybrid vigour: offspring of cross-pollination are often stronger, taller, and more productive than self-pollinated offspring; (3) Greater disease resistance: genetically diverse population is not all susceptible to the same disease — unlike genetically identical self-pollinated offspring.'}
+  ];
+  let saScore=0;let saFeedbackHTML='';
+  saData.forEach(sa=>{const val=document.getElementById(sa.id).value.toLowerCase();const found=sa.keys.filter(k=>val.includes(k));const missed=sa.keys.filter(k=>!val.includes(k));const pts=Math.min(2,Math.round(found.length/sa.keys.length*2));saScore+=pts;saFeedbackHTML+=`<div style="margin:10px 0;"><strong>${sa.id.toUpperCase()}:</strong> `;found.forEach(k=>{saFeedbackHTML+=`<span class="tag found">✓ ${k}</span>`;});missed.slice(0,4).forEach(k=>{saFeedbackHTML+=`<span class="tag missed">✗ ${k}</span>`;});saFeedbackHTML+=`<div class="model-answer"><strong>Model Answer:</strong> ${sa.model}</div></div>`;});
+
+  const tot=fibs.length+6;const pct=Math.round((fibScore+saScore)/tot*100);
+  document.getElementById('score-display').textContent=pct+'%';
+  const grades=[[80,'Exceeds Expectations 🌟'],[50,'Meets Expectations ✅'],[30,'Approaching Expectations 📈'],[0,'Below Expectations — Revise & Retry 📚']];
+  document.getElementById('grade-display').textContent=grades.find(g=>pct>=g[0])[1];
+  document.getElementById('fib-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Fill-in-Blank: '+fibScore+'/'+fibs.length+'</h4>';
+  document.getElementById('sa-feedback').innerHTML='<h4 style="margin:12px 0 6px;color:var(--pri);">Short Answer: '+saScore+'/6</h4>'+saFeedbackHTML;
+  document.getElementById('quiz-result').style.display='block';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(fibScore+saScore,tot,pct);
+  document.getElementById('quiz-result').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

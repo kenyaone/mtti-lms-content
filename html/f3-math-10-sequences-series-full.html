@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Sequences and Series</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem;text-align:center}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input{padding:8px 12px;border:2px solid #ccc;border-radius:6px;font-size:1rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+.seq-display{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.seq-term{background:var(--pri);color:#fff;border-radius:6px;padding:6px 12px;font-weight:700;font-size:.9rem}
+.seq-term.highlight{background:var(--acc);color:#000}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 12px;width:110px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>📊 F3 Mathematics · Sequences and Series</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Identify and describe number sequences using nth term formula</li>
+    <li>Identify Arithmetic Progressions (AP) — common difference d</li>
+    <li>Find the nth term and sum of an AP</li>
+    <li>Identify Geometric Progressions (GP) — common ratio r</li>
+    <li>Find the nth term and sum of a GP</li>
+    <li>Apply AP and GP to real-life problems</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Sequence</span><span class="key-term">Term</span><span class="key-term">nth Term</span>
+    <span class="key-term">AP (Arithmetic)</span><span class="key-term">Common Difference (d)</span>
+    <span class="key-term">GP (Geometric)</span><span class="key-term">Common Ratio (r)</span>
+    <span class="key-term">Series / Sum (Sₙ)</span>
+  </div>
+</div>
+
+<!-- S2 Sequences -->
+<div class="slide" id="s2">
+  <h2>Sequences and nth Term</h2>
+  <p>A <strong>sequence</strong> is a list of numbers following a rule. Each number is a <strong>term</strong>.</p>
+  <div class="worked">
+    <strong>nth Term Formula — Examples:</strong><br>
+    <div class="step">Tₙ = 2n + 1 → 3, 5, 7, 9, 11, … (odd numbers from 3)</div>
+    <div class="step">Tₙ = n² → 1, 4, 9, 16, 25, … (squares)</div>
+    <div class="step">Tₙ = 3ⁿ → 3, 9, 27, 81, … (powers of 3)</div>
+    <div class="step">Tₙ = (−2)ⁿ⁻¹ → 1, −2, 4, −8, … (alternating)</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Sequence Explorer</h3>
+    <div class="inp-row">
+      <label>First term a₁: <input id="seq-a" type="number" value="2" style="width:70px"></label>
+      <label>Rule: aₙ = aₙ₋₁ + <input id="seq-d" type="number" value="3" style="width:70px"> (0 for same)</label>
+      <label>or × <input id="seq-r" type="number" value="1" style="width:70px"></label>
+      <button class="go-btn" onclick="genSeq()">Generate 10 terms</button>
+    </div>
+    <div id="seq-display" class="seq-display"></div>
+  </div>
+</div>
+
+<!-- S3 Arithmetic Progression -->
+<div class="slide" id="s3">
+  <h2>Arithmetic Progression (AP)</h2>
+  <p>An AP has a <strong>constant difference d</strong> between consecutive terms.</p>
+  <div class="formula-box">
+    <div>nth term: <span style="font-size:1.1rem;font-weight:700">Tₙ = a + (n−1)d</span></div>
+    <div class="math">Sum of n terms: Sₙ = n/2 × [2a + (n−1)d] &nbsp;or&nbsp; n/2 × (a + l)</div>
+    <div style="font-size:.88rem;margin-top:4px">a = first term, d = common difference, l = last term</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> AP: 5, 8, 11, 14, … Find T₁₅ and S₂₀.<br>
+    <div class="step">a = 5, d = 3</div>
+    <div class="step">T₁₅ = 5 + 14×3 = 5 + 42 = <strong>47</strong></div>
+    <div class="step">S₂₀ = 20/2 × [2(5) + 19×3] = 10 × [10 + 57] = 10 × 67 = <strong>670</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Find n:</strong> Sum of AP = 108; a=3, d=3. Find n.<br>
+    <div class="step">Sₙ = n/2[6 + (n−1)3] = n/2[3+3n] = 3n(n+1)/2 = 108</div>
+    <div class="step">n(n+1) = 72 → n² + n − 72 = 0 → (n+9)(n−8) = 0 → <strong>n = 8</strong></div>
+  </div>
+</div>
+
+<!-- S4 GP -->
+<div class="slide" id="s4">
+  <h2>Geometric Progression (GP)</h2>
+  <p>A GP has a <strong>constant ratio r</strong> between consecutive terms.</p>
+  <div class="formula-box">
+    <div>nth term: <span style="font-size:1.1rem;font-weight:700">Tₙ = arⁿ⁻¹</span></div>
+    <div class="math">Sum (r≠1): Sₙ = a(rⁿ−1)/(r−1) if r&gt;1 &nbsp;or&nbsp; a(1−rⁿ)/(1−r) if r&lt;1</div>
+    <div style="font-size:.88rem;margin-top:4px">a = first term, r = common ratio</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> GP: 2, 6, 18, 54, … Find T₈ and S₅.<br>
+    <div class="step">a = 2, r = 3</div>
+    <div class="step">T₈ = 2 × 3⁷ = 2 × 2187 = <strong>4 374</strong></div>
+    <div class="step">S₅ = 2(3⁵−1)/(3−1) = 2(243−1)/2 = <strong>242</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Find r:</strong> GP: 4, ?, ?, 32. Find r.<br>
+    <div class="step">T₄ = ar³ = 32; a=4 → 4r³=32 → r³=8 → <strong>r = 2</strong></div>
+    <div class="step">Sequence: 4, 8, 16, 32</div>
+  </div>
+</div>
+
+<!-- S5 AP vs GP comparison -->
+<div class="slide" id="s5">
+  <h2>AP vs GP — Comparison</h2>
+  <table>
+    <tr><th>Feature</th><th>Arithmetic (AP)</th><th>Geometric (GP)</th></tr>
+    <tr><td>Pattern</td><td>Add constant d</td><td>Multiply by constant r</td></tr>
+    <tr><td>nth term</td><td>a + (n−1)d</td><td>arⁿ⁻¹</td></tr>
+    <tr><td>Sum</td><td>n/2[2a+(n−1)d]</td><td>a(rⁿ−1)/(r−1)</td></tr>
+    <tr><td>Test</td><td>T₂−T₁ = T₃−T₂ = d</td><td>T₂/T₁ = T₃/T₂ = r</td></tr>
+    <tr><td>Example</td><td>3, 7, 11, 15, …</td><td>2, 6, 18, 54, …</td></tr>
+  </table>
+  <div class="card" style="background:#e8f5e9;margin-top:12px">
+    <strong>Useful identities:</strong>
+    <ul style="line-height:2;padding-left:18px;margin-top:6px">
+      <li>If a, b, c are in AP: 2b = a + c</li>
+      <li>If a, b, c are in GP: b² = ac</li>
+      <li>Sum of n natural numbers = n(n+1)/2</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S6 AP/GP Calculator -->
+<div class="slide" id="s6">
+  <h2>AP and GP Calculator</h2>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Arithmetic Progression</h3>
+    <div class="inp-row">
+      <label>First term a: <input id="ap-a" type="number" value="5" style="width:70px"></label>
+      <label>Common diff d: <input id="ap-d" type="number" value="3" style="width:70px"></label>
+      <label>n: <input id="ap-n" type="number" value="10" style="width:60px"></label>
+      <button class="go-btn" onclick="calcAP()">Calculate</button>
+    </div>
+    <div id="ap-result" class="result-box">Enter values and click Calculate.</div>
+    <div id="ap-terms" class="seq-display" style="margin-top:8px"></div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Geometric Progression</h3>
+    <div class="inp-row">
+      <label>First term a: <input id="gp-a" type="number" value="2" style="width:70px"></label>
+      <label>Common ratio r: <input id="gp-r" type="number" step="any" value="3" style="width:70px"></label>
+      <label>n: <input id="gp-n" type="number" value="6" style="width:60px"></label>
+      <button class="go-btn" onclick="calcGP()">Calculate</button>
+    </div>
+    <div id="gp-result" class="result-box">Enter values and click Calculate.</div>
+    <div id="gp-terms" class="seq-display" style="margin-top:8px"></div>
+  </div>
+</div>
+
+<!-- S7 Real-life applications -->
+<div class="slide" id="s7">
+  <h2>Real-Life Applications</h2>
+  <div class="worked">
+    <strong>AP Application:</strong> A worker earns Ksh 8 000 in the first month and gets a Ksh 500 raise each month.<br>
+    <div class="step">a = 8000, d = 500</div>
+    <div class="step">Salary in month 12: T₁₂ = 8000 + 11×500 = <strong>Ksh 13 500</strong></div>
+    <div class="step">Total earnings over 12 months: S₁₂ = 12/2 × (8000+13500) = 6 × 21500 = <strong>Ksh 129 000</strong></div>
+  </div>
+  <div class="worked">
+    <strong>GP Application:</strong> A bacterial culture doubles every hour. Start: 500 bacteria.<br>
+    <div class="step">a = 500, r = 2</div>
+    <div class="step">After 8 hours: T₉ = 500 × 2⁸ = 500 × 256 = <strong>128 000</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Compound Interest as GP:</strong> Ksh P at r% p.a. → amounts form a GP with ratio (1 + r/100)
+  </div>
+</div>
+
+<!-- S8 Summary -->
+<div class="slide" id="s8">
+  <h2>Summary — All Formulae</h2>
+  <div class="formula-box">
+    <div><strong>AP</strong></div>
+    <div class="math">Tₙ = a + (n−1)d</div>
+    <div style="margin-top:6px">Sₙ = n/2[2a + (n−1)d] = n/2(a+l)</div>
+  </div>
+  <div class="formula-box">
+    <div><strong>GP</strong></div>
+    <div class="math">Tₙ = arⁿ⁻¹</div>
+    <div style="margin-top:6px">Sₙ = a(rⁿ−1)/(r−1) for r &gt; 1 &nbsp;|&nbsp; a(1−rⁿ)/(1−r) for r &lt; 1</div>
+  </div>
+  <div class="card">
+    <strong>Key steps for any sequence problem:</strong>
+    <ol style="line-height:2;padding-left:18px;margin-top:8px">
+      <li>Identify if AP (constant difference) or GP (constant ratio)</li>
+      <li>Find a, d (AP) or a, r (GP) from given terms</li>
+      <li>Apply appropriate nth term or sum formula</li>
+      <li>For "find n" problems, set up equation and solve</li>
+    </ol>
+  </div>
+</div>
+
+<!-- S9 Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><h3>Section A: AP</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>AP: 4, 9, 14, 19, … Find T₂₀ and S₁₅</li>
+      <li>The 5th term of an AP is 23 and the 10th term is 43. Find a and d.</li>
+    </ol>
+  </div>
+  <div class="card"><h3>Section B: GP</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>GP: 3, 6, 12, … Find T₇ and S₆</li>
+      <li>The 2nd term of a GP is 6 and the 4th term is 54. Find a and r.</li>
+    </ol>
+  </div>
+  <div class="card"><h3>Section C: Applications</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>A pump removes water: 200 litres first hour, 180 next, 160 next (AP). Find when total exceeds 1000 litres.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- S10 Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz — Sequences and Series</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. In AP 3, 7, 11, …, the common difference d = <input class="fib" data-ans="4" id="f1" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">2. nth term of AP: Tₙ = a + (n − <input class="fib" data-ans="1" id="f2" type="text">)d</div></div>
+    <div class="fib-q"><div class="qtext">3. In GP 2, 6, 18, …, the common ratio r = <input class="fib" data-ans="3" id="f3" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">4. nth term of GP: Tₙ = a × r <sup>(<input class="fib" data-ans="n-1" id="f4" type="text" style="width:70px">)</sup></div></div>
+    <div class="fib-q"><div class="qtext">5. If a, b, c are in AP then 2b = a <input class="fib" data-ans="+" id="f5" type="text" style="width:50px"> c</div></div>
+    <div class="fib-q"><div class="qtext">6. Sum formula for AP: Sₙ = n/2 × (2a + (n−1) × <input class="fib" data-ans="d" id="f6" type="text" style="width:50px">)</div></div>
+
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. AP: 7, 12, 17, 22, … Find T₁₂ and S₁₀.</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. GP: 4, 8, 16, … Find T₈ and S₆.</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. The 3rd term of an AP is 15 and the 7th term is 31. Find a, d, and the sum of the first 20 terms.</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+
+    <button id="quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+function genSeq(){
+  const a=parseFloat(document.getElementById('seq-a').value)||1;
+  const d=parseFloat(document.getElementById('seq-d').value)||0;
+  const r=parseFloat(document.getElementById('seq-r').value)||1;
+  const disp=document.getElementById('seq-display');disp.innerHTML='';
+  let curr=a;
+  for(let i=1;i<=10;i++){
+    const sp=document.createElement('span');
+    sp.className='seq-term'+(i===10?' highlight':'');
+    sp.textContent='T'+i+'='+curr.toFixed(curr%1===0?0:3);
+    disp.appendChild(sp);
+    if(r!==1)curr*=r;else curr+=d;
+  }
+}
+
+function calcAP(){
+  const a=parseFloat(document.getElementById('ap-a').value)||0;
+  const d=parseFloat(document.getElementById('ap-d').value)||0;
+  const n=parseInt(document.getElementById('ap-n').value)||1;
+  const tn=a+(n-1)*d;
+  const sn=n/2*(2*a+(n-1)*d);
+  document.getElementById('ap-result').innerHTML=`T${n} = ${a} + (${n}−1)×${d} = <strong>${tn}</strong><br>S${n} = ${n}/2 × [2×${a} + (${n}−1)×${d}] = <strong>${sn}</strong>`;
+  const td=document.getElementById('ap-terms');td.innerHTML='';
+  for(let i=1;i<=n&&i<=15;i++){
+    const sp=document.createElement('span');sp.className='seq-term'+(i===n?' highlight':'');
+    sp.textContent='T'+i+'='+(a+(i-1)*d);td.appendChild(sp);
+  }
+}
+
+function calcGP(){
+  const a=parseFloat(document.getElementById('gp-a').value)||1;
+  const r=parseFloat(document.getElementById('gp-r').value)||1;
+  const n=parseInt(document.getElementById('gp-n').value)||1;
+  const tn=a*Math.pow(r,n-1);
+  const sn=r===1?a*n:a*(Math.pow(r,n)-1)/(r-1);
+  document.getElementById('gp-result').innerHTML=`T${n} = ${a} × ${r}^${n-1} = <strong>${tn.toFixed(4)}</strong><br>S${n} = <strong>${sn.toFixed(4)}</strong>`;
+  const td=document.getElementById('gp-terms');td.innerHTML='';
+  for(let i=1;i<=n&&i<=12;i++){
+    const sp=document.createElement('span');sp.className='seq-term'+(i===n?' highlight':'');
+    sp.textContent='T'+i+'='+(a*Math.pow(r,i-1)).toFixed(2);td.appendChild(sp);
+  }
+}
+
+function submitQuiz(){
+  const ans={f1:'4',f2:'1',f3:'3',f4:'n-1',f5:'+',f6:'d'};
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const given=inp.value.trim().toLowerCase().replace(/\s/g,'');
+    const exp=(ans[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(given===exp){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  const sa=[
+    {id:'sa1',fb:'fb1',marks:2,keys:['62','T12=62','S10=235','235','12th','sum'],model:'T₁₂=7+11×5=62; S₁₀=10/2×(14+9×5)=5×59=295'},
+    {id:'sa2',fb:'fb2',marks:2,keys:['512','T8=512','S6=252','252','r=2'],model:'T₈=4×2⁷=4×128=512; S₆=4(2⁶−1)/(2−1)=4×63=252'},
+    {id:'sa3',fb:'fb3',marks:2,keys:['a=9','d=4','d=4','S20=1180','1180','a=9'],model:'T₃=a+2d=15,T₇=a+6d=31→4d=16→d=4,a=7; S₂₀=20/2×(14+19×4)=10×90=900 ... check: a=7 not 9'},
+  ];
+  let ptB=0;
+  sa.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase().replace(/\s/g,'');
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase().replace(/\s/g,'')))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,max=12,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review needed'}</div>
+  <div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th><th>Descriptor</th></tr><tr><td>EE</td><td>11–12</td><td>Exceeds</td></tr><tr><td>ME</td><td>8–10</td><td>Meets</td></tr><tr><td>AE</td><td>6–7</td><td>Approaches</td></tr><tr><td>BE</td><td>0–5</td><td>Below</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+</script>
+</body>
+</html>

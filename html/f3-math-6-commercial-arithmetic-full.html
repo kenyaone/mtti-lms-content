@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Commercial Arithmetic (II)</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input,.inp-row select{padding:8px 12px;border:2px solid #ccc;border-radius:6px;font-size:1rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.go-btn:hover{background:#0d7a36}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 12px;width:120px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>💰 F3 Mathematics · Commercial Arithmetic (II)</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Calculate simple interest using I = PRT/100</li>
+    <li>Calculate compound interest and amount using A = P(1 + R/100)ⁿ</li>
+    <li>Solve problems on appreciation and depreciation</li>
+    <li>Calculate hire purchase cost and compare with cash price</li>
+    <li>Compute income tax using tax bands and PAYE</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Principal (P)</span><span class="key-term">Rate (R)</span><span class="key-term">Time (T)</span>
+    <span class="key-term">Simple Interest</span><span class="key-term">Compound Interest</span>
+    <span class="key-term">Appreciation</span><span class="key-term">Depreciation</span>
+    <span class="key-term">Hire Purchase</span><span class="key-term">Income Tax</span>
+  </div>
+</div>
+
+<!-- S2 Simple Interest -->
+<div class="slide" id="s2">
+  <h2>Simple Interest</h2>
+  <p>Simple interest is calculated only on the original principal — it is constant each period.</p>
+  <div class="formula-box">
+    <div><strong>I = PRT / 100</strong> &nbsp;&nbsp; <strong>A = P + I</strong></div>
+    <div class="math">P = Principal &nbsp;|&nbsp; R = Rate (%) p.a. &nbsp;|&nbsp; T = Time (years)</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Find SI on Ksh 15 000 at 8% p.a. for 3 years.<br>
+    <div class="step">I = (15000 × 8 × 3) / 100 = <strong>Ksh 3 600</strong></div>
+    <div class="step">A = 15000 + 3600 = <strong>Ksh 18 600</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Find rate:</strong> Ksh 5 000 earns Ksh 900 SI in 3 years.<br>
+    <div class="step">R = (I × 100) / (P × T) = (900 × 100) / (5000 × 3) = <strong>6% p.a.</strong></div>
+  </div>
+  <table>
+    <tr><th>Find</th><th>Formula</th></tr>
+    <tr><td>Interest I</td><td>PRT / 100</td></tr>
+    <tr><td>Principal P</td><td>100I / (RT)</td></tr>
+    <tr><td>Rate R</td><td>100I / (PT)</td></tr>
+    <tr><td>Time T</td><td>100I / (PR)</td></tr>
+  </table>
+</div>
+
+<!-- S3 Compound Interest -->
+<div class="slide" id="s3">
+  <h2>Compound Interest</h2>
+  <p>Compound interest is calculated on the <strong>accumulated amount</strong> each period — interest earns interest.</p>
+  <div class="formula-box">
+    <div><strong>A = P(1 + R/100)ⁿ</strong></div>
+    <div class="math">CI = A − P</div>
+    <div style="font-size:.88rem;margin-top:4px">n = number of compounding periods</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> Ksh 20 000 at 10% p.a. compound interest for 3 years.<br>
+    <div class="step">A = 20000 × (1.10)³ = 20000 × 1.331 = <strong>Ksh 26 620</strong></div>
+    <div class="step">CI = 26620 − 20000 = <strong>Ksh 6 620</strong></div>
+    <div class="step">Compare: SI = 20000 × 10 × 3 / 100 = Ksh 6 000 (less!)</div>
+  </div>
+  <div class="worked">
+    <strong>Half-yearly compounding:</strong> Rate = 10% p.a. → 5% per half year; n = 2t<br>
+    <div class="step">A = P(1 + 5/100)²ᵗ</div>
+  </div>
+  <table>
+    <tr><th>Period</th><th>Rate per period</th><th>n (for 1 year)</th></tr>
+    <tr><td>Annually</td><td>R%</td><td>1</td></tr>
+    <tr><td>Half-yearly</td><td>R/2 %</td><td>2</td></tr>
+    <tr><td>Quarterly</td><td>R/4 %</td><td>4</td></tr>
+    <tr><td>Monthly</td><td>R/12 %</td><td>12</td></tr>
+  </table>
+</div>
+
+<!-- S4 Appreciation & Depreciation -->
+<div class="slide" id="s4">
+  <h2>Appreciation and Depreciation</h2>
+  <div class="card" style="background:#e8f5e9">
+    <strong>Appreciation</strong> — value <em>increases</em> over time (e.g. land, antiques)<br>
+    <div style="margin-top:8px"><strong>New Value = P(1 + R/100)ⁿ</strong></div>
+  </div>
+  <div class="card" style="background:#ffebee">
+    <strong>Depreciation</strong> — value <em>decreases</em> over time (e.g. cars, machinery)<br>
+    <div style="margin-top:8px"><strong>New Value = P(1 − R/100)ⁿ</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Appreciation:</strong> Land worth Ksh 500 000 appreciates at 12% p.a. Value after 4 years:<br>
+    <div class="step">V = 500000 × (1.12)⁴ = 500000 × 1.5735 = <strong>Ksh 786 764</strong></div>
+  </div>
+  <div class="worked">
+    <strong>Depreciation:</strong> Car bought at Ksh 800 000 depreciates at 15% p.a. Value after 3 years:<br>
+    <div class="step">V = 800000 × (0.85)³ = 800000 × 0.6141 = <strong>Ksh 491 300</strong></div>
+  </div>
+</div>
+
+<!-- S5 Hire Purchase -->
+<div class="slide" id="s5">
+  <h2>Hire Purchase</h2>
+  <p>Hire Purchase (HP) allows buying goods by paying a <strong>deposit</strong> then <strong>monthly instalments</strong>. HP always costs more than cash price.</p>
+  <div class="formula-box">
+    <div class="math">HP Cost = Deposit + (Monthly Instalment × No. of Months)</div>
+    <div style="margin-top:6px">Extra Cost = HP Cost − Cash Price</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> A TV costs Ksh 24 000 cash. On HP: deposit Ksh 4 000 + 12 monthly instalments of Ksh 2 200.<br>
+    <div class="step">HP Cost = 4000 + (12 × 2200) = 4000 + 26400 = <strong>Ksh 30 400</strong></div>
+    <div class="step">Extra cost = 30400 − 24000 = <strong>Ksh 6 400</strong></div>
+    <div class="step">% Extra = (6400/24000) × 100 = <strong>26.7%</strong></div>
+  </div>
+</div>
+
+<!-- S6 Income Tax -->
+<div class="slide" id="s6">
+  <h2>Income Tax (PAYE)</h2>
+  <p>Income tax is charged on taxable income using <strong>tax bands</strong>. PAYE = Pay As You Earn.</p>
+  <table>
+    <tr><th>Taxable Income (Ksh p.m.)</th><th>Tax Rate</th></tr>
+    <tr><td>1 – 12 298</td><td>10%</td></tr>
+    <tr><td>12 299 – 23 885</td><td>25%</td></tr>
+    <tr><td>23 886 – 35 472</td><td>30%</td></tr>
+    <tr><td>35 473 – 47 059</td><td>35%</td></tr>
+    <tr><td>Over 47 059</td><td>40%</td></tr>
+  </table>
+  <div class="worked">
+    <strong>Example:</strong> Monthly gross income = Ksh 30 000. Relief = Ksh 1 056.<br>
+    <div class="step">Band 1: 12298 × 10% = 1 229.80</div>
+    <div class="step">Band 2: (23885−12298) × 25% = 11587 × 25% = 2 896.75</div>
+    <div class="step">Band 3: (30000−23885) × 30% = 6115 × 30% = 1 834.50</div>
+    <div class="step">Gross tax = 1229.80 + 2896.75 + 1834.50 = 5 961.05</div>
+    <div class="step">PAYE = 5961.05 − 1056 = <strong>Ksh 4 905.05</strong></div>
+  </div>
+</div>
+
+<!-- S7 Interest Calculator Tool -->
+<div class="slide" id="s7">
+  <h2>Interest Calculator</h2>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Simple vs Compound Interest</h3>
+    <div class="inp-row">
+      <label>Principal (Ksh):<input id="ip" type="number" value="10000" style="width:110px"></label>
+      <label>Rate (% p.a.):<input id="ir" type="number" value="12" style="width:80px"></label>
+      <label>Years:<input id="it" type="number" value="3" style="width:70px"></label>
+      <button class="go-btn" onclick="calcInterest()">Calculate</button>
+    </div>
+    <div id="int-result" class="result-box">Enter values and click Calculate.</div>
+  </div>
+  <div class="tool-wrap">
+    <h3 style="margin-bottom:10px">Depreciation / Appreciation</h3>
+    <div class="inp-row">
+      <label>Initial Value:<input id="dv" type="number" value="500000" style="width:110px"></label>
+      <label>Rate (%):<input id="dr" type="number" value="15" style="width:80px"></label>
+      <label>Years:<input id="dt" type="number" value="3" style="width:70px"></label>
+      <select id="dtype"><option value="dep">Depreciation</option><option value="app">Appreciation</option></select>
+      <button class="go-btn" onclick="calcDepApp()">Calculate</button>
+    </div>
+    <div id="dep-result" class="result-box">Enter values and click Calculate.</div>
+  </div>
+</div>
+
+<!-- S8 Summary -->
+<div class="slide" id="s8">
+  <h2>Summary — Key Formulae</h2>
+  <table>
+    <tr><th>Topic</th><th>Formula</th></tr>
+    <tr><td>Simple Interest</td><td>I = PRT/100; A = P + I</td></tr>
+    <tr><td>Compound Amount</td><td>A = P(1 + R/100)ⁿ</td></tr>
+    <tr><td>Appreciation</td><td>V = P(1 + R/100)ⁿ</td></tr>
+    <tr><td>Depreciation</td><td>V = P(1 − R/100)ⁿ</td></tr>
+    <tr><td>HP Cost</td><td>Deposit + (instalment × months)</td></tr>
+    <tr><td>Income Tax</td><td>Apply tax bands, then subtract relief</td></tr>
+  </table>
+  <div class="card" style="background:#e8f5e9;margin-top:12px">
+    <strong>Key Comparisons:</strong>
+    <ul style="line-height:2;padding-left:18px;margin-top:6px">
+      <li>CI &gt; SI for same P, R, T (when T &gt; 1)</li>
+      <li>HP cost &gt; Cash price always</li>
+      <li>Depreciation: car/machine value falls exponentially</li>
+      <li>To find number of years: use logarithms with CI formula</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S9 Practice -->
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><h3>Section A: Simple & Compound Interest</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>Find SI on Ksh 8 000 at 9% p.a. for 2½ years. Find Amount.</li>
+      <li>Find CI on Ksh 12 000 at 10% p.a. for 3 years. Compare with SI.</li>
+      <li>In how many years will Ksh 5 000 double at 15% p.a. simple interest?</li>
+    </ol>
+  </div>
+  <div class="card"><h3>Section B: Appreciation & Hire Purchase</h3>
+    <ol style="line-height:2.2;padding-left:20px">
+      <li>A motorbike bought at Ksh 120 000 depreciates at 20% p.a. Find value after 4 years.</li>
+      <li>A fridge costs Ksh 18 000 cash. HP: Ksh 3 000 deposit + 18 months at Ksh 1 050. Find the extra cost and % extra.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- S10 Quiz -->
+<div class="slide" id="s10">
+  <h2>Quiz — Commercial Arithmetic (II)</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. SI formula: I = P × R × T / <input class="fib" data-ans="100" id="f1" type="text" style="width:70px"></div></div>
+    <div class="fib-q"><div class="qtext">2. SI on Ksh 4 000 at 5% for 2 years = Ksh <input class="fib" data-ans="400" id="f2" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">3. CI formula: A = P(1 + R/100)<sup><input class="fib" data-ans="n" id="f3" type="text" style="width:50px"></sup></div></div>
+    <div class="fib-q"><div class="qtext">4. Ksh 10 000 at 10% p.a. CI for 2 years: A = Ksh <input class="fib" data-ans="12100" id="f4" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">5. Depreciation means value <input class="fib" data-ans="decreases" id="f5" type="text" style="width:130px"></div></div>
+    <div class="fib-q"><div class="qtext">6. HP cost is always <input class="fib" data-ans="greater" id="f6" type="text" style="width:100px"> than cash price</div></div>
+
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">7. Find the compound interest on Ksh 15 000 at 8% p.a. for 3 years. Show working.</div>
+      <textarea id="sa1" placeholder="Write working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. A car bought at Ksh 900 000 depreciates at 18% p.a. Find its value after 2 years.</div>
+      <textarea id="sa2" placeholder="Write working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">9. A sofa costs Ksh 30 000 cash. On HP: Ksh 5 000 deposit + 24 monthly instalments of Ksh 1 200. Find the total HP cost and extra cost.</div>
+      <textarea id="sa3" placeholder="Write working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+
+    <button id="quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+function calcInterest(){
+  const P=parseFloat(document.getElementById('ip').value)||0;
+  const R=parseFloat(document.getElementById('ir').value)||0;
+  const T=parseFloat(document.getElementById('it').value)||0;
+  const SI=P*R*T/100;
+  const A_SI=P+SI;
+  const A_CI=P*Math.pow(1+R/100,T);
+  const CI=A_CI-P;
+  document.getElementById('int-result').innerHTML=
+    `<strong>Simple Interest:</strong> I = ${P} × ${R} × ${T} / 100 = <strong>Ksh ${SI.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong>; Amount = <strong>Ksh ${A_SI.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong><br>
+    <strong>Compound Interest:</strong> A = ${P}(1+${R}/100)^${T} = <strong>Ksh ${A_CI.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong>; CI = <strong>Ksh ${CI.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong><br>
+    Extra earned by CI over SI: <strong>Ksh ${(CI-SI).toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong>`;
+}
+
+function calcDepApp(){
+  const V=parseFloat(document.getElementById('dv').value)||0;
+  const R=parseFloat(document.getElementById('dr').value)||0;
+  const T=parseFloat(document.getElementById('dt').value)||0;
+  const type=document.getElementById('dtype').value;
+  const factor=type==='dep'?Math.pow(1-R/100,T):Math.pow(1+R/100,T);
+  const newVal=V*factor;
+  const change=Math.abs(newVal-V);
+  document.getElementById('dep-result').innerHTML=
+    `${type==='dep'?'Depreciation':'Appreciation'}: V = ${V.toLocaleString()} × (${type==='dep'?'1−':'1+'}${R}/100)^${T}<br>
+    New value = <strong>Ksh ${newVal.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong><br>
+    ${type==='dep'?'Loss':'Gain'} = <strong>Ksh ${change.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong>`;
+}
+
+function submitQuiz(){
+  const ans={f1:'100',f2:'400',f3:'n',f4:'12100',f5:'decreases',f6:'greater'};
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const given=inp.value.trim().toLowerCase().replace(/\s/g,'');
+    const exp=(ans[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(given===exp){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  const sa=[
+    {id:'sa1',fb:'fb1',marks:2,keys:['18895','18,895','3888','3,888','1.08','1.259712'],model:'A=15000×(1.08)³=15000×1.259712=18895.68; CI=Ksh 3895.68'},
+    {id:'sa2',fb:'fb2',marks:2,keys:['606060','606,060','0.82','0.6724'],model:'V=900000×(0.82)²=900000×0.6724=Ksh 605,160'},
+    {id:'sa3',fb:'fb3',marks:2,keys:['33800','33,800','28800','3800','extra'],model:'HP=5000+(24×1200)=5000+28800=33800; Extra=33800−30000=Ksh 3800'},
+  ];
+  let ptB=0;
+  sa.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase().replace(/,/g,'');
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase().replace(/,/g,'')))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,max=12,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review needed'}</div>
+  <div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th><th>Descriptor</th></tr><tr><td>EE</td><td>11–12</td><td>Exceeds</td></tr><tr><td>ME</td><td>8–10</td><td>Meets</td></tr><tr><td>AE</td><td>6–7</td><td>Approaches</td></tr><tr><td>BE</td><td>0–5</td><td>Below</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+</script>
+</body>
+</html>

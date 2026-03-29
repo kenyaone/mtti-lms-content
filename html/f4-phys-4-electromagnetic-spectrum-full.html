@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Electromagnetic Spectrum</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}
+#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.5px;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;line-height:1.3;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-hint{font-size:.78rem;color:var(--muted);margin-top:4px;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h2>⚡ F4 Physics &mdash; Ch.4: Electromagnetic Spectrum</h2>
+  <span class="meta">MTTI LMS | Form 4</span>
+</div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<div class="slide active" id="s1"><span class="slide-label">SLIDE 1 OF 10</span><h1>📚 Learning Outcomes</h1><div class="card"><ol><li>Define electromagnetic spectrum and list its seven regions</li><li>State common properties of all EM waves</li><li>Describe unique properties of each region</li><li>State applications of each type of EM radiation</li><li>Apply the wave equation v = fλ to EM waves</li></ol></div><div class="highlight">🔑 All EM waves travel at c = 3×10⁸ m/s in vacuum | v = fλ</div></div>
+<div class="slide" id="s2"><span class="slide-label">SLIDE 2 OF 10</span><h1>🌈 The Electromagnetic Spectrum</h1><div class="card"><p>A <strong>continuum of all EM waves</strong> arranged by frequency and wavelength. Produced when electrically charged particles oscillate or change energy. Travel perpendicularly to both electric and magnetic fields.</p><table><tr><th>Region</th><th>Frequency (Hz)</th><th>Wavelength (m)</th></tr><tr><td>Radio waves</td><td>10⁴–10⁹</td><td>10⁴–10⁻¹</td></tr><tr><td>Microwaves</td><td>10⁹–10¹²</td><td>10⁻¹–10⁻³</td></tr><tr><td>Infrared</td><td>10¹²–10¹⁴</td><td>10⁻³–10⁻⁶</td></tr><tr><td>Visible light</td><td>4–7×10¹⁴</td><td>700–400 nm</td></tr><tr><td>Ultraviolet</td><td>10¹⁵–10¹⁶</td><td>10⁻⁷–10⁻⁸</td></tr><tr><td>X-rays</td><td>10¹⁶–10¹⁹</td><td>10⁻⁸–10⁻¹¹</td></tr><tr><td>Gamma rays</td><td>&gt;10¹⁸</td><td>&lt;10⁻¹⁰</td></tr></table></div></div>
+<div class="slide" id="s3"><span class="slide-label">SLIDE 3 OF 10</span><h1>📡 Common Properties of EM Waves</h1><div class="card"><ul><li>Do <strong>not</strong> require a medium — travel through vacuum</li><li>Undergo <strong>reflection, refraction and diffraction</strong></li><li>All travel at <strong>c = 3×10⁸ m/s</strong> in vacuum</li><li>Carry <strong>no electric charge</strong></li><li>Transfer energy as oscillating electric and magnetic fields</li><li>Obey the wave equation: <strong>v = fλ</strong></li></ul></div><div class="card"><h2>Examples</h2><p>VHF radio at 30 MHz: λ = v/f = 3×10⁸/30×10⁶ = <strong>10 m</strong></p><p>Radio wave at λ=150 m: f = v/λ = 3×10⁸/150 = <strong>2 MHz</strong></p></div></div>
+<div class="slide" id="s4"><span class="slide-label">SLIDE 4 OF 10</span><h1>📻 Radio & Microwaves</h1><div class="card"><h2>Radio Waves</h2><p>Subdivided into LW, MW, SW. Produced by <strong>oscillators</strong>. Easily diffracted by small objects (houses) but not large ones (hills). Used in radio, TV, military communications.</p><h2>Microwaves</h2><p>Produced by oscillating charges in dish aerials. Detected by RADAR (Radio Detection and Ranging). Used in: radar, speed guns, microwave ovens, telephone and data communication.</p></div></div>
+<div class="slide" id="s5"><span class="slide-label">SLIDE 5 OF 10</span><h1>🔥 Infrared, Visible & UV</h1><div class="card"><h2>Infrared (IR)</h2><p>Close to microwaves = thermal (heat from sun, fire). Close to visible = no thermal (TV remote). Detected by skin, photographic film. Used in: satellite vegetation imaging, hospitals, burglar alarms, green houses.</p><h2>Visible Light (ROYGBIV)</h2><p>Tiny part of spectrum. Wavelengths visible to human eye. Used in photosynthesis, remote sensing, identification.</p><h2>Ultraviolet (UV)</h2><p>Emitted by hot objects (sun, welding). Can cause skin cancer and cataracts. Used in: detecting fake currency, making reflective materials.</p></div></div>
+<div class="slide" id="s6"><span class="slide-label">SLIDE 6 OF 10</span><h1>☢️ X-rays & Gamma Rays</h1><div class="card"><h2>X-rays</h2><p>Very short wavelength, high energy. Produced in X-ray tubes (high-speed electrons stopped by metal). Detected by photographic film or fluorescent screen.</p><p><strong>Uses:</strong> fractures, cancer radiotherapy, detecting cracks in metal, airport security.</p><h2>Gamma Rays</h2><p>Produced by radioactive materials (large energy changes in nuclei). Detected by photographic film, Geiger-Müller tube, cloud chamber.</p><p><strong>Uses:</strong> sterilise instruments, kill weevils in grain, treat cancer, X-ray-like photography.</p></div></div>
+<div class="slide" id="s7"><span class="slide-label">SLIDE 7 OF 10</span><h1>📊 Applications Summary</h1><div class="card"><table><tr><th>Wave type</th><th>Key applications</th></tr><tr><td>Radio</td><td>Radio, TV, cellular, military (satellite imagery)</td></tr><tr><td>Microwave</td><td>Radar, speed guns, ovens, phone data</td></tr><tr><td>Infrared</td><td>Satellite imaging, hospital diagnosis, burglar alarms</td></tr><tr><td>Visible</td><td>Photosynthesis, vision, remote sensing</td></tr><tr><td>UV</td><td>Fake currency detection, reflective materials</td></tr><tr><td>X-ray</td><td>Medical imaging, radiotherapy, security</td></tr><tr><td>Gamma</td><td>Sterilization, grain preservation, cancer treatment</td></tr></table></div></div>
+<div class="slide" id="s8"><span class="slide-label">SLIDE 8 OF 10</span><h1>✏️ Worked Examples</h1><div class="card"><h2>Example 1</h2><p>Calculate the wavelength of a 900 MHz microwave.</p><p>λ = c/f = 3×10⁸ / 900×10⁶ = <strong>0.333 m = 33.3 cm</strong></p></div><div class="card"><h2>Example 2</h2><p>An EM wave has wavelength 6×10⁻⁷ m. What colour is it and what is its frequency?</p><p>f = c/λ = 3×10⁸/6×10⁻⁷ = <strong>5×10¹⁴ Hz — visible green/yellow light</strong></p></div><div class="card"><h2>Example 3</h2><p>A gamma ray has energy E = hf where h = 6.63×10⁻³⁴ Js and f = 3×10²⁰ Hz. Find E.</p><p>E = 6.63×10⁻³⁴ × 3×10²⁰ = <strong>1.99×10⁻¹³ J</strong></p></div></div>
+<div class="slide" id="s9"><span class="slide-label">SLIDE 9 OF 10</span><h1>🧪 Practice Problems</h1><div class="card"><h3>P1. Find the wavelength of a radio wave of frequency 600 kHz.</h3><div class="highlight">λ = 3×10⁸/600×10³ = <strong>500 m</strong></div></div><div class="card"><h3>P2. State the EM wave with: (a) longest wavelength (b) highest energy per photon.</h3><div class="highlight">(a) Radio waves | (b) Gamma rays</div></div><div class="card"><h3>P3. Why are X-rays dangerous to living cells?</h3><div class="highlight">High energy — can ionize atoms in cells, damaging DNA and causing mutations or cancer.</div></div></div>
+<div class="slide" id="s10"><span class="slide-label">SLIDE 10 OF 10</span><h1>📝 Quiz — Electromagnetic Spectrum</h1><div class="quiz-wrap"><h2>Fill in the Blanks (8 marks)</h2>
+<div class="q-block"><div class="q-text"><span>Q1.</span> All EM waves travel at __________ m/s in vacuum. (1 mk)</div><input type="text" id="q1" placeholder="value"><div class="q-fb" id="q1f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q2.</span> The EM wave with the longest wavelength is __________ waves. (1 mk)</div><input type="text" id="q2" placeholder="type"><div class="q-fb" id="q2f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q3.</span> The wave equation for EM waves is v = f × __________. (1 mk)</div><input type="text" id="q3" placeholder="symbol"><div class="q-fb" id="q3f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q4.</span> Microwaves in RADAR stands for Radio Detection and __________. (1 mk)</div><input type="text" id="q4" placeholder="word"><div class="q-fb" id="q4f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q5.</span> UV exposure can cause skin __________ and cataracts. (1 mk)</div><input type="text" id="q5" placeholder="word"><div class="q-fb" id="q5f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q6.</span> Gamma rays are detected using a Geiger-Müller tube or __________ chamber. (1 mk)</div><input type="text" id="q6" placeholder="word"><div class="q-fb" id="q6f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q7.</span> Radio wave λ=300 m. Its frequency = __________ MHz. (1 mk)</div><input type="text" id="q7" placeholder="number"><div class="q-fb" id="q7f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q8.</span> Visible light colours in order from longest to shortest wavelength: R O Y G B I __________. (1 mk)</div><input type="text" id="q8" placeholder="letter"><div class="q-fb" id="q8f"></div></div>
+<h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+<div class="q-block q-sa"><div class="q-text"><span>Q9.</span> State FOUR common properties shared by all electromagnetic waves. (4 mks)</div><textarea id="q9" placeholder="1... 2... 3... 4..."></textarea><div class="q-fb" id="q9f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q10.</span> Distinguish between hard X-rays and soft X-rays. (2 mks)</div><textarea id="q10" placeholder="Your answer..."></textarea><div class="q-fb" id="q10f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q11.</span> Give ONE reason why infrared radiation is used in TV remote controls. (1 mk)</div><textarea id="q11" placeholder="Your answer..."></textarea><div class="q-fb" id="q11f"></div></div>
+<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+<div class="score-box" id="scorebox"><h3 id="score-txt"></h3><p id="score-msg"></p></div></div></div>
+<div id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>&#8592; Prev</button>
+  <span id="slide-counter">1 / 10</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next &#8594;</button>
+</div>
+<script>
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+
+const ans={"q1":{kw:["3×10","3x10","3e8","3.0×10"],pts:1},"q2":{kw:["radio"],pts:1},"q3":{kw:["λ","lambda","wavelength"],pts:1},"q4":{kw:["ranging","raging"],pts:1},"q5":{kw:["cancer"],pts:1},"q6":{kw:["cloud"],pts:1},"q7":{kw:["1","1.0"],pts:1},"q8":{kw:["v","violet"],pts:1}};
+let score=0;
+function submitQuiz(){
+  score=0;
+  Object.keys(ans).forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el||el.tagName==='TEXTAREA') return;
+    const val=el.value.trim().toLowerCase();
+    const correct=ans[id].kw.some(k=>val.includes(k));
+    const fb=document.getElementById(id+'f');
+    if(fb){if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}}
+  });
+  // SA questions
+  const sas=document.querySelectorAll('.q-sa textarea');
+  sas.forEach(el=>{if(el.value.trim().length>30)score+=Math.min(3,Math.ceil(el.value.trim().length/50));});
+  score=Math.min(score,15);
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');if(sb){sb.style.display='block';}
+  const st=document.getElementById('score-txt');if(st)st.textContent='Score: '+score+' / 15 ('+pct+'%)';
+  const sm=document.getElementById('score-msg');if(sm)sm.textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+
+</script>
+</body>
+</html>

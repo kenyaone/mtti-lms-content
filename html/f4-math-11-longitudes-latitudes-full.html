@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Math | Longitudes & Latitudes</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f8;--card:#fff;--txt:#1a1a1a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+#topbar .title{font-size:.95rem;font-weight:700;}
+#topbar .meta{font-size:.8rem;opacity:.85;}
+.slide{display:none;padding:16px;max-width:860px;margin:0 auto;}
+.slide.active{display:block;}
+.slide h2{color:var(--pri);font-size:1.2rem;margin-bottom:12px;border-left:4px solid var(--acc);padding-left:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 2px 6px rgba(0,0,0,.07);}
+.card h3{color:var(--pri);font-size:1rem;margin-bottom:8px;}
+.card p,.card li{font-size:.95rem;line-height:1.65;margin-bottom:6px;}
+.card ul{padding-left:18px;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--pri);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.9rem;}
+.formula{background:#fff8e1;border:1px solid var(--acc);border-radius:8px;padding:12px;margin:10px 0;font-size:.95rem;font-family:monospace;}
+.globe-viz{background:linear-gradient(135deg,#0d47a1,#1565c0);border-radius:12px;padding:20px;color:#fff;margin:10px 0;text-align:center;}
+.globe-viz svg{max-width:100%;}
+.example-box{background:#f3e5f5;border-radius:8px;padding:14px;margin:10px 0;}
+.example-box strong{color:#6a1b9a;}
+.nav-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;margin-top:10px;}
+.btn{padding:10px 22px;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;} .btn-pri:hover{opacity:.88;}
+.btn-acc{background:var(--acc);color:#fff;} .btn-acc:hover{opacity:.88;}
+.btn-gray{background:#ccc;color:#555;}
+.dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+#progress-bar{height:4px;background:#e0e0e0;} #progress-fill{height:4px;background:var(--acc);transition:width .3s;}
+.outcome-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.outcome-item .icon{font-size:1.2rem;}
+input[type=text]{border:2px solid #ddd;border-radius:6px;padding:8px 10px;font-size:.9rem;width:100%;margin-top:4px;}
+input[type=text]:focus{outline:none;border-color:var(--pri);}
+.q-block{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.q-block label{font-size:.9rem;color:#555;display:block;margin-bottom:4px;}
+.q-block strong{font-size:.95rem;}
+.feedback{margin-top:6px;font-size:.85rem;padding:6px 10px;border-radius:6px;}
+.feedback.ok{background:#e8f5e9;color:var(--ok);}
+.feedback.no{background:#ffebee;color:var(--no);}
+.found-tag{background:#c8e6c9;color:#1b5e20;padding:2px 7px;border-radius:10px;font-size:.8rem;margin:2px;}
+.miss-tag{background:#ffcdd2;color:#b71c1c;padding:2px 7px;border-radius:10px;font-size:.8rem;margin:2px;}
+#score-board{background:var(--pri);color:#fff;border-radius:14px;padding:24px;text-align:center;margin-top:16px;}
+#score-board h3{font-size:1.5rem;} #score-board p{font-size:1rem;opacity:.9;margin-top:6px;}
+.rubric{background:#f9f9f9;border:1px solid #e0e0e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric table{width:100%;border-collapse:collapse;}
+.rubric td,.rubric th{padding:6px 8px;border:1px solid #ddd;text-align:left;}
+.rubric th{background:#e8f5e9;color:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="title">📐 F4 Mathematics — Longitudes & Latitudes</div>
+  <div class="meta" id="slide-label">Slide 1 / 10</div>
+</div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div class="dots" id="dot-row"></div>
+
+<!-- S1: Learning Outcomes -->
+<div class="slide active" id="s1">
+  <h2>📌 Learning Outcomes</h2>
+  <div class="card">
+    <h3>By the end of this lesson, you will be able to:</h3>
+    <div class="outcome-item"><span class="icon">🌍</span><p>Define great circles and small circles in relation to the Earth</p></div>
+    <div class="outcome-item"><span class="icon">📏</span><p>Establish the relationship between radii of small and great circles</p></div>
+    <div class="outcome-item"><span class="icon">📍</span><p>Locate a place on the Earth's surface using latitude and longitude</p></div>
+    <div class="outcome-item"><span class="icon">📐</span><p>Calculate distance between two points in nautical miles and kilometres</p></div>
+    <div class="outcome-item"><span class="icon">⏰</span><p>Calculate time differences in relation to longitudes</p></div>
+    <div class="outcome-item"><span class="icon">🚢</span><p>Calculate speed in knots and kilometres per hour</p></div>
+  </div>
+  <div class="nav-row"><span></span><button class="btn btn-pri" onclick="go(2)">Start Lesson →</button></div>
+</div>
+
+<!-- S2: Great & Small Circles -->
+<div class="slide" id="s2">
+  <h2>🌐 Great Circles and Small Circles</h2>
+  <div class="card">
+    <h3>The Earth as a Sphere</h3>
+    <p>When you cut a 'slice' through a sphere, the cross-section is a circle. The type of circle depends on where the cut is made.</p>
+    <div class="highlight">
+      <strong>Great Circle:</strong> A slice through the <em>centre</em> of the Earth. Its radius equals the Earth's radius (≈ 6,371 km). It divides the Earth into two equal halves.<br><br>
+      <strong>Small Circle:</strong> Any slice NOT through the centre. Its radius is smaller than the Earth's radius.
+    </div>
+    <p>Examples of great circles: The Equator, all meridians of longitude.</p>
+    <p>Examples of small circles: All parallels of latitude (except the Equator).</p>
+  </div>
+  <div class="card">
+    <h3>Relationship Between Radii</h3>
+    <p>If R is the Earth's radius and a circle is at latitude θ:</p>
+    <div class="formula">r = R × cos θ</div>
+    <p>At the Equator (θ = 0°): r = R (great circle)<br>At θ = 60°N: r = R × cos60° = 0.5R (small circle)</p>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(1)">← Back</button><button class="btn btn-pri" onclick="go(3)">Next →</button></div>
+</div>
+
+<!-- S3: Latitude -->
+<div class="slide" id="s3">
+  <h2>📍 Latitude</h2>
+  <div class="card">
+    <h3>What is Latitude?</h3>
+    <p>Latitudes are imaginary lines running around the Earth, parallel to the Equator. Their planes are perpendicular to the Earth's axis.</p>
+    <div class="highlight">
+      The <strong>Equator</strong> is at 0° latitude — the only great circle among the latitudes. It divides the Earth into the Northern and Southern hemispheres.
+    </div>
+    <p>The angle of latitude is measured from the Equator at the centre O of the Earth:</p>
+    <ul>
+      <li>Range: 0° (Equator) to 90°N (North Pole) or 90°S (South Pole)</li>
+      <li>Written as: 30°N, 45°S, etc.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Kenyan Context 🇰🇪</h3>
+    <p>Nairobi is at approximately <strong>1.3°S</strong> latitude — just south of the Equator.<br>Eldoret is at approximately <strong>0.52°N</strong> — very close to the Equator!</p>
+    <div class="example-box">
+      <strong>Example:</strong> Which is further from the Equator — Mombasa (4°S) or Cairo (30°N)?<br>
+      <em>Cairo is further: 30° > 4°</em>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(2)">← Back</button><button class="btn btn-pri" onclick="go(4)">Next →</button></div>
+</div>
+
+<!-- S4: Longitude -->
+<div class="slide" id="s4">
+  <h2>🧭 Longitude (Meridians)</h2>
+  <div class="card">
+    <h3>What is Longitude?</h3>
+    <p>Longitudes (meridians) are imaginary semicircles running from the North Pole to the South Pole through the Earth.</p>
+    <div class="highlight">
+      The <strong>Prime Meridian (Greenwich Meridian)</strong> is at 0° longitude — it passes through Greenwich, London, England. All other meridians are measured East or West of this line.
+    </div>
+    <ul>
+      <li>Range: 0° to 180°E or 180°W</li>
+      <li>All meridians are half great circles</li>
+      <li>They meet at the North and South Poles</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Locating a Point on Earth</h3>
+    <p>Any point on Earth can be uniquely identified by its latitude and longitude:</p>
+    <div class="formula">Position = (Latitude, Longitude)<br>e.g. Nairobi = (1.3°S, 36.8°E)</div>
+    <div class="example-box">
+      <strong>Kenya's approximate location:</strong> Between 4°N–4°S latitude and 34°E–42°E longitude
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(3)">← Back</button><button class="btn btn-pri" onclick="go(5)">Next →</button></div>
+</div>
+
+<!-- S5: Distance Calculations -->
+<div class="slide" id="s5">
+  <h2>📏 Distance Calculations</h2>
+  <div class="card">
+    <h3>Distance Along a Great Circle (Longitude)</h3>
+    <p>1 nautical mile (nm) = the arc length of 1 minute of latitude on a great circle.</p>
+    <div class="formula">Distance (nm) = difference in degrees × 60<br>Distance (km) = distance (nm) × 1.852</div>
+    <div class="example-box">
+      <strong>Example:</strong> Find the distance between Nairobi (1°S, 37°E) and Cairo (30°N, 37°E) along their common meridian.<br>
+      Difference in latitude = 30° + 1° = 31°<br>
+      Distance = 31 × 60 = <strong>1,860 nm</strong> = 1,860 × 1.852 = <strong>3,444.7 km</strong>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Distance Along a Small Circle (Latitude)</h3>
+    <div class="formula">Distance (nm) = difference in longitude × 60 × cos θ<br>(where θ is the latitude)</div>
+    <div class="example-box">
+      <strong>Example:</strong> Two cities both at 60°N — A at 20°E and B at 50°E. Find distance.<br>
+      Difference in longitude = 50° – 20° = 30°<br>
+      r = R cos 60° = R × 0.5<br>
+      Distance = 30 × 60 × cos60° = 1800 × 0.5 = <strong>900 nm</strong>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(4)">← Back</button><button class="btn btn-pri" onclick="go(6)">Next →</button></div>
+</div>
+
+<!-- S6: Time & Longitude -->
+<div class="slide" id="s6">
+  <h2>⏰ Time and Longitude</h2>
+  <div class="card">
+    <h3>The Relationship</h3>
+    <p>The Earth rotates 360° in 24 hours. So it rotates:</p>
+    <div class="formula">360° ÷ 24 hours = 15° per hour<br>1° of longitude = 4 minutes of time</div>
+    <div class="highlight">
+      Places <strong>East</strong> of Greenwich are ahead in time. Places <strong>West</strong> are behind.
+    </div>
+  </div>
+  <div class="card">
+    <h3>Worked Examples</h3>
+    <div class="example-box">
+      <strong>Example 1:</strong> Nairobi is at 37°E. What is the local time when Greenwich time is 10:00 am?<br>
+      Time difference = 37 × 4 = 148 minutes = 2 hours 28 minutes<br>
+      Nairobi time = 10:00 + 2:28 = <strong>12:28 pm</strong>
+    </div>
+    <div class="example-box">
+      <strong>Example 2:</strong> New York is at 74°W. What is the local time when Nairobi (37°E) shows 3:00 pm?<br>
+      Total difference = 37° + 74° = 111° = 111 × 4 = 444 min = 7 hr 24 min<br>
+      New York = 3:00 pm – 7:24 = <strong>7:36 am</strong>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Speed in Knots</h3>
+    <div class="formula">1 knot = 1 nautical mile per hour<br>Speed (knots) = Distance (nm) ÷ Time (hours)</div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(5)">← Back</button><button class="btn btn-pri" onclick="go(7)">Next →</button></div>
+</div>
+
+<!-- S7: More Examples -->
+<div class="slide" id="s7">
+  <h2>🔢 More Worked Examples</h2>
+  <div class="card">
+    <h3>Example: Radius of a Latitude Circle</h3>
+    <div class="example-box">
+      Find the radius of the circle of latitude 50°N. (Earth's radius R = 6370 km)<br>
+      r = R × cos 50° = 6370 × 0.6428 = <strong>4,094.7 km</strong>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Example: Complete Navigation Problem</h3>
+    <div class="example-box">
+      A ship sails from A (45°N, 20°W) to B (45°N, 80°W) along the 45°N parallel.<br>
+      <strong>(a) Distance in nm:</strong><br>
+      Diff in longitude = 80° – 20° = 60°<br>
+      Distance = 60 × 60 × cos45° = 3600 × 0.7071 = <strong>2,545.6 nm</strong><br><br>
+      <strong>(b) Distance in km:</strong><br>
+      = 2545.6 × 1.852 = <strong>4,714.5 km</strong><br><br>
+      <strong>(c) If speed = 20 knots, time taken:</strong><br>
+      Time = 2545.6 ÷ 20 = <strong>127.3 hours ≈ 5 days 7.3 hrs</strong>
+    </div>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(6)">← Back</button><button class="btn btn-pri" onclick="go(8)">Next →</button></div>
+</div>
+
+<!-- S8: Summary -->
+<div class="slide" id="s8">
+  <h2>📋 Key Formulas Summary</h2>
+  <div class="card">
+    <div class="formula">
+      <strong>Radius of small circle:</strong> r = R cos θ<br><br>
+      <strong>Distance along meridian (great circle):</strong><br>
+      d = Δlat° × 60 nm<br><br>
+      <strong>Distance along parallel (small circle):</strong><br>
+      d = Δlong° × 60 × cos θ nm<br><br>
+      <strong>Time difference:</strong><br>
+      ΔT = Δlong° × 4 minutes<br><br>
+      <strong>Speed:</strong> Speed (knots) = Distance (nm) / Time (hours)<br><br>
+      <strong>nm to km:</strong> × 1.852
+    </div>
+  </div>
+  <div class="card">
+    <h3>Quick Reminders</h3>
+    <ul>
+      <li>East = ahead of Greenwich time</li>
+      <li>West = behind Greenwich time</li>
+      <li>Only the Equator is a great circle among latitudes</li>
+      <li>All meridians are great circles (half)</li>
+      <li>1 nautical mile = 1.852 km</li>
+    </ul>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(7)">← Back</button><button class="btn btn-pri" onclick="go(9)">Practice →</button></div>
+</div>
+
+<!-- S9: Practice -->
+<div class="slide" id="s9">
+  <h2>✏️ Practice Questions</h2>
+  <div class="card">
+    <div class="q-block">
+      <strong>1. What is the radius of the latitude circle at 30°N? (R = 6370 km)</strong>
+      <label>Your answer (km, 1 dp):</label>
+      <input type="text" id="p1" placeholder="e.g. 5513.2">
+      <div id="pf1"></div>
+    </div>
+    <div class="q-block">
+      <strong>2. How many nautical miles between A (10°N, 25°E) and B (40°N, 25°E)?</strong>
+      <label>Distance in nm:</label>
+      <input type="text" id="p2" placeholder="">
+      <div id="pf2"></div>
+    </div>
+    <div class="q-block">
+      <strong>3. Two cities are both at 60°N: P at 10°E and Q at 70°E. Find distance in nm.</strong>
+      <label>Distance in nm:</label>
+      <input type="text" id="p3" placeholder="">
+      <div id="pf3"></div>
+    </div>
+    <div class="q-block">
+      <strong>4. A city is at 45°E longitude. When GMT is 8:00 am, what is the local time?</strong>
+      <label>Local time:</label>
+      <input type="text" id="p4" placeholder="e.g. 11:00 am">
+      <div id="pf4"></div>
+    </div>
+    <button class="btn btn-acc" onclick="checkPractice()" style="margin-top:10px">Check Answers</button>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(8)">← Back</button><button class="btn btn-pri" onclick="go(10)">Take Quiz →</button></div>
+</div>
+
+<!-- S10: Quiz -->
+<div class="slide" id="s10">
+  <h2>🎯 Quiz — Longitudes & Latitudes</h2>
+  <div id="quiz-area">
+    <div class="card">
+      <h3>Fill in the Blanks (1 mark each)</h3>
+      <div class="q-block">
+        <strong>1.</strong> A circle that passes through the centre of the Earth is called a _____ circle.
+        <input type="text" id="q1" placeholder="answer">
+      </div>
+      <div class="q-block">
+        <strong>2.</strong> The only great circle among the latitudes is the _____.
+        <input type="text" id="q2" placeholder="answer">
+      </div>
+      <div class="q-block">
+        <strong>3.</strong> The Earth rotates 360° in 24 hours, so it rotates _____ degrees per hour.
+        <input type="text" id="q3" placeholder="number">
+      </div>
+      <div class="q-block">
+        <strong>4.</strong> The formula for the radius of a small circle at latitude θ is r = R × _____.
+        <input type="text" id="q4" placeholder="trig function">
+      </div>
+      <div class="q-block">
+        <strong>5.</strong> 1 nautical mile equals _____ km.
+        <input type="text" id="q5" placeholder="number">
+      </div>
+    </div>
+    <div class="card">
+      <h3>Short Answer (2 marks each)</h3>
+      <div class="q-block">
+        <strong>6.</strong> Find the distance between P(20°S, 40°E) and Q(60°S, 40°E) in nautical miles.
+        <input type="text" id="q6" placeholder="show working">
+        <div id="qf6"></div>
+      </div>
+      <div class="q-block">
+        <strong>7.</strong> Two towns are at latitude 30°N: X at 0° and Y at 90°E. Find the distance XY in km. (cos30°=0.866)
+        <input type="text" id="q7" placeholder="show working">
+        <div id="qf7"></div>
+      </div>
+      <div class="q-block">
+        <strong>8.</strong> A town at longitude 60°W has local time 6:00 am. What is GMT?
+        <input type="text" id="q8" placeholder="your answer">
+        <div id="qf8"></div>
+      </div>
+    </div>
+    <button class="btn btn-acc" onclick="submitQuiz()" style="margin-top:10px;width:100%">Submit Quiz</button>
+  </div>
+  <div id="score-board" style="display:none">
+    <h3 id="score-txt"></h3>
+    <p id="grade-txt"></p>
+    <p id="cbc-comment"></p>
+  </div>
+  <div class="nav-row"><button class="btn btn-gray" onclick="go(9)">← Back</button></div>
+</div>
+
+<script>
+let current=1;const total=10;
+const dots=document.getElementById('dot-row');
+for(let i=1;i<=total;i++){const d=document.createElement('div');d.className='dot';d.id='dot'+i;d.onclick=()=>go(i);dots.appendChild(d);}
+function go(n){
+  document.querySelector('.slide.active').classList.remove('active');
+  document.getElementById('s'+n).classList.add('active');
+  current=n;
+  document.getElementById('slide-label').textContent=`Slide ${n} / ${total}`;
+  document.getElementById('progress-fill').style.width=(n/total*100)+'%';
+  for(let i=1;i<=total;i++){const d=document.getElementById('dot'+i);d.className='dot'+(i===n?' active':i<n?' done':'');}
+  window.scrollTo(0,0);
+}
+go(1);
+
+function checkPractice(){
+  const ans=[
+    {id:'p1',correct:'5513.2',hint:'R×cos30°=6370×0.866=5513.2 km'},
+    {id:'p2',correct:'1800',hint:'(40-10)×60=30×60=1800 nm'},
+    {id:'p3',correct:'1800',hint:'(70-10)×60×cos60°=60×60×0.5=1800 nm'},
+    {id:'p4',correct:'11:00 am',hint:'45×4=180min=3hrs; 8:00+3:00=11:00 am'}
+  ];
+  ans.forEach(a=>{
+    const v=document.getElementById(a.id).value.trim().replace(/\s+/g,' ');
+    const fb=document.getElementById('pf'+a.id.replace('p',''));
+    if(v.toLowerCase().includes(a.correct.toLowerCase())){
+      fb.innerHTML=`<div class="feedback ok">✅ Correct!</div>`;
+    } else {
+      fb.innerHTML=`<div class="feedback no">❌ Hint: ${a.hint}</div>`;
+    }
+  });
+}
+
+function grade(inp,keys){
+  const v=inp.toLowerCase();
+  const found=keys.filter(k=>v.includes(k.toLowerCase()));
+  const missed=keys.filter(k=>!v.includes(k.toLowerCase()));
+  return{found,missed,score:found.length>0?1:0};
+}
+
+function submitQuiz(){
+  const fills=[
+    {id:'q1',answers:['great']},
+    {id:'q2',answers:['equator']},
+    {id:'q3',answers:['15']},
+    {id:'q4',answers:['cos']},
+    {id:'q5',answers:['1.852']}
+  ];
+  let score=0,total_marks=11;
+  fills.forEach(f=>{
+    const v=document.getElementById(f.id).value.trim().toLowerCase();
+    if(f.answers.some(a=>v.includes(a))){score++;}
+  });
+  const shorts=[
+    {id:'q6',keys:['2400','2,400'],model:'|40°–20°|=40°; distance=40×60=2400 nm',marks:2},
+    {id:'q7',keys:['8569','8,569','4639','4,639'],model:'d=90×60×cos30°=90×60×0.866=4,675.4 nm×1.852=8,659 km',marks:2},
+    {id:'q8',keys:['10:00 am','10am','10:00am'],model:'60°W → 60×4=240min=4hrs behind; GMT=6:00+4:00=10:00 am',marks:2}
+  ];
+  shorts.forEach(s=>{
+    const v=document.getElementById(s.id).value.trim();
+    const res=grade(v,s.keys);
+    const fb=document.getElementById(s.id.replace('q','qf'));
+    const tags='<br>Found: '+s.keys.map(k=>`<span class="found-tag">${k}</span>`).join('')+'<br>Model: '+s.model;
+    if(res.score>0){score+=s.marks;fb.innerHTML=`<div class="feedback ok">✅ +${s.marks} marks${tags}</div>`;}
+    else{fb.innerHTML=`<div class="feedback no">❌ 0 marks${tags}</div>`;}
+  });
+  const pct=Math.round(score/total_marks*100);
+  let grade='',comment='';
+  if(pct>=80){grade='Exceeds Expectation (EE)';comment='Excellent! You have mastered longitude and latitude calculations.';}
+  else if(pct>=60){grade='Meets Expectation (ME)';comment='Good work! Review the distance formulas for small circles.';}
+  else if(pct>=40){grade='Approaches Expectation (AE)';comment='Keep practising. Focus on time-longitude relationships.';}
+  else{grade='Below Expectation (BE)';comment='Revisit the lesson slides. Use the formulas table for reference.';}
+  document.getElementById('score-board').style.display='block';
+  document.getElementById('score-txt').textContent=`Score: ${score} / ${total_marks} (${pct}%)`;
+  document.getElementById('grade-txt').textContent=grade;
+  document.getElementById('cbc-comment').textContent=comment;
+  document.getElementById('quiz-area').style.display='none';
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(score,total_marks,pct);
+}
+</script>
+</body>
+</html>

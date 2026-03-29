@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | Electronics</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar"><h2>⚡ F4 Physics — Ch.11: Electronics</h2><span class="meta">MTTI LMS | Form 4</span></div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<div class="slide active" id="s1"><span class="slide-label">SLIDE 1 OF 10</span><h1>📚 Learning Outcomes</h1><div class="card"><ol><li>Distinguish conductors, insulators and semiconductors</li><li>Explain electronic band structure (valence/conduction bands)</li><li>Describe doping and N-type/P-type semiconductors</li><li>Explain forward and reverse bias of a p-n junction diode</li><li>Describe half-wave and full-wave rectification</li><li>Explain amplitude modulation in radio transmission</li></ol></div><div class="highlight">🔑 N-type = donor atoms | P-type = acceptor atoms | Diode allows current in one direction</div></div>
+
+<div class="slide" id="s2"><span class="slide-label">SLIDE 2 OF 10</span><h1>🔌 Conductors, Insulators & Semiconductors</h1><div class="card"><table><tr><th>Type</th><th>Property</th><th>Examples</th></tr><tr><td><strong>Insulator</strong></td><td>Resists flow of electric charge. Large band gap.</td><td>Rubber, plastic, wood, glass</td></tr><tr><td><strong>Conductor</strong></td><td>Free electrons carry charge. Valence band = conduction band.</td><td>Metals, graphite, carbon</td></tr><tr><td><strong>Semiconductor</strong></td><td>Conducts under certain conditions (e.g. temperature). Small band gap.</td><td>Silicon, germanium, CdS, GaAs</td></tr></table></div></div>
+
+<div class="slide" id="s3"><span class="slide-label">SLIDE 3 OF 10</span><h1>⚡ Electronic Band Structure</h1><div class="card"><h2>Energy Bands</h2><ul><li><strong>Valence band</strong> — highest energy electrons at 0K</li><li><strong>Conduction band</strong> — electrons free to move; responsible for charge transfer</li><li><strong>Band gap</strong> — forbidden zone between valence and conduction bands</li></ul><table><tr><th>Material</th><th>Band gap</th><th>Behaviour</th></tr><tr><td>Insulator</td><td>Large</td><td>No conduction</td></tr><tr><td>Semiconductor</td><td>Small</td><td>Conducts at higher temperature</td></tr><tr><td>Conductor</td><td>Zero (overlap)</td><td>Always conducts</td></tr></table><p>Intrinsic semiconductors: conductivity increases with temperature (unlike metals).</p></div></div>
+
+<div class="slide" id="s4"><span class="slide-label">SLIDE 4 OF 10</span><h1>🔬 Doping Semiconductors</h1><div class="card"><p><strong>Doping</strong> — adding impurities to semiconductors to change conductivity. Can increase conductivity by >10⁶×.</p><h2>N-type Semiconductor</h2><p>Donor impurity (e.g. phosphorus/antimony in silicon) contributes <strong>extra free electrons</strong>. Majority carriers: electrons.</p><h2>P-type Semiconductor</h2><p>Acceptor impurity (e.g. boron in silicon) creates <strong>holes</strong> (missing electrons). Majority carriers: holes.</p></div></div>
+
+<div class="slide" id="s5"><span class="slide-label">SLIDE 5 OF 10</span><h1>⚡ P-N Junction Diode</h1><div class="card"><p>P-type + N-type semiconductor joined together. P-region = anode, N-region = cathode. A <strong>depletion layer</strong> (region with no charge carriers) forms at the junction.</p><h2>Forward Bias</h2><p>+terminal to P, −terminal to N → depletion layer thins → current flows.</p><h2>Reverse Bias</h2><p>−terminal to P, +terminal to N → depletion layer widens → no current (until breakdown voltage).</p></div><div class="warn">📌 Diodes allow current in one direction only — from anode (+) to cathode (−).</div></div>
+
+<div class="slide" id="s6"><span class="slide-label">SLIDE 6 OF 10</span><h1>🔄 Rectification</h1><div class="card"><p><strong>Rectification</strong> — converting AC to unidirectional DC waveform.</p><h2>Half-wave Rectification</h2><p>One diode blocks negative half-cycle → pulsating DC. Smoothed by capacitor in parallel with load.</p><h2>Full-wave Rectification</h2><ul><li><strong>Centre-tap</strong> — transformer with centre tap + 2 diodes</li><li><strong>Bridge rectifier</strong> — 4 diodes in bridge arrangement; current flows in same direction in both half-cycles</li></ul></div></div>
+
+<div class="slide" id="s7"><span class="slide-label">SLIDE 7 OF 10</span><h1>📻 Radio Transmission</h1><div class="card"><h2>Amplitude Modulation (AM)</h2><ol><li>Sound converted to electrical signal by microphone</li><li>Signal added to radio carrier wave → <strong>amplitude modulation</strong></li><li>Modulated wave transmitted by aerial</li><li>Received by another aerial</li><li>Demodulated by diode → reproduced as sound</li></ol><p>Radio waves: greater range than sound/light → used as carriers for audio and visual information.</p></div></div>
+
+<div class="slide" id="s8"><span class="slide-label">SLIDE 8 OF 10</span><h1>📊 Summary Table</h1><div class="card"><table><tr><th>Device</th><th>Type</th><th>Function</th></tr><tr><td>Junction diode</td><td>P-N junction</td><td>Allow current one way; rectification</td></tr><tr><td>LDR</td><td>Photoconductive</td><td>Resistance decreases in light</td></tr><tr><td>LED</td><td>P-N junction</td><td>Emits light when forward biased</td></tr><tr><td>Solar cell</td><td>Photovoltaic</td><td>Converts light to electrical energy</td></tr><tr><td>Transistor</td><td>NPN or PNP</td><td>Amplification, switching</td></tr></table></div></div>
+
+<div class="slide" id="s9"><span class="slide-label">SLIDE 9 OF 10</span><h1>🧪 Practice Problems</h1><div class="card"><h3>P1. In silicon doped with phosphorus, what type of semiconductor is formed and what are the majority carriers?</h3><div class="highlight"><strong>N-type</strong> semiconductor. Majority carriers: <strong>electrons</strong> (donated by phosphorus).</div></div><div class="card"><h3>P2. Why does a semiconductor increase conductivity with temperature while a metal decreases?</h3><div class="highlight">In semiconductors, higher temperature promotes more electrons across the small band gap into the conduction band. In metals, higher temperature increases lattice vibrations, impeding electron flow.</div></div></div>
+
+<div class="slide" id="s10"><span class="slide-label">SLIDE 10 OF 10</span><h1>📝 Quiz — Electronics</h1><div class="quiz-wrap"><h2>Fill in the Blanks (8 marks)</h2>
+<div class="q-block"><div class="q-text"><span>Q1.</span> A material that allows current to flow under certain conditions is called a __________. (1 mk)</div><input type="text" id="q1" placeholder="type"><div class="q-fb" id="q1f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q2.</span> Doping of semiconductors introduces __________. (1 mk)</div><input type="text" id="q2" placeholder="what"><div class="q-fb" id="q2f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q3.</span> In an N-type semiconductor, the majority carriers are __________. (1 mk)</div><input type="text" id="q3" placeholder="carrier type"><div class="q-fb" id="q3f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q4.</span> A diode in __________ bias allows current to flow. (1 mk)</div><input type="text" id="q4" placeholder="direction"><div class="q-fb" id="q4f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q5.</span> Conversion of AC to DC is called __________. (1 mk)</div><input type="text" id="q5" placeholder="process"><div class="q-fb" id="q5f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q6.</span> A bridge rectifier uses __________ diodes. (1 mk)</div><input type="text" id="q6" placeholder="number"><div class="q-fb" id="q6f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q7.</span> In P-type semiconductor, holes are created by __________ impurity atoms. (1 mk)</div><input type="text" id="q7" placeholder="type"><div class="q-fb" id="q7f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q8.</span> The process of adding sound to a carrier wave is called __________ modulation. (1 mk)</div><input type="text" id="q8" placeholder="type"><div class="q-fb" id="q8f"></div></div>
+<h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+<div class="q-block q-sa"><div class="q-text"><span>Q9.</span> Distinguish between N-type and P-type semiconductors in terms of doping and majority charge carriers. (4 mks)</div><textarea id="q9" placeholder="N-type: ... P-type: ..."></textarea><div class="q-fb" id="q9f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q10.</span> Draw and explain the output waveform of a half-wave rectifier. (2 mks)</div><textarea id="q10" placeholder="Describe the waveform..."></textarea><div class="q-fb" id="q10f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q11.</span> State ONE advantage of full-wave rectification over half-wave rectification. (1 mk)</div><textarea id="q11" placeholder="Your answer..."></textarea><div class="q-fb" id="q11f"></div></div>
+<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+<div class="score-box" id="scorebox"><h3 id="score-txt"></h3><p id="score-msg"></p></div></div></div>
+
+<div id="nav"><button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button><span id="slide-counter">1 / 10</span><button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button></div>
+<script>
+
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+
+const ans={q1:{kw:["semi"],pts:1},q2:{kw:["impurit"],pts:1},q3:{kw:["electron"],pts:1},q4:{kw:["forward"],pts:1},q5:{kw:["rectif"],pts:1},q6:{kw:["4","four"],pts:1},q7:{kw:["acceptor"],pts:1},q8:{kw:["amplitude"],pts:1}};
+
+function submitQuiz(){
+  let score=0;
+  Object.keys(ans).forEach(id=>{const el=document.getElementById(id);if(!el||el.tagName==='TEXTAREA')return;const val=el.value.trim().toLowerCase();const correct=ans[id].kw.some(k=>val.includes(k));const fb=document.getElementById(id+'f');if(fb){if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}}});
+  document.querySelectorAll('.q-sa textarea').forEach(el=>{if(el.value.trim().length>30)score+=Math.min(3,Math.ceil(el.value.trim().length/60));});
+  score=Math.min(score,15);
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');if(sb)sb.style.display='block';
+  const st=document.getElementById('score-txt');if(st)st.textContent='Score: '+score+' / 15 ('+pct+'%)';
+  const sm=document.getElementById('score-msg');if(sm)sm.textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+
+</script>
+</body>
+</html>

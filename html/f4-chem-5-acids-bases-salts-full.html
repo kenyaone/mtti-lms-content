@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Chemistry | Acids, Bases & Salts</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a2e1a;--sub:#4a6a4a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+/* TOP BAR */
+#topbar{position:sticky;top:0;z-index:100;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;box-shadow:0 2px 8px #0005;}
+#topbar .meta{font-size:.75rem;opacity:.8;}
+#topbar .title{font-weight:700;font-size:.95rem;text-align:center;flex:1;}
+#slide-counter{font-size:.78rem;background:#ffffff28;padding:3px 10px;border-radius:20px;}
+/* DOTS */
+#dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px;}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+/* SLIDES */
+#slides-wrap{max-width:820px;margin:0 auto;padding:12px 14px 80px;}
+.slide{display:none;animation:fadeIn .35s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;padding:14px 18px;border-radius:12px 12px 0 0;font-size:1.1rem;font-weight:700;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:18px;box-shadow:0 2px 12px #0001;}
+/* CARDS */
+.info-card{background:#f0f7f0;border-left:4px solid var(--pri);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.warn-card{background:#fff8e1;border-left:4px solid var(--acc);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.danger-card{background:#fce8e8;border-left:4px solid var(--no);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.def-box{background:var(--pri);color:#fff;border-radius:10px;padding:13px 16px;margin:12px 0;font-size:.95rem;}
+h3{color:var(--pri);margin:14px 0 7px;font-size:1rem;}
+h4{color:var(--sub);margin:10px 0 5px;font-size:.93rem;}
+p,li{font-size:.93rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:20px;margin-bottom:8px;}
+/* EQUATION BOX */
+.eq{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:10px 14px;margin:10px 0;font-family:monospace;font-size:.9rem;overflow-x:auto;}
+.eq-label{font-size:.75rem;color:var(--sub);margin-top:4px;}
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.87rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:8px 10px;border-bottom:1px solid #e0e8e0;}
+tr:nth-child(even) td{background:#f5faf5;}
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:13px;}
+.col-card h4{color:var(--pri);margin-top:0;}
+/* NAV */
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e0e8e0;display:flex;justify-content:center;align-items:center;gap:14px;padding:10px 16px;z-index:99;}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}
+.btn-pri:hover{background:#0d7a36;}
+.btn-sec{background:#e8f0e8;color:var(--pri);}
+.btn-sec:hover{background:#d0e4d0;}
+.btn-acc{background:var(--acc);color:#fff;}
+/* QUIZ */
+.q-block{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:15px;margin:14px 0;}
+.q-block p{font-weight:600;margin-bottom:8px;}
+.fill-input{width:100%;padding:9px 12px;border:2px solid #cde;border-radius:7px;font-size:.92rem;margin-top:5px;}
+.fill-input:focus{outline:none;border-color:var(--pri);}
+textarea.fill-input{resize:vertical;min-height:70px;}
+.feedback{margin-top:8px;padding:8px 12px;border-radius:7px;font-size:.87rem;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--ok);display:block;}
+.feedback.wrong{background:#fce8e8;border:1px solid #ef9a9a;color:var(--no);display:block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;margin:2px;}
+.tag.found{background:#c8e6c9;color:#1b5e20;}
+.tag.missed{background:#ffcdd2;color:#b71c1c;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric strong{color:#e65100;}
+#score-board{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:14px;}
+#score-board .big{font-size:2.5rem;font-weight:800;}
+/* PRACTICE */
+.practice-q{background:#f0f7ff;border:1px solid #bbdefb;border-radius:9px;padding:14px;margin:12px 0;}
+.practice-q p{font-weight:600;color:#1565c0;}
+.reveal-btn{margin-top:8px;background:#1565c0;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;}
+.answer-reveal{display:none;margin-top:10px;background:#e3f2fd;border-radius:7px;padding:10px;font-size:.87rem;}
+/* BADGE */
+.outcome-list li{margin:6px 0;padding:6px 10px;background:#f0f7f0;border-radius:6px;border-left:3px solid var(--acc);}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="meta">F4 Chemistry</div>
+  <div class="title">⚗️ Acids, Bases &amp; Salts</div>
+  <div id="slide-counter">1 / 10</div>
+</div>
+
+<div id="dots"></div>
+
+<div id="slides-wrap">
+
+<!-- SLIDE 1: LEARNING OUTCOMES -->
+<div class="slide active" id="s1">
+  <div class="slide-title">🎯 Learning Outcomes</div>
+  <div class="slide-body">
+    <div class="info-card">By the end of this lesson, you should be able to:</div>
+    <ul class="outcome-list">
+      <li>Define acids, bases and salts and write dissociation equations</li>
+      <li>Distinguish between strong and weak acids and bases with pH values</li>
+      <li>Explain electrical conductivity of strong vs weak electrolytes</li>
+      <li>Describe amphoteric oxides and hydroxides with equations</li>
+      <li>Explain the solvent effect on acid-base character</li>
+      <li>Describe methods of salt preparation and precipitation reactions</li>
+      <li>Identify cations using NaOH and NH₃ solution tests</li>
+      <li>Explain solubility, solubility curves and water hardness</li>
+    </ul>
+    <div class="warn-card">📚 <strong>Book Reference:</strong> Longhorn F4 Chemistry — Unit 1 (Pages 1–46)</div>
+  </div>
+</div>
+
+<!-- SLIDE 2: ACIDS, BASES & SALTS BASICS -->
+<div class="slide" id="s2">
+  <div class="slide-title">📖 Acids, Bases &amp; Salts — Definitions</div>
+  <div class="slide-body">
+    <div class="def-box">💧 <strong>Acid:</strong> A substance that dissociates in water to produce H⁺ ions as the <em>only</em> positively charged ions.</div>
+
+    <h3>Strong Acids — Complete Dissociation</h3>
+    <div class="eq">HCl(aq) → H⁺(aq) + Cl⁻(aq)
+H₂SO₄(aq) → 2H⁺(aq) + SO₄²⁻(aq)
+HNO₃(aq) → H⁺(aq) + NO₃⁻(aq)</div>
+
+    <h3>Weak Acids — Partial Dissociation</h3>
+    <div class="eq">CH₃COOH(aq) ⇌ H⁺(aq) + CH₃COO⁻(aq)
+H₂CO₃(aq) ⇌ H⁺(aq) + HCO₃⁻(aq)</div>
+    <div class="eq-label">⇌ shows reversible (partial) dissociation — a weak acid contains more molecules than ions.</div>
+
+    <div class="def-box">⚗️ <strong>Base:</strong> A substance that dissociates in water to produce OH⁻ ions as the <em>only</em> negatively charged ions.</div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Strong Bases</h4>
+        <p>Completely dissociate:</p>
+        <div class="eq">NaOH → Na⁺ + OH⁻
+KOH → K⁺ + OH⁻</div>
+      </div>
+      <div class="col-card">
+        <h4>Weak Bases</h4>
+        <p>Partially dissociate:</p>
+        <div class="eq">NH₃ + H₂O ⇌ NH₄⁺ + OH⁻</div>
+      </div>
+    </div>
+
+    <div class="def-box">🧂 <strong>Salt:</strong> An ionic compound formed when a cation (from a base) combines with an anion (from an acid) during neutralisation.</div>
+    <div class="eq">HCl(aq) + NaOH(aq) → NaCl(aq) + H₂O(l)
+HNO₃(aq) + KOH(aq) → KNO₃(aq) + H₂O(l)</div>
+  </div>
+</div>
+
+<!-- SLIDE 3: STRONG VS WEAK — pH & CONDUCTIVITY -->
+<div class="slide" id="s3">
+  <div class="slide-title">⚡ Strength, pH &amp; Electrical Conductivity</div>
+  <div class="slide-body">
+    <div class="info-card"><strong>Important:</strong> "Strong" refers to degree of dissociation — NOT concentration. A strong acid can be dilute; a weak acid can be concentrated.</div>
+
+    <h3>pH Comparison</h3>
+    <table>
+      <tr><th>Substance</th><th>Type</th><th>pH (approx.)</th><th>Dissociation</th></tr>
+      <tr><td>2M HCl</td><td>Strong acid</td><td>~0–1</td><td>Complete</td></tr>
+      <tr><td>2M CH₃COOH</td><td>Weak acid</td><td>~3–4</td><td>Partial</td></tr>
+      <tr><td>2M NaOH</td><td>Strong base</td><td>~13–14</td><td>Complete</td></tr>
+      <tr><td>2M NH₃(aq)</td><td>Weak base</td><td>~10–11</td><td>Partial</td></tr>
+    </table>
+
+    <h3>Electrical Conductivity</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Strong Electrolytes</h4>
+        <ul>
+          <li>Fully dissociate → many ions</li>
+          <li>High conductivity</li>
+          <li>Bulb glows <strong>brightly</strong></li>
+          <li>HCl, NaOH, KOH, H₂SO₄</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>Weak Electrolytes</h4>
+        <ul>
+          <li>Partially dissociate → few ions</li>
+          <li>Low conductivity</li>
+          <li>Bulb glows <strong>faintly</strong></li>
+          <li>CH₃COOH, NH₃(aq)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="warn-card">🔬 <strong>Experiment 1.2:</strong> When electrodes are dipped in solutions, strong electrolytes conduct well (bright bulb, visible electrode changes) while weak electrolytes conduct poorly.</div>
+  </div>
+</div>
+
+<!-- SLIDE 4: AMPHOTERIC OXIDES -->
+<div class="slide" id="s4">
+  <div class="slide-title">🔄 Amphoteric Oxides &amp; Hydroxides</div>
+  <div class="slide-body">
+    <div class="def-box">🔄 <strong>Amphoteric:</strong> Oxides/hydroxides that react with BOTH acids AND bases — they show both acidic and basic properties.</div>
+
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Amphoteric Oxides</h4>
+        <ul><li>Zinc oxide (ZnO)</li><li>Lead(II) oxide (PbO)</li><li>Aluminium oxide (Al₂O₃)</li></ul>
+      </div>
+      <div class="col-card">
+        <h4>Amphoteric Hydroxides</h4>
+        <ul><li>Zinc hydroxide Zn(OH)₂</li><li>Lead(II) hydroxide Pb(OH)₂</li><li>Aluminium hydroxide Al(OH)₃</li></ul>
+      </div>
+    </div>
+
+    <h3>Zinc — Reactions with Acid &amp; Alkali</h3>
+    <div class="info-card"><strong>Basic behaviour</strong> (reacts with acid → simple salt):</div>
+    <div class="eq">ZnO(s) + 2HNO₃(aq) → Zn(NO₃)₂(aq) + H₂O(l)
+Zn(OH)₂(s) + 2HNO₃(aq) → Zn(NO₃)₂(aq) + 2H₂O(l)</div>
+    <div class="info-card"><strong>Acidic behaviour</strong> (reacts with NaOH → complex salt):</div>
+    <div class="eq">ZnO(s) + 2NaOH(aq) + H₂O(l) → Na₂Zn(OH)₄(aq) [sodium zincate]
+Zn(OH)₂(s) + 2NaOH(aq) → Na₂Zn(OH)₄(aq)</div>
+
+    <h3>Summary Table</h3>
+    <table>
+      <tr><th>Metal oxide</th><th>Simple salt (HNO₃)</th><th>Complex salt (NaOH)</th></tr>
+      <tr><td>ZnO / Zn(OH)₂</td><td>Zinc nitrate Zn(NO₃)₂</td><td>Sodium zincate Na₂Zn(OH)₄</td></tr>
+      <tr><td>PbO / Pb(OH)₂</td><td>Lead(II) nitrate Pb(NO₃)₂</td><td>Sodium plumbate Na₂Pb(OH)₄</td></tr>
+      <tr><td>Al₂O₃ / Al(OH)₃</td><td>Aluminium nitrate Al(NO₃)₃</td><td>Sodium aluminate NaAl(OH)₄</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 5: SALTS & CATION TESTS -->
+<div class="slide" id="s5">
+  <div class="slide-title">🧪 Salt Preparation &amp; Cation Tests</div>
+  <div class="slide-body">
+    <h3>Methods of Salt Preparation</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>1. Neutralisation</h4>
+        <p>Acid + Base → Salt + Water</p>
+        <div class="eq">HCl + NaOH → NaCl + H₂O</div>
+      </div>
+      <div class="col-card">
+        <h4>2. Precipitation</h4>
+        <p>Two soluble salts react → insoluble precipitate</p>
+        <div class="eq">Pb(NO₃)₂ + 2KI → PbI₂↓ + 2KNO₃</div>
+      </div>
+      <div class="col-card">
+        <h4>3. Titration</h4>
+        <p>Used for soluble salts from weak acid + strong base or vice versa</p>
+      </div>
+      <div class="col-card">
+        <h4>4. Direct combination</h4>
+        <p>Metal + non-metal directly</p>
+        <div class="eq">Fe(s) + S(s) → FeS(s)</div>
+      </div>
+    </div>
+
+    <h3>Cation Tests — NaOH &amp; NH₃ Solution</h3>
+    <table>
+      <tr><th>Cation</th><th>Excess NaOH</th><th>Excess NH₃</th></tr>
+      <tr><td>Fe²⁺</td><td>Green ppt, insoluble</td><td>Green ppt, insoluble</td></tr>
+      <tr><td>Fe³⁺</td><td>Red-brown ppt, insoluble</td><td>Red-brown ppt, insoluble</td></tr>
+      <tr><td>Cu²⁺</td><td>Blue ppt, insoluble</td><td>Blue ppt → deep blue (dissolves)</td></tr>
+      <tr><td>Zn²⁺</td><td>White ppt, dissolves (amphoteric)</td><td>White ppt, dissolves</td></tr>
+      <tr><td>Al³⁺</td><td>White ppt, dissolves</td><td>White ppt, insoluble</td></tr>
+      <tr><td>Pb²⁺</td><td>White ppt, dissolves</td><td>White ppt, insoluble</td></tr>
+      <tr><td>NH₄⁺</td><td>Ammonia gas (pungent smell)</td><td>—</td></tr>
+    </table>
+    <div class="warn-card">🔑 Key distinction: Al³⁺ dissolves in excess NaOH but NOT in excess NH₃. Cu²⁺ turns deep blue (tetraamminecopper complex) in excess NH₃.</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: SOLUBILITY -->
+<div class="slide" id="s6">
+  <div class="slide-title">📈 Solubility &amp; Solubility Curves</div>
+  <div class="slide-body">
+    <div class="def-box">📏 <strong>Solubility:</strong> The maximum mass (in grams) of a solute that dissolves in 100 g of water at a given temperature to form a saturated solution.</div>
+
+    <h3>Effect of Temperature</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Most solid salts</h4>
+        <p>Solubility <strong>increases</strong> with temperature</p>
+        <p>e.g. KNO₃, NaNO₃, KCl</p>
+      </div>
+      <div class="col-card">
+        <h4>Gases</h4>
+        <p>Solubility <strong>decreases</strong> with temperature</p>
+        <p>e.g. CO₂, NH₃ in water</p>
+      </div>
+    </div>
+
+    <h3>Using Solubility Curves</h3>
+    <ul>
+      <li>Read the solubility of a substance at any temperature from the graph</li>
+      <li>Find the temperature at which two substances have the same solubility (crossover point)</li>
+      <li>Calculate the mass of crystals formed when a solution is cooled</li>
+    </ul>
+
+    <div class="info-card">
+      <strong>Fractional Crystallisation:</strong> A mixture of salts can be separated by dissolving in hot water then cooling — the less soluble salt crystallises first.
+    </div>
+
+    <h3>Water Hardness</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>Temporary Hardness</h4>
+        <ul>
+          <li>Caused by Ca(HCO₃)₂ / Mg(HCO₃)₂</li>
+          <li>Removed by <strong>boiling</strong></li>
+          <li>Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂</li>
+        </ul>
+      </div>
+      <div class="col-card">
+        <h4>Permanent Hardness</h4>
+        <ul>
+          <li>Caused by CaSO₄, MgSO₄, CaCl₂</li>
+          <li>NOT removed by boiling</li>
+          <li>Removed by washing soda, ion exchange</li>
+        </ul>
+      </div>
+    </div>
+    <div class="warn-card">⚠️ Hard water wastes soap (forms scum), damages boilers (scale), and blocks pipes. Soft water lathers easily but may dissolve lead pipes.</div>
+  </div>
+</div>
+
+<!-- SLIDE 7: SOLVENT EFFECT & ANION TESTS -->
+<div class="slide" id="s7">
+  <div class="slide-title">🧫 Solvent Effects &amp; Anion Tests</div>
+  <div class="slide-body">
+    <h3>Effect of Solvent on Acid-Base Character</h3>
+    <div class="info-card">
+      <strong>Water as solvent:</strong> Acids and bases only show their characteristic properties when dissolved in water (aqueous solution). Dry HCl gas does NOT affect dry litmus paper.
+    </div>
+    <div class="eq">HCl(g) — dry → no acidic effect
+HCl(aq) → H⁺(aq) + Cl⁻(aq) — acidic</div>
+
+    <h3>Non-aqueous Solvents</h3>
+    <p>Some acids like HCl dissolved in organic solvents (e.g. benzene) do NOT conduct electricity or turn litmus red — they remain as molecules without dissociating.</p>
+
+    <h3>Testing for Anions</h3>
+    <table>
+      <tr><th>Anion</th><th>Reagent</th><th>Observation</th></tr>
+      <tr><td>Cl⁻</td><td>AgNO₃ / dilute HNO₃</td><td>White ppt (AgCl), insoluble in HNO₃</td></tr>
+      <tr><td>Br⁻</td><td>AgNO₃ / dilute HNO₃</td><td>Cream ppt (AgBr)</td></tr>
+      <tr><td>I⁻</td><td>AgNO₃ / dilute HNO₃</td><td>Yellow ppt (AgI)</td></tr>
+      <tr><td>SO₄²⁻</td><td>BaCl₂ / dilute HCl</td><td>White ppt (BaSO₄), insoluble in HCl</td></tr>
+      <tr><td>CO₃²⁻</td><td>Dilute HCl + limewater</td><td>Effervescence; CO₂ turns limewater milky</td></tr>
+      <tr><td>NO₃⁻</td><td>Fe²⁺ / conc. H₂SO₄</td><td>Brown ring at junction</td></tr>
+    </table>
+
+    <h3>Complex Ions</h3>
+    <p>When excess NaOH or NH₃ is added to certain metal hydroxide precipitates, the precipitate dissolves by forming complex ions. E.g.:</p>
+    <div class="eq">Zn(OH)₂(s) + 2OH⁻(aq) → [Zn(OH)₄]²⁻(aq) [tetrahydroxozincate]
+Cu(OH)₂(s) + 4NH₃(aq) → [Cu(NH₃)₄]²⁺(aq) + 2OH⁻ [deep blue]</div>
+  </div>
+</div>
+
+<!-- SLIDE 8: WATER HARDNESS REMOVAL -->
+<div class="slide" id="s8">
+  <div class="slide-title">💧 Removing Water Hardness &amp; Summary</div>
+  <div class="slide-body">
+    <h3>Methods of Removing Water Hardness</h3>
+    <table>
+      <tr><th>Method</th><th>Removes Temporary</th><th>Removes Permanent</th></tr>
+      <tr><td>Boiling</td><td>✅ Yes</td><td>❌ No</td></tr>
+      <tr><td>Adding washing soda (Na₂CO₃)</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+      <tr><td>Ion exchange resin</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+      <tr><td>Distillation</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+    </table>
+
+    <h3>Washing Soda Mechanism</h3>
+    <div class="eq">Na₂CO₃(aq) + CaCl₂(aq) → CaCO₃↓ + 2NaCl(aq)
+Na₂CO₃(aq) + CaSO₄(aq) → CaCO₃↓ + Na₂SO₄(aq)</div>
+
+    <h3>Scum Formation with Soap</h3>
+    <div class="eq">2C₁₇H₃₅COONa + CaCl₂ → (C₁₇H₃₅COO)₂Ca↓ + 2NaCl
+        (soap)                          (scum — insoluble)</div>
+
+    <div class="info-card">
+      <strong>Key Revision Points:</strong>
+      <ul>
+        <li>Strong acids/bases fully dissociate — low/high pH, good conductors</li>
+        <li>Amphoteric: ZnO, PbO, Al₂O₃ react with BOTH acids and alkalis</li>
+        <li>Cation tests: use NaOH and NH₃ — observe colour, solubility of precipitate</li>
+        <li>Solubility = g/100g water. Use curves for crystallisation calculations</li>
+        <li>Temporary hardness → boiling; Permanent → washing soda / ion exchange</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: PRACTICE -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="slide-body">
+
+    <div class="practice-q">
+      <p>1. Write the dissociation equation for sulphuric(VI) acid and state whether it is strong or weak.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">H₂SO₄(aq) → 2H⁺(aq) + SO₄²⁻(aq). Strong acid — fully dissociates (single arrow, not reversible).</div>
+    </div>
+
+    <div class="practice-q">
+      <p>2. Why does dry HCl gas not affect dry blue litmus paper?</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Acids only show acidic properties in the presence of water. Dry HCl does not dissociate to produce H⁺ ions without water — so it cannot change litmus.</div>
+    </div>
+
+    <div class="practice-q">
+      <p>3. What is observed when excess NaOH is added to a solution containing Cu²⁺ ions? Write an equation.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">A blue precipitate forms: Cu²⁺(aq) + 2OH⁻(aq) → Cu(OH)₂(s). The precipitate does NOT dissolve in excess NaOH (unlike Zn²⁺, Al³⁺, Pb²⁺).</div>
+    </div>
+
+    <div class="practice-q">
+      <p>4. State TWO differences between temporary and permanent water hardness.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">
+        1. Cause: Temporary — Ca(HCO₃)₂/Mg(HCO₃)₂; Permanent — CaSO₄/MgSO₄/CaCl₂.<br>
+        2. Removal: Temporary — removed by boiling; Permanent — NOT removed by boiling (needs washing soda or ion exchange).
+      </div>
+    </div>
+
+    <div class="practice-q">
+      <p>5. Calculate the mass of KNO₃ crystals deposited when a saturated solution containing 120 g KNO₃ per 100 g water at 80°C is cooled to 20°C (solubility at 20°C = 32 g/100g water).</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">Mass deposited = 120 − 32 = <strong>88 g</strong> of KNO₃ crystals.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Acids, Bases &amp; Salts</div>
+  <div class="slide-body">
+
+    <div class="q-block">
+      <p>Q1. An acid is a substance that dissociates in water to give __________ as the only positively charged ions.</p>
+      <input class="fill-input" id="q1" placeholder="Type your answer..." />
+      <div class="feedback" id="f1"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q2. A __________ acid dissociates completely in water, while a __________ acid only partially dissociates.</p>
+      <input class="fill-input" id="q2" placeholder="Type both words separated by comma..." />
+      <div class="feedback" id="f2"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q3. Name THREE examples of amphoteric oxides.</p>
+      <input class="fill-input" id="q3" placeholder="e.g. zinc oxide, ..." />
+      <div class="feedback" id="f3"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q4. Write the ionic equation for the reaction of zinc hydroxide with excess sodium hydroxide.</p>
+      <input class="fill-input" id="q4" placeholder="Type equation..." />
+      <div class="feedback" id="f4"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q5. State TWO methods that can remove BOTH temporary AND permanent hardness from water.</p>
+      <input class="fill-input" id="q5" placeholder="..." />
+      <div class="feedback" id="f5"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q6 (Short Answer): Explain why aluminium hydroxide dissolves in excess NaOH but NOT in excess ammonia solution.</p>
+      <textarea class="fill-input" id="q6" placeholder="Write your explanation..."></textarea>
+      <div class="feedback" id="f6"></div>
+    </div>
+
+    <div class="q-block">
+      <p>Q7 (Short Answer): A student adds AgNO₃ solution to an unknown salt solution and observes a white precipitate that dissolves in dilute HNO₃. What anion is present? Explain.</p>
+      <textarea class="fill-input" id="q7" placeholder="Write your answer..."></textarea>
+      <div class="feedback" id="f7"></div>
+    </div>
+
+    <button class="btn btn-acc" onclick="submitExam()" style="width:100%;margin-top:10px;padding:13px;font-size:1rem;">✅ Submit Quiz</button>
+    <div id="score-area"></div>
+  </div>
+</div>
+
+</div><!-- end slides-wrap -->
+
+<div id="nav">
+  <button class="btn btn-sec" id="prevBtn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <button class="btn btn-pri" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+
+<script>
+const TOTAL = 10;
+let current = 1;
+
+function buildDots(){
+  const c=document.getElementById('dots');
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i===1?' active':'');
+    d.onclick=()=>goTo(i);
+    d.id='dot'+i;
+    c.appendChild(d);
+  }
+}
+
+function goTo(n){
+  document.querySelector('.slide.active').classList.remove('active');
+  document.getElementById('s'+n).classList.add('active');
+  document.getElementById('dot'+current).classList.remove('active');
+  if(current<n) document.getElementById('dot'+current).classList.add('done');
+  current=n;
+  document.getElementById('dot'+current).classList.add('active');
+  document.getElementById('slide-counter').textContent=current+' / '+TOTAL;
+  document.getElementById('prevBtn').disabled=current===1;
+  document.getElementById('nextBtn').disabled=current===TOTAL;
+  window.scrollTo(0,0);
+}
+
+function changeSlide(d){goTo(Math.min(Math.max(1,current+d),TOTAL));}
+
+function reveal(btn){
+  const ans=btn.nextElementSibling;
+  ans.style.display=ans.style.display==='block'?'none':'block';
+  btn.textContent=ans.style.display==='block'?'Hide Answer':'Show Answer';
+}
+
+const ANSWERS={
+  q1:{kw:['hydrogen ions','h+ ions','h+','hydrogen'],pts:2},
+  q2:{kw:['strong','weak'],pts:2},
+  q3:{kw:['zinc oxide','lead','aluminium oxide','aluminum oxide','zno','al2o3','pbo'],pts:3,need:3},
+  q4:{kw:['zn(oh)2','naoh','na2zn(oh)4','sodium zincate','zincate'],pts:2},
+  q5:{kw:['washing soda','ion exchange','distillation','na2co3'],pts:2,need:2},
+};
+
+function checkFill(id,fb,data){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).textContent='Please write an answer.';return 0;}
+  const found=data.kw.filter(k=>val.includes(k.toLowerCase()));
+  const need=data.need||1;
+  const got=Math.min(found.length,data.pts);
+  const tags=data.kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');
+  document.getElementById(fb).innerHTML=`Keywords: ${tags}`;
+  document.getElementById(fb).className='feedback '+(found.length>=need?'correct':'wrong');
+  return got;
+}
+
+function scoreShort(id,fb,kw,pts,rubric){
+  const val=document.getElementById(id).value.trim().toLowerCase();
+  if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).innerHTML='Please write an answer.';return 0;}
+  const found=kw.filter(k=>val.includes(k.toLowerCase()));
+  const tags=kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');
+  const score=Math.min(Math.round((found.length/kw.length)*pts),pts);
+  document.getElementById(fb).innerHTML=`Keywords found: ${tags}<div class="rubric"><strong>Model Answer:</strong> ${rubric}</div>`;
+  document.getElementById(fb).className='feedback '+(score>=Math.ceil(pts/2)?'correct':'wrong');
+  return score;
+}
+
+function submitExam(){
+  let total=0,max=0;
+  total+=checkFill('q1','f1',ANSWERS.q1); max+=ANSWERS.q1.pts;
+  total+=checkFill('q2','f2',ANSWERS.q2); max+=ANSWERS.q2.pts;
+  total+=checkFill('q3','f3',ANSWERS.q3); max+=ANSWERS.q3.pts;
+  total+=checkFill('q4','f4',ANSWERS.q4); max+=ANSWERS.q4.pts;
+  total+=checkFill('q5','f5',ANSWERS.q5); max+=ANSWERS.q5.pts;
+
+  total+=scoreShort('q6','f6',
+    ['amphoteric','acidic','aluminium','al(oh)4','dissolves','naaloh','excess naoh','excess ammonia','not dissolve','nh3','complex'],
+    3,
+    'Aluminium hydroxide is amphoteric — it can act as an acid, dissolving in excess NaOH to form the tetrahydroxoaluminate complex ion [Al(OH)₄]⁻. Ammonia is a weak base and cannot provide enough OH⁻ ions to form the complex, so the precipitate remains insoluble in excess NH₃.'
+  ); max+=3;
+
+  total+=scoreShort('q7','f7',
+    ['carbonate','co32-','co3','sulphite','so32-','dissolves','hno3','not chloride','not sulphate'],
+    3,
+    'The white ppt that dissolves in dilute HNO₃ is NOT AgCl (which is insoluble in HNO₃) or BaSO₄. It is likely Ag₂CO₃ or Ag₂SO₃. If CO₃²⁻ is suspected, confirm with acid + limewater test — the CO₂ produced turns limewater milky.'
+  ); max+=3;
+
+  const pct=Math.round((total/max)*100);
+  const grade=pct>=80?'Excellent! 🏆':pct>=60?'Good Work! 👍':pct>=40?'Keep Practising 📚':'Review the lesson 🔄';
+
+  document.getElementById('score-area').innerHTML=`
+    <div id="score-board">
+      <div class="big">${total}/${max}</div>
+      <div style="font-size:1.3rem;font-weight:700;margin:6px 0">${pct}%</div>
+      <div style="font-size:1rem;opacity:.9">${grade}</div>
+      <div style="font-size:.8rem;opacity:.75;margin-top:8px">CBC Rubric: 80–100% = Exceeding | 60–79% = Meeting | 40–59% = Approaching | Below 40% = Below</div>
+    </div>`;
+
+  if(typeof submitExamToMTTI==='function') submitExamToMTTI(total,max,pct);
+}
+
+buildDots();
+</script>
+</body>
+</html>

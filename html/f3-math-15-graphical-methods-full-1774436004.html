@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F3 Math – Graphical Methods</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+#topbar{background:var(--pri);color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#topbar h1{font-size:1rem;font-weight:700}
+.slide{display:none;max-width:860px;margin:0 auto;padding:20px 16px 100px}
+.slide.active{display:block}
+h2{color:var(--pri);border-left:4px solid var(--acc);padding-left:10px;margin-bottom:16px;font-size:1.25rem}
+h3{color:var(--pri);margin:14px 0 8px;font-size:1.05rem}
+p{line-height:1.7;margin-bottom:10px}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.formula-box{background:#e8f5e9;border:2px solid var(--pri);border-radius:8px;padding:14px;text-align:center;font-size:1.05rem;margin:12px 0}
+.formula-box .math{font-size:1.2rem;font-weight:700;color:var(--pri);margin-top:6px}
+.worked{background:#fff8e1;border-left:4px solid var(--acc);border-radius:0 8px 8px 0;padding:14px;margin:12px 0}
+.worked .step{margin:6px 0;padding-left:8px}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th{background:var(--pri);color:#fff;padding:8px;font-size:.9rem}
+td{padding:8px;border:1px solid #ddd;font-size:.9rem}
+tr:nth-child(even) td{background:#f0f7f0}
+.key-term{display:inline-block;background:#e8f5e9;border:1px solid var(--pri);border-radius:20px;padding:3px 12px;margin:4px;font-size:.88rem;font-weight:600}
+.tool-wrap{background:var(--card);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:14px}
+.inp-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.inp-row input,.inp-row select{padding:8px 10px;border:2px solid #ccc;border-radius:6px;font-size:.95rem}
+.inp-row label{font-weight:600;font-size:.9rem}
+.go-btn{background:var(--pri);color:#fff;border:none;padding:9px 20px;border-radius:6px;cursor:pointer;font-weight:600}
+.result-box{background:#e8f5e9;border-radius:8px;padding:12px;margin-top:8px;min-height:36px;font-size:.95rem;line-height:1.9}
+#nav-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid #ddd;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.dot-row{display:flex;gap:6px}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s}
+.dot.active{background:var(--pri)}.dot.done{background:var(--ok)}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:6px;cursor:pointer;font-weight:600}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed}
+.fib-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.fib-q .qtext{font-weight:600;margin-bottom:8px}
+.fib-q input{border:2px solid #ccc;border-radius:6px;padding:7px 10px;width:110px;font-size:1rem;text-align:center}
+.fib-q input.correct{border-color:var(--ok);background:#e8f5e9}
+.fib-q input.wrong{border-color:var(--no);background:#ffebee}
+.sa-q{background:var(--card);border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sa-q textarea{width:100%;border:2px solid #ccc;border-radius:6px;padding:8px;min-height:70px;resize:vertical;margin-top:8px}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.8rem;font-weight:700;margin:2px}
+.tag.found{background:#c8e6c9;color:#1b5e20}.tag.missed{background:#ffcdd2;color:#b71c1c}
+#quiz-btn{background:var(--pri);color:#fff;border:none;padding:11px 32px;border-radius:6px;cursor:pointer;font-size:1rem;font-weight:700;margin-top:8px}
+#quiz-result{margin-top:14px;padding:14px;border-radius:8px;line-height:1.9}
+.rubric{background:#f9f9f9;border:1px solid #ddd;border-radius:8px;padding:12px;margin-top:10px;font-size:.88rem}
+.rubric table td,.rubric table th{font-size:.83rem;padding:5px 8px}
+canvas{border-radius:8px;border:1px solid #ddd;background:#fff;display:block;max-width:100%}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <h1>📈 F3 Mathematics · Graphical Methods</h1>
+  <span id="slide-indicator">Slide 1 / 10</span>
+</div>
+
+<div class="slide active" id="s1">
+  <h2>Learning Outcomes</h2>
+  <div class="card"><ol style="line-height:2.1;padding-left:20px">
+    <li>Draw and interpret graphs of various relations</li>
+    <li>Solve cubic equations graphically</li>
+    <li>Calculate average rate of change from a graph</li>
+    <li>Estimate instantaneous rate of change using tangents</li>
+    <li>Draw and interpret empirical graphs (scatter plots, line of best fit)</li>
+  </ol></div>
+  <div class="card" style="background:#e8f5e9"><strong>Key Terms:</strong><br><br>
+    <span class="key-term">Rate of Change</span><span class="key-term">Gradient / Slope</span>
+    <span class="key-term">Tangent Line</span><span class="key-term">Cubic Graph</span>
+    <span class="key-term">Empirical Graph</span><span class="key-term">Line of Best Fit</span>
+    <span class="key-term">Interpolation</span><span class="key-term">Extrapolation</span>
+  </div>
+</div>
+
+<div class="slide" id="s2">
+  <h2>Tables and Graphs of Relations</h2>
+  <p>Any equation y = f(x) can be graphed by computing a table of values then plotting points.</p>
+  <div class="worked">
+    <strong>Example:</strong> y = 3√x for 0 ≤ x ≤ 9<br>
+    <table style="margin-top:8px">
+      <tr><th>x</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>9</td></tr>
+      <tr><th>y=3√x</th><td>0</td><td>3</td><td>4.24</td><td>5.20</td><td>6</td><td>6.71</td><td>9</td></tr>
+    </table>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> y = 2/x + 1 for x = 0.5 to 5<br>
+    <table>
+      <tr><th>x</th><td>0.5</td><td>1</td><td>2</td><td>4</td><td>5</td></tr>
+      <tr><th>y</th><td>5</td><td>3</td><td>2</td><td>1.5</td><td>1.4</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="slide" id="s3">
+  <h2>Interactive Function Graph</h2>
+  <div class="tool-wrap">
+    <div class="inp-row">
+      <label>Function:
+        <select id="fn-sel" onchange="drawFn()">
+          <option value="cubic">y = x³ − 3x</option>
+          <option value="sqrt">y = 3√x</option>
+          <option value="recip">y = 6/x</option>
+          <option value="quad">y = x² − 4</option>
+          <option value="custom">y = ax³ + bx² + cx + d</option>
+        </select>
+      </label>
+      <span id="custom-inputs" style="display:none">
+        a:<input id="ca" type="number" value="1" style="width:55px" oninput="drawFn()">
+        b:<input id="cb" type="number" value="0" style="width:55px" oninput="drawFn()">
+        c:<input id="cc" type="number" value="-3" style="width:55px" oninput="drawFn()">
+        d:<input id="cd" type="number" value="0" style="width:55px" oninput="drawFn()">
+      </span>
+    </div>
+    <canvas id="fn-canvas" width="700" height="320" style="max-width:100%"></canvas>
+    <div id="fn-info" style="margin-top:8px;color:var(--pri);font-size:.9rem;font-weight:600"></div>
+  </div>
+</div>
+
+<div class="slide" id="s4">
+  <h2>Solving Cubic Equations Graphically</h2>
+  <p>The roots of y = x³ + ax² + bx + c are where the curve crosses the x-axis (y = 0).</p>
+  <div class="worked">
+    <strong>Solve x³ − 3x = 0 graphically:</strong><br>
+    <div class="step">Plot y = x³ − 3x; roots are where y = 0</div>
+    <div class="step">From graph: x ≈ −1.73, 0, 1.73 (i.e. −√3, 0, √3)</div>
+  </div>
+  <div class="worked">
+    <strong>Solve x³ − 3x = 1 graphically:</strong><br>
+    <div class="step">Plot y = x³ − 3x and y = 1 on the same axes</div>
+    <div class="step">Read x-values at intersection points</div>
+  </div>
+  <div class="card" style="background:#e8f5e9">
+    <strong>Steps for graphical solution:</strong>
+    <ol style="line-height:2;padding-left:18px;margin-top:6px">
+      <li>Prepare table of values for suitable x range</li>
+      <li>Plot y = f(x) on graph paper</li>
+      <li>Draw the line y = k (constant)</li>
+      <li>Read x-coordinates of intersection points</li>
+    </ol>
+  </div>
+</div>
+
+<div class="slide" id="s5">
+  <h2>Average Rate of Change</h2>
+  <p>The <strong>average rate of change</strong> between two points is the gradient of the chord.</p>
+  <div class="formula-box">
+    <div class="math">Average rate = Δy / Δx = (y₂ − y₁) / (x₂ − x₁)</div>
+    <div style="margin-top:6px">This is the gradient of the secant line through the two points.</div>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> y = x² between x = 1 and x = 3.<br>
+    <div class="step">y₁ = 1, y₂ = 9</div>
+    <div class="step">Average rate = (9−1)/(3−1) = 8/2 = <strong>4</strong></div>
+  </div>
+</div>
+
+<div class="slide" id="s6">
+  <h2>Rate of Change at an Instant</h2>
+  <p>The <strong>instantaneous rate</strong> at a point is the gradient of the <strong>tangent</strong> at that point.</p>
+  <div class="worked">
+    <strong>Method — drawing a tangent:</strong>
+    <ol style="line-height:1.9;padding-left:18px;margin-top:8px">
+      <li>Draw the curve accurately on graph paper</li>
+      <li>At the required point, draw a tangent (touches curve at one point)</li>
+      <li>Choose two points on the tangent far apart</li>
+      <li>Compute gradient = Δy/Δx of the tangent</li>
+    </ol>
+  </div>
+  <div class="worked">
+    <strong>Example:</strong> y = x³ at x = 2. Draw tangent. From graph, tangent through (1, 5) and (3, 19).<br>
+    <div class="step">Gradient = (19−5)/(3−1) = 14/2 = <strong>7</strong></div>
+    <div class="step">(Actual dy/dx = 3x² = 12 — closer approximation needs more accurate tangent)</div>
+  </div>
+</div>
+
+<div class="slide" id="s7">
+  <h2>Empirical Graphs</h2>
+  <p>An <strong>empirical graph</strong> is drawn from experimental data. A line of best fit summarises the trend.</p>
+  <div class="card">
+    <strong>Drawing a line of best fit:</strong>
+    <ul style="line-height:2;padding-left:18px;margin-top:6px">
+      <li>Plot all data points as a scatter graph</li>
+      <li>Draw a straight line passing through the <em>mean point</em> (x̄, ȳ)</li>
+      <li>Aim to have equal numbers of points above and below the line</li>
+      <li>Use the line to interpolate (within range) or extrapolate (beyond range)</li>
+    </ul>
+  </div>
+  <div class="worked">
+    <strong>Reading the graph:</strong> From the line y = mx + c, read gradient m and y-intercept c to find the empirical relationship.
+  </div>
+</div>
+
+<div class="slide" id="s8">
+  <h2>Summary</h2>
+  <table>
+    <tr><th>Topic</th><th>Method</th></tr>
+    <tr><td>Graph any f(x)</td><td>Table of values → plot → smooth curve</td></tr>
+    <tr><td>Solve f(x)=0 graphically</td><td>Read x-intercepts</td></tr>
+    <tr><td>Solve f(x)=k graphically</td><td>Draw y=k; read intersections</td></tr>
+    <tr><td>Average rate of change</td><td>Δy/Δx between two points (chord gradient)</td></tr>
+    <tr><td>Instantaneous rate</td><td>Gradient of tangent at the point</td></tr>
+    <tr><td>Empirical graph</td><td>Scatter plot + line of best fit</td></tr>
+    <tr><td>Interpolation</td><td>Read values within data range</td></tr>
+    <tr><td>Extrapolation</td><td>Extend line beyond data range</td></tr>
+  </table>
+</div>
+
+<div class="slide" id="s9">
+  <h2>Practice Questions</h2>
+  <div class="card"><ol style="line-height:2.2;padding-left:20px">
+    <li>Draw y = x³ − 2x² − 5x + 6 for −2 ≤ x ≤ 4. Use the graph to solve x³ − 2x² − 5x + 6 = 0.</li>
+    <li>Find the average rate of change of y = 2x² between x = 1 and x = 4.</li>
+    <li>A tangent to y = x³ at x = 1 passes through (0, −2) and (2, 4). Find the instantaneous rate of change at x = 1.</li>
+    <li>Describe how you would draw a line of best fit for a scatter graph.</li>
+  </ol></div>
+</div>
+
+<div class="slide" id="s10">
+  <h2>Quiz — Graphical Methods</h2>
+  <div id="quiz-area">
+    <h3 style="color:var(--pri);margin-bottom:14px">Part A: Fill in the Blanks (1 mark each)</h3>
+    <div class="fib-q"><div class="qtext">1. The roots of y = f(x) are where the graph crosses the <input class="fib" data-ans="x-axis" id="f1" type="text"> axis</div></div>
+    <div class="fib-q"><div class="qtext">2. Average rate of change = Δy / <input class="fib" data-ans="Δx" id="f2" type="text"></div></div>
+    <div class="fib-q"><div class="qtext">3. Instantaneous rate of change = gradient of the <input class="fib" data-ans="tangent" id="f3" type="text"> at that point</div></div>
+    <div class="fib-q"><div class="qtext">4. A graph of experimental data is called an <input class="fib" data-ans="empirical" id="f4" type="text"> graph</div></div>
+    <div class="fib-q"><div class="qtext">5. Average rate of y=x² from x=2 to x=4: Δy = <input class="fib" data-ans="12" id="f5" type="text">, Δx = 2, gradient = <input class="fib" data-ans="6" id="f6" type="text"></div></div>
+    <h3 style="color:var(--pri);margin:18px 0 12px">Part B: Short Answer (2 marks each)</h3>
+    <div class="sa-q"><div class="qtext">6. Complete the table for y = x³ − 3x for x = −2, −1, 0, 1, 2. State the roots of x³ − 3x = 0.</div>
+      <textarea id="sa1" placeholder="Show working…"></textarea><div id="fb1" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">7. Find the average rate of change of y = 2x² + 1 between x = 1 and x = 3. Show all steps.</div>
+      <textarea id="sa2" placeholder="Show working…"></textarea><div id="fb2" style="margin-top:8px"></div></div>
+    <div class="sa-q"><div class="qtext">8. A tangent at x=2 on y=x³ passes through (1, 5) and (3, 17). Find the instantaneous rate of change at x=2.</div>
+      <textarea id="sa3" placeholder="Show working…"></textarea><div id="fb3" style="margin-top:8px"></div></div>
+    <button id="quiz-btn" onclick="doQuiz()">Submit Quiz</button>
+    <div id="quiz-result"></div>
+  </div>
+</div>
+
+
+<div id="nav-bar">
+  <button class="nav-btn" id="prev-btn" onclick="goSlide(-1)" disabled>◀ Prev</button>
+  <div class="dot-row" id="dot-row"></div>
+  <button class="nav-btn" id="next-btn" onclick="goSlide(1)">Next ▶</button>
+</div>
+
+<script>
+
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const dr=document.getElementById('dot-row');dr.innerHTML='';for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===cur?' active':visited.has(i)?' done':'');d.onclick=(()=>{const n=i;return()=>gotoSlide(n)})();dr.appendChild(d);}}
+function gotoSlide(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-indicator').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=n===1;document.getElementById('next-btn').disabled=n===TOTAL;buildDots();}
+function goSlide(d){gotoSlide(cur+d);}
+buildDots();
+
+
+function submitQuiz(ans_obj, sa_arr, max){
+  let ptA=0;
+  document.querySelectorAll('.fib').forEach(inp=>{
+    const g=inp.value.trim().toLowerCase().replace(/\s/g,''),e=(ans_obj[inp.id]||'').toLowerCase().replace(/\s/g,'');
+    if(g===e){inp.className='fib correct';ptA++;}else inp.className='fib wrong';
+  });
+  let ptB=0;
+  sa_arr.forEach(q=>{
+    const text=document.getElementById(q.id).value.toLowerCase();
+    const found=[],missed=[];
+    q.keys.forEach(k=>{if(text.includes(k.toLowerCase()))found.push(k);else missed.push(k);});
+    const earned=found.length>=2?2:found.length>=1?1:0;ptB+=earned;
+    document.getElementById(q.fb).innerHTML='<strong>Found:</strong> '+found.map(k=>`<span class="tag found">${k}</span>`).join('')+' <strong>Missed:</strong> '+missed.map(k=>`<span class="tag missed">${k}</span>`).join('')+`<br><em>Model:</em> ${q.model}`;
+  });
+  const total=ptA+ptB,pct=Math.round(total/max*100);
+  document.getElementById('quiz-result').innerHTML=`<div style="font-size:1.4rem;font-weight:800;text-align:center;padding:14px;border-radius:8px;background:${pct>=50?'#e8f5e9':'#ffebee'};color:${pct>=50?'#1b5e20':'#b71c1c'}">Score: ${total} / ${max} (${pct}%) ${pct>=70?'🏆 Excellent':pct>=50?'✔ Pass':'📚 Review'}</div><div class="rubric"><strong>CBC Rubric:</strong><table><tr><th>Level</th><th>Score</th></tr><tr><td>EE</td><td>${Math.round(max*0.9)}–${max}</td></tr><tr><td>ME</td><td>${Math.round(max*0.65)}–${Math.round(max*0.89)}</td></tr><tr><td>AE</td><td>${Math.round(max*0.5)}–${Math.round(max*0.64)}</td></tr><tr><td>BE</td><td>0–${Math.round(max*0.49)}</td></tr></table></div>`;
+  document.getElementById('quiz-btn').textContent='Resubmit';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);
+}
+
+
+document.getElementById('fn-sel').onchange=function(){
+  document.getElementById('custom-inputs').style.display=this.value==='custom'?'':'none';
+  drawFn();
+};
+
+function drawFn(){
+  const sel=document.getElementById('fn-sel').value;
+  const cv=document.getElementById('fn-canvas'),ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  let xMin=-4,xMax=4,yMin=-12,yMax=12,label='';
+  if(sel==='sqrt'){xMin=0;xMax=10;yMin=0;yMax=12;}
+  if(sel==='recip'){xMin=0.2;xMax=8;yMin=0;yMax=12;}
+  const px=x=>(x-xMin)/(xMax-xMin)*W;
+  const py=y=>H-(y-yMin)/(yMax-yMin)*H;
+  // grid
+  ctx.strokeStyle='#eee';ctx.lineWidth=1;
+  for(let x=Math.ceil(xMin);x<=xMax;x++){ctx.beginPath();ctx.moveTo(px(x),0);ctx.lineTo(px(x),H);ctx.stroke();}
+  for(let y=Math.ceil(yMin);y<=yMax;y+=2){ctx.beginPath();ctx.moveTo(0,py(y));ctx.lineTo(W,py(y));ctx.stroke();}
+  // axes
+  ctx.strokeStyle='#888';ctx.lineWidth=1.5;
+  if(xMin<=0&&xMax>=0){ctx.beginPath();ctx.moveTo(px(0),0);ctx.lineTo(px(0),H);ctx.stroke();}
+  if(yMin<=0&&yMax>=0){ctx.beginPath();ctx.moveTo(0,py(0));ctx.lineTo(W,py(0));ctx.stroke();}
+  // labels
+  ctx.fillStyle='#555';ctx.font='11px sans-serif';
+  for(let x=Math.ceil(xMin);x<=xMax;x+=1){if(yMin<=0&&yMax>=0&&x!==0)ctx.fillText(x,px(x)-4,py(0)+13);}
+  // curve
+  ctx.beginPath();ctx.strokeStyle='#0a5e2a';ctx.lineWidth=2.5;
+  let first=true;
+  const fn_map={
+    cubic:x=>x*x*x-3*x,
+    sqrt:x=>3*Math.sqrt(x),
+    recip:x=>6/x,
+    quad:x=>x*x-4,
+    custom:x=>{const a=+document.getElementById('ca').value||0,b2=+document.getElementById('cb').value||0,c=+document.getElementById('cc').value||0,d=+document.getElementById('cd').value||0;return a*x*x*x+b2*x*x+c*x+d;}
+  };
+  const fn=fn_map[sel];
+  const step=(xMax-xMin)/W*0.5;
+  for(let xi=xMin;xi<=xMax;xi+=step){
+    const yv=fn(xi);
+    if(!isFinite(yv)||yv<yMin||yv>yMax){first=true;continue;}
+    if(first){ctx.moveTo(px(xi),py(yv));first=false;}else ctx.lineTo(px(xi),py(yv));
+  }
+  ctx.stroke();
+  const names={cubic:'y = x³ − 3x',sqrt:'y = 3√x',recip:'y = 6/x',quad:'y = x² − 4',custom:'y = custom cubic'};
+  document.getElementById('fn-info').textContent=names[sel]+' | Use the graph to read roots (y=0 crossings)';
+}
+setTimeout(drawFn,200);
+
+function doQuiz(){
+  const ans={f1:'x-axis',f2:'Δx',f3:'tangent',f4:'empirical',f5:'12',f6:'6'};
+  const sa=[
+    {id:'sa1',fb:'fb1',keys:['−2','0','2','−√3','√3','x=0','roots'],model:'y values: x=−2→−2, x=−1→2, x=0→0, x=1→−2, x=2→2. Roots: x≈−1.73, 0, 1.73'},
+    {id:'sa2',fb:'fb2',keys:['19','3','Δy','16','8','rate'],model:'y(1)=3; y(3)=19; Δy=16; Δx=2; rate=16/2=8'],
+    {id:'sa3',fb:'fb3',keys:['6','12','gradient','17−5','3−1'],model:'gradient=(17−5)/(3−1)=12/2=6 at x=2'},
+  ];
+  submitQuiz(ans,sa,11);
+}
+
+</script>
+</body>
+</html>

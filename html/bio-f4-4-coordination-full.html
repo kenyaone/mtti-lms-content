@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Biology | Coordination</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a2e1a;--sub:#4a6a4a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{position:sticky;top:0;z-index:100;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 18px;gap:10px;box-shadow:0 2px 8px #0005;}
+#topbar .meta{font-size:.75rem;opacity:.8;}
+#topbar .title{font-weight:700;font-size:.95rem;text-align:center;flex:1;}
+#slide-counter{font-size:.78rem;background:#ffffff28;padding:3px 10px;border-radius:20px;}
+#dots{display:flex;gap:6px;justify-content:center;padding:10px 0 4px;flex-wrap:wrap;}
+.dot{width:11px;height:11px;border-radius:50%;background:#ccc;cursor:pointer;transition:.2s;}
+.dot.active{background:var(--pri);}
+.dot.done{background:var(--acc);}
+#slides-wrap{max-width:820px;margin:0 auto;padding:12px 14px 80px;}
+.slide{display:none;animation:fadeIn .35s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.slide-title{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;padding:14px 18px;border-radius:12px 12px 0 0;font-size:1.1rem;font-weight:700;}
+.slide-body{background:var(--card);border-radius:0 0 12px 12px;padding:18px;box-shadow:0 2px 12px #0001;}
+.info-card{background:#f0f7f0;border-left:4px solid var(--pri);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.warn-card{background:#fff8e1;border-left:4px solid var(--acc);border-radius:8px;padding:13px 15px;margin:12px 0;}
+.def-box{background:var(--pri);color:#fff;border-radius:10px;padding:13px 16px;margin:12px 0;font-size:.95rem;}
+h3{color:var(--pri);margin:14px 0 7px;font-size:1rem;}
+h4{color:var(--sub);margin:10px 0 5px;font-size:.93rem;}
+p,li{font-size:.93rem;line-height:1.6;margin-bottom:7px;}
+ul,ol{padding-left:20px;margin-bottom:8px;}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.84rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e8e0;}
+tr:nth-child(even) td{background:#f5faf5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+@media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+.col-card{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:13px;}
+.col-card h4{color:var(--pri);margin-top:0;}
+#nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e0e8e0;display:flex;justify-content:center;align-items:center;gap:14px;padding:10px 16px;z-index:99;}
+.btn{padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;}
+.btn-pri{background:var(--pri);color:#fff;}
+.btn-sec{background:#e8f0e8;color:var(--pri);}
+.btn-acc{background:var(--acc);color:#fff;}
+.q-block{background:#f9fbf9;border:1px solid #d0e8d0;border-radius:10px;padding:15px;margin:14px 0;}
+.q-block p{font-weight:600;margin-bottom:8px;}
+.fill-input{width:100%;padding:9px 12px;border:2px solid #cde;border-radius:7px;font-size:.92rem;margin-top:5px;}
+.fill-input:focus{outline:none;border-color:var(--pri);}
+textarea.fill-input{resize:vertical;min-height:70px;}
+.feedback{margin-top:8px;padding:8px 12px;border-radius:7px;font-size:.87rem;display:none;}
+.feedback.correct{background:#e8f5e9;border:1px solid #a5d6a7;color:var(--ok);display:block;}
+.feedback.wrong{background:#fce8e8;border:1px solid #ef9a9a;color:var(--no);display:block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.78rem;margin:2px;}
+.tag.found{background:#c8e6c9;color:#1b5e20;}
+.tag.missed{background:#ffcdd2;color:#b71c1c;}
+.rubric{background:#fff3e0;border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;}
+.rubric strong{color:#e65100;}
+#score-board{background:linear-gradient(135deg,var(--pri),#1a8a40);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:14px;}
+#score-board .big{font-size:2.5rem;font-weight:800;}
+.practice-q{background:#f0f7ff;border:1px solid #bbdefb;border-radius:9px;padding:14px;margin:12px 0;}
+.practice-q p{font-weight:600;color:#1565c0;}
+.reveal-btn{margin-top:8px;background:#1565c0;color:#fff;border:none;padding:7px 16px;border-radius:6px;cursor:pointer;font-size:.85rem;}
+.answer-reveal{display:none;margin-top:10px;background:#e3f2fd;border-radius:7px;padding:10px;font-size:.87rem;}
+.outcome-list li{margin:6px 0;padding:6px 10px;background:#f0f7f0;border-radius:6px;border-left:3px solid var(--acc);}
+/* REFLEX ARC */
+.arc-flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:12px 0;background:#f0f7f0;padding:12px;border-radius:10px;}
+.arc-step{background:var(--pri);color:#fff;padding:6px 12px;border-radius:20px;font-size:.8rem;font-weight:600;white-space:nowrap;}
+.arc-arrow{color:var(--acc);font-size:1.1rem;font-weight:700;}
+/* NEURON PARTS */
+.neuron-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0;}
+.neuron-part{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:11px;}
+.neuron-part .part-name{font-weight:700;color:var(--pri);font-size:.88rem;}
+.neuron-part .part-fn{font-size:.8rem;color:#444;margin-top:3px;}
+/* EYE PARTS */
+.eye-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.eye-part{background:#fff3e0;border:1px solid #ffcc02;border-radius:7px;padding:9px;}
+.eye-part .ep-name{font-weight:700;color:#e65100;font-size:.85rem;}
+.eye-part .ep-fn{font-size:.8rem;color:#555;margin-top:2px;}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="meta">F4 Biology</div>
+  <div class="title">🧠 Coordination — Nervous System &amp; Hormones</div>
+  <div id="slide-counter">1 / 10</div>
+</div>
+<div id="dots"></div>
+<div id="slides-wrap">
+
+<!-- S1 -->
+<div class="slide active" id="s1">
+  <div class="slide-title">🎯 Learning Outcomes</div>
+  <div class="slide-body">
+    <div class="info-card">By the end of this lesson, you should be able to:</div>
+    <ul class="outcome-list">
+      <li>Define coordination and name the two main coordination systems</li>
+      <li>Describe the structure and function of sensory, motor and relay neurons</li>
+      <li>Explain how a nerve impulse is transmitted across a synapse</li>
+      <li>State the functions of the major parts of the human brain</li>
+      <li>Describe a reflex action and distinguish it from a conditioned reflex</li>
+      <li>Name endocrine glands, their hormones and functions</li>
+      <li>Compare nervous and hormonal communication</li>
+      <li>Describe the structure of the human eye and ear and their defects</li>
+    </ul>
+    <div class="warn-card">📚 <strong>Source:</strong> Form IV Biology Notes — Topic 4: Coordination</div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="slide" id="s2">
+  <div class="slide-title">⚡ The Nervous System</div>
+  <div class="slide-body">
+    <div class="def-box">🧠 <strong>Coordination:</strong> The linking together of all physiological activities in the body so they take place at the right time and place.</div>
+    <h3>Two Main Coordination Systems</h3>
+    <div class="two-col">
+      <div class="col-card"><h4>Nervous System</h4><p>Fast, electrical signals through neurons. Short-duration response. Localised targets.</p></div>
+      <div class="col-card"><h4>Endocrine (Hormonal) System</h4><p>Slower, chemical signals through blood. Long-duration response. Widespread targets.</p></div>
+    </div>
+    <h3>Components of the Mammalian Nervous System</h3>
+    <ul>
+      <li><strong>CNS</strong> — Central Nervous System: brain &amp; spinal cord</li>
+      <li><strong>PNS</strong> — Peripheral Nervous System: cranial and spinal nerves</li>
+      <li><strong>Sense organs</strong> — receptors detecting stimuli</li>
+      <li><strong>ANS</strong> — Autonomic Nervous System: controls involuntary actions</li>
+    </ul>
+    <h3>Receptors, Conductors &amp; Effectors</h3>
+    <table>
+      <tr><th>Component</th><th>Definition</th><th>Examples</th></tr>
+      <tr><td>Receptors</td><td>Structures that detect stimuli</td><td>Sense organs (eye, ear, skin)</td></tr>
+      <tr><td>Conductors</td><td>Transmit impulses from receptors to effectors</td><td>Neurons (nerve cells)</td></tr>
+      <tr><td>Effectors</td><td>Responding parts</td><td>Muscles, glands</td></tr>
+    </table>
+    <h3>Somatic vs Autonomic Nervous System</h3>
+    <div class="two-col">
+      <div class="col-card"><h4>Somatic (Voluntary)</h4><p>Controls conscious/voluntary actions — skin, bones, joints, skeletal muscles.</p></div>
+      <div class="col-card"><h4>Autonomic (Involuntary)</h4><p>Controls involuntary actions — digestive system, blood vessels, cardiac muscle, glands.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="slide" id="s3">
+  <div class="slide-title">🔬 Neurons &amp; Nerve Impulse Transmission</div>
+  <div class="slide-body">
+    <div class="def-box">🔬 <strong>Neuron (Nerve Cell):</strong> The basic structural and functional unit of the nervous system. Conducts nerve impulses.</div>
+
+    <h3>Parts of a Neuron &amp; Their Functions</h3>
+    <div class="neuron-grid">
+      <div class="neuron-part"><div class="part-name">Cell body (Centron)</div><div class="part-fn">Contains nucleus and cytoplasm; metabolic centre</div></div>
+      <div class="neuron-part"><div class="part-name">Axon</div><div class="part-fn">Transmits impulses AWAY from cell body</div></div>
+      <div class="neuron-part"><div class="part-name">Dendrites</div><div class="part-fn">Relay impulses TOWARD cell body / across adjacent neurons</div></div>
+      <div class="neuron-part"><div class="part-name">Myelin Sheath</div><div class="part-fn">Insulates axon; speeds up impulse transmission</div></div>
+      <div class="neuron-part"><div class="part-name">Schwann Cells</div><div class="part-fn">Form myelin sheath; aid nutrition and regeneration of axon</div></div>
+      <div class="neuron-part"><div class="part-name">Nodes of Ranvier</div><div class="part-fn">Gaps between Schwann cells; speed up impulse (saltatory conduction)</div></div>
+      <div class="neuron-part"><div class="part-name">Nissl Granules</div><div class="part-fn">Contain mitochondria; provide energy for metabolic processes</div></div>
+    </div>
+
+    <h3>Three Types of Neurons</h3>
+    <table>
+      <tr><th>Type</th><th>Direction of impulse</th><th>Location</th></tr>
+      <tr><td>Sensory neuron</td><td>Receptors → CNS</td><td>Outside CNS; bipolar (cell body on axon)</td></tr>
+      <tr><td>Motor neuron</td><td>CNS → Effectors</td><td>Cell body inside CNS (terminal)</td></tr>
+      <tr><td>Relay/Interneuron</td><td>Within CNS</td><td>Inside CNS; usually no myelin sheath</td></tr>
+    </table>
+
+    <h3>Impulse Transmission Across a Synapse</h3>
+    <div class="arc-flow">
+      <span class="arc-step">Impulse arrives at synaptic knob</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Vesicles release acetylcholine</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Diffuses across synaptic cleft</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Attaches to post-synaptic membrane</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Depolarisation → new impulse</span>
+    </div>
+    <h3>Functions of a Synapse</h3>
+    <ul>
+      <li>Allows transmission of impulses from one neuron to the next</li>
+      <li>Ensures impulses travel in <strong>ONE direction only</strong></li>
+      <li>In the brain, synapses store information/<strong>memory</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="slide" id="s4">
+  <div class="slide-title">🧠 The Human Brain &amp; Reflex Actions</div>
+  <div class="slide-body">
+    <h3>Parts of the Brain &amp; Their Functions</h3>
+    <table>
+      <tr><th>Part</th><th>Key Functions</th></tr>
+      <tr><td><strong>Cerebrum (Forebrain)</strong></td><td>Largest part. Controls: thinking, memory, learning, speech, personality, vision, touch. Contains thalamus (sorts sensory info) and hypothalamus (hunger, body temp, heartbeat).</td></tr>
+      <tr><td>Temporal lobe</td><td>Taste, smell, hearing, learning, memory</td></tr>
+      <tr><td>Parietal lobe</td><td>Sensory output, touch</td></tr>
+      <tr><td>Occipital lobe</td><td>Vision, motor output, speech</td></tr>
+      <tr><td>Frontal lobe</td><td>Personality, learning, thought, speech</td></tr>
+      <tr><td><strong>Midbrain</strong></td><td>Small in humans; relay centre for audio and visual info; orientation responses</td></tr>
+      <tr><td><strong>Cerebellum</strong></td><td>Coordinates impulses, posture, balance, motor coordination, muscle tone</td></tr>
+      <tr><td><strong>Medulla Oblongata</strong></td><td>Controls heartbeat, blood pressure, breathing rate, coughing, sneezing</td></tr>
+    </table>
+
+    <h3>Reflex Action</h3>
+    <div class="def-box">⚡ <strong>Reflex Action:</strong> An automatic, involuntary response to an external stimulus (e.g. withdrawing hand from hot object, sneezing).</div>
+    <h4>Reflex Arc — Withdrawal from Hot Object</h4>
+    <div class="arc-flow">
+      <span class="arc-step">Skin receptor stimulated</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Sensory neuron</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Synapse</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Relay neuron (spinal cord)</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Motor neuron</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Effector muscle contracts</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Hand withdrawn</span>
+    </div>
+
+    <h3>Conditioned Reflex</h3>
+    <div class="info-card"><strong>Conditioned reflex:</strong> A response caused by an <em>associated</em> stimulus that substitutes the normal stimulus. It is learned (e.g. Pavlov's dogs salivating at a bell). Involves spinal cord + specialised brain centres.</div>
+    <table>
+      <tr><th>Simple Reflex</th><th>Conditioned Reflex</th></tr>
+      <tr><td>Independent of experience</td><td>Dependent on experience (learned)</td></tr>
+      <tr><td>One stimulus evokes response</td><td>Substitute + original stimulus evoke response</td></tr>
+      <tr><td>Reflex is simple</td><td>Reflex is modified</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="slide" id="s5">
+  <div class="slide-title">⚗️ Endocrine System — Hormones</div>
+  <div class="slide-body">
+    <div class="def-box">⚗️ <strong>Endocrine Glands:</strong> Ductless glands that secrete hormones directly into the bloodstream. Hormones are chemical substances that coordinate body functions.</div>
+    <h3>Main Endocrine Glands, Hormones &amp; Functions</h3>
+    <table>
+      <tr><th>Gland</th><th>Hormone</th><th>Function</th></tr>
+      <tr><td>Thyroid</td><td>Thyroxine</td><td>Increases rate of metabolism</td></tr>
+      <tr><td>Parathyroid</td><td>Parathyroid hormone</td><td>Regulates calcium &amp; phosphate levels</td></tr>
+      <tr><td rowspan="6">Pituitary ("master gland")</td><td>Growth hormone</td><td>Regulates body growth</td></tr>
+      <tr><td>Gonadotrophic hormone</td><td>Stimulates development of sex organs</td></tr>
+      <tr><td>Prolactin (lactogenic)</td><td>Stimulates milk secretion after childbirth</td></tr>
+      <tr><td>TSH (Thyrotropic)</td><td>Proper functioning of thyroid gland</td></tr>
+      <tr><td>FSH</td><td>Egg maturation in females; sperm production in males</td></tr>
+      <tr><td>ADH (Vasopressin)</td><td>Regulates water balance in kidneys</td></tr>
+      <tr><td rowspan="3">Adrenal</td><td>Adrenaline (epinephrine)</td><td>Fight/flight response; prepares body for stress</td></tr>
+      <tr><td>Aldosterone</td><td>Maintains salt and water balance in blood</td></tr>
+      <tr><td>Cortisone</td><td>Breaks down proteins; regulates blood sugar; prevents inflammation</td></tr>
+      <tr><td rowspan="2">Pancreas</td><td>Insulin</td><td>Lowers blood sugar; enables liver to store glycogen</td></tr>
+      <tr><td>Glucagon</td><td>Raises blood sugar level</td></tr>
+      <tr><td rowspan="2">Ovaries</td><td>Oestrogen</td><td>Secondary sexual characteristics in females; prepares uterus</td></tr>
+      <tr><td>Progesterone</td><td>Maintains uterus lining during pregnancy</td></tr>
+      <tr><td>Testes</td><td>Testosterone (androgens)</td><td>Secondary sexual characteristics in males</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="slide" id="s6">
+  <div class="slide-title">⚡ Nervous vs Hormonal Communication &amp; Drug Abuse</div>
+  <div class="slide-body">
+    <h3>Differences: Nervous vs Endocrine Systems</h3>
+    <table>
+      <tr><th>Feature</th><th>Nervous System</th><th>Hormonal (Endocrine)</th></tr>
+      <tr><td>Speed</td><td>Very rapid</td><td>Slower</td></tr>
+      <tr><td>Transmission</td><td>Electrical (nerve impulses)</td><td>Chemical (through blood)</td></tr>
+      <tr><td>Target</td><td>Localised (specific effectors)</td><td>Widespread (various organs)</td></tr>
+      <tr><td>Duration</td><td>Short-lasting</td><td>Longer-lasting</td></tr>
+      <tr><td>Medium</td><td>Neurons/nerve cells</td><td>Bloodstream</td></tr>
+    </table>
+
+    <h3>Effects of Over/Under Secretion of Hormones</h3>
+    <table>
+      <tr><th>Hormone</th><th>Over-secretion</th><th>Under-secretion</th></tr>
+      <tr><td>Thyroxine</td><td>↑ metabolism, ↑ heartbeat, restlessness, protruding eyeballs, enlarged thyroid</td><td>Cretinism (dwarfism + low mental development), lowered metabolism, low temperature</td></tr>
+      <tr><td>Adrenaline</td><td>High blood pressure, obesity, early sexual development</td><td>Low blood pressure, fatigue, muscular weakness, inability to withstand stress</td></tr>
+    </table>
+
+    <h3>Drug Abuse</h3>
+    <div class="def-box">💊 <strong>Drug:</strong> A substance that causes a change in body function. <strong>Drug abuse:</strong> Indiscriminate/wrong use of drugs without minding side effects.</div>
+    <table>
+      <tr><th>Type</th><th>Effect</th><th>Examples</th><th>Abuse effects</th></tr>
+      <tr><td>Sedatives (depressants)</td><td>Decrease CNS activity</td><td>Alcohol, barbiturates, tranquilizers</td><td>Anxiety, delirium, death</td></tr>
+      <tr><td>Hallucinogens</td><td>Alter perception</td><td>LSD, bhang, cannabis, valium</td><td>Confusion, violent behaviour, suicide</td></tr>
+      <tr><td>Stimulants</td><td>Increase CNS activity</td><td>Cocaine, caffeine, miraa, nicotine</td><td>Hallucination, addiction, persecution</td></tr>
+      <tr><td>Pain killers</td><td>Suppress pain centres</td><td>Morphine, codeine</td><td>Addiction, organ damage</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="slide" id="s7">
+  <div class="slide-title">👁️ The Human Eye</div>
+  <div class="slide-body">
+    <div class="def-box">👁️ <strong>Accommodation:</strong> The ability of the eye to adjust to bring an image from a near or far object into sharp focus on the retina.</div>
+    <h3>Parts of the Eye &amp; Their Functions</h3>
+    <div class="eye-grid">
+      <div class="eye-part"><div class="ep-name">Cornea</div><div class="ep-fn">Transparent, curved → refracts light rays into eye</div></div>
+      <div class="eye-part"><div class="ep-name">Iris</div><div class="ep-fn">Coloured part; radial + circular muscles control pupil size</div></div>
+      <div class="eye-part"><div class="ep-name">Pupil</div><div class="ep-fn">Opening in iris; controls amount of light entering</div></div>
+      <div class="eye-part"><div class="ep-name">Lens</div><div class="ep-fn">Biconvex, elastic; refracts light; changes shape for focus</div></div>
+      <div class="eye-part"><div class="ep-name">Ciliary body/muscles</div><div class="ep-fn">Contract/relax to change lens shape for accommodation</div></div>
+      <div class="eye-part"><div class="ep-name">Retina</div><div class="ep-fn">Contains rods (dim light) and cones (colour/bright light)</div></div>
+      <div class="eye-part"><div class="ep-name">Yellow spot (Fovea)</div><div class="ep-fn">High concentration of cones → sharpest vision</div></div>
+      <div class="eye-part"><div class="ep-name">Blind spot</div><div class="ep-fn">No rods/cones; where optic nerve exits</div></div>
+      <div class="eye-part"><div class="ep-name">Choroid</div><div class="ep-fn">Black pigment → prevents internal reflection; blood supply</div></div>
+      <div class="eye-part"><div class="ep-name">Sclera</div><div class="ep-fn">White, tough outer layer → maintains eye shape</div></div>
+    </div>
+
+    <h3>Eye Defects &amp; Corrections</h3>
+    <table>
+      <tr><th>Defect</th><th>Problem</th><th>Correction</th></tr>
+      <tr><td>Myopia (short sight)</td><td>Image forms IN FRONT of retina; lens too thick; eyeball too long</td><td>Concave (biconcave) lenses</td></tr>
+      <tr><td>Hypermetropia (long sight)</td><td>Image forms BEHIND retina; lens too flat/thin</td><td>Convex (biconvex) lenses</td></tr>
+      <tr><td>Presbyopia (old sight)</td><td>Loss of lens elasticity in old age → long sight</td><td>Convex/biconvex lenses</td></tr>
+      <tr><td>Astigmatism</td><td>Uneven cornea surface → weak focus</td><td>Cylindrical lenses</td></tr>
+      <tr><td>Squinting</td><td>Uncoordinated eye muscles</td><td>Surgery</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="slide" id="s8">
+  <div class="slide-title">👂 The Human Ear</div>
+  <div class="slide-body">
+    <div class="def-box">👂 The ear has TWO functions: <strong>Hearing</strong> and <strong>Balance</strong>.</div>
+    <h3>How the Ear Performs Hearing</h3>
+    <div class="arc-flow">
+      <span class="arc-step">Pinna collects sound waves</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Auditory canal directs to eardrum</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Eardrum vibrates</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Ossicles (malleus, incus, stapes) amplify</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Oval window → cochlea fluid vibrates</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Sensory hairs stimulated → impulses</span><span class="arc-arrow">→</span>
+      <span class="arc-step">Auditory nerve → brain for interpretation</span>
+    </div>
+    <div class="info-card"><strong>Eustachian tube:</strong> Connects middle ear to throat — equalises air pressure between middle ear and atmosphere.</div>
+    <div class="info-card"><strong>Round window (Fenestra rotunda):</strong> Dissipates vibrations from inner ear to middle ear.</div>
+
+    <h3>How the Ear Maintains Balance</h3>
+    <ul>
+      <li>Three <strong>semi-circular canals</strong> arranged at right angles to each other</li>
+      <li>Each canal has an <strong>ampulla</strong> with sensory receptors (hair cells)</li>
+      <li>Head movement causes <strong>endolymph</strong> to move in one or more canals</li>
+      <li>Fluid movement stimulates sensory hairs → impulses generated</li>
+      <li><strong>Auditory nerve</strong> transmits impulses to brain for interpretation of body position/balance</li>
+    </ul>
+
+    <h3>What Happens if the Auditory Nerve is Damaged?</h3>
+    <ul>
+      <li>Deafness (no sound interpretation)</li>
+      <li>Loss of body balance</li>
+      <li>Impulses not transmitted to brain</li>
+    </ul>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="slide" id="s9">
+  <div class="slide-title">✏️ Practice Questions</div>
+  <div class="slide-body">
+    <div class="practice-q">
+      <p>1. State the function of the myelin sheath in a neuron. What happens at the nodes of Ranvier?</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Myelin sheath:</strong> Insulates the axon and speeds up the transmission of nerve impulses.<br><strong>Nodes of Ranvier:</strong> Gaps between Schwann cells where the axon is not covered. Impulses "jump" from node to node (saltatory conduction), which greatly speeds up impulse transmission.</div>
+    </div>
+    <div class="practice-q">
+      <p>2. Describe the pathway of a reflex action when a person touches a hot object.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">1. Heat receptors in skin are stimulated → 2. Sensory neuron carries impulse to spinal cord → 3. Impulse crosses synapse to relay neuron (in grey matter) → 4. Motor neuron carries impulse to effector muscle → 5. Muscle contracts → 6. Hand is withdrawn. All this happens without conscious thought.</div>
+    </div>
+    <div class="practice-q">
+      <p>3. Explain the accommodation of the eye when focusing from a far object to a near object.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">For near objects: <strong>Ciliary muscles CONTRACT</strong> → tension in suspensory ligaments REDUCES → lens BULGES/thickens (increases curvature) → radial muscles contract, circular muscles relax → pupil enlarges to allow more light. The thicker, more curved lens bends light more sharply to focus it on the retina.</div>
+    </div>
+    <div class="practice-q">
+      <p>4. State THREE differences between nervous and hormonal communication.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal">1. Speed: Nervous is rapid; hormonal is slower.<br>2. Transmission: Nervous is electrical through neurons; hormonal is chemical through blood.<br>3. Duration: Nervous response is short-lasting; hormonal response persists longer.<br>4. Target: Nervous response is localised; hormonal is widespread.</div>
+    </div>
+    <div class="practice-q">
+      <p>5. A person is suffering from cretinism. Which gland is malfunctioning and which hormone is deficient? State TWO effects of this condition.</p>
+      <button class="reveal-btn" onclick="reveal(this)">Show Answer</button>
+      <div class="answer-reveal"><strong>Gland:</strong> Thyroid gland. <strong>Hormone deficient:</strong> Thyroxine (under-secretion).<br>Effects: (1) Retarded growth (dwarfism); (2) Low mental development/intelligence; (3) Lowered metabolism; (4) Low body temperature; (5) Coarse hair and puffy eyes.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 -->
+<div class="slide" id="s10">
+  <div class="slide-title">📝 Quiz — Coordination</div>
+  <div class="slide-body">
+    <div class="q-block">
+      <p>Q1. The basic unit of the nervous system is called a ____________.</p>
+      <input class="fill-input" id="q1" placeholder="Type your answer..."/>
+      <div class="feedback" id="f1"></div>
+    </div>
+    <div class="q-block">
+      <p>Q2. The neurotransmitter substance released at a synapse is called ____________.</p>
+      <input class="fill-input" id="q2" placeholder="Type your answer..."/>
+      <div class="feedback" id="f2"></div>
+    </div>
+    <div class="q-block">
+      <p>Q3. Short-sightedness (myopia) is corrected using ____________ lenses, while long-sightedness is corrected using ____________ lenses.</p>
+      <input class="fill-input" id="q3" placeholder="Type both answers..."/>
+      <div class="feedback" id="f3"></div>
+    </div>
+    <div class="q-block">
+      <p>Q4. The hormone produced by the pancreas that lowers blood sugar is ____________.</p>
+      <input class="fill-input" id="q4" placeholder="Type your answer..."/>
+      <div class="feedback" id="f4"></div>
+    </div>
+    <div class="q-block">
+      <p>Q5. Name the part of the brain that controls heartbeat, blood pressure and breathing rate.</p>
+      <input class="fill-input" id="q5" placeholder="Type your answer..."/>
+      <div class="feedback" id="f5"></div>
+    </div>
+    <div class="q-block">
+      <p>Q6 (Short Answer): Explain how the human ear is adapted to perform the function of hearing. Describe the pathway of sound from the pinna to the brain.</p>
+      <textarea class="fill-input" id="q6" placeholder="Write your explanation..."></textarea>
+      <div class="feedback" id="f6"></div>
+    </div>
+    <div class="q-block">
+      <p>Q7 (Short Answer): Describe how an impulse is transmitted across a synapse. State THREE functions of a synapse.</p>
+      <textarea class="fill-input" id="q7" placeholder="Write your answer..."></textarea>
+      <div class="feedback" id="f7"></div>
+    </div>
+    <button class="btn btn-acc" onclick="submitExam()" style="width:100%;margin-top:10px;padding:13px;font-size:1rem;">✅ Submit Quiz</button>
+    <div id="score-area"></div>
+  </div>
+</div>
+</div>
+<div id="nav">
+  <button class="btn btn-sec" id="prevBtn" onclick="changeSlide(-1)" disabled>◀ Prev</button>
+  <button class="btn btn-pri" id="nextBtn" onclick="changeSlide(1)">Next ▶</button>
+</div>
+<script>
+const TOTAL=10;let current=1;
+function buildDots(){const c=document.getElementById('dots');for(let i=1;i<=TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');d.onclick=()=>goTo(i);d.id='dot'+i;c.appendChild(d);}}
+function goTo(n){document.querySelector('.slide.active').classList.remove('active');document.getElementById('s'+n).classList.add('active');document.getElementById('dot'+current).classList.remove('active');if(current<n)document.getElementById('dot'+current).classList.add('done');current=n;document.getElementById('dot'+current).classList.add('active');document.getElementById('slide-counter').textContent=current+' / '+TOTAL;document.getElementById('prevBtn').disabled=current===1;document.getElementById('nextBtn').disabled=current===TOTAL;window.scrollTo(0,0);}
+function changeSlide(d){goTo(Math.min(Math.max(1,current+d),TOTAL));}
+function reveal(btn){const ans=btn.nextElementSibling;ans.style.display=ans.style.display==='block'?'none':'block';btn.textContent=ans.style.display==='block'?'Hide Answer':'Show Answer';}
+const ANSWERS={q1:{kw:['neuron','neurone','nerve cell'],pts:2},q2:{kw:['acetylcholine'],pts:2},q3:{kw:['concave','convex'],pts:2,need:2},q4:{kw:['insulin'],pts:2},q5:{kw:['medulla oblongata','medulla'],pts:2}};
+function checkFill(id,fb,data){const val=document.getElementById(id).value.trim().toLowerCase();if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).textContent='Please write an answer.';return 0;}const found=data.kw.filter(k=>val.includes(k.toLowerCase()));const need=data.need||1;const got=Math.min(found.length>=need?data.pts:Math.floor((found.length/need)*data.pts),data.pts);const tags=data.kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');document.getElementById(fb).innerHTML=`Keywords: ${tags}`;document.getElementById(fb).className='feedback '+(found.length>=need?'correct':'wrong');return got;}
+function scoreShort(id,fb,kw,pts,rubric){const val=document.getElementById(id).value.trim().toLowerCase();if(!val){document.getElementById(fb).className='feedback wrong';document.getElementById(fb).innerHTML='Please write an answer.';return 0;}const found=kw.filter(k=>val.includes(k.toLowerCase()));const tags=kw.map(k=>`<span class="tag ${val.includes(k.toLowerCase())?'found':'missed'}">${k}</span>`).join('');const score=Math.min(Math.round((found.length/kw.length)*pts),pts);document.getElementById(fb).innerHTML=`Keywords found: ${tags}<div class="rubric"><strong>Model Answer:</strong> ${rubric}</div>`;document.getElementById(fb).className='feedback '+(score>=Math.ceil(pts/2)?'correct':'wrong');return score;}
+function submitExam(){let total=0,max=0;
+total+=checkFill('q1','f1',ANSWERS.q1);max+=ANSWERS.q1.pts;
+total+=checkFill('q2','f2',ANSWERS.q2);max+=ANSWERS.q2.pts;
+total+=checkFill('q3','f3',ANSWERS.q3);max+=ANSWERS.q3.pts;
+total+=checkFill('q4','f4',ANSWERS.q4);max+=ANSWERS.q4.pts;
+total+=checkFill('q5','f5',ANSWERS.q5);max+=ANSWERS.q5.pts;
+total+=scoreShort('q6','f6',['pinna','auditory canal','eardrum','ossicles','malleus','incus','stapes','oval window','cochlea','sensory hair','auditory nerve','brain','amplify','vibration'],4,'Pinna collects sound waves → auditory canal directs them to eardrum → eardrum vibrates → ear ossicles (malleus, incus, stapes) amplify vibrations → oval window transmits vibrations to cochlea fluids → sensory hair cells in cochlea are stimulated → nerve impulses generated in auditory nerve → transmitted to brain for interpretation as sound.');max+=4;
+total+=scoreShort('q7','f7',['impulse','synaptic knob','vesicle','acetylcholine','diffuses','synaptic cleft','post-synaptic','depolarized','one direction','memory','neuron to neuron'],4,'Transmission: Impulse arrives at synaptic knob → vesicles move to pre-synaptic membrane → acetylcholine released into synaptic cleft → diffuses across cleft → attaches to post-synaptic membrane → depolarisation generates new action potential in next neuron.\n\nFunctions: (1) Allows transmission of impulses from neuron to neuron (2) Ensures impulses travel in ONE direction only (3) Store information/memory in the brain.');max+=4;
+const pct=Math.round((total/max)*100);const grade=pct>=80?'Excellent! 🏆':pct>=60?'Good Work! 👍':pct>=40?'Keep Practising 📚':'Review the lesson 🔄';
+document.getElementById('score-area').innerHTML=`<div id="score-board"><div class="big">${total}/${max}</div><div style="font-size:1.3rem;font-weight:700;margin:6px 0">${pct}%</div><div style="font-size:1rem;opacity:.9">${grade}</div><div style="font-size:.8rem;opacity:.75;margin-top:8px">CBC Rubric: 80–100% = Exceeding | 60–79% = Meeting | 40–59% = Approaching | Below 40% = Below</div></div>`;
+if(typeof submitExamToMTTI==='function')submitExamToMTTI(total,max,pct);}
+buildDots();
+</script>
+</body>
+</html>

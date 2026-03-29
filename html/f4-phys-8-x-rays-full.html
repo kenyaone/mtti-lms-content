@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F4 Physics | X-Rays</title>
+<style>
+:root{--pri:#0a5e2a;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f6f4;--card:#fff;--txt:#1a1a1a;--muted:#555;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;}
+#topbar{background:var(--pri);color:#fff;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+#topbar h2{font-size:1rem;font-weight:700;}#topbar .meta{font-size:.78rem;opacity:.85;}
+#progress-bar{height:4px;background:rgba(255,255,255,.2);}
+#progress-fill{height:100%;background:var(--acc);transition:width .4s;}
+.slide{display:none;padding:22px 18px 30px;max-width:860px;margin:0 auto;animation:fadeIn .3s ease;}
+.slide.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide-label{background:var(--pri);color:#fff;display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;margin-bottom:10px;}
+h1{font-size:1.45rem;color:var(--pri);margin-bottom:14px;}
+h2{font-size:1.1rem;color:var(--pri);margin:16px 0 8px;border-left:4px solid var(--acc);padding-left:10px;}
+h3{font-size:.95rem;color:#333;margin:12px 0 6px;}
+p,li{font-size:.9rem;line-height:1.6;color:#333;margin-bottom:6px;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+.card{background:var(--card);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid #e0e8e0;}
+.highlight{background:#e8f5e9;border-left:4px solid var(--ok);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.warn{background:#fff8e1;border-left:4px solid var(--acc);padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.88rem;}
+.formula{background:#e3f2fd;border:1px solid #90caf9;border-radius:8px;padding:12px 16px;font-family:monospace;font-size:1rem;text-align:center;margin:10px 0;}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.85rem;}
+th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left;}
+td{padding:7px 10px;border-bottom:1px solid #e0e0e0;}
+tr:nth-child(even) td{background:#f9fdf9;}
+.quiz-wrap{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:18px;margin-bottom:16px;}
+.quiz-wrap h2{color:var(--pri);border-left:4px solid var(--acc);margin-bottom:14px;}
+.q-block{margin-bottom:18px;}
+.q-text{font-weight:600;font-size:.9rem;margin-bottom:8px;}
+.q-text span{color:var(--pri);}
+input[type=text]{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;}
+.q-sa textarea{width:100%;padding:8px 12px;border:2px solid #c8e6c9;border-radius:6px;font-size:.88rem;min-height:80px;resize:vertical;}
+.q-fb{font-size:.82rem;margin-top:6px;padding:6px 10px;border-radius:6px;display:none;}
+.q-fb.ok{background:#e8f5e9;color:var(--ok);display:block;}
+.q-fb.no{background:#ffebee;color:var(--no);display:block;}
+.submit-btn{background:var(--pri);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:8px;}
+.submit-btn:hover{background:#0d7a37;}
+.score-box{background:#e8f5e9;border:2px solid var(--ok);border-radius:10px;padding:16px;text-align:center;margin-top:16px;display:none;}
+.score-box h3{color:var(--ok);font-size:1.3rem;}
+#nav{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;max-width:860px;margin:0 auto;}
+.nav-btn{background:var(--pri);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:.88rem;font-weight:700;cursor:pointer;}
+.nav-btn:hover{background:#0d7a37;}
+.nav-btn:disabled{background:#aaa;cursor:not-allowed;}
+#slide-counter{font-size:.85rem;color:var(--muted);}
+#dots{display:flex;gap:6px;justify-content:center;padding:8px;}
+.dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;}
+.dot.active{background:var(--pri);}
+</style>
+</head>
+<body>
+<div id="topbar"><h2>⚡ F4 Physics — Ch.8: X-Rays</h2><span class="meta">MTTI LMS | Form 4</span></div>
+<div id="progress-bar"><div id="progress-fill" style="width:10%"></div></div>
+<div id="dots"></div>
+
+<div class="slide active" id="s1"><span class="slide-label">SLIDE 1 OF 10</span><h1>📚 Learning Outcomes</h1><div class="card"><ol><li>Describe production of X-rays in an X-ray tube</li><li>Explain energy changes in an X-ray tube</li><li>State properties of X-rays</li><li>Distinguish hard and soft X-rays</li><li>State uses and dangers of X-rays</li><li>Solve problems using E=hf and hf<sub>max</sub>=eV</li></ol></div><div class="highlight">🔑 E=hf | hf<sub>max</sub>=eV | (hc)/λ<sub>min</sub>=eV | h=6.63×10⁻³⁴ Js</div></div>
+
+<div class="slide" id="s2"><span class="slide-label">SLIDE 2 OF 10</span><h1>☢️ Production of X-rays</h1><div class="card"><p>Discovered by <strong>Wilhelm Röntgen</strong> in 1895. Named "X-rays" meaning "unknown rays".</p><h2>X-ray Tube</h2><ul><li><strong>Cathode</strong> — tungsten filament (thermionic emission)</li><li><strong>Anode</strong> (target) — solid copper with tungsten target</li><li>High PD maintained: 10 kV to 1,000 kV</li><li>Electrons accelerated → hit tungsten target → produce X-rays</li><li>Only <strong>0.2% of energy</strong> becomes X-rays (rest = heat)</li><li>Cooling oil circulates through anode</li><li>Lead shield absorbs stray X-rays</li></ul></div></div>
+
+<div class="slide" id="s3"><span class="slide-label">SLIDE 3 OF 10</span><h1>⚡ Energy Changes in X-ray Tube</h1><div class="card"><h2>Energy Equations</h2><div class="formula">Electrical energy gained: E = eV</div><div class="formula">Kinetic energy: eV = ½m<sub>e</sub>v²</div><div class="formula">Maximum frequency: hf<sub>max</sub> = eV</div><div class="formula">Minimum wavelength: (hc)/λ<sub>min</sub> = eV</div><p><strong>h</strong> = 6.63×10⁻³⁴ Js (Planck's constant)</p><p>Lower frequencies when electrons make multiple collisions.</p></div></div>
+
+<div class="slide" id="s4"><span class="slide-label">SLIDE 4 OF 10</span><h1>✏️ Worked Examples</h1><div class="card"><h2>Example 1 — Energy</h2><p>X-ray frequency f = 4×10¹⁷ Hz. Find energy.</p><p>E = hf = 6.63×10⁻³⁴ × 4×10¹⁷ = <strong>2.65×10⁻¹⁶ J</strong></p></div><div class="card"><h2>Example 2 — Speed</h2><p>X-ray tube at 60 kV, current 4 mA. Find (a) electrons/sec, (b) speed at target.</p><p>(a) n = I/e = 4×10⁻³/1.6×10⁻¹⁹ = <strong>2.5×10¹⁶ e/s</strong></p><p>(b) ½mv² = eV → v = √(2eV/m) = <strong>2.13×10⁸ m/s</strong></p></div><div class="card"><h2>Example 3 — Min Wavelength</h2><p>18 kV tube. Find λ<sub>min</sub>.</p><p>λ<sub>min</sub> = hc/eV = (6.6×10⁻³⁴×3×10⁸)/(1.6×10⁻¹⁹×18000) = <strong>6.9×10⁻¹¹ m</strong></p></div></div>
+
+<div class="slide" id="s5"><span class="slide-label">SLIDE 5 OF 10</span><h1>🔍 Properties of X-rays</h1><div class="card"><ol><li>Travel in straight lines</li><li>Undergo reflection and diffraction</li><li><strong>Not deflected</strong> by electric or magnetic fields (uncharged)</li><li>Ionize gases → cause conduction</li><li>Affect photographic films</li><li>Highly penetrating — pass through paper, metal foils, soft tissue</li><li>Cause fluorescence (e.g. barium platinocyanide)</li></ol></div></div>
+
+<div class="slide" id="s6"><span class="slide-label">SLIDE 6 OF 10</span><h1>⚡ Hard vs Soft X-rays</h1><div class="card"><table><tr><th>Type</th><th>Wavelength</th><th>Penetration</th><th>Use</th></tr><tr><td><strong>Hard X-rays</strong></td><td>10⁻¹¹–10⁻⁸ m (short)</td><td>High — penetrate flesh but absorbed by bones</td><td>Bone imaging, security</td></tr><tr><td><strong>Soft X-rays</strong></td><td>Upper range (long)</td><td>Low — only soft tissue</td><td>Showing malignant growth in tissues</td></tr></table></div></div>
+
+<div class="slide" id="s7"><span class="slide-label">SLIDE 7 OF 10</span><h1>🏥 Uses & Dangers</h1><div class="card"><h2>Uses of X-rays</h2><ul><li><strong>Medicine</strong> — radiographs (diagnosis), radiotherapy (cancer treatment)</li><li><strong>Industry</strong> — detect cracks in metal castings and welds</li><li><strong>Science</strong> — X-ray crystallography (atomic structure)</li><li><strong>Security</strong> — detect weapons and explosives at airports</li></ul><h2>Dangers</h2><ul><li>Destroy or damage living cells when overexposed</li><li>Can cause genetic mutations</li><li>Precaution: X-ray tubes shielded by lead</li></ul></div></div>
+
+<div class="slide" id="s8"><span class="slide-label">SLIDE 8 OF 10</span><h1>📊 X-ray Tube Components</h1><div class="card"><table><tr><th>Component</th><th>Function</th></tr><tr><td>Tungsten filament (cathode)</td><td>Emits electrons by thermionic emission</td></tr><tr><td>Anode (copper + tungsten)</td><td>Target — receives electrons → produces X-rays</td></tr><tr><td>High PD source</td><td>Accelerates electrons to high KE</td></tr><tr><td>Cooling oil</td><td>Removes excess heat from anode</td></tr><tr><td>Lead shield</td><td>Absorbs stray X-rays</td></tr><tr><td>Evacuated tube</td><td>Prevents collisions with air molecules</td></tr></table></div></div>
+
+<div class="slide" id="s9"><span class="slide-label">SLIDE 9 OF 10</span><h1>🧪 Practice Problems</h1><div class="card"><h3>P1. An X-ray tube operates at 30 kV. Find (a) maximum frequency of X-rays, (b) minimum wavelength.</h3><div class="highlight">(a) f<sub>max</sub>=eV/h=(1.6×10⁻¹⁹×30000)/(6.63×10⁻³⁴)=7.24×10¹⁸ Hz<br>(b) λ<sub>min</sub>=hc/eV=6.63×10⁻³⁴×3×10⁸/(1.6×10⁻¹⁹×30000)=4.14×10⁻¹¹ m</div></div><div class="card"><h3>P2. Why is only 0.2% of energy converted to X-rays?</h3><div class="highlight">Most kinetic energy (99.8%) is converted to heat when electrons hit the target; only a small fraction results in X-ray emission.</div></div></div>
+
+<div class="slide" id="s10"><span class="slide-label">SLIDE 10 OF 10</span><h1>📝 Quiz — X-Rays</h1><div class="quiz-wrap"><h2>Fill in the Blanks (8 marks)</h2>
+<div class="q-block"><div class="q-text"><span>Q1.</span> X-rays were discovered by __________. (1 mk)</div><input type="text" id="q1" placeholder="scientist"><div class="q-fb" id="q1f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q2.</span> In an X-ray tube, only __________ % of energy is converted to X-rays. (1 mk)</div><input type="text" id="q2" placeholder="percentage"><div class="q-fb" id="q2f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q3.</span> The formula for maximum X-ray frequency is: hf<sub>max</sub> = __________. (1 mk)</div><input type="text" id="q3" placeholder="expression"><div class="q-fb" id="q3f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q4.</span> X-rays are __________ deflected by electric and magnetic fields. (1 mk)</div><input type="text" id="q4" placeholder="word"><div class="q-fb" id="q4f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q5.</span> Hard X-rays have __________ wavelength and greater penetrating power. (1 mk)</div><input type="text" id="q5" placeholder="short/long"><div class="q-fb" id="q5f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q6.</span> Stray X-rays in the tube are absorbed by a __________ shield. (1 mk)</div><input type="text" id="q6" placeholder="material"><div class="q-fb" id="q6f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q7.</span> X-ray tube at 50 kV. Energy of fastest electron = __________ × 10⁻¹⁵ J. (1 mk)</div><input type="text" id="q7" placeholder="coefficient"><div class="q-fb" id="q7f"></div></div>
+<div class="q-block"><div class="q-text"><span>Q8.</span> X-rays can be detected using photographic film or a __________ screen. (1 mk)</div><input type="text" id="q8" placeholder="type"><div class="q-fb" id="q8f"></div></div>
+<h2 style="margin-top:20px;">Short Answer (7 marks)</h2>
+<div class="q-block q-sa"><div class="q-text"><span>Q9.</span> Describe the energy changes that occur in an X-ray tube from electron emission to X-ray production. (3 mks)</div><textarea id="q9" placeholder="Step by step..."></textarea><div class="q-fb" id="q9f"></div></div>
+<div class="q-block q-sa"><div class="q-text"><span>Q10.</span> State FOUR uses of X-rays. (4 mks)</div><textarea id="q10" placeholder="1... 2... 3... 4..."></textarea><div class="q-fb" id="q10f"></div></div>
+<button class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
+<div class="score-box" id="scorebox"><h3 id="score-txt"></h3><p id="score-msg"></p></div></div></div>
+
+<div id="nav"><button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>← Prev</button><span id="slide-counter">1 / 10</span><button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button></div>
+<script>
+
+let cur=0;const total=10;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');document.querySelectorAll('.dot')[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');document.querySelectorAll('.dot')[cur].classList.add('active');document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1;document.getElementById('slide-counter').textContent=(cur+1)+' / '+total;document.getElementById('progress-fill').style.width=(((cur+1)/total)*100)+'%';window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=0&&cur+d<total)goTo(cur+d);}
+
+const ans={q1:{kw:["roentgen","röntgen"],pts:1},q2:{kw:["0.2"],pts:1},q3:{kw:["ev"],pts:1},q4:{kw:["not"],pts:1},q5:{kw:["short"],pts:1},q6:{kw:["lead"],pts:1},q7:{kw:["8"],pts:1},q8:{kw:["fluorescent"],pts:1}};
+
+function submitQuiz(){
+  let score=0;
+  Object.keys(ans).forEach(id=>{const el=document.getElementById(id);if(!el||el.tagName==='TEXTAREA')return;const val=el.value.trim().toLowerCase();const correct=ans[id].kw.some(k=>val.includes(k));const fb=document.getElementById(id+'f');if(fb){if(correct){score+=ans[id].pts;fb.className='q-fb ok';fb.textContent='✓ Correct!';}else{fb.className='q-fb no';fb.textContent='✗ Expected: '+ans[id].kw[0];}}});
+  document.querySelectorAll('.q-sa textarea').forEach(el=>{if(el.value.trim().length>30)score+=Math.min(3,Math.ceil(el.value.trim().length/60));});
+  score=Math.min(score,15);
+  const pct=Math.round(score/15*100);
+  const sb=document.getElementById('scorebox');if(sb)sb.style.display='block';
+  const st=document.getElementById('score-txt');if(st)st.textContent='Score: '+score+' / 15 ('+pct+'%)';
+  const sm=document.getElementById('score-msg');if(sm)sm.textContent=pct>=80?'Excellent! 🌟':pct>=60?'Good work!':'Keep revising.';
+  if(typeof submitExamToMTTI==='function')submitExamToMTTI(score,15,pct);
+}
+
+</script>
+</body>
+</html>

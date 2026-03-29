@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chemistry Form 4 | Chlorine and Its Compounds</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--txt:#1a1a1a;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#topbar .sub{font-size:.7rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+#topbar .ttl{font-size:.95rem;font-weight:700;flex:1}
+#slide-badge{background:var(--acc);color:#000;font-weight:700;font-size:.78rem;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.slide{display:none;flex:1;padding:16px 16px 80px;animation:fi .3s ease}
+.slide.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-title{font-size:1.2rem;font-weight:800;color:var(--pri);margin-bottom:14px;padding-bottom:8px;border-bottom:3px solid var(--acc)}
+.lo-box{background:#e8f5e9;border-left:5px solid var(--pri);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.lo-box h3{color:var(--pri);font-size:.95rem;margin-bottom:8px}
+.lo-box ol{padding-left:18px;font-size:.9rem;line-height:1.8}
+.inquiry{background:#fff8e1;border:1.5px solid var(--acc);border-radius:8px;padding:10px 14px;font-size:.88rem;color:#5d4037;margin-top:10px}
+.inquiry strong{color:#e65100}
+.tb{margin-bottom:18px}
+.tb h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--acc);display:inline-block}
+.tb p,.tb li{font-size:.9rem;line-height:1.7}
+.tb ul,.tb ol{padding-left:18px;margin-top:6px}
+.kt{background:#fff8e1;border-left:4px solid var(--acc);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem}
+.kt strong{color:#e65100}
+.it{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+.it th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.it td{padding:7px 10px;border-bottom:1px solid #e0e0e0}
+.it tr:nth-child(even) td{background:#f1f8e9}
+.eg{background:#f1f8e9;border:1.5px solid var(--ok);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.88rem}
+.eg strong{color:var(--ok);display:block;margin-bottom:4px}
+.warn{background:#fff3e0;border-left:4px solid #e65100;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem;color:#5d4037}
+.rxn{background:#f8f9fa;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.9rem;text-align:center}
+.qs h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:12px}
+.qi{background:#fff;border:1.5px solid #c8e6c9;border-radius:10px;padding:14px;margin-bottom:12px}
+.qi p{font-size:.9rem;font-weight:600;margin-bottom:10px}
+.fb{border:none;border-bottom:2.5px dashed var(--pri);background:transparent;font-size:.9rem;padding:2px 6px;width:130px;outline:none;text-align:center}
+.fb:focus{border-bottom-color:var(--acc)}
+.fbr{font-size:.82rem;font-weight:600;margin-top:6px;padding:4px 8px;border-radius:4px;display:none}
+.fbr.ok{background:#e8f5e9;color:var(--ok)}
+.fbr.no{background:#ffebee;color:var(--no)}
+.sa{width:100%;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px;font-size:.88rem;font-family:inherit;resize:vertical;min-height:80px;outline:none}
+.sa:focus{border-color:var(--pri)}
+.gb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:8px}
+.gb:hover{background:var(--pri-l)}
+.saf{font-size:.82rem;margin-top:8px;padding:10px;border-radius:8px;line-height:1.6;display:none}
+.saf.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+.saf.partial{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.saf.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c}
+.kwf{color:var(--ok);font-weight:700}
+.kwm{color:var(--no);font-weight:700}
+.ma{margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-style:italic}
+#sr{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:16px;display:none}
+#sr .big{font-size:2rem;font-weight:900;margin:8px 0}
+.sub-btn{background:var(--acc);color:#000;border:none;border-radius:10px;padding:12px 32px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:16px;width:100%}
+.sub-btn:hover{background:#e8961a}
+#navbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.nb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer}
+.nb:hover{background:var(--pri-l)}
+.nb:disabled{background:#ccc;cursor:not-allowed}
+#dn{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:#c8e6c9;cursor:pointer;transition:background .2s,transform .2s}
+.dot.active{background:var(--pri);transform:scale(1.3)}
+.dot.done{background:var(--acc)}
+@media(max-width:600px){.nb{padding:8px 14px;font-size:.8rem}#topbar .ttl{font-size:.85rem}}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div><div class="sub">Chemistry - Form 4</div><div class="ttl">Chlorine and Its Compounds</div></div>
+  <div id="slide-badge">Slide 1 / 10</div>
+</div>
+<div class="slide active" id="s1">
+  <div class="slide-title">Learning Outcomes</div>
+  <div class="lo-box"><h3>By the end of this lesson, you should be able to:</h3><ol>
+    <li>Describe the preparation, properties and uses of chlorine gas</li>
+    <li>Explain the reactions of chlorine with water, alkalis and metals</li>
+    <li>Describe the preparation and uses of hydrogen chloride gas and hydrochloric acid</li>
+    <li>Explain the reactions of hydrochloric acid</li>
+    <li>Describe the properties and uses of chlorine compounds (bleaching powder, sodium hypochlorite)</li>
+    <li>State the environmental and health hazards of chlorine compounds</li>
+  </ol></div>
+  <div class="inquiry"><strong>Key Inquiry:</strong> How does chlorine's high reactivity make it both useful in industry and potentially harmful to human health and the environment?</div>
+</div>
+<div class="slide" id="s2">
+  <div class="slide-title">Preparation and Properties of Chlorine</div>
+  <div class="tb"><h3>Laboratory Preparation</h3>
+    <p>Chlorine is prepared by oxidising concentrated hydrochloric acid with manganese(IV) oxide (MnO2) on warming.</p>
+    <div class="rxn">MnO2 + 4HCl(conc.) rarr MnCl2 + 2H2O + Cl2 (gas, warm)</div>
+    <p style="margin-top:8px">Alternatively: electrolysis of brine (NaCl solution) - industrial method.</p>
+    <div class="warn">Chlorine is a poisonous, yellow-green gas with a pungent smell. Always use in a fume cupboard.</div>
+  </div>
+  <div class="tb"><h3>Physical Properties</h3>
+    <ul>
+      <li>Yellow-green gas at room temperature</li>
+      <li>Pungent, choking smell</li>
+      <li>Denser than air (relative molecular mass = 71)</li>
+      <li>Slightly soluble in water to form chlorine water</li>
+      <li>Melting point: -101 degrees C; Boiling point: -35 degrees C</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Test for Chlorine Gas</h3>
+    <p>Moist blue litmus paper turns red then is bleached white. (Cl2 dissolves in water to form HClO which bleaches.)</p>
+  </div>
+</div>
+<div class="slide" id="s3">
+  <div class="slide-title">Chemical Reactions of Chlorine</div>
+  <div class="tb"><h3>Reaction with Water (Disproportionation)</h3>
+    <div class="rxn">Cl2 + H2O rarr HCl + HClO (hypochlorous acid)</div>
+    <p style="margin-top:8px">HClO is a weak acid and is responsible for bleaching action. In sunlight, HClO decomposes:</p>
+    <div class="rxn">2HClO rarr 2HCl + O2 (nascent oxygen - bleaches)</div>
+  </div>
+  <div class="tb"><h3>Reaction with Alkalis</h3>
+    <div class="eg"><strong>With cold dilute NaOH (bleach):</strong><br>
+    Cl2 + 2NaOH rarr NaCl + NaClO + H2O (sodium hypochlorite - Jik/bleach)</div>
+    <div class="eg"><strong>With hot concentrated NaOH:</strong><br>
+    3Cl2 + 6NaOH rarr 5NaCl + NaClO3 + 3H2O (sodium chlorate(V))</div>
+    <div class="eg"><strong>With slaked lime Ca(OH)2 (bleaching powder):</strong><br>
+    2Cl2 + 2Ca(OH)2 rarr Ca(ClO)2 + CaCl2 + 2H2O</div>
+  </div>
+  <div class="tb"><h3>Reaction with Metals</h3>
+    <ul>
+      <li>2Fe + 3Cl2 rarr 2FeCl3 (iron(III) chloride - brown fumes)</li>
+      <li>2Na + Cl2 rarr 2NaCl (vigorous)</li>
+      <li>Cu + Cl2 rarr CuCl2 (copper(II) chloride)</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Reaction with Hydrogen (synthesis of HCl)</h3>
+    <div class="rxn">H2 + Cl2 rarr 2HCl (burns with pale blue flame, explosive mixture in sunlight)</div>
+  </div>
+</div>
+<div class="slide" id="s4">
+  <div class="slide-title">Hydrogen Chloride and Hydrochloric Acid</div>
+  <div class="tb"><h3>Preparation of HCl Gas</h3>
+    <p>NaCl (solid) + conc. H2SO4 rarr NaHSO4 + HCl (gas) on gentle warming</p>
+    <div class="warn">HCl gas is dense, colourless, acidic. Fumes in moist air. Collected by downward delivery or dissolved in water.</div>
+  </div>
+  <div class="tb"><h3>Properties of HCl Gas</h3>
+    <ul>
+      <li>Colourless gas with pungent smell</li>
+      <li>Denser than air</li>
+      <li>Highly soluble in water - dissolves with hissing sound (fountain experiment)</li>
+      <li>NOT an acid in the dry state (requires water to ionise)</li>
+    </ul>
+    <div class="kt"><strong>HCl(g) is molecular</strong> (not acidic in dry state). When dissolved: HCl(aq) rarr H+(aq) + Cl-(aq) - now a strong acid.</div>
+  </div>
+  <div class="tb"><h3>Reactions of Hydrochloric Acid</h3>
+    <ul>
+      <li>With metals: Mg + 2HCl rarr MgCl2 + H2 (effervescence)</li>
+      <li>With carbonates: CaCO3 + 2HCl rarr CaCl2 + H2O + CO2</li>
+      <li>With bases: NaOH + HCl rarr NaCl + H2O</li>
+      <li>With silver nitrate: HCl + AgNO3 rarr AgCl (white ppt) + HNO3 (test for Cl- ions)</li>
+    </ul>
+  </div>
+</div>
+<div class="slide" id="s5">
+  <div class="slide-title">Chlorine Compounds and Uses</div>
+  <div class="tb"><h3>Bleaching Powder (Calcium Hypochlorite)</h3>
+    <p>Made by passing Cl2 over slaked lime (Ca(OH)2). Formula: Ca(ClO)2.CaCl2 (mixture).</p>
+    <ul>
+      <li>Used for bleaching cotton and linen</li>
+      <li>Disinfecting water supplies (swimming pools, drinking water)</li>
+      <li>Bleaching paper pulp</li>
+    </ul>
+    <div class="kt">Bleaching powder releases Cl2 with dilute acids, which then dissolves in water to form HClO (the active bleaching agent).</div>
+  </div>
+  <div class="tb"><h3>Sodium Hypochlorite (NaClO) - Household Bleach</h3>
+    <ul>
+      <li>Made by: Cl2 + 2NaOH rarr NaCl + NaClO + H2O</li>
+      <li>Active ingredient in Jik, Clorox, swimming pool treatment</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Other Important Uses of Chlorine</h3>
+    <table class="it">
+      <tr><th>Use</th><th>Details</th></tr>
+      <tr><td>Water purification</td><td>Kills bacteria in drinking water and swimming pools</td></tr>
+      <tr><td>PVC manufacture</td><td>Chloroethene monomer from Cl2 + C2H2</td></tr>
+      <tr><td>Antiseptics/disinfectants</td><td>TCP, chlorhexidine</td></tr>
+      <tr><td>Pesticides</td><td>DDT (now banned), lindane</td></tr>
+      <tr><td>Solvents</td><td>CHCl3 (chloroform), CCl4 (dry cleaning)</td></tr>
+      <tr><td>HCl manufacture</td><td>Industrial acid for metal treatment</td></tr>
+    </table>
+  </div>
+</div>
+<div class="slide" id="s6">
+  <div class="slide-title">Halogens - Trends and Comparisons</div>
+  <div class="tb"><h3>The Halogens (Group VII)</h3>
+    <table class="it">
+      <tr><th>Halogen</th><th>Symbol</th><th>State (R.T.)</th><th>Colour</th><th>Reactivity</th></tr>
+      <tr><td>Fluorine</td><td>F2</td><td>Gas</td><td>Pale yellow</td><td>Highest</td></tr>
+      <tr><td>Chlorine</td><td>Cl2</td><td>Gas</td><td>Yellow-green</td><td>High</td></tr>
+      <tr><td>Bromine</td><td>Br2</td><td>Liquid</td><td>Brown/red</td><td>Medium</td></tr>
+      <tr><td>Iodine</td><td>I2</td><td>Solid</td><td>Grey/violet vapour</td><td>Low</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:.9rem">Reactivity decreases down the group (harder to gain an electron as atomic radius increases).</p>
+  </div>
+  <div class="tb"><h3>Displacement Reactions of Halogens</h3>
+    <p>A more reactive halogen displaces a less reactive halogen from its salt solution.</p>
+    <div class="eg"><strong>Cl2 + 2KBr rarr 2KCl + Br2</strong> (chlorine displaces bromine - brown colour)</div>
+    <div class="eg"><strong>Cl2 + 2KI rarr 2KCl + I2</strong> (chlorine displaces iodine - brown/violet colour)</div>
+    <div class="eg"><strong>Br2 + 2KI rarr 2KBr + I2</strong> (bromine displaces iodine)</div>
+    <p style="margin-top:8px;font-size:.9rem">Note: Iodine cannot displace bromine or chlorine (less reactive).</p>
+  </div>
+</div>
+<div class="slide" id="s7">
+  <div class="slide-title">Environmental and Health Hazards</div>
+  <div class="tb"><h3>Hazards of Chlorine</h3>
+    <ul>
+      <li>Toxic - used as a chemical weapon in World War I</li>
+      <li>Damages the respiratory system: causes choking, pulmonary oedema</li>
+      <li>Exposure limit: 1 ppm (OSHA) in air</li>
+      <li>Chlorine in water reacts with organic matter to form trihalomethanes (THMs) - potential carcinogens</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Hazards of Chlorine Compounds</h3>
+    <ul>
+      <li><strong>CFCs (chlorofluorocarbons):</strong> Destroy the ozone layer (Cl atoms catalyse ozone breakdown)</li>
+      <li><strong>DDT:</strong> Persistent organic pollutant - bioaccumulates in food chains; banned in many countries</li>
+      <li><strong>Dioxins:</strong> Toxic by-products from burning chlorinated plastics (PVC)</li>
+      <li><strong>HCl emissions:</strong> From industrial processes - contributes to acid rain</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Safety in Handling Chlorine</h3>
+    <ul>
+      <li>Use in fume cupboard only</li>
+      <li>Wear goggles and gloves</li>
+      <li>Keep quantities minimal</li>
+      <li>Store bleach/HCl in sealed containers, away from heat</li>
+    </ul>
+  </div>
+</div>
+<div class="slide" id="s8">
+  <div class="slide-title">Summary - Chlorine and Its Compounds</div>
+  <div class="tb"><h3>Key Reactions Summary</h3>
+    <table class="it">
+      <tr><th>Reaction</th><th>Equation</th><th>Product</th></tr>
+      <tr><td>Cl2 + cold NaOH</td><td>Cl2 + 2NaOH rarr NaCl + NaClO + H2O</td><td>Bleach (NaClO)</td></tr>
+      <tr><td>Cl2 + slaked lime</td><td>2Cl2 + 2Ca(OH)2 rarr CaCl2 + Ca(ClO)2 + 2H2O</td><td>Bleaching powder</td></tr>
+      <tr><td>Cl2 + H2O</td><td>Cl2 + H2O rarr HCl + HClO</td><td>HClO (bleaches)</td></tr>
+      <tr><td>Cl2 + H2</td><td>H2 + Cl2 rarr 2HCl</td><td>Hydrogen chloride</td></tr>
+      <tr><td>NaCl + H2SO4</td><td>NaCl + H2SO4 rarr NaHSO4 + HCl</td><td>HCl gas</td></tr>
+    </table>
+  </div>
+  <div class="eg"><strong>Test for Cl- ions:</strong> Add dilute HNO3 then AgNO3 solution rarr white precipitate of AgCl (insoluble in dilute HNO3)</div>
+  <div class="eg"><strong>Test for Cl2 gas:</strong> Moist blue litmus paper: turns red then bleaches white</div>
+</div>
+<div class="slide" id="s9">
+  <div class="slide-title">Practice Questions</div>
+  <div class="tb"><h3>Work Through These</h3>
+    <ol style="font-size:.9rem;line-height:2.2">
+      <li>Describe the laboratory preparation of chlorine gas. Give the reagents, conditions and equation.</li>
+      <li>Describe the test for chlorine gas and explain why the litmus paper is bleached.</li>
+      <li>Write equations for the reaction of chlorine with (a) cold dilute NaOH and (b) slaked lime, Ca(OH)2.</li>
+      <li>Explain why dry HCl gas does not turn blue litmus paper red, but HCl dissolved in water does.</li>
+      <li>How does chlorine displace bromine from potassium bromide solution? Write an equation and state the observation.</li>
+      <li>State TWO environmental hazards of chlorine compounds with specific examples.</li>
+    </ol>
+  </div>
+  <div class="eg"><strong>Worked Example - Test for Cl- ions:</strong><br>
+  Add dilute nitric acid, then silver nitrate solution.<br>
+  Observation: White precipitate of silver chloride (AgCl) formed.<br>
+  Equation: Ag+ + Cl- rarr AgCl (white ppt)</div>
+</div>
+<div class="slide" id="s10">
+  <div class="slide-title">Quiz - Chlorine and Its Compounds</div>
+  <div class="qs">
+    <h3>Section A: Fill in the Blanks (5 marks)</h3>
+    <div class="qi"><p>1. Chlorine gas is <input class="fb" id="f1" placeholder="colour">-green in colour and has a <input class="fb" id="f1b" placeholder="..."> smell.</p><div class="fbr" id="f1r"></div></div>
+    <div class="qi"><p>2. The test for chlorine gas uses moist blue litmus paper which turns red then <input class="fb" id="f2" placeholder="...">.</p><div class="fbr" id="f2r"></div></div>
+    <div class="qi"><p>3. When chlorine reacts with cold dilute NaOH the bleaching agent produced is sodium <input class="fb" id="f3" placeholder="...">.</p><div class="fbr" id="f3r"></div></div>
+    <div class="qi"><p>4. A more reactive halogen displaces a less reactive halogen from its <input class="fb" id="f4" placeholder="..."> solution.</p><div class="fbr" id="f4r"></div></div>
+    <div class="qi"><p>5. CFCs are harmful to the environment because they destroy the <input class="fb" id="f5" placeholder="..."> layer.</p><div class="fbr" id="f5r"></div></div>
+  </div>
+  <div class="qs">
+    <h3>Section B: Short Answer (10 marks)</h3>
+    <div class="qi"><p>6. Write the equation for the laboratory preparation of chlorine and state ONE safety precaution that must be taken. (3 marks)</p>
+      <textarea class="sa" id="sa1"></textarea>
+      <button class="gb" onclick="grSA('sa1','sf1',['mno2','mncl2','hcl','cl2','manganese','fume','cupboard','toxic','goggles','poisonous'],3,3,'MnO2 + 4HCl(conc.) rarr MnCl2 + 2H2O + Cl2. Safety: carry out in a fume cupboard as chlorine is toxic/poisonous.')">Check</button>
+      <div class="saf" id="sf1"></div></div>
+    <div class="qi"><p>7. Explain why household bleach (NaClO solution) has a bleaching effect. (2 marks)</p>
+      <textarea class="sa" id="sa2"></textarea>
+      <button class="gb" onclick="grSA('sa2','sf2',['hypochlorous','hclo','oxidise','oxidation','bleach','colour','chlorine','acid','releases'],3,2,'Sodium hypochlorite (NaClO) reacts with water/carbon dioxide to release hypochlorous acid (HClO). HClO is an oxidising agent that oxidises (destroys) colour-producing compounds, resulting in bleaching.')">Check</button>
+      <div class="saf" id="sf2"></div></div>
+    <div class="qi"><p>8. Write the equation for the reaction of chlorine with potassium iodide solution. State the observation and explain why the reaction occurs. (3 marks)</p>
+      <textarea class="sa" id="sa3"></textarea>
+      <button class="gb" onclick="grSA('sa3','sf3',['cl2','ki','kcl','i2','iodine','brown','displacement','more reactive','reactive','chlorine'],4,3,'Cl2 + 2KI rarr 2KCl + I2. Observation: solution turns brown (iodine produced). Chlorine displaces iodine because chlorine is more reactive (higher oxidising power) than iodine.')">Check</button>
+      <div class="saf" id="sf3"></div></div>
+    <div class="qi"><p>9. State TWO environmental hazards of chlorine compounds and name a specific compound responsible in each case. (2 marks)</p>
+      <textarea class="sa" id="sa4"></textarea>
+      <button class="gb" onclick="grSA('sa4','sf4',['cfc','ozone','ddt','food chain','bioaccumulate','dioxin','acid rain','hcl','persistent','carcinogen'],3,2,'1. CFCs destroy the ozone layer (allowing harmful UV radiation to reach the earth). 2. DDT (organochlorine pesticide) bioaccumulates in food chains, harming wildlife and humans.')">Check</button>
+      <div class="saf" id="sf4"></div></div>
+  </div>
+  <button class="sub-btn" onclick="submitQuiz()">Submit and See Score</button>
+  <div id="sr"><div class="big" id="sv"></div><div id="sm"></div></div>
+</div>
+<div id="navbar">
+  <button class="nb" id="prev-btn" onclick="changeSlide(-1)" disabled>Prev</button>
+  <div id="dn"></div>
+  <button class="nb" id="next-btn" onclick="changeSlide(1)">Next</button>
+</div>
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const d=document.getElementById('dn');d.innerHTML='';for(let i=1;i<=TOTAL;i++){const dot=document.createElement('div');dot.className='dot'+(i===cur?' active':visited.has(i)&&i!==cur?' done':'');dot.onclick=(()=>{const n=i;return()=>goTo(n)})();d.appendChild(dot);}}
+function goTo(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-badge').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=(n===1);document.getElementById('next-btn').disabled=(n===TOTAL);buildDots();window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=1&&cur+d<=TOTAL)goTo(cur+d);}
+buildDots();
+const FA={f1:['yellow'],f1b:['pungent','choking'],f2:['bleaches','bleached','white'],f3:['hypochlorite'],f4:['salt'],f5:['ozone']};
+function checkFills(){let s=0;['f1','f1b','f2','f3','f4','f5'].forEach(id=>{const el=document.getElementById(id);if(!el)return;const v=(el.value||'').toLowerCase().trim();const ok=FA[id].some(a=>v.includes(a));const r=document.getElementById(id.replace('b','')+'r');if(!r)return;r.style.display='inline-block';if(ok){r.className='fbr ok';r.textContent='Correct';s++;}else{r.className='fbr no';r.textContent='Ans: '+FA[id][0];}});
+const ok1=(document.getElementById('f1').value||'').toLowerCase().includes('yellow')&&(document.getElementById('f1b').value||'').toLowerCase().match(/pungent|choking/);return Math.min(5,s);}
+function grSA(saId,fbId,kw,req,marks,model){const txt=document.getElementById(saId).value.toLowerCase().trim();if(!txt){alert('Please write your answer first.');return;}const found=kw.filter(k=>txt.includes(k));const missed=kw.filter(k=>!txt.includes(k)).slice(0,5);const rate=Math.min(1,found.length/req);const sc=Math.round(rate*marks);const fb=document.getElementById(fbId);fb.style.display='block';const cls=sc>=marks?'ok':sc>0?'partial':'no';fb.className='saf '+cls;fb.innerHTML='<strong>Score: '+sc+' / '+marks+'</strong><br>Found: <span class="kwf">'+(found.length?found.join(', '):'none')+'</span><br>Missed: <span class="kwm">'+(missed.length?missed.join(', '):'none')+'</span><div class="ma">Model: '+model+'</div>';}
+function getScore(id){const el=document.getElementById(id);if(!el||el.style.display==='none')return 0;const m=el.innerHTML.match(/Score:\s*(\d+)\s*\//);return m?parseInt(m[1]):0;}
+function checkFillsSimple(){let s=0;const checks=[['f1','yellow'],['f1b','pungent'],['f2','bleach'],['f3','hypochlorite'],['f4','salt'],['f5','ozone']];checks.forEach(([id,ans])=>{const el=document.getElementById(id);if(!el)return;if((el.value||'').toLowerCase().includes(ans))s++;});return Math.min(5,s);}
+function submitQuiz(){const fill=checkFillsSimple();const sa=getScore('sf1')+getScore('sf2')+getScore('sf3')+getScore('sf4');const tot=fill+sa;const pct=Math.round((tot/15)*100);const grade=pct>=80?'Excellent':pct>=60?'Good':pct>=50?'Average':'Keep Revising';const r=document.getElementById('sr');r.style.display='block';document.getElementById('sv').textContent=tot+'/15 ('+pct+'%)';document.getElementById('sm').innerHTML='<strong>'+grade+'</strong><br><small>Fill-in: '+fill+'/5 | Short Answer: '+sa+'/10</small>';submitExamToMTTI(tot,15,pct);r.scrollIntoView({behavior:'smooth'});}
+function submitExamToMTTI(score,total,percent){try{fetch('/wp-json/mtti/v1/exam-result',{method:'POST',headers:{'Content-Type':'application/json','X-WP-Nonce':window.mtti_nonce||''},body:JSON.stringify({lesson_id:'f4-chem-4-chlorine-compounds',score,total,percent,timestamp:new Date().toISOString()})}).then(r=>r.json()).then(d=>{if(d&&d.success)console.log('[MTTI] Saved');}).catch(e=>console.log('[MTTI] Offline',e));}catch(e){console.log('[MTTI]',e);}}
+</script>
+</body>
+</html>

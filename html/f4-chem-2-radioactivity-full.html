@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chemistry Form 4 | Radioactivity</title>
+<style>
+:root{--pri:#0a5e2a;--pri-l:#0d7a38;--acc:#f5a623;--ok:#2e7d32;--no:#c62828;--bg:#f4f7f5;--txt:#1a1a1a;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;display:flex;flex-direction:column}
+#topbar{position:sticky;top:0;z-index:100;background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#topbar .sub{font-size:.7rem;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+#topbar .ttl{font-size:.95rem;font-weight:700;flex:1}
+#slide-badge{background:var(--acc);color:#000;font-weight:700;font-size:.78rem;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.slide{display:none;flex:1;padding:16px 16px 80px;animation:fi .3s ease}
+.slide.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.slide-title{font-size:1.2rem;font-weight:800;color:var(--pri);margin-bottom:14px;padding-bottom:8px;border-bottom:3px solid var(--acc)}
+.lo-box{background:#e8f5e9;border-left:5px solid var(--pri);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.lo-box h3{color:var(--pri);font-size:.95rem;margin-bottom:8px}
+.lo-box ol{padding-left:18px;font-size:.9rem;line-height:1.8}
+.inquiry{background:#fff8e1;border:1.5px solid var(--acc);border-radius:8px;padding:10px 14px;font-size:.88rem;color:#5d4037;margin-top:10px}
+.inquiry strong{color:#e65100}
+.tb{margin-bottom:18px}
+.tb h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:8px;padding-bottom:4px;border-bottom:2px solid var(--acc);display:inline-block}
+.tb p,.tb li{font-size:.9rem;line-height:1.7}
+.tb ul,.tb ol{padding-left:18px;margin-top:6px}
+.kt{background:#fff8e1;border-left:4px solid var(--acc);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem}
+.kt strong{color:#e65100}
+.it{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem}
+.it th{background:var(--pri);color:#fff;padding:8px 10px;text-align:left}
+.it td{padding:7px 10px;border-bottom:1px solid #e0e0e0}
+.it tr:nth-child(even) td{background:#f1f8e9}
+.eg{background:#f1f8e9;border:1.5px solid var(--ok);border-radius:8px;padding:12px 14px;margin:10px 0;font-size:.88rem}
+.eg strong{color:var(--ok);display:block;margin-bottom:4px}
+.warn{background:#fff3e0;border-left:4px solid #e65100;border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.88rem;color:#5d4037}
+.rxn{background:#f8f9fa;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.9rem;text-align:center}
+.qs h3{font-size:1rem;font-weight:700;color:var(--pri);margin-bottom:12px}
+.qi{background:#fff;border:1.5px solid #c8e6c9;border-radius:10px;padding:14px;margin-bottom:12px}
+.qi p{font-size:.9rem;font-weight:600;margin-bottom:10px}
+.fb{border:none;border-bottom:2.5px dashed var(--pri);background:transparent;font-size:.9rem;padding:2px 6px;width:130px;outline:none;text-align:center}
+.fb:focus{border-bottom-color:var(--acc)}
+.fbr{font-size:.82rem;font-weight:600;margin-top:6px;padding:4px 8px;border-radius:4px;display:none}
+.fbr.ok{background:#e8f5e9;color:var(--ok)}
+.fbr.no{background:#ffebee;color:var(--no)}
+.sa{width:100%;border:1.5px solid #c8e6c9;border-radius:8px;padding:10px;font-size:.88rem;font-family:inherit;resize:vertical;min-height:80px;outline:none}
+.sa:focus{border-color:var(--pri)}
+.gb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:.85rem;font-weight:700;cursor:pointer;margin-top:8px}
+.gb:hover{background:var(--pri-l)}
+.saf{font-size:.82rem;margin-top:8px;padding:10px;border-radius:8px;line-height:1.6;display:none}
+.saf.ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20}
+.saf.partial{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.saf.no{background:#ffebee;border:1px solid #ef9a9a;color:#b71c1c}
+.kwf{color:var(--ok);font-weight:700}
+.kwm{color:var(--no);font-weight:700}
+.ma{margin-top:6px;padding-top:6px;border-top:1px solid #ccc;font-style:italic}
+#sr{background:linear-gradient(135deg,var(--pri),var(--pri-l));color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:16px;display:none}
+#sr .big{font-size:2rem;font-weight:900;margin:8px 0}
+.sub-btn{background:var(--acc);color:#000;border:none;border-radius:10px;padding:12px 32px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:16px;width:100%}
+.sub-btn:hover{background:#e8961a}
+#navbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e0e0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.1)}
+.nb{background:var(--pri);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.88rem;font-weight:700;cursor:pointer}
+.nb:hover{background:var(--pri-l)}
+.nb:disabled{background:#ccc;cursor:not-allowed}
+#dn{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:#c8e6c9;cursor:pointer;transition:background .2s,transform .2s}
+.dot.active{background:var(--pri);transform:scale(1.3)}
+.dot.done{background:var(--acc)}
+@media(max-width:600px){.nb{padding:8px 14px;font-size:.8rem}#topbar .ttl{font-size:.85rem}}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div><div class="sub">Chemistry - Form 4</div><div class="ttl">Radioactivity</div></div>
+  <div id="slide-badge">Slide 1 / 10</div>
+</div>
+<div class="slide active" id="s1">
+  <div class="slide-title">Learning Outcomes</div>
+  <div class="lo-box"><h3>By the end of this lesson, you should be able to:</h3><ol>
+    <li>Define radioactivity and explain nuclear instability</li>
+    <li>Describe the properties of alpha, beta and gamma radiation</li>
+    <li>Write and balance nuclear equations for radioactive decay</li>
+    <li>Define half-life and solve half-life problems</li>
+    <li>Explain the uses and hazards of radioactive materials</li>
+    <li>Distinguish between nuclear fission and nuclear fusion</li>
+  </ol></div>
+  <div class="inquiry"><strong>Key Inquiry:</strong> How does radioactive decay change the identity of an element, and what are the benefits and risks of radioactivity to society?</div>
+</div>
+<div class="slide" id="s2">
+  <div class="slide-title">Introduction to Radioactivity</div>
+  <div class="tb"><h3>Definition</h3>
+    <p>Radioactivity is the <strong>spontaneous emission of radiation</strong> from an unstable atomic nucleus. Discovered by Henri Becquerel (1896); studied by Marie and Pierre Curie.</p>
+    <div class="kt"><strong>Nuclear instability</strong> occurs when the neutron-to-proton ratio is too high or too low. The nucleus emits radiation to reach a more stable configuration.</div>
+  </div>
+  <div class="tb"><h3>Key Terms</h3>
+    <ul>
+      <li><strong>Radioisotope:</strong> An unstable isotope that undergoes radioactive decay</li>
+      <li><strong>Activity:</strong> The rate of radioactive decay (unit: Becquerel, Bq)</li>
+      <li><strong>Background radiation:</strong> Low-level radiation always present in the environment (cosmic rays, radon gas, rocks, medical sources)</li>
+    </ul>
+  </div>
+</div>
+<div class="slide" id="s3">
+  <div class="slide-title">Types of Radiation</div>
+  <div class="tb"><h3>Alpha (alpha), Beta (beta) and Gamma (gamma) Compared</h3>
+    <table class="it">
+      <tr><th>Property</th><th>Alpha</th><th>Beta</th><th>Gamma</th></tr>
+      <tr><td>Nature</td><td>Helium nucleus (4/2 He)</td><td>Fast electron</td><td>Electromagnetic wave</td></tr>
+      <tr><td>Charge</td><td>+2</td><td>-1</td><td>0</td></tr>
+      <tr><td>Mass</td><td>4 u</td><td>~0</td><td>0</td></tr>
+      <tr><td>Ionising power</td><td>Highest</td><td>Medium</td><td>Lowest</td></tr>
+      <tr><td>Penetrating power</td><td>Lowest</td><td>Medium</td><td>Highest</td></tr>
+      <tr><td>Stopped by</td><td>Paper or skin</td><td>3 mm aluminium</td><td>Thick lead/concrete</td></tr>
+      <tr><td>Deflected by fields?</td><td>Yes (+ve)</td><td>Yes (-ve)</td><td>No</td></tr>
+    </table>
+  </div>
+  <div class="eg"><strong>Memory Aid:</strong> Alpha is the most ionising but least penetrating. Gamma is least ionising but most penetrating.</div>
+</div>
+<div class="slide" id="s4">
+  <div class="slide-title">Nuclear Equations</div>
+  <div class="tb"><h3>Balancing Rules</h3>
+    <ul>
+      <li>Mass number (top) and atomic number (bottom) must balance on both sides</li>
+      <li>Alpha decay: mass number -4, atomic number -2</li>
+      <li>Beta decay: mass number unchanged, atomic number +1</li>
+      <li>Gamma: no change in mass or atomic number</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Alpha Decay Examples</h3>
+    <div class="rxn">238/92 U rarr 234/90 Th + 4/2 He (Uranium-238 to Thorium-234 + alpha)</div>
+    <div class="rxn">226/88 Ra rarr 222/86 Rn + 4/2 He (Radium-226 to Radon-222 + alpha)</div>
+  </div>
+  <div class="tb"><h3>Beta Decay Examples</h3>
+    <div class="rxn">14/6 C rarr 14/7 N + 0/-1 e (Carbon-14 to Nitrogen-14 + beta)</div>
+    <div class="rxn">32/15 P rarr 32/16 S + 0/-1 e (Phosphorus-32 to Sulphur-32 + beta)</div>
+    <div class="kt"><strong>In beta decay:</strong> a neutron converts to a proton + electron: n rarr p + beta</div>
+  </div>
+</div>
+<div class="slide" id="s5">
+  <div class="slide-title">Half-Life</div>
+  <div class="tb"><h3>Definition</h3>
+    <p>The <strong>half-life (t1/2)</strong> is the time for half the radioactive nuclei in a sample to decay. It is constant for a given isotope and independent of temperature, pressure or chemical state.</p>
+  </div>
+  <div class="tb"><h3>Calculations</h3>
+    <p>After n half-lives: Amount remaining = Initial amount x (1/2)^n</p>
+    <div class="eg"><strong>Example 1:</strong> 64g sample, t1/2 = 8 days. Mass after 32 days?<br>
+    n = 32/8 = 4 half-lives. Remaining = 64 x (1/2)^4 = 64/16 = <strong>4g</strong></div>
+    <div class="eg"><strong>Example 2:</strong> 80g reduced to 10g. How many half-lives?<br>
+    80 rarr 40 rarr 20 rarr 10 = <strong>3 half-lives</strong></div>
+  </div>
+  <div class="tb"><h3>Common Radioisotopes and Half-Lives</h3>
+    <table class="it">
+      <tr><th>Isotope</th><th>Half-life</th><th>Application</th></tr>
+      <tr><td>Carbon-14</td><td>5,730 years</td><td>Radiocarbon dating</td></tr>
+      <tr><td>Iodine-131</td><td>8 days</td><td>Thyroid cancer treatment</td></tr>
+      <tr><td>Technetium-99m</td><td>6 hours</td><td>Medical imaging</td></tr>
+      <tr><td>Uranium-238</td><td>4.5 billion years</td><td>Geological dating</td></tr>
+    </table>
+  </div>
+</div>
+<div class="slide" id="s6">
+  <div class="slide-title">Nuclear Fission and Fusion</div>
+  <div class="tb"><h3>Nuclear Fission</h3>
+    <p>A heavy nucleus splits into two smaller nuclei + neutrons + large amounts of energy.</p>
+    <div class="rxn">235/92 U + neutron rarr 141/56 Ba + 92/36 Kr + 3 neutrons + energy</div>
+    <ul>
+      <li>Released neutrons trigger more fissions: <strong>chain reaction</strong></li>
+      <li>Nuclear reactor: controlled chain reaction for electricity generation</li>
+      <li>Atomic bomb: uncontrolled chain reaction</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Nuclear Fusion</h3>
+    <p>Two light nuclei combine to form a heavier nucleus, releasing enormous energy.</p>
+    <div class="rxn">2/1 H + 3/1 H rarr 4/2 He + neutron + energy</div>
+    <ul>
+      <li>Requires ~10 million degrees Celsius to occur</li>
+      <li>The Sun's energy source</li>
+      <li>Very little radioactive waste produced compared to fission</li>
+    </ul>
+  </div>
+  <table class="it">
+    <tr><th>Feature</th><th>Fission</th><th>Fusion</th></tr>
+    <tr><td>Process</td><td>Heavy nucleus splits</td><td>Light nuclei combine</td></tr>
+    <tr><td>Waste</td><td>High radioactive waste</td><td>Very little waste</td></tr>
+    <tr><td>Status</td><td>Working reactors exist</td><td>Still experimental</td></tr>
+  </table>
+</div>
+<div class="slide" id="s7">
+  <div class="slide-title">Uses and Hazards of Radioactivity</div>
+  <div class="tb"><h3>Beneficial Uses</h3>
+    <table class="it">
+      <tr><th>Field</th><th>Isotope and Use</th></tr>
+      <tr><td>Medical diagnosis</td><td>Technetium-99m: body scans</td></tr>
+      <tr><td>Medical treatment</td><td>Iodine-131: thyroid cancer; Co-60: radiotherapy</td></tr>
+      <tr><td>Archaeology</td><td>Carbon-14: radiocarbon dating of organic materials</td></tr>
+      <tr><td>Geology</td><td>Uranium-238/Lead-206: dating rocks</td></tr>
+      <tr><td>Industry</td><td>Thickness gauges; sterilising food and equipment</td></tr>
+      <tr><td>Power generation</td><td>Nuclear fission reactors</td></tr>
+    </table>
+  </div>
+  <div class="tb"><h3>Hazards</h3>
+    <ul>
+      <li>Ionising radiation damages DNA - can cause cancer and mutations</li>
+      <li>High doses cause radiation sickness, organ failure, death</li>
+      <li>Long-lived radioactive waste remains dangerous for thousands of years</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Safety Precautions</h3>
+    <ul>
+      <li>Store sources in lead-lined containers</li>
+      <li>Handle with tongs - never bare hands</li>
+      <li>Minimise exposure time; maximise distance from source</li>
+      <li>Wear dosimeters (film badges) to monitor dose received</li>
+      <li>Lead aprons, thick concrete shielding in reactors</li>
+    </ul>
+  </div>
+</div>
+<div class="slide" id="s8">
+  <div class="slide-title">Summary - Radioactivity</div>
+  <div class="tb"><h3>Three Radiations at a Glance</h3>
+    <table class="it">
+      <tr><th>Radiation</th><th>Symbol</th><th>Charge</th><th>Stopped by</th></tr>
+      <tr><td>Alpha</td><td>4/2 He</td><td>+2</td><td>Paper or skin</td></tr>
+      <tr><td>Beta</td><td>0/-1 e</td><td>-1</td><td>3mm aluminium</td></tr>
+      <tr><td>Gamma</td><td>y</td><td>0</td><td>Thick lead or concrete</td></tr>
+    </table>
+  </div>
+  <div class="tb"><h3>Decay Rules Summary</h3>
+    <ul>
+      <li>Alpha: mass number -4, atomic number -2</li>
+      <li>Beta: mass number unchanged, atomic number +1</li>
+      <li>Gamma: no change in mass or atomic number</li>
+    </ul>
+  </div>
+  <div class="tb"><h3>Half-Life Formula</h3>
+    <div class="rxn">After n half-lives: N = N0 x (1/2)^n</div>
+  </div>
+  <div class="eg"><strong>Applications:</strong> Medical imaging and therapy | Carbon-14 dating | Nuclear power | Food irradiation | Smoke detectors (Am-241 alpha source)</div>
+</div>
+<div class="slide" id="s9">
+  <div class="slide-title">Practice Questions</div>
+  <div class="tb"><h3>Work Through These</h3>
+    <ol style="font-size:.9rem;line-height:2.2">
+      <li>State THREE differences between alpha and gamma radiation.</li>
+      <li>Write a balanced nuclear equation for the alpha decay of Radium-226 (atomic number 88).</li>
+      <li>Write a balanced nuclear equation for the beta decay of Carbon-14 (atomic number 6). Identify the product element.</li>
+      <li>A sample initially has 120g of a radioisotope with t1/2 = 10 years. How much remains after 40 years?</li>
+      <li>Explain why iodine-131 (t1/2 = 8 days) is more suitable for medical diagnosis than uranium-238 (t1/2 = 4.5 billion years).</li>
+      <li>Distinguish between nuclear fission and nuclear fusion, giving one example equation for each.</li>
+    </ol>
+  </div>
+  <div class="eg"><strong>Worked Example - Half-life:</strong><br>
+  Initial = 100g, t1/2 = 5 years, time = 20 years.<br>
+  n = 20/5 = 4 half-lives.<br>
+  Remaining = 100 x (1/2)^4 = 100/16 = 6.25g</div>
+</div>
+<div class="slide" id="s10">
+  <div class="slide-title">Quiz - Radioactivity</div>
+  <div class="qs">
+    <h3>Section A: Fill in the Blanks (5 marks)</h3>
+    <div class="qi"><p>1. An alpha particle is identical to a <input class="fb" id="f1" placeholder="..."> nucleus.</p><div class="fbr" id="f1r"></div></div>
+    <div class="qi"><p>2. Beta radiation is stopped by a few millimetres of <input class="fb" id="f2" placeholder="...">.</p><div class="fbr" id="f2r"></div></div>
+    <div class="qi"><p>3. The time for half the atoms in a radioactive sample to decay is called the <input class="fb" id="f3" placeholder="...">.</p><div class="fbr" id="f3r"></div></div>
+    <div class="qi"><p>4. In alpha decay the mass number decreases by <input class="fb" id="f4" placeholder="number">.</p><div class="fbr" id="f4r"></div></div>
+    <div class="qi"><p>5. The isotope used for radiocarbon dating of organic materials is <input class="fb" id="f5" placeholder="...">.</p><div class="fbr" id="f5r"></div></div>
+  </div>
+  <div class="qs">
+    <h3>Section B: Short Answer (10 marks)</h3>
+    <div class="qi"><p>6. Describe THREE properties of gamma radiation. (3 marks)</p>
+      <textarea class="sa" id="sa1"></textarea>
+      <button class="gb" onclick="grSA('sa1','sf1',['electromagnetic','no charge','neutral','highest penetrating','lead','concrete','no mass','ionising','speed of light'],3,3,'Gamma radiation is electromagnetic with no charge and no mass. It has the highest penetrating power (stopped by thick lead or concrete) and travels at the speed of light.')">Check</button>
+      <div class="saf" id="sf1"></div></div>
+    <div class="qi"><p>7. A radioactive isotope has t1/2 = 6 hours. A sample starts at 96g. Calculate the mass remaining after 24 hours. Show your working. (3 marks)</p>
+      <textarea class="sa" id="sa2"></textarea>
+      <button class="gb" onclick="grSA('sa2','sf2',['4','half-lives','24','6','96','48','24','12','6'],3,3,'n = 24/6 = 4 half-lives. Remaining = 96 x (1/2)^4 = 96/16 = 6g. Step by step: 96 -> 48 -> 24 -> 12 -> 6g.')">Check</button>
+      <div class="saf" id="sf2"></div></div>
+    <div class="qi"><p>8. Explain TWO safety precautions for handling radioactive materials, with a reason for each. (2 marks)</p>
+      <textarea class="sa" id="sa3"></textarea>
+      <button class="gb" onclick="grSA('sa3','sf3',['tongs','lead','distance','time','dosimeter','badge','shielding','container','exposure'],3,2,'Use tongs - prevents skin contact and absorption. Store in lead-lined containers - lead absorbs gamma radiation. Minimise exposure time - reduces total radiation dose received.')">Check</button>
+      <div class="saf" id="sf3"></div></div>
+    <div class="qi"><p>9. Compare nuclear fission and nuclear fusion. State what happens in each and give ONE advantage of fusion over fission. (2 marks)</p>
+      <textarea class="sa" id="sa4"></textarea>
+      <button class="gb" onclick="grSA('sa4','sf4',['splits','heavy','fission','combines','light','fusion','waste','clean','energy','hydrogen'],4,2,'Fission: heavy nucleus (e.g. U-235) splits into two smaller nuclei + neutrons + energy. Fusion: two light nuclei (e.g. hydrogen isotopes) combine to form heavier nucleus + enormous energy. Advantage of fusion: produces very little long-lived radioactive waste.')">Check</button>
+      <div class="saf" id="sf4"></div></div>
+  </div>
+  <button class="sub-btn" onclick="submitQuiz()">Submit and See Score</button>
+  <div id="sr"><div class="big" id="sv"></div><div id="sm"></div></div>
+</div>
+<div id="navbar">
+  <button class="nb" id="prev-btn" onclick="changeSlide(-1)" disabled>Prev</button>
+  <div id="dn"></div>
+  <button class="nb" id="next-btn" onclick="changeSlide(1)">Next</button>
+</div>
+<script>
+const TOTAL=10;let cur=1;const visited=new Set([1]);
+function buildDots(){const d=document.getElementById('dn');d.innerHTML='';for(let i=1;i<=TOTAL;i++){const dot=document.createElement('div');dot.className='dot'+(i===cur?' active':visited.has(i)&&i!==cur?' done':'');dot.onclick=(()=>{const n=i;return()=>goTo(n)})();d.appendChild(dot);}}
+function goTo(n){document.getElementById('s'+cur).classList.remove('active');cur=n;visited.add(n);document.getElementById('s'+n).classList.add('active');document.getElementById('slide-badge').textContent='Slide '+n+' / '+TOTAL;document.getElementById('prev-btn').disabled=(n===1);document.getElementById('next-btn').disabled=(n===TOTAL);buildDots();window.scrollTo(0,0);}
+function changeSlide(d){if(cur+d>=1&&cur+d<=TOTAL)goTo(cur+d);}
+buildDots();
+const FA={f1:['helium'],f2:['aluminium','aluminum'],f3:['half-life','half life'],f4:['4'],f5:['carbon-14','carbon 14']};
+function checkFills(){let s=0;Object.keys(FA).forEach(id=>{const v=(document.getElementById(id).value||'').toLowerCase().trim();const ok=FA[id].some(a=>v.includes(a));const r=document.getElementById(id+'r');r.style.display='inline-block';if(ok){r.className='fbr ok';r.textContent='Correct (1 mark)';s++;}else{r.className='fbr no';r.textContent='Ans: '+FA[id][0];}});return s;}
+function grSA(saId,fbId,kw,req,marks,model){const txt=document.getElementById(saId).value.toLowerCase().trim();if(!txt){alert('Please write your answer first.');return;}const found=kw.filter(k=>txt.includes(k));const missed=kw.filter(k=>!txt.includes(k)).slice(0,5);const rate=Math.min(1,found.length/req);const sc=Math.round(rate*marks);const fb=document.getElementById(fbId);fb.style.display='block';const cls=sc>=marks?'ok':sc>0?'partial':'no';fb.className='saf '+cls;fb.innerHTML='<strong>Score: '+sc+' / '+marks+'</strong><br>Found: <span class="kwf">'+(found.length?found.join(', '):'none')+'</span><br>Missed: <span class="kwm">'+(missed.length?missed.join(', '):'none')+'</span><div class="ma">Model: '+model+'</div>';}
+function getScore(id){const el=document.getElementById(id);if(!el||el.style.display==='none')return 0;const m=el.innerHTML.match(/Score:\s*(\d+)\s*\//);return m?parseInt(m[1]):0;}
+function submitQuiz(){const fill=checkFills();const sa=getScore('sf1')+getScore('sf2')+getScore('sf3')+getScore('sf4');const tot=fill+sa;const pct=Math.round((tot/15)*100);const grade=pct>=80?'Excellent':pct>=60?'Good':pct>=50?'Average':'Keep Revising';const r=document.getElementById('sr');r.style.display='block';document.getElementById('sv').textContent=tot+'/15 ('+pct+'%)';document.getElementById('sm').innerHTML='<strong>'+grade+'</strong><br><small>Fill-in: '+fill+'/5 | Short Answer: '+sa+'/10</small>';submitExamToMTTI(tot,15,pct);r.scrollIntoView({behavior:'smooth'});}
+function submitExamToMTTI(score,total,percent){try{fetch('/wp-json/mtti/v1/exam-result',{method:'POST',headers:{'Content-Type':'application/json','X-WP-Nonce':window.mtti_nonce||''},body:JSON.stringify({lesson_id:'f4-chem-2-radioactivity',score,total,percent,timestamp:new Date().toISOString()})}).then(r=>r.json()).then(d=>{if(d&&d.success)console.log('[MTTI] Saved');}).catch(e=>console.log('[MTTI] Offline',e));}catch(e){console.log('[MTTI]',e);}}
+</script>
+</body>
+</html>

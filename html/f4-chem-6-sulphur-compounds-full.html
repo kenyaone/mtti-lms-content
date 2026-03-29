@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4 Chemistry | Sulphur &amp; Its Compounds</title>
+<style>
+:root {
+  --pri: #0a5e2a;
+  --pri-light: #e8f5e9;
+  --acc: #f5a623;
+  --ok: #2e7d32;
+  --no: #c62828;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --muted: #555;
+  --border: #ddd;
+  --radius: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+#topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--pri); color: #fff;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#topbar .brand { font-size: 0.75rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; }
+#topbar .lesson-title { font-size: 0.95rem; font-weight: 700; text-align: center; flex: 1; padding: 0 10px; }
+#topbar .slide-counter { font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+
+#dotnav {
+  display: flex; justify-content: center; gap: 6px;
+  padding: 10px; background: #fff; border-bottom: 1px solid var(--border); flex-wrap: wrap;
+}
+.dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #ddd; border: none; cursor: pointer;
+  font-size: 0.7rem; font-weight: 700; color: #555;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+}
+.dot.active { background: var(--pri); color: #fff; transform: scale(1.15); }
+.dot.visited { background: var(--pri-light); color: var(--pri); }
+.dot.done { background: var(--ok); color: #fff; }
+
+#slides-wrap { max-width: 860px; margin: 0 auto; padding: 16px; }
+.slide { display: none; animation: fadeIn 0.3s ease; }
+.slide.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-header {
+  background: linear-gradient(135deg, var(--pri), #1a7a40);
+  color: #fff; border-radius: var(--radius) var(--radius) 0 0;
+  padding: 20px 24px;
+}
+.slide-header .slide-num { font-size: 0.75rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+.slide-header h2 { font-size: 1.4rem; margin-top: 4px; }
+.slide-body { background: var(--card); border-radius: 0 0 var(--radius) var(--radius); padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+
+.card { background: var(--pri-light); border-left: 4px solid var(--pri); border-radius: 8px; padding: 14px 16px; margin: 12px 0; }
+.card.acc { background: #fff8e1; border-left-color: var(--acc); }
+.card.info { background: #e3f2fd; border-left-color: #1565c0; }
+.card.warn { background: #fff3e0; border-left-color: #e65100; }
+.card.danger { background: #fbe9e7; border-left-color: var(--no); }
+.card h4 { color: var(--pri); margin-bottom: 6px; font-size: 1rem; }
+.card.acc h4 { color: #b06a00; }
+.card.info h4 { color: #1565c0; }
+.card.warn h4 { color: #e65100; }
+.card.danger h4 { color: var(--no); }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+@media(max-width:600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+.outcome-list { list-style: none; padding: 0; }
+.outcome-list li { padding: 10px 14px; border-radius: 8px; background: var(--pri-light); margin-bottom: 8px; border-left: 4px solid var(--pri); display: flex; align-items: flex-start; gap: 10px; }
+.outcome-list li::before { content: "✓"; color: var(--ok); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.9rem; }
+th { background: var(--pri); color: #fff; padding: 10px 12px; text-align: left; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+tr:nth-child(even) td { background: #f5f5f5; }
+
+.diagram-wrap { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin: 16px 0; overflow-x: auto; text-align: center; }
+.diagram-wrap svg { max-width: 100%; height: auto; }
+.diagram-caption { font-size: 0.8rem; color: var(--muted); margin-top: 6px; text-align: center; }
+
+.eq-box { background: #1a1a2e; color: #e0e0ff; border-radius: 8px; padding: 12px 18px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 0.95rem; text-align: center; }
+.eq-box .eq-label { font-size: 0.7rem; color: #aaa; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+.flow-box { background: #fff; border: 2px solid var(--pri); border-radius: 10px; padding: 16px; margin: 14px 0; }
+.flow-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; margin: 10px 0; }
+.flow-step { background: var(--pri); color: #fff; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; text-align: center; }
+.flow-arrow { font-size: 1.4rem; color: var(--acc); font-weight: 700; }
+
+.practice-q { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin: 14px 0; }
+.practice-q .q-num { font-size: 0.75rem; color: var(--pri); font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+.practice-q textarea { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; resize: vertical; min-height: 70px; }
+.check-btn { background: var(--pri); color: #fff; border: none; border-radius: 6px; padding: 7px 18px; cursor: pointer; font-size: 0.85rem; font-weight: 600; margin-top: 6px; }
+.check-btn:hover { background: #0d7a36; }
+.feedback { margin-top: 8px; padding: 8px 12px; border-radius: 6px; font-size: 0.88rem; display: none; }
+.feedback.correct { background: #e8f5e9; color: var(--ok); border-left: 3px solid var(--ok); display: block; }
+.feedback.partial { background: #fff8e1; color: #b06a00; border-left: 3px solid var(--acc); display: block; }
+.feedback.incorrect { background: #fbe9e7; color: var(--no); border-left: 3px solid var(--no); display: block; }
+
+.quiz-q { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 14px 0; }
+.quiz-q .qn { font-size: 0.75rem; color: var(--pri); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+.quiz-q p { font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+.fill-wrap { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; line-height: 2; }
+.fill-blank { border: none; border-bottom: 2px solid var(--pri); background: transparent; font-size: 1rem; font-family: inherit; padding: 2px 6px; min-width: 110px; outline: none; color: var(--text); }
+.fill-blank:focus { border-bottom-color: var(--acc); }
+.fill-blank.correct-ans { border-bottom-color: var(--ok); background: #e8f5e9; }
+.fill-blank.wrong-ans { border-bottom-color: var(--no); background: #fbe9e7; }
+.short-ans { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; resize: vertical; min-height: 65px; margin-top: 6px; }
+.rubric-tag { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; margin: 2px; }
+.rubric-tag.found { background: #e8f5e9; color: var(--ok); }
+.rubric-tag.missed { background: #fbe9e7; color: var(--no); }
+.model-answer { background: var(--pri-light); border-left: 3px solid var(--pri); padding: 10px 14px; border-radius: 0 8px 8px 0; margin-top: 8px; font-size: 0.88rem; display: none; }
+.model-answer strong { color: var(--pri); }
+
+#score-card { background: linear-gradient(135deg, var(--pri), #1a7a40); color: #fff; border-radius: var(--radius); padding: 28px; text-align: center; margin: 16px 0; }
+#score-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
+#score-circle { width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 16px auto; border: 4px solid rgba(255,255,255,0.5); }
+#score-circle .big { font-size: 2rem; font-weight: 900; }
+#score-circle .lbl { font-size: 0.7rem; opacity: 0.8; }
+.rubric-table { width: 100%; border-collapse: collapse; margin: 14px 0; background: rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; }
+.rubric-table th, .rubric-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 0.85rem; }
+.rubric-table th { background: rgba(0,0,0,0.2); }
+
+.nav-row { display: flex; justify-content: space-between; margin-top: 24px; }
+.nav-btn { background: var(--pri); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; cursor: pointer; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
+.nav-btn:hover { background: #0d7a36; }
+.nav-btn:disabled { background: #ccc; cursor: not-allowed; }
+.nav-btn.acc-btn { background: var(--acc); color: #1a1a1a; }
+.nav-btn.acc-btn:hover { background: #e09a1a; }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="brand">MTTI | F4 Chemistry</div>
+  <div class="lesson-title">Sulphur &amp; Its Compounds</div>
+  <div class="slide-counter" id="slide-counter">1 / 10</div>
+</div>
+
+<div id="dotnav">
+  <button class="dot active" onclick="goSlide(1)" id="dot1" title="Learning Outcomes">1</button>
+  <button class="dot" onclick="goSlide(2)" id="dot2" title="Sulphur Element">2</button>
+  <button class="dot" onclick="goSlide(3)" id="dot3" title="Sulphur Dioxide">3</button>
+  <button class="dot" onclick="goSlide(4)" id="dot4" title="Sulphur Trioxide">4</button>
+  <button class="dot" onclick="goSlide(5)" id="dot5" title="Contact Process">5</button>
+  <button class="dot" onclick="goSlide(6)" id="dot6" title="Sulphuric Acid">6</button>
+  <button class="dot" onclick="goSlide(7)" id="dot7" title="Hydrogen Sulphide">7</button>
+  <button class="dot" onclick="goSlide(8)" id="dot8" title="Environmental Impact">8</button>
+  <button class="dot" onclick="goSlide(9)" id="dot9" title="Practice">9</button>
+  <button class="dot" onclick="goSlide(10)" id="dot10" title="Quiz">10</button>
+</div>
+
+<div id="slides-wrap">
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="slide-1">
+  <div class="slide-header">
+    <div class="slide-num">Slide 1 of 10</div>
+    <h2>🎯 Learning Outcomes</h2>
+  </div>
+  <div class="slide-body">
+    <p style="color:var(--muted);margin-bottom:14px;">By the end of this lesson, you should be able to:</p>
+    <ul class="outcome-list">
+      <li>Describe the occurrence, allotropes, and properties of sulphur</li>
+      <li>Describe the physical and chemical properties of sulphur dioxide (SO₂)</li>
+      <li>Explain the industrial manufacture of sulphuric acid by the Contact Process</li>
+      <li>Describe the properties and reactions of concentrated and dilute sulphuric acid</li>
+      <li>Describe the properties and uses of hydrogen sulphide (H₂S)</li>
+      <li>Explain the environmental effects of sulphur compounds including acid rain</li>
+      <li>Identify uses of sulphur and its compounds in industry</li>
+    </ul>
+    <div class="card acc" style="margin-top:18px;">
+      <h4>📚 Key Concepts</h4>
+      <p>Allotropes of Sulphur · SO₂ · SO₃ · Contact Process · H₂SO₄ (dilute &amp; concentrated) · H₂S · Acid Rain</p>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" disabled>← Back</button>
+    <button class="nav-btn" onclick="goSlide(2)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 2: SULPHUR ELEMENT -->
+<div class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="slide-num">Slide 2 of 10</div>
+    <h2>🟡 Sulphur — Occurrence &amp; Allotropes</h2>
+  </div>
+  <div class="slide-body">
+    <div class="card">
+      <h4>Occurrence</h4>
+      <p>Sulphur occurs naturally as the <strong>free element</strong> near volcanoes and hot springs (Sicily, USA). It also occurs in combined form as sulphate minerals (gypsum CaSO₄·2H₂O, barytes BaSO₄) and sulphide ores (pyrite FeS₂, galena PbS). It is present in proteins (amino acids cysteine and methionine).</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Allotropes of Sulphur</h3>
+    <p style="margin-bottom:10px;font-size:0.9rem;color:var(--muted);">Allotropes are different physical forms of the same element in the same state. Sulphur has two main solid allotropes.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>Rhombic Sulphur (α-S)</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;margin-top:6px;">
+          <li>Stable below <strong>96°C</strong> (transition temperature)</li>
+          <li>Yellow, octahedral crystals</li>
+          <li>Density: 2.07 g/cm³</li>
+          <li>Melting point: 113°C</li>
+          <li>Most stable allotrope at room temperature</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Monoclinic Sulphur (β-S)</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;margin-top:6px;">
+          <li>Stable between <strong>96°C and 119°C</strong></li>
+          <li>Pale yellow, needle-shaped crystals</li>
+          <li>Density: 1.96 g/cm³</li>
+          <li>Melting point: 119°C</li>
+          <li>Converts to rhombic below 96°C</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card info">
+      <h4>Transition Temperature</h4>
+      <p>At <strong>96°C</strong>, both allotropes are in equilibrium. Above 96°C, monoclinic is stable; below 96°C, rhombic is stable. Both consist of <strong>S₈ ring molecules</strong> — they differ only in the packing arrangement of the rings.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Physical Properties of Sulphur</h3>
+    <table>
+      <tr><th>Property</th><th>Detail</th></tr>
+      <tr><td>Appearance</td><td>Bright yellow solid, brittle</td></tr>
+      <tr><td>Solubility</td><td>Insoluble in water; soluble in carbon disulphide (CS₂)</td></tr>
+      <tr><td>Electrical conductivity</td><td>Poor conductor — non-metal</td></tr>
+      <tr><td>Boiling point</td><td>445°C</td></tr>
+    </table>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Chemical Properties of Sulphur</h3>
+    <div class="card">
+      <h4>Combustion in air / oxygen</h4>
+      <div class="eq-box" style="margin-top:8px;">S(s) + O₂(g) → SO₂(g)<br><small style="color:#aaa;">(burns with a blue flame; suffocating smell)</small></div>
+    </div>
+    <div class="card">
+      <h4>Reaction with metals</h4>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="eq-box" style="font-size:0.85rem;">Fe(s) + S(s) → FeS(s)<br><small style="color:#aaa;">Iron(II) sulphide</small></div>
+        <div class="eq-box" style="font-size:0.85rem;">2Cu(s) + S(s) → Cu₂S(s)<br><small style="color:#aaa;">Copper(I) sulphide</small></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>Reaction with hot concentrated HNO₃</h4>
+      <div class="eq-box" style="margin-top:8px;">S + 2HNO₃(conc.) → H₂SO₄ + 2NO<br><small style="color:#aaa;">(sulphur oxidised to +6 state)</small></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Extraction of Sulphur — Frasch Process</h3>
+    <p style="font-size:0.9rem;">Sulphur is mined from underground deposits using the <strong>Frasch Process</strong>: three concentric pipes are sunk into the sulphur bed. Superheated water (160°C) melts the sulphur; hot compressed air forces liquid sulphur to the surface where it solidifies (99.5% pure).</p>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(1)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(3)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 3: SO2 -->
+<div class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="slide-num">Slide 3 of 10</div>
+    <h2>💨 Sulphur Dioxide (SO₂)</h2>
+  </div>
+  <div class="slide-body">
+
+    <h3 style="color:var(--pri);margin-bottom:10px;">Laboratory Preparation</h3>
+    <div class="card">
+      <h4>Method 1: Copper + Hot Conc. H₂SO₄</h4>
+      <div class="eq-box" style="margin-top:8px;">Cu + 2H₂SO₄(conc.) → CuSO₄ + SO₂ + 2H₂O<br><small style="color:#aaa;">(heat required; H₂SO₄ acts as oxidising agent)</small></div>
+    </div>
+    <div class="card">
+      <h4>Method 2: Sodium Sulphite + Dilute H₂SO₄</h4>
+      <div class="eq-box" style="margin-top:8px;">Na₂SO₃ + H₂SO₄ → Na₂SO₄ + SO₂ + H₂O</div>
+    </div>
+    <div class="card">
+      <h4>Method 3: Burning Sulphur</h4>
+      <div class="eq-box" style="margin-top:8px;">S + O₂ → SO₂</div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Physical Properties of SO₂</h3>
+    <div class="grid3">
+      <div class="card"><h4>Appearance</h4><p>Colourless gas with a pungent, choking smell</p></div>
+      <div class="card"><h4>Density</h4><p>Denser than air. Collected by upward delivery.</p></div>
+      <div class="card"><h4>Solubility</h4><p>Very soluble in water (→ acidic solution)</p></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Chemical Properties of SO₂</h3>
+
+    <div class="card">
+      <h4>1. Reaction with Water — Acidic Oxide</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₂(g) + H₂O(l)  ⇌  H₂SO₃(aq)<br><small style="color:#aaa;">(sulphurous acid — weak diprotic acid; turns blue litmus red)</small></div>
+    </div>
+
+    <div class="card">
+      <h4>2. Reaction with Bases</h4>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="eq-box" style="font-size:0.85rem;">SO₂ + 2NaOH → Na₂SO₃ + H₂O<br><small style="color:#aaa;">(sodium sulphite)</small></div>
+        <div class="eq-box" style="font-size:0.85rem;">SO₂ + NaOH → NaHSO₃<br><small style="color:#aaa;">(sodium bisulphite — excess SO₂)</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>3. Reducing Agent</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₂ + Cl₂ + 2H₂O → H₂SO₄ + 2HCl<br><small style="color:#aaa;">(SO₂ oxidised from +4 to +6; Cl₂ reduced)</small></div>
+      <p style="font-size:0.9rem;margin-top:6px;">Also decolourises acidified KMnO₄ solution — a test for SO₂ as a reducing agent.</p>
+    </div>
+
+    <div class="card">
+      <h4>4. Bleaching Action</h4>
+      <p style="font-size:0.9rem;">SO₂ bleaches moist coloured materials by <strong>reduction</strong> (adding hydrogen). Unlike chlorine bleaching (oxidation), colours return on heating — so SO₂ is used for bleaching delicate materials like wool, silk, straw hats, and dried fruits.</p>
+    </div>
+
+    <div class="card">
+      <h4>5. Oxidising Agent (limited)</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₂ + 2H₂S → 3S + 2H₂O<br><small style="color:#aaa;">(SO₂ acts as oxidising agent; precipitate of sulphur)</small></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Test for SO₂</h3>
+    <div class="card warn">
+      <h4>⚗️ Identification Tests</h4>
+      <ul style="padding-left:16px;font-size:0.9rem;">
+        <li>Turns <strong>acidified KMnO₄ colourless</strong> (reducing agent)</li>
+        <li>Turns <strong>K₂Cr₂O₇/H₂SO₄ from orange to green</strong></li>
+        <li>Gives <strong>white precipitate</strong> with Ba(NO₃)₂ / BaCl₂ solution after oxidation to SO₄²⁻</li>
+      </ul>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Uses of SO₂</h3>
+    <div class="grid3">
+      <div class="card acc"><h4>Preservative</h4><p>Preserves dried fruits, wines, and juices (E220)</p></div>
+      <div class="card acc"><h4>Bleaching</h4><p>Bleaching wool, silk, straw, and paper pulp</p></div>
+      <div class="card acc"><h4>Industrial</h4><p>Making H₂SO₄ (Contact Process); making sulphites</p></div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(2)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(4)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 4: SO3 -->
+<div class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="slide-num">Slide 4 of 10</div>
+    <h2>🔬 Sulphur Trioxide (SO₃)</h2>
+  </div>
+  <div class="slide-body">
+
+    <div class="card info">
+      <h4>What is SO₃?</h4>
+      <p>Sulphur trioxide is the anhydride of sulphuric acid. It is produced industrially in the Contact Process and reacts vigorously with water to form H₂SO₄.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Physical Properties</h3>
+    <div class="grid3">
+      <div class="card"><h4>State</h4><p>Colourless fuming liquid/solid at room temperature (bp 45°C)</p></div>
+      <div class="card"><h4>Density</h4><p>Much denser than air; white fumes in moist air</p></div>
+      <div class="card"><h4>Solubility</h4><p>Reacts violently with water — not simply dissolved</p></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Chemical Properties of SO₃</h3>
+
+    <div class="card">
+      <h4>1. Reaction with Water</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₃(g) + H₂O(l) → H₂SO₄(l)<br><small style="color:#aaa;">(violent exothermic reaction; fumes of H₂SO₄ produced)</small></div>
+      <p style="font-size:0.9rem;margin-top:6px;">This is why SO₃ is NOT absorbed directly in water industrially — it creates acid mist. Instead it is absorbed in <strong>98% H₂SO₄</strong> to form oleum, which is then diluted.</p>
+    </div>
+
+    <div class="card">
+      <h4>2. Reaction with Bases</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₃ + 2NaOH → Na₂SO₄ + H₂O<br><small style="color:#aaa;">(sodium sulphate formed)</small></div>
+    </div>
+
+    <div class="card">
+      <h4>3. Formation of Oleum (Fuming H₂SO₄)</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₃ + H₂SO₄  →  H₂S₂O₇<br><small style="color:#aaa;">(pyrosulphuric acid / oleum; then diluted with water to give H₂SO₄)</small></div>
+    </div>
+
+    <div class="card">
+      <h4>4. Equilibrium in Contact Process</h4>
+      <div class="eq-box" style="margin-top:8px;">2SO₂(g) + O₂(g)  ⇌  2SO₃(g)   ΔH = −197 kJ/mol<br><small style="color:#aaa;">(vanadium(V) oxide catalyst, 450°C, 1–2 atm)</small></div>
+      <p style="font-size:0.9rem;margin-top:6px;">This is the key equilibrium step — discussed in full on the next slide.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Sulphur Oxidation States</h3>
+    <table>
+      <tr><th>Compound</th><th>Oxidation State of S</th><th>Notes</th></tr>
+      <tr><td>H₂S</td><td>−2</td><td>Sulphur in lowest state; reducing agent</td></tr>
+      <tr><td>S (element)</td><td>0</td><td>Free element</td></tr>
+      <tr><td>SO₂ / H₂SO₃</td><td>+4</td><td>Intermediate; both oxidising and reducing</td></tr>
+      <tr><td>SO₃ / H₂SO₄</td><td>+6</td><td>Highest state; strong oxidising agent (conc.)</td></tr>
+    </table>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(3)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(5)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 5: CONTACT PROCESS -->
+<div class="slide" id="slide-5">
+  <div class="slide-header">
+    <div class="slide-num">Slide 5 of 10</div>
+    <h2>🏭 The Contact Process</h2>
+  </div>
+  <div class="slide-body">
+
+    <div class="card info">
+      <h4>What is the Contact Process?</h4>
+      <p>The Contact Process is the industrial manufacture of <strong>sulphuric acid</strong> (H₂SO₄), the most important industrial chemical. Over 200 million tonnes are produced annually worldwide.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Raw Materials</h3>
+    <div class="grid3">
+      <div class="card acc"><h4>Sulphur / Pyrite</h4><p>S or FeS₂ burned in air to produce SO₂</p></div>
+      <div class="card acc"><h4>Air (Oxygen)</h4><p>Purified, dried; provides O₂ for oxidation steps</p></div>
+      <div class="card acc"><h4>98% H₂SO₄</h4><p>Used to absorb SO₃ to form oleum</p></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">The Three Stages</h3>
+
+    <div class="card">
+      <h4>Stage 1: Production of SO₂</h4>
+      <div class="eq-box" style="margin-top:8px;">S(s) + O₂(g)  →  SO₂(g)</div>
+      <div class="eq-box">4FeS₂(s) + 11O₂(g)  →  2Fe₂O₃(s) + 8SO₂(g)<br><small style="color:#aaa;">(if using iron pyrite)</small></div>
+      <p style="font-size:0.9rem;margin-top:6px;">Gas is purified and dried before the next stage.</p>
+    </div>
+
+    <div class="card">
+      <h4>Stage 2: Oxidation of SO₂ to SO₃ (Key Equilibrium)</h4>
+      <div class="eq-box" style="margin-top:8px;">2SO₂(g) + O₂(g)  ⇌  2SO₃(g)   ΔH = −197 kJ/mol</div>
+      <table style="margin-top:10px;">
+        <tr><th>Condition</th><th>Value Used</th><th>Reason (Le Chatelier)</th></tr>
+        <tr><td>Temperature</td><td><strong>450°C</strong></td><td>Compromise: low T gives high yield but slow rate; 450°C balances both (~98% conversion)</td></tr>
+        <tr><td>Pressure</td><td><strong>1–2 atm</strong></td><td>Reaction is favoured by high pressure (3→2 mol gas), but 1–2 atm gives adequate yield; higher pressure is costly</td></tr>
+        <tr><td>Catalyst</td><td><strong>V₂O₅</strong> (vanadium pentoxide)</td><td>Increases rate; does not shift equilibrium</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h4>Stage 3: Absorption of SO₃ &amp; Formation of H₂SO₄</h4>
+      <div class="eq-box" style="margin-top:8px;">SO₃(g) + H₂SO₄(l)  →  H₂S₂O₇(l)   (oleum)<br><small style="color:#aaa;">(SO₃ absorbed in 98% H₂SO₄, NOT water — avoids acid mist)</small></div>
+      <div class="eq-box">H₂S₂O₇(l) + H₂O(l)  →  2H₂SO₄(l)<br><small style="color:#aaa;">(oleum carefully diluted with water to give 98% H₂SO₄)</small></div>
+    </div>
+
+    <div class="flow-box">
+      <h4 style="color:var(--pri);margin-bottom:10px;">Contact Process Flow</h4>
+      <div class="flow-row">
+        <div class="flow-step">S + O₂<br><small>→ SO₂</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Purify &amp;<br>Dry SO₂</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Converter<br><small>V₂O₅, 450°C</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">SO₃ + H₂SO₄<br><small>→ Oleum</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">+ H₂O<br><small>→ H₂SO₄</small></div>
+      </div>
+      <p style="font-size:0.85rem;color:var(--muted);text-align:center;margin-top:6px;">Unreacted SO₂ is recycled back into the converter</p>
+    </div>
+
+    <div class="card warn">
+      <h4>⚠️ Why Not Absorb SO₃ Directly in Water?</h4>
+      <p>SO₃ + H₂O is so exothermic that a fine acid mist forms which is difficult to condense and causes air pollution. Absorbing in 98% H₂SO₄ gives oleum which is then diluted safely.</p>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(4)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(6)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 6: SULPHURIC ACID -->
+<div class="slide" id="slide-6">
+  <div class="slide-header">
+    <div class="slide-num">Slide 6 of 10</div>
+    <h2>🧪 Properties of Sulphuric Acid (H₂SO₄)</h2>
+  </div>
+  <div class="slide-body">
+
+    <h3 style="color:var(--pri);margin-bottom:10px;">Physical Properties</h3>
+    <div class="grid3">
+      <div class="card"><h4>Appearance</h4><p>Colourless, oily, viscous liquid; very dense (1.84 g/cm³)</p></div>
+      <div class="card"><h4>Boiling point</h4><p>337°C (high — due to hydrogen bonding between molecules)</p></div>
+      <div class="card"><h4>Mixing with water</h4><p>Highly exothermic — ALWAYS add acid to water, never reverse</p></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Properties of Dilute H₂SO₄</h3>
+    <p style="font-size:0.9rem;margin-bottom:10px;">Dilute H₂SO₄ is a strong diprotic acid: H₂SO₄ → 2H⁺ + SO₄²⁻</p>
+    <table>
+      <tr><th>Reaction</th><th>Equation</th><th>Product</th></tr>
+      <tr><td>With metals (Mg, Zn)</td><td>Mg + H₂SO₄ → MgSO₄ + H₂↑</td><td>Metal sulphate + hydrogen</td></tr>
+      <tr><td>With metal oxides</td><td>CuO + H₂SO₄ → CuSO₄ + H₂O</td><td>Metal sulphate + water</td></tr>
+      <tr><td>With carbonates</td><td>CaCO₃ + H₂SO₄ → CaSO₄ + H₂O + CO₂</td><td>Sulphate + water + CO₂</td></tr>
+      <tr><td>With hydroxides</td><td>2NaOH + H₂SO₄ → Na₂SO₄ + 2H₂O</td><td>Sodium sulphate + water</td></tr>
+      <tr><td>With BaCl₂/Ba(NO₃)₂</td><td>Ba²⁺ + SO₄²⁻ → BaSO₄↓</td><td>White ppt — test for SO₄²⁻</td></tr>
+    </table>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Properties of Concentrated H₂SO₄</h3>
+    <div class="card warn">
+      <h4>⚠️ Concentrated H₂SO₄ behaves differently from dilute!</h4>
+    </div>
+
+    <div class="card">
+      <h4>1. Dehydrating Agent</h4>
+      <p>Removes water (H and OH) from compounds as H₂O molecules:</p>
+      <div class="eq-box" style="margin-top:8px;">C₁₂H₂₂O₁₁  →  12C + 11H₂O<br><small style="color:#aaa;">(sugar → black carbon + steam; spectacular reaction)</small></div>
+      <div class="eq-box">HCOOH  →  CO + H₂O<br><small style="color:#aaa;">(formic acid dehydrated to carbon monoxide)</small></div>
+    </div>
+
+    <div class="card">
+      <h4>2. Oxidising Agent (hot, concentrated)</h4>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="eq-box" style="font-size:0.82rem;">Cu + 2H₂SO₄(conc.) → CuSO₄ + SO₂ + 2H₂O<br><small style="color:#aaa;">(Cu dissolved — not possible with dilute)</small></div>
+        <div class="eq-box" style="font-size:0.82rem;">C + 2H₂SO₄(conc.) → CO₂ + 2SO₂ + 2H₂O<br><small style="color:#aaa;">(non-metals oxidised)</small></div>
+      </div>
+      <div class="eq-box" style="font-size:0.82rem;">S + 2H₂SO₄(conc.) → 3SO₂ + 2H₂O</div>
+    </div>
+
+    <div class="card">
+      <h4>3. Reaction with NaCl / NaBr (displacement)</h4>
+      <div class="eq-box" style="margin-top:8px;">NaCl + H₂SO₄(conc.) → NaHSO₄ + HCl↑<br><small style="color:#aaa;">(cold; used to make HCl gas)</small></div>
+      <div class="eq-box">2NaCl + H₂SO₄(conc.) → Na₂SO₄ + 2HCl↑<br><small style="color:#aaa;">(hot)</small></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Uses of Sulphuric Acid</h3>
+    <div class="grid3">
+      <div class="card acc"><h4>Fertilisers (60%)</h4><p>Making (NH₄)₂SO₄, superphosphate</p></div>
+      <div class="card acc"><h4>Chemicals</h4><p>Making HCl, HNO₃, dyes, drugs, detergents</p></div>
+      <div class="card acc"><h4>Industry</h4><p>Car batteries, steel pickling, oil refining, paint pigments</p></div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(5)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(7)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 7: H2S -->
+<div class="slide" id="slide-7">
+  <div class="slide-header">
+    <div class="slide-num">Slide 7 of 10</div>
+    <h2>🥚 Hydrogen Sulphide (H₂S)</h2>
+  </div>
+  <div class="slide-body">
+
+    <div class="card warn">
+      <h4>⚠️ Safety Note</h4>
+      <p>H₂S is a <strong>highly toxic</strong> gas — more poisonous than HCN. It smells of rotten eggs. All experiments must be done in a fume cupboard.</p>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Laboratory Preparation</h3>
+    <div class="card">
+      <h4>Iron(II) Sulphide + Dilute HCl or H₂SO₄ (Kipp's Apparatus)</h4>
+      <div class="eq-box" style="margin-top:8px;">FeS(s) + H₂SO₄(dilute) → FeSO₄(aq) + H₂S(g)</div>
+      <div class="eq-box">FeS(s) + 2HCl(aq) → FeCl₂(aq) + H₂S(g)</div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Physical Properties</h3>
+    <div class="grid3">
+      <div class="card"><h4>Smell</h4><p>Rotten egg odour; detectable at very low concentrations</p></div>
+      <div class="card"><h4>Density</h4><p>Slightly denser than air (M=34); collected by upward delivery</p></div>
+      <div class="card"><h4>Solubility</h4><p>Slightly soluble in water → weak diprotic acid (H₂S ⇌ 2H⁺ + S²⁻)</p></div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Chemical Properties of H₂S</h3>
+
+    <div class="card">
+      <h4>1. Combustion</h4>
+      <div class="grid2" style="margin-top:8px;">
+        <div class="eq-box" style="font-size:0.85rem;">2H₂S + 3O₂(excess) → 2SO₂ + 2H₂O<br><small style="color:#aaa;">(blue flame)</small></div>
+        <div class="eq-box" style="font-size:0.85rem;">2H₂S + O₂(limited) → 2S + 2H₂O<br><small style="color:#aaa;">(yellow S deposited)</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>2. Reducing Agent</h4>
+      <div class="eq-box" style="margin-top:8px;">H₂S + Cl₂ → S + 2HCl<br><small style="color:#aaa;">(H₂S oxidised; yellow sulphur precipitate)</small></div>
+      <div class="eq-box">SO₂ + 2H₂S → 3S + 2H₂O<br><small style="color:#aaa;">(SO₂ acts as oxidising agent here)</small></div>
+      <p style="font-size:0.9rem;margin-top:6px;">H₂S decolourises acidified KMnO₄ and turns K₂Cr₂O₇ green — both tests for reducing action.</p>
+    </div>
+
+    <div class="card">
+      <h4>3. Reaction with Metals Salts (Qualitative Analysis)</h4>
+      <p style="font-size:0.9rem;margin-top:6px;">H₂S is used in qualitative analysis to precipitate metal sulphides — many of which are insoluble and characteristically coloured:</p>
+      <table style="margin-top:8px;">
+        <tr><th>Ion</th><th>Sulphide</th><th>Colour</th></tr>
+        <tr><td>Pb²⁺</td><td>PbS</td><td>Black</td></tr>
+        <tr><td>Cu²⁺</td><td>CuS</td><td>Black</td></tr>
+        <tr><td>Fe²⁺</td><td>FeS</td><td>Black</td></tr>
+        <tr><td>Zn²⁺</td><td>ZnS</td><td>White</td></tr>
+        <tr><td>Cd²⁺</td><td>CdS</td><td>Yellow</td></tr>
+        <tr><td>As³⁺</td><td>As₂S₃</td><td>Yellow</td></tr>
+      </table>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Test for H₂S</h3>
+    <div class="card warn">
+      <p>Turns <strong>lead(II) acetate paper black</strong>: Pb(CH₃COO)₂ + H₂S → PbS↓ + 2CH₃COOH. This is the definitive test for H₂S.</p>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(6)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(8)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 8: ENVIRONMENTAL IMPACT -->
+<div class="slide" id="slide-8">
+  <div class="slide-header">
+    <div class="slide-num">Slide 8 of 10</div>
+    <h2>🌍 Environmental Impact of Sulphur Compounds</h2>
+  </div>
+  <div class="slide-body">
+
+    <h3 style="color:var(--pri);margin-bottom:12px;">Acid Rain</h3>
+    <div class="card danger">
+      <h4>How Acid Rain Forms</h4>
+      <p>Normal rain is slightly acidic (pH ~5.6) due to dissolved CO₂. <strong>Acid rain</strong> (pH 4–5) forms when SO₂ and NOₓ from burning fossil fuels dissolve in water vapour and are oxidised in the atmosphere:</p>
+      <div class="eq-box" style="margin-top:8px;">2SO₂ + O₂ + 2H₂O → 2H₂SO₄<br><small style="color:#aaa;">(sulphuric acid — main component of acid rain)</small></div>
+      <div class="eq-box">4NO₂ + O₂ + 2H₂O → 4HNO₃<br><small style="color:#aaa;">(nitric acid contribution)</small></div>
+    </div>
+
+    <!-- SVG Acid Rain Diagram -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+        <rect width="700" height="320" fill="#e8f4f8" rx="10"/>
+        <!-- Sky -->
+        <rect width="700" height="140" fill="#bbdefb" rx="10 10 0 0"/>
+        <!-- Ground -->
+        <rect y="220" width="700" height="100" fill="#a5d6a7" rx="0 0 10 10"/>
+        <!-- Water body -->
+        <ellipse cx="580" cy="250" rx="90" ry="30" fill="#64b5f6" opacity="0.7"/>
+        <text x="580" y="255" text-anchor="middle" font-size="10" fill="#0d47a1">Lake / River</text>
+        <!-- Factory -->
+        <rect x="60" y="140" width="60" height="80" fill="#90a4ae"/>
+        <rect x="75" y="120" width="15" height="40" fill="#78909c"/>
+        <rect x="100" y="130" width="12" height="30" fill="#78909c"/>
+        <!-- Smoke plume -->
+        <path d="M82 120 Q70 90 100 70 Q130 50 110 30" stroke="#bdbdbd" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <text x="30" y="190" font-size="10" fill="#37474f" font-weight="700">Industrial source</text>
+        <text x="35" y="203" font-size="9" fill="#546e7a">SO₂ + NOₓ</text>
+        <!-- Cloud -->
+        <ellipse cx="350" cy="60" rx="80" ry="35" fill="#eceff1"/>
+        <ellipse cx="310" cy="70" rx="50" ry="28" fill="#eceff1"/>
+        <ellipse cx="390" cy="72" rx="50" ry="25" fill="#eceff1"/>
+        <text x="350" y="60" text-anchor="middle" font-size="10" fill="#546e7a" font-weight="700">SO₂ + H₂O + O₂</text>
+        <text x="350" y="74" text-anchor="middle" font-size="9" fill="#546e7a">→ H₂SO₄ (acid rain)</text>
+        <!-- Arrows: emissions up -->
+        <path d="M 110 80 Q 200 50 280 60" stroke="#e65100" stroke-width="2" fill="none" marker-end="url(#rArrow)"/>
+        <!-- Rain down -->
+        <line x1="330" y1="95" x2="290" y2="185" stroke="#1565c0" stroke-width="2" stroke-dasharray="4,3"/>
+        <line x1="350" y1="95" x2="350" y2="185" stroke="#1565c0" stroke-width="2" stroke-dasharray="4,3"/>
+        <line x1="370" y1="95" x2="400" y2="185" stroke="#1565c0" stroke-width="2" stroke-dasharray="4,3"/>
+        <line x1="390" y1="95" x2="450" y2="185" stroke="#1565c0" stroke-width="2" stroke-dasharray="4,3"/>
+        <text x="420" y="160" font-size="10" fill="#1565c0" font-weight="700">Acid Rain</text>
+        <text x="415" y="173" font-size="9" fill="#1565c0">pH 4–5</text>
+        <!-- Effects labels -->
+        <text x="230" y="245" font-size="10" fill="#b71c1c" font-weight="600">🌲 Forest damage</text>
+        <text x="230" y="260" font-size="9" fill="#b71c1c">Leaf damage, soil acidification</text>
+        <text x="490" y="235" font-size="10" fill="#1565c0" font-weight="600">🐟 Aquatic damage</text>
+        <text x="495" y="248" font-size="9" fill="#1565c0">Fish die at pH &lt; 5</text>
+        <!-- Building corrosion -->
+        <rect x="160" y="190" width="40" height="35" fill="#bcaaa4"/>
+        <polygon points="160,190 180,170 200,190" fill="#a1887f"/>
+        <text x="180" y="240" text-anchor="middle" font-size="9" fill="#4e342e">Building corrosion</text>
+        <defs>
+          <marker id="rArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0,0 L0,8 L8,4 z" fill="#e65100"/>
+          </marker>
+        </defs>
+      </svg>
+      <div class="diagram-caption">Figure: Acid rain formation from SO₂ emissions and its environmental effects</div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:14px 0 8px;">Effects of Acid Rain</h3>
+    <div class="grid2">
+      <div class="card danger">
+        <h4>On Aquatic Life</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;">
+          <li>Lakes become acidic (pH &lt; 5)</li>
+          <li>Fish and invertebrates die</li>
+          <li>Disrupts food chains</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <h4>On Forests &amp; Soil</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;">
+          <li>Damages leaf surfaces and kills trees</li>
+          <li>Leaches nutrients from soil</li>
+          <li>Releases toxic Al³⁺ ions from soil</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <h4>On Buildings</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;">
+          <li>Corrodes limestone and marble: CaCO₃ + H₂SO₄ → CaSO₄ + H₂O + CO₂</li>
+          <li>Corrodes iron and steel structures</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <h4>On Human Health</h4>
+        <ul style="padding-left:16px;font-size:0.9rem;">
+          <li>Acid aerosols cause respiratory problems</li>
+          <li>Acidified water leaches lead/copper from pipes</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="color:var(--pri);margin:16px 0 8px;">Control of SO₂ Emissions</h3>
+    <table>
+      <tr><th>Method</th><th>How It Works</th></tr>
+      <tr><td>Flue gas desulphurisation (FGD)</td><td>Reacts SO₂ in exhaust with CaO or Ca(OH)₂: SO₂ + CaO → CaSO₃ (calcium sulphite)</td></tr>
+      <tr><td>Low-sulphur fuels</td><td>Use fuels with &lt;0.5% S content; hydrodesulphurisation of oil</td></tr>
+      <tr><td>Catalytic converters</td><td>Reduce NOₓ in vehicle exhaust (also reduces acid rain contribution)</td></tr>
+      <tr><td>Renewable energy</td><td>Solar, wind, hydro — no SO₂ emitted</td></tr>
+    </table>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(7)">← Back</button>
+    <button class="nav-btn" onclick="goSlide(9)">Next →</button>
+  </div>
+</div>
+
+<!-- SLIDE 9: PRACTICE -->
+<div class="slide" id="slide-9">
+  <div class="slide-header">
+    <div class="slide-num">Slide 9 of 10</div>
+    <h2>✏️ Practice Questions</h2>
+  </div>
+  <div class="slide-body">
+
+    <div class="practice-q">
+      <div class="q-num">Question 1</div>
+      <p>Name and describe the two main allotropes of sulphur. State the transition temperature between them.</p>
+      <textarea id="pq1" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(1)">Check Answer</button>
+      <div class="feedback" id="pfb1"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 2</div>
+      <p>Write the three equations for the Contact Process. State the catalyst used in Stage 2 and explain why a temperature of 450°C is used.</p>
+      <textarea id="pq2" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(2)">Check Answer</button>
+      <div class="feedback" id="pfb2"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 3</div>
+      <p>Describe what happens when concentrated H₂SO₄ is added to sucrose (sugar). Write a word equation and name the property of H₂SO₄ demonstrated.</p>
+      <textarea id="pq3" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(3)">Check Answer</button>
+      <div class="feedback" id="pfb3"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 4</div>
+      <p>State the chemical test for (a) sulphate ions (SO₄²⁻) and (b) hydrogen sulphide gas (H₂S). Include the observation and equation for each.</p>
+      <textarea id="pq4" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(4)">Check Answer</button>
+      <div class="feedback" id="pfb4"></div>
+    </div>
+
+    <div class="practice-q">
+      <div class="q-num">Question 5</div>
+      <p>Explain why SO₃ is absorbed in concentrated H₂SO₄ rather than water in the Contact Process.</p>
+      <textarea id="pq5" placeholder="Write your answer here..."></textarea>
+      <button class="check-btn" onclick="checkPQ(5)">Check Answer</button>
+      <div class="feedback" id="pfb5"></div>
+    </div>
+
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(8)">← Back</button>
+    <button class="nav-btn acc-btn" onclick="goSlide(10)">Take Quiz →</button>
+  </div>
+</div>
+
+<!-- SLIDE 10: QUIZ -->
+<div class="slide" id="slide-10">
+  <div class="slide-header">
+    <div class="slide-num">Slide 10 of 10</div>
+    <h2>🧠 Assessment Quiz</h2>
+  </div>
+  <div class="slide-body" id="quiz-body">
+
+    <div class="quiz-q">
+      <div class="qn">Question 1 — Fill in the Blank [1 mark]</div>
+      <p>In the Contact Process, SO₂ is oxidised to SO₃ using a catalyst of <span class="fill-wrap"><input type="text" class="fill-blank" id="q1a" placeholder="catalyst"> at a temperature of <input type="text" class="fill-blank" id="q1b" placeholder="temp">°C.</span></p>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 2 — Fill in the Blank [1 mark]</div>
+      <p>The two allotropes of sulphur are <span class="fill-wrap"><input type="text" class="fill-blank" id="q2a" placeholder="allotrope 1"> and <input type="text" class="fill-blank" id="q2b" placeholder="allotrope 2">, and both consist of <input type="text" class="fill-blank" id="q2c" placeholder="molecular formula"> ring molecules.</span></p>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 3 — Fill in the Blank [1 mark]</div>
+      <p>The test for sulphate ions uses <span class="fill-wrap"><input type="text" class="fill-blank" id="q3a" placeholder="reagent"> solution, which gives a <input type="text" class="fill-blank" id="q3b" placeholder="colour"> precipitate of <input type="text" class="fill-blank" id="q3c" placeholder="formula">.</span></p>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 4 — Fill in the Blank [1 mark]</div>
+      <p>Concentrated H₂SO₄ acting as a <span class="fill-wrap"><input type="text" class="fill-blank" id="q4a" placeholder="property"> agent turns sucrose black by removing <input type="text" class="fill-blank" id="q4b" placeholder="what is removed"> to form carbon.</span></p>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 5 — Fill in the Blank [1 mark]</div>
+      <p>Hydrogen sulphide is identified by turning <span class="fill-wrap"><input type="text" class="fill-blank" id="q5a" placeholder="paper/reagent"> paper <input type="text" class="fill-blank" id="q5b" placeholder="colour"> due to formation of lead(II) sulphide.</span></p>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 6 — Short Answer [3 marks]</div>
+      <p>Explain, with equations, how acid rain forms from sulphur dioxide released by burning fossil fuels, and describe TWO environmental effects of acid rain.</p>
+      <textarea class="short-ans" id="q6" placeholder="Write your answer here..."></textarea>
+      <div class="model-answer" id="ma6">
+        <strong>Model Answer:</strong> SO₂ is released when fossil fuels (coal, oil) containing sulphur are burned: S + O₂ → SO₂. In the atmosphere, SO₂ reacts with oxygen and water vapour: 2SO₂ + O₂ + 2H₂O → 2H₂SO₄. The sulphuric acid dissolves in rain, giving acid rain (pH 4–5). Effects include: (1) Acidification of lakes and rivers, killing fish and aquatic organisms at pH &lt; 5. (2) Damage to forests — acid leaches nutrients and releases toxic Al³⁺ ions, killing trees. (Also: corrosion of limestone buildings; respiratory damage in humans.)
+        <div style="margin-top:8px;" id="tags6"></div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 7 — Short Answer [3 marks]</div>
+      <p>Describe THREE differences in the reactions of dilute and concentrated sulphuric acid with copper metal, including equations.</p>
+      <textarea class="short-ans" id="q7" placeholder="Write your answer here..."></textarea>
+      <div class="model-answer" id="ma7">
+        <strong>Model Answer:</strong> Dilute H₂SO₄ does NOT react with copper — Cu is below hydrogen in the reactivity series so H⁺ cannot oxidise it. Concentrated H₂SO₄ DOES react with copper when heated: Cu + 2H₂SO₄(conc.) → CuSO₄ + SO₂ + 2H₂O. Difference 1: Dilute = no reaction; Conc. = reaction occurs. Difference 2: Conc. H₂SO₄ acts as oxidising agent; dilute acts only as an acid. Difference 3: Conc. produces SO₂ gas (pungent); dilute produces no gas with Cu.
+        <div style="margin-top:8px;" id="tags7"></div>
+      </div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qn">Question 8 — Short Answer [2 marks]</div>
+      <p>State why SO₃ cannot be absorbed directly in water during the Contact Process, and describe what is done instead.</p>
+      <textarea class="short-ans" id="q8" placeholder="Write your answer here..."></textarea>
+      <div class="model-answer" id="ma8">
+        <strong>Model Answer:</strong> SO₃ reacts very vigorously with water in a highly exothermic reaction, producing a fine mist of sulphuric acid droplets that are very difficult to condense and would pollute the air. Instead, SO₃ is absorbed in 98% concentrated H₂SO₄ to form oleum (H₂S₂O₇): SO₃ + H₂SO₄ → H₂S₂O₇. The oleum is then carefully diluted with water to produce the required concentration of H₂SO₄: H₂S₂O₇ + H₂O → 2H₂SO₄.
+        <div style="margin-top:8px;" id="tags8"></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <button class="nav-btn acc-btn" style="font-size:1rem;padding:12px 36px;" onclick="submitExam()">Submit &amp; Get Results</button>
+    </div>
+
+    <div id="score-card" style="display:none;">
+      <h3>🎉 Quiz Complete!</h3>
+      <div id="score-circle">
+        <span class="big" id="score-pct">0%</span>
+        <span class="lbl" id="score-frac">0/11</span>
+      </div>
+      <p id="score-msg" style="margin-bottom:14px;"></p>
+      <table class="rubric-table">
+        <tr><th>Level</th><th>Score %</th><th>Description</th></tr>
+        <tr><td>Exceeds (4)</td><td>80–100%</td><td>Excellent mastery of sulphur chemistry</td></tr>
+        <tr><td>Meets (3)</td><td>60–79%</td><td>Good understanding; minor gaps</td></tr>
+        <tr><td>Approaches (2)</td><td>40–59%</td><td>Partial understanding; revisit key sections</td></tr>
+        <tr><td>Below (1)</td><td>0–39%</td><td>Needs significant review — start from Slide 2</td></tr>
+      </table>
+    </div>
+
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="goSlide(9)">← Back</button>
+    <button class="nav-btn" disabled>End of Lesson</button>
+  </div>
+</div>
+
+</div><!-- /slides-wrap -->
+
+<script>
+let currentSlide = 1;
+const totalSlides = 10;
+
+function goSlide(n) {
+  document.getElementById('slide-' + currentSlide).classList.remove('active');
+  document.getElementById('dot' + currentSlide).classList.remove('active');
+  if (!document.getElementById('dot' + currentSlide).classList.contains('done')) {
+    document.getElementById('dot' + currentSlide).classList.add('visited');
+  }
+  currentSlide = n;
+  document.getElementById('slide-' + n).classList.add('active');
+  document.getElementById('dot' + n).classList.add('active');
+  document.getElementById('dot' + n).classList.remove('visited');
+  document.getElementById('slide-counter').textContent = n + ' / ' + totalSlides;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const pqAnswers = {
+  1: { keywords: ['rhombic','monoclinic','96','transition','s8','ring','octahedral','needle'], threshold: 3 },
+  2: { keywords: ['s + o2','so2','2so2','o2','so3','v2o5','vanadium','450','le chatelier','exothermic','oleum','h2so4'], threshold: 5 },
+  3: { keywords: ['dehydrating','black carbon','sucrose','water','c12h22o11','12c','11h2o'], threshold: 2 },
+  4: { keywords: ['bacl2','ba(no3)2','baso4','white precipitate','sulphate','lead acetate','pbs','black','h2s'], threshold: 3 },
+  5: { keywords: ['mist','acid mist','exothermic','pollution','oleum','98%','h2s2o7'], threshold: 2 }
+};
+const pqModel = {
+  1: 'Rhombic sulphur: stable below 96°C, yellow octahedral crystals. Monoclinic sulphur: stable 96–119°C, needle-shaped crystals. Transition temperature = 96°C. Both have S₈ ring molecules.',
+  2: 'Stage 1: S + O₂ → SO₂. Stage 2: 2SO₂ + O₂ ⇌ 2SO₃ (V₂O₅ catalyst, 450°C). Stage 3: SO₃ + H₂SO₄ → H₂S₂O₇ (oleum), then H₂S₂O₇ + H₂O → 2H₂SO₄. 450°C: exothermic reaction — compromise between yield and rate.',
+  3: 'Black spongy carbon and steam are produced. C₁₂H₂₂O₁₁ → 12C + 11H₂O. Property demonstrated: concentrated H₂SO₄ as a dehydrating agent (removes water from the compound).',
+  4: '(a) SO₄²⁻: add BaCl₂ or Ba(NO₃)₂ — white precipitate of BaSO₄ forms (insoluble in dilute HCl). (b) H₂S: hold damp lead acetate paper above gas — turns black (PbS formed). Pb(CH₃COO)₂ + H₂S → PbS↓ + 2CH₃COOH.',
+  5: 'SO₃ reacts violently with water forming a fine acid mist that cannot be condensed easily. Instead SO₃ is absorbed in 98% H₂SO₄ to form oleum (H₂S₂O₇), which is then safely diluted with water to give concentrated H₂SO₄.'
+};
+
+function checkPQ(n) {
+  const ans = document.getElementById('pq' + n).value.toLowerCase();
+  const cfg = pqAnswers[n];
+  const found = cfg.keywords.filter(k => ans.includes(k));
+  const fb = document.getElementById('pfb' + n);
+  if (found.length >= cfg.threshold) {
+    fb.className = 'feedback correct';
+    fb.innerHTML = '✅ Good answer!<br><small><strong>Model:</strong> ' + pqModel[n] + '</small>';
+  } else if (found.length > 0) {
+    fb.className = 'feedback partial';
+    fb.innerHTML = '⚠️ Partially correct. Try to include: ' + cfg.keywords.filter(k=>!ans.includes(k)).slice(0,3).join(', ') + '<br><small><strong>Model:</strong> ' + pqModel[n] + '</small>';
+  } else {
+    fb.className = 'feedback incorrect';
+    fb.innerHTML = '❌ Needs more detail.<br><small><strong>Model:</strong> ' + pqModel[n] + '</small>';
+  }
+}
+
+const fillAnswers = {
+  q1a: ['v2o5','vanadium','vanadium pentoxide','vanadium(v)'],
+  q1b: ['450'],
+  q2a: ['rhombic'],
+  q2b: ['monoclinic'],
+  q2c: ['s8','s₈'],
+  q3a: ['bacl2','barium chloride','ba(no3)2','barium nitrate'],
+  q3b: ['white'],
+  q3c: ['baso4','barium sulphate'],
+  q4a: ['dehydrating','dehydration'],
+  q4b: ['water','h2o'],
+  q5a: ['lead acetate','lead(ii) acetate','pb(ch3coo)2'],
+  q5b: ['black']
+};
+
+const shortKeywords = {
+  q6: { keys: ['so2','fossil fuel','atmosphere','h2so4','acid rain','ph','lake','fish','forest','aquatic','tree','corrosion'], min: 5 },
+  q7: { keys: ['dilute','concentrated','copper','no reaction','cuso4','so2','oxidising','h2so4','2h2so4','heat'], min: 5 },
+  q8: { keys: ['mist','acid mist','exothermic','oleum','h2s2o7','98%','dilute','h2so4','so3'], min: 4 }
+};
+
+function submitExam() {
+  let score = 0; const total = 11;
+
+  // Fill pairs (5 pairs but q2 has 3 blanks → 6 pairs)
+  const pairs = [
+    ['q1a','q1b'],['q2a','q2b'],['q3a','q3b'],['q4a','q4b'],['q5a','q5b']
+  ];
+  pairs.forEach(([a,b]) => {
+    const va = document.getElementById(a).value.trim().toLowerCase();
+    const vb = document.getElementById(b).value.trim().toLowerCase();
+    const okA = fillAnswers[a].some(x => va.includes(x));
+    const okB = fillAnswers[b].some(x => vb.includes(x));
+    document.getElementById(a).className = 'fill-blank ' + (okA ? 'correct-ans' : 'wrong-ans');
+    document.getElementById(b).className = 'fill-blank ' + (okB ? 'correct-ans' : 'wrong-ans');
+    if (okA && okB) score++;
+  });
+  // q2c (extra blank)
+  const vc = document.getElementById('q2c').value.trim().toLowerCase();
+  const okC = fillAnswers['q2c'].some(x => vc.includes(x));
+  document.getElementById('q2c').className = 'fill-blank ' + (okC ? 'correct-ans' : 'wrong-ans');
+
+  // q3c
+  const vr = document.getElementById('q3c').value.trim().toLowerCase();
+  const okR = fillAnswers['q3c'].some(x => vr.includes(x));
+  document.getElementById('q3c').className = 'fill-blank ' + (okR ? 'correct-ans' : 'wrong-ans');
+
+  // Short answers
+  ['q6','q7','q8'].forEach(id => {
+    const ans = document.getElementById(id).value.toLowerCase();
+    const cfg = shortKeywords[id];
+    const found = cfg.keys.filter(k => ans.includes(k));
+    const missed = cfg.keys.filter(k => !ans.includes(k));
+    const maxMark = id === 'q8' ? 2 : 3;
+    const mark = Math.min(Math.round((found.length / cfg.min) * maxMark), maxMark);
+    score += mark;
+    document.getElementById('ma' + id.slice(1)).style.display = 'block';
+    const tagDiv = document.getElementById('tags' + id.slice(1));
+    tagDiv.innerHTML = found.map(k => `<span class="rubric-tag found">✓ ${k}</span>`).join('') +
+                       missed.slice(0,4).map(k => `<span class="rubric-tag missed">✗ ${k}</span>`).join('');
+  });
+
+  const pct = Math.round((score / total) * 100);
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-frac').textContent = score + ' / ' + total;
+  const msgs = [
+    [80,'🌟 Excellent! Strong mastery of sulphur chemistry.'],
+    [60,'👍 Good work! Review the Contact Process and acid rain sections.'],
+    [40,'⚠️ Developing — revisit H₂SO₄ properties and SO₂ reactions.'],
+    [0,'📖 Keep studying. Start from Slide 2 and work through carefully.']
+  ];
+  document.getElementById('score-msg').textContent = msgs.find(([t]) => pct >= t)[1];
+  document.getElementById('score-card').style.display = 'block';
+  document.getElementById('dot10').classList.add('done');
+  document.getElementById('score-card').scrollIntoView({ behavior: 'smooth' });
+
+  if (typeof submitExamToMTTI === 'function') {
+    submitExamToMTTI(score, total, pct);
+  }
+}
+</script>
+</body>
+</html>
